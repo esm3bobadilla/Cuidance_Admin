@@ -1,58 +1,66 @@
-# CLAUDE.md: Cuidance Admin
+# CLAUDE.md: Cuidance Admin Web
 
 Rules for any Claude agent working in this repo. Follow them on every task. If something here conflicts with a request, ask before going ahead.
 
-_Last updated: Oct 14, 2026 (Week 8, Step 1: repository setup)._
+_Last updated: Oct 19, 2026 (Week 8: scope set to Admin Web only)._
 
 ## Project context
 
 - **Cuidance** is a mobile app for beauty and personal-care guidance. A short quiz asks about hair, skin, makeup and body care, and the app explains what may fit the person and why.
-- **This repo is Cuidance Admin**, an **internal support artifact**. It holds the tools the team uses to review and maintain Cuidance content. It is not the public app.
-- Two apps live here:
-  - **admin mobile** (Expo, for phones)
-  - **admin web** (for the browser)
-- Admin mobile and admin web **share terminology, quiz logic, result content and design tokens** through `shared/`. Never define these twice.
+- **This repository is Cuidance Admin Web.**
+- **Admin Web is an internal browser-based support artifact.** The team uses it to review and maintain quiz content, guidance content, product information, sources, partner highlights, commercial labels, claims and safety notes.
+- Admin Web is **not** a public-facing app, and **not** a provider, creator, brand or retailer portal.
+- **Admin Mobile is archived** and is not an active implementation target. Its wireframes may stay documented under `docs/archived/admin-mobile/` as reference only.
 - **Admin screens are not part of participant testing.** Don't add them to test plans, and don't treat admin feedback as user research.
-- Team: Alyssa Ramirez and Esme Bobadilla. Both work in this repo, so this file keeps both builds consistent.
-- The public app's reference is the `alyssaramirez601/Cuidance_Prototype` repo and its CLAUDE.md. Follow its content, safety and design rules. **Don't copy its app code or prototype screens here.**
+- The public Cuidance app remains in the **separate `alyssaramirez601/Cuidance_Prototype` repository.** Follow its content, safety and design rules, but **don't copy public app code or public prototype screens** here, and never modify that repo from here.
+- Team 03: Alyssa Ramirez and Esme Bobadilla. Both work in this repo, so this file keeps the build consistent.
+
+## Platform
+
+- **Active target: Admin Web**
+- Browser-based implementation direction
+- Framework remains to be confirmed. Don't pick one until the team approves it.
+- **No active Expo or React Native Admin Mobile build**
 
 ## Product boundaries
 
-Admin tools stay inside the approved Cuidance scope. If a request goes past these lines, stop and ask.
+Admin Web stays inside the approved Cuidance scope. If a request goes past these lines, stop and ask.
 
 - **No marketplace tools.** No checkout, carts, pricing or seller tools.
-- **No automated recommendations.** Admin organizes and reviews content. It never generates picks for people.
-- **No medical-review features.** No clinician workflows, case review or medical sign-off.
-- **No diagnosis, medical advice, selfie analysis, skin scanning or automated expert judgment.**
+- **No provider or creator dashboards.**
+- **No public brand or retailer accounts.**
+- **No automated recommendations.** Admin Web organizes and reviews content. It never generates picks for people.
+- **No medical-review feature.** No clinician workflows, case review or medical sign-off.
+- **No diagnosis or medical advice.**
+- **No selfie analysis or skin scanning**, and no automated expert judgment.
 - **Product Barcode / Label Lookup** stays **product lookup only.**
-- **Saved Routine Notes** stays **saved-note organization**, not a full routine builder.
+- **Saved Routine Notes** stays **saved-note organization**, not a routine builder.
 - **Product availability and retailer information** are **future scope or VERIFY.** Don't build them, and mark any mention as VERIFY.
 - **Commercial content must be clearly labeled** ("Partner") and kept separate from guidance.
 - No user-account management or analytics expansion beyond what the team approves.
 
 ## Core stack (planned)
 
-- Expo (managed workflow) with React Native for admin mobile
-- Expo for web (or a matching React setup) for admin web, to be confirmed by the team
+- Admin Web: browser-based React or another approved web setup, framework to be confirmed
 - TypeScript (strict)
-- Supabase for authentication and the database, same project as the main app
+- Supabase for the database, same project as the main app (pending team decision)
 - Shared content and rules ship as local typed data in `shared/`
 
-**Not yet:** Don't add Expo app code or Supabase tables until the team starts that step.
+**Not yet:** Don't add app code, Supabase tables, authentication or backend implementation until the team starts that step.
 
 ## Project structure
 
 ```
 Cuidance_Admin/
-├── admin-mobile/          # Admin app for phones (Expo)
-├── admin-web/             # Admin app for the browser
-├── shared/                # Used by both admin apps. Define things once, here.
+├── admin-web/             # Admin Web app for the browser
+├── shared/                # Shared content and rules. Define things once, here.
 │   ├── content/           # Result content, safety lines, labels
 │   ├── quiz-rules/        # Answer cards, mixing rules, delivery rules
 │   └── design-tokens/     # Colors, type, spacing
 ├── docs/
-│   ├── wireframes/        # Admin wireframes (reference only)
-│   └── Week-8/            # Week 8 notes and deliverables
+│   ├── wireframes/        # Admin Web wireframes (reference only)
+│   └── archived/
+│       └── admin-mobile/  # Archived Admin Mobile reference (no active work)
 ├── README.md
 ├── CLAUDE.md
 ├── .gitignore
@@ -60,7 +68,8 @@ Cuidance_Admin/
     └── pull_request_template.md
 ```
 
-- Wireframe HTML in `docs/wireframes/` is **reference only.** Never treat it as working app code or import from it.
+- Wireframe HTML in `docs/wireframes/` and `docs/archived/` is **reference only.** Never treat it as working app code or import from it.
+- Don't create empty placeholder folders just to make them show up in Git.
 - Update the "Project structure" section of `README.md` whenever folders change.
 
 ## Repo and branches
@@ -71,11 +80,11 @@ Cuidance_Admin/
 - **At least one teammate reviews** each pull request before it merges.
 - **Do not merge directly into `main`.**
 - Delete a feature branch only after its pull request is merged.
-- **Do not commit secrets.** Keys go in `.env`, never in code. Certificates and provisioning files stay out of the repo (see `.gitignore`).
+- **Do not commit secrets.** Keys go in `.env`, never in code. Certificates and key files stay out of the repo (see `.gitignore`).
 
 ## Content and safety rules
 
-These match the main app. Admin content feeds the app, so the same rules apply.
+These match the main app. Admin Web content feeds the app, so the same rules apply.
 
 - Say "may fit" and "based on what you selected." Never "you have," "fix," "perfect," "flawless," "anti-," "problem," "best," "guaranteed" or "slimming."
 - No real brand names in guidance. Partner or paid content is always labeled "Partner."
@@ -91,18 +100,25 @@ These match the main app. Admin content feeds the app, so the same rules apply.
 
 ## AI use
 
-- AI output is a draft. **The team reviews it before it's used.**
+- AI output is a draft. **Team 03 reviews it before it's used.** No tool replaces human review.
 - **AI output is not user research.** Never present it as findings, and never use synthetic people or simulated feedback as evidence.
+- Tools Team 03 uses:
+  - **Claude Code:** repository setup and documentation
+  - **Claude Design:** visual boards and wireframe artifacts
+  - **ChatGPT / Codex:** planning, review, scope control and prompt direction
+  - **Figma Make:** only when used for prototype or visual implementation work
 - Log AI-assisted work in the team's AI disclosure log.
 
 ## Do not
 
-- Do not add Expo app code or Supabase tables until the team starts that step.
-- Do not copy public app code or prototype screens from `Cuidance_Prototype`.
+- Do not create Admin Mobile screens, mobile navigation, Expo mobile code, or mobile-specific implementation unless Team 03 explicitly reopens that scope.
+- Do not add app code, Supabase tables, authentication or backend implementation until the team starts that step.
+- Do not pick a final web framework until the team approves one.
+- Do not copy public app code or public prototype screens from `Cuidance_Prototype`.
 - Do not edit the `Cuidance_Prototype` repo or its `gh-pages` branch from here.
 - Do not treat wireframe HTML as working application code.
-- Do not add user-account management, analytics expansion, marketplace tools, automated recommendations, checkout or medical-review features.
-- Do not define terminology, quiz rules, result content or tokens separately in `admin-mobile/` and `admin-web/`. Use `shared/`.
+- Do not add user-account management, analytics expansion, marketplace tools, provider or creator dashboards, brand or retailer accounts, automated recommendations, checkout or medical-review features.
+- Do not define terminology, quiz rules, result content or tokens outside `shared/`.
 - Do not commit secrets.
 
 ## Working style

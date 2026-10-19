@@ -1,88 +1,95 @@
-# Cuidance Admin
+# Cuidance Admin Web
 
-Internal admin tools for the Cuidance team.
+Internal admin tool for the Cuidance team.
 
-Cuidance is a mobile app for beauty and personal-care guidance. A short quiz asks about hair, skin, makeup and body care, and the app explains what may fit the person and why. This repo holds the **internal admin side**: the tools Alyssa and Esme use to review and maintain the content behind that guidance. It is not the public app, and it is not part of participant testing.
+Cuidance Admin Web is an internal browser-based support tool for the Cuidance team. It helps maintain and review the content behind the public Cuidance mobile app.
 
-> Cuidance offers guidance, not medical advice. The admin tools follow the same rule. They never diagnose, never analyze photos and never make automated expert judgments.
+It is not the public app, it is not part of participant testing, and it is not a provider, creator, brand or retailer portal.
+
+> **Scope note:** Admin Mobile is archived as a reference artifact and is not part of the current implementation scope.
+
+> Cuidance offers guidance, not medical advice. Admin Web follows the same rule. It never diagnoses, never analyzes photos and never makes automated expert judgments.
 
 ---
 
 ## Status
 
-**Week 8, Step 1: repository setup.** Docs and workflow are in place. No app code yet.
+**Week 8: scope set to Admin Web only.** Docs and workflow are in place. No app code yet.
 
 | Area | Status |
 | --- | --- |
 | Repository, README, CLAUDE.md and PR template | Done |
-| Folder structure | Documented, folders added as work lands |
-| Admin wireframes | Not started (will live in `docs/wireframes/`) |
+| Admin Web | Supporting implementation direction / current scope |
+| Admin Mobile | Archived reference / no active implementation |
+| Admin Web wireframes | Not started (will live in `docs/wireframes/`) |
 | Shared content, quiz rules and design tokens | Not started |
-| Admin mobile (Expo) | Not started |
-| Admin web | Not started |
-| Supabase tables | Not started, waiting on team decision |
+| Supabase tables | Not started, pending team decision |
 
-## What it's for
+## What Admin Web is for
 
-Admin is an **internal support artifact**. It helps the team keep the public app's content accurate and consistent. It does not add new features for the people using Cuidance.
+Admin Web is an **internal support artifact**. The Cuidance team uses it in the browser to review and maintain:
 
-### Admin mobile
+- Quiz content
+- Guidance content
+- Product information
+- Sources
+- Partner highlights and commercial labels
+- Claims and their evidence labels
+- Safety notes
 
-- Check quiz content, result content and safety lines on a phone, the same way testers see them
-- Review and organize content the team is working on
+It does not add features for the people using the public Cuidance app.
 
-### Admin web
+**Admin Web is not:**
 
-- Review answer cards, mixing rules, result names and safety lines on a larger screen
-- Keep content labels (evidence labels, "Partner" labels) consistent
-
-Both apps share the same terminology, quiz logic, result content and design tokens through `shared/`.
+- A public-facing Cuidance app
+- Part of participant testing
+- A provider, creator, brand or retailer portal
 
 ## Product boundaries
 
-These are the approved limits for Cuidance. Admin tools must stay inside them.
+These are the approved limits for Cuidance. Admin Web must stay inside them.
 
 **In scope**
 
 - Guidance quiz content and the rules that build a result
 - Result content, evidence labels and sources
 - **Product Barcode / Label Lookup:** product lookup only
-- **Saved Routine Notes:** organizing saved notes, not a full routine builder
+- **Saved Routine Notes:** organizing saved notes, not a routine builder
 - Commercial content, always clearly labeled as "Partner"
 
 **Future scope or VERIFY**
 
 - Product availability and retailer information
 
-**Not in Cuidance (and not in admin)**
+**Not in Cuidance (and not in Admin Web)**
 
 - Diagnosis or medical advice
 - Selfie analysis, skin scanning or any photo-based detection
 - Automated recommendations or automated expert judgment
 - Medical-review features
 - Marketplace tools or checkout
+- Provider or creator dashboards
+- Public brand or retailer accounts
 - User-account management or analytics expansion
 
 ## Tech stack
 
-- [Expo](https://expo.dev/) and [React Native](https://reactnative.dev/) for admin mobile
-- Expo for web (or a matching React setup) for admin web
-- TypeScript (strict)
-- [Supabase](https://supabase.com/) for authentication and the database, same as the main app
+- **Admin Web:** browser-based React or another approved web setup. The framework is still to be confirmed.
+- [Supabase](https://supabase.com/) for the database, same project as the main app (pending team decision)
 - Shared content and tokens as local typed data in `shared/`
 
-> This stack is planned. We will update this section if it changes during the build.
+> This stack is not final. We will update this section once the team approves a framework.
 
 ## Getting started
 
-> Setup steps will be filled in once the admin apps are created. There is no app code in this repo yet.
+> Setup steps will be filled in once Admin Web is created. There is no app code in this repo yet.
 
 ### Requirements
 
 - Node.js: _version TBD_
 - npm or yarn
-- The Expo Go app on an iOS or Android phone (admin mobile)
-- A Supabase project (ask the team for access)
+- A current desktop browser for testing Admin Web
+- A Supabase project, when that step starts (ask the team for access)
 
 ### Environment variables
 
@@ -92,15 +99,15 @@ When setup starts, keys go in a `.env` file in the project root. Never commit re
 
 ```
 Cuidance_Admin/
-├── admin-mobile/          Admin app for phones (Expo)
-├── admin-web/             Admin app for the browser
-├── shared/                Used by both admin apps
+├── admin-web/             Admin Web app for the browser
+├── shared/                Shared content and rules for Admin Web
 │   ├── content/           Result content, safety lines, labels
 │   ├── quiz-rules/        Answer cards, mixing rules, delivery rules
 │   └── design-tokens/     Colors, type, spacing
 ├── docs/
-│   ├── wireframes/        Admin wireframes (reference only, not app code)
-│   └── Week-8/            Week 8 notes and deliverables
+│   ├── wireframes/        Admin Web wireframes (reference only, not app code)
+│   └── archived/
+│       └── admin-mobile/  Archived Admin Mobile reference (no active work)
 ├── README.md
 ├── CLAUDE.md              Rules for AI agents working in this repo
 ├── .gitignore
@@ -122,20 +129,25 @@ Folders are added to the repo when their first file lands. Git doesn't track emp
 
 ## Related
 
-- **Cuidance prototype** (`alyssaramirez601/Cuidance_Prototype`): the public app's reference for flows, copy and design. Admin follows its conventions but does not copy its screens or code.
+- **Cuidance prototype** (`alyssaramirez601/Cuidance_Prototype`): the public Cuidance mobile app's separate repository and the reference for flows, copy and design. Admin Web follows its conventions but does not copy its code or screens, and work here never changes that repo.
 
 ## Team
+
+Team 03:
 
 - Alyssa Ramirez
 - Esme Bobadilla
 
 ## AI use
 
-We use AI tools to support research, design exploration, coding and documentation. Every claim, design decision and line of code is reviewed and verified by the team. Material AI use is logged in our AI disclosure log.
+We use AI tools to support planning, design exploration, coding and documentation. Every claim, design decision and line of code is reviewed and verified by Team 03. Material AI use is logged in our AI disclosure log.
 
-- **Claude:** repository setup, documentation drafting
+- **Claude Code:** repository setup and documentation
+- **Claude Design:** visual boards and wireframe artifacts
+- **ChatGPT / Codex:** planning, review, scope control and prompt direction
+- **Figma Make:** only when used for prototype or visual implementation work
 
-AI output is a draft for the team to review. It is never presented as user research, and synthetic people or simulated feedback are never used as evidence.
+No AI tool replaces human review or user research. AI output is a draft for the team to review. It is never presented as user research, and synthetic people or simulated feedback are never used as evidence.
 
 ## License
 
