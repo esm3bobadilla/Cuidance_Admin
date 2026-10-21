@@ -2,7 +2,7 @@
 
 Rules for any Claude agent working in this repo. Follow them on every task. If something here conflicts with a request, ask before going ahead.
 
-_Last updated: Oct 21, 2026 (Week 9 practice build: Admin Web scope confirmed; implementation not started)._
+_Last updated: Oct 21, 2026 (Week 9 practice build: Admin Web scope confirmed; Next.js with TypeScript approved; implementation not started)._
 
 ## Project context
 
@@ -18,8 +18,8 @@ _Last updated: Oct 21, 2026 (Week 9 practice build: Admin Web scope confirmed; i
 ## Platform
 
 - **Active target: Admin Web**
-- Browser-based implementation direction
-- Admin Web is browser-based. The framework remains to be confirmed. Do not scaffold until Team 03 approves the framework.
+- Browser-based implementation
+- **Framework: Next.js with TypeScript**, approved by Team 03
 - **No active Expo or React Native Admin Mobile build**
 
 ## Product boundaries
@@ -40,14 +40,14 @@ Admin Web stays inside the approved Cuidance scope. If a request goes past these
 - **Commercial content must be clearly labeled** ("Partner") and kept separate from guidance.
 - No public user-account management or analytics expansion. Limited internal Account Support and Content Metrics views may be implemented only where already approved in the Admin Web architecture.
 
-## Core stack (planned)
+## Core stack
 
-- Admin Web: browser-based React or another approved web setup, framework to be confirmed
+- Admin Web: Next.js (approved)
 - TypeScript (strict)
-- Supabase for the database, same project as the main app (pending team decision)
+- Supabase for the database, same project as the main app. **Not connected yet** (pending team decision).
 - Shared content and rules ship as local typed data in `shared/`
 
-**Not yet:** Don't add app code, Supabase tables, authentication or backend implementation until the team starts that step.
+**Not yet:** Don't connect Supabase, create database tables, or add authentication or backend implementation until the team starts that step. Ask before adding any dependency beyond the approved Next.js and TypeScript setup.
 
 ## Project structure
 
@@ -114,8 +114,8 @@ These match the main app. Admin Web content feeds the app, so the same rules app
 ## Do not
 
 - Do not create Admin Mobile screens, mobile navigation, Expo mobile code, or mobile-specific implementation unless Team 03 explicitly reopens that scope.
-- Do not add app code, Supabase tables, authentication or backend implementation until the team starts that step.
-- Do not pick a final web framework until the team approves one.
+- Do not connect Supabase, create database tables, or add authentication or backend implementation until the team starts that step.
+- Do not switch away from Next.js with TypeScript without Team 03 approval.
 - Do not copy public app code or public prototype screens from `Cuidance_Prototype`.
 - Do not edit the `Cuidance_Prototype` repo or its `gh-pages` branch from here.
 - Do not treat wireframe HTML as working application code.

@@ -14,7 +14,7 @@ It is not the public app, it is not part of participant testing, and it is not a
 
 ## Status
 
-**Week 9 practice build: Admin Web scope confirmed; implementation not started.**
+**Week 9 practice build: Admin Web scope confirmed; framework approved (Next.js with TypeScript); implementation not started.**
 
 | Area | Status |
 | --- | --- |
@@ -23,7 +23,10 @@ It is not the public app, it is not part of participant testing, and it is not a
 | Admin Mobile | Archived reference / no active implementation |
 | Admin Web wireframes | Available as reference; not yet implemented |
 | Shared content, quiz rules and design tokens | Not started |
+| Admin Web framework | Approved: Next.js with TypeScript |
 | Admin Web scaffold | Not started |
+| Supabase connection | Not connected yet |
+| Authentication | Not started |
 | Supabase tables | Not started, pending team decision |
 
 ## What Admin Web is for
@@ -76,11 +79,11 @@ These are the approved limits for Cuidance. Admin Web must stay inside them.
 
 ## Tech stack
 
-- **Admin Web:** Browser-based React or another approved web setup. Framework to be confirmed before scaffolding.
-- [Supabase](https://supabase.com/) for the database, same project as the main app (pending team decision)
+- **Admin Web:** [Next.js](https://nextjs.org/) with TypeScript (strict), browser-based. Approved by Team 03.
+- [Supabase](https://supabase.com/) for the database, same project as the main app. **Not connected yet.** No authentication or database tables are being created yet (pending team decision).
 - Shared content and tokens as local typed data in `shared/`
 
-> This stack is not final. We will update this section once the team approves a framework.
+> Admin Mobile remains archived reference only. There is no Expo or React Native Admin build.
 
 ## Getting started
 
