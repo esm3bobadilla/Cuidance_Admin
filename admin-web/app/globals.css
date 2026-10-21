@@ -1,39 +1,124 @@
-/* Layout only. Colors and type come from shared/design-tokens/ once Esme's tokens land there. */
+/* Every value comes from shared/design-tokens/tokens.css. Don't add loose values here. */
+
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
-  font-family: system-ui, sans-serif;
-  line-height: 1.5;
+  background: var(--color-background);
+  color: var(--color-ink);
+  font: var(--type-body);
 }
 
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+:focus-visible {
+  outline: var(--stroke-strong) solid var(--color-accent);
+  outline-offset: var(--stroke-strong);
+}
+
+/* Full width within the outer margins, per the board's Admin Web layout */
 .shell {
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 32px 24px;
+  padding: var(--space-48) var(--layout-outer-margin);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-48);
 }
 
-.eyebrow,
-.status {
-  font-weight: 600;
+.intro {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+}
+
+.eyebrow {
+  font: var(--type-eyebrow);
+  letter-spacing: var(--type-eyebrow-tracking);
+  text-transform: uppercase;
+  color: var(--color-highlight);
+}
+
+.page-title {
+  font: var(--type-heading-1);
+}
+
+.lead {
+  font: var(--type-intro-body);
 }
 
 .note {
-  font-style: italic;
+  font: var(--type-body-small);
+  color: var(--color-ink-muted);
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-24);
+}
+
+.section-title {
+  font: var(--type-heading-2);
 }
 
 .areas {
   list-style: none;
+  margin: 0;
   padding: 0;
   display: grid;
-  gap: 16px;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--layout-gutter);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .area {
-  border: 1px solid;
-  border-radius: 12px;
-  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  padding: var(--space-16);
+  background: var(--color-surface);
+  border: var(--stroke-default) solid var(--color-border);
+  border-radius: var(--radius-medium);
 }
 
-.area h3 {
-  margin-top: 0;
+.area-title {
+  font: var(--type-heading-4);
+}
+
+.area-description {
+  font: var(--type-body-small);
+}
+
+.area-status {
+  font: var(--type-caption);
+}
+
+/* Tablet: 768-1279px */
+@media (max-width: 1279px) {
+  .shell {
+    padding-block: var(--space-32);
+    gap: var(--space-32);
+  }
+
+  .areas {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Mobile: below 768px. Card lists use a 12px gap, sections 24-32px. */
+@media (max-width: 767px) {
+  .shell {
+    padding-block: var(--space-24);
+    gap: var(--space-32);
+  }
+
+  .areas {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-12);
+  }
 }

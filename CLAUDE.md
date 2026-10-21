@@ -97,8 +97,9 @@ These match the main app. Admin Web content feeds the app, so the same rules app
 
 ## Styling
 
-- Use the design tokens in `shared/design-tokens/` once they exist. Never hard-code a color, size or spacing value in a screen.
-- Tokens come from Esme's Week 7 identity system. Check with Esme before changing any token or role.
+- Use the design tokens in `shared/design-tokens/tokens.css`. Never hard-code a color, size or spacing value in a screen.
+- Tokens come from the Week 8 Step 3 design system board (`T03_W08_S03_Board_DesignSystem_Cuidance_v04_ART646`), built on Esme's Week 7 identity system. Check with Esme before changing any token or role.
+- If the board has no exact value for something (for example, shadows), don't guess. Leave it out and add it to the open items in `shared/design-tokens/README.md`.
 
 ## AI use
 

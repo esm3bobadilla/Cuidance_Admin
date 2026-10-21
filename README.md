@@ -22,7 +22,8 @@ It is not the public app, it is not part of participant testing, and it is not a
 | Admin Web | Supporting implementation direction / current scope |
 | Admin Mobile | Archived reference / no active implementation |
 | Admin Web wireframes | Available as reference; not yet implemented |
-| Shared content, quiz rules and design tokens | Not started |
+| Design tokens | Done: `shared/design-tokens/` from the Week 8 Step 3 design system board (v04); open items listed in its README |
+| Shared content and quiz rules | Not started |
 | Admin Web framework | Approved: Next.js with TypeScript |
 | Admin Web scaffold | Done: minimal shell with a placeholder dashboard |
 | Supabase connection | Not connected yet |
@@ -124,7 +125,7 @@ Cuidance_Admin/
 ├── shared/                Shared content and rules for Admin Web
 │   ├── content/           Result content, safety lines, labels
 │   ├── quiz-rules/        Answer cards, mixing rules, delivery rules
-│   └── design-tokens/     Colors, type, spacing
+│   └── design-tokens/     Colors (light and dark), type, spacing, radius, stroke
 ├── docs/
 │   ├── wireframes/        Admin Web wireframes (reference only, not app code)
 │   └── archived/

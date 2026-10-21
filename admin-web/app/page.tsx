@@ -16,10 +16,10 @@ const contentAreas: ContentArea[] = [
 export default function DashboardPage() {
   return (
     <main className="shell">
-      <header>
+      <header className="intro">
         <p className="eyebrow">Internal tool</p>
-        <h1>Cuidance Admin Web</h1>
-        <p>
+        <h1 className="page-title">Cuidance Admin Web</h1>
+        <p className="lead">
           A place for the Cuidance team to review and maintain the content behind the public
           Cuidance mobile app.
         </p>
@@ -29,14 +29,14 @@ export default function DashboardPage() {
         </p>
       </header>
 
-      <section aria-labelledby="areas-heading">
-        <h2 id="areas-heading">Content areas</h2>
+      <section className="section" aria-labelledby="areas-heading">
+        <h2 id="areas-heading" className="section-title">Content areas</h2>
         <ul className="areas">
           {contentAreas.map((area) => (
             <li key={area.name} className="area">
-              <h3>{area.name}</h3>
-              <p>{area.description}</p>
-              <p className="status">Not built yet</p>
+              <h3 className="area-title">{area.name}</h3>
+              <p className="area-description">{area.description}</p>
+              <p className="area-status">Not built yet</p>
             </li>
           ))}
         </ul>
