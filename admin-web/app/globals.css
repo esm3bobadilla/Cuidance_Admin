@@ -1,0 +1,39 @@
+/* Layout only. Colors and type come from shared/design-tokens/ once Esme's tokens land there. */
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  line-height: 1.5;
+}
+
+.shell {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 32px 24px;
+}
+
+.eyebrow,
+.status {
+  font-weight: 600;
+}
+
+.note {
+  font-style: italic;
+}
+
+.areas {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+}
+
+.area {
+  border: 1px solid;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.area h3 {
+  margin-top: 0;
+}
