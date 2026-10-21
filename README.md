@@ -125,7 +125,9 @@ Cuidance_Admin/
 ├── shared/                Shared content and rules for Admin Web
 │   ├── content/           Result content, safety lines, labels
 │   ├── quiz-rules/        Answer cards, mixing rules, delivery rules
-│   └── design-tokens/     Colors (light and dark), type, spacing, radius, stroke
+│   ├── design-tokens/     Colors (light and dark), type, spacing, radius, stroke
+│   └── brand/
+│       └── logo/          Approved Logo Version 4 files (waiting on assets)
 ├── docs/
 │   ├── wireframes/        Admin Web wireframes (reference only, not app code)
 │   └── archived/

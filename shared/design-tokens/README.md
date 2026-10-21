@@ -30,16 +30,24 @@ outline: var(--stroke-strong) solid var(--color-accent);
 - **Contrast:** only use the foreground and background pairings verified in the board's Color Contrast Sheet. Never use color as the only signal. Pair it with text, an icon, a border or a shape change.
 - Breakpoints can't be CSS variables. Use `max-width: 1279px` for tablet and `max-width: 767px` for mobile in media queries.
 
-## Open items for team review
+## Status of open decisions
+
+Reviewed against the v04 board. "Unresolved" means the board doesn't give a final value, so Admin Web uses the most conservative option and nothing new was added to `tokens.css`.
+
+| Item | What the board says | Status | What Admin Web does now |
+| --- | --- | --- | --- |
+| Desktop card-column count | Admin Web desktop is "persistent sidebar · multi-column · table rows ≥ 56 · main + secondary panel." Mobile is "single column." "Multi-column → one column" when space shrinks. Responsive behavior is marked **"Confirm after coded testing."** No card-column count is given. | **Unresolved** | Placeholder cards are a single column at every width, the one layout the board explicitly allows. Card gap is 24 px on desktop and tablet and 12 px on mobile (both documented). |
+| Font hosting method | Names the fonts (Newsreader 400, Archivo 400 / 500 / 600) but says nothing about how they're hosted. | **Unresolved** | Fonts load through Next.js's built-in font loader (`next/font/google`). It downloads the files at build time and serves them from the app, so browsers make no requests to Google. Team 03 to confirm. |
+| Shadow token / value | "Restrained elevation. Sheets, dialogs, overlays only." Marked **"Shadow value requires team confirmation."** Rules: border before shadow, surface contrast before shadow, no heavy decorative shadows. | **Unresolved** | No shadow token exists and nothing uses a shadow. Cards separate from the page with a border and surface color, as the board prefers. |
+| Empty state | "Message + one next step," shown as a dashed outline with an icon, a message and a link. Marked **"Provisional"**, and provisional on result and product cards in the component matrix. | **Unresolved** | Not implemented. The "Not built yet" line on each placeholder card is plain caption text, not the Empty-state component. |
+| Loading state | "Text status · reduced motion," shown with skeleton bars and "Loading guidance…". Marked **"Provisional"**, and provisional on result and product cards in the component matrix. | **Unresolved** | Not implemented. The shell loads no data, so it has no loading state. |
+
+## Other open items
 
 These are documented on the board but have no exact implementation value, or need a team decision. They are **not** in `tokens.css`. Don't guess them.
 
 | Item | What the board says | What's missing |
 | --- | --- | --- |
-| Shadow / elevation | "Restrained elevation. Sheets, dialogs, overlays only." Marked **"Shadow value requires team confirmation."** | The actual shadow value. No shadow token exists yet, so don't use shadows. |
-| Logo files | Logo Version 4 rules: sizes, clear space, colors, reversed use | The logo artwork itself (SVG or PNG exports, including favicon sizes 16, 32 and 48 px). Admin Web shows no logo until Esme supplies approved files. |
+| Logo files | Logo Version 4 rules: sizes, clear space, colors, reversed use | The approved artwork. See `shared/brand/logo/README.md` for the expected files. Admin Web shows no logo until they arrive. |
 | Gradients | "Introduce gradients only when a defined gradient token and application rule exist." | No gradient tokens are defined, so don't use gradients. |
 | Expanded tone scales | Nine tones per color family, with a Tone Legibility Guide | Only the semantic roles are tokenized. Other tones need separate contrast testing before use. |
-| Font delivery | Font families and weights | How fonts are hosted isn't specified. Admin Web loads them with Next.js's built-in font loader (`next/font/google`), which serves them from the app. Confirm this is acceptable. |
-| Admin Web column counts | Desktop is "multi-column," mobile is "single column" | Exact column counts aren't specified. Admin Web currently uses 3 columns on desktop, 2 on tablet and 1 on mobile for the placeholder cards. Confirm or adjust. |
-| Provisional states | Empty and Loading states are marked "Provisional · designed in Step 3" | Final approval of those states before they're built. |

@@ -57,7 +57,9 @@ Cuidance_Admin/
 ├── shared/                # Shared content and rules. Define things once, here.
 │   ├── content/           # Result content, safety lines, labels
 │   ├── quiz-rules/        # Answer cards, mixing rules, delivery rules
-│   └── design-tokens/     # Colors, type, spacing
+│   ├── design-tokens/     # Colors, type, spacing
+│   └── brand/
+│       └── logo/          # Approved Logo Version 4 files only. Never create logo artwork.
 ├── docs/
 │   ├── wireframes/        # Admin Web wireframes (reference only)
 │   └── archived/

@@ -73,7 +73,9 @@ p {
   padding: 0;
   display: grid;
   gap: var(--layout-gutter);
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  /* Single column at every width until Team 03 confirms a desktop column count.
+     See "Status of open decisions" in shared/design-tokens/README.md. */
+  grid-template-columns: minmax(0, 1fr);
 }
 
 .area {
@@ -104,10 +106,6 @@ p {
     padding-block: var(--space-32);
     gap: var(--space-32);
   }
-
-  .areas {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
 }
 
 /* Mobile: below 768px. Card lists use a 12px gap, sections 24-32px. */
@@ -118,7 +116,6 @@ p {
   }
 
   .areas {
-    grid-template-columns: minmax(0, 1fr);
     gap: var(--space-12);
   }
 }
