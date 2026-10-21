@@ -2,7 +2,7 @@
 
 Rules for any Claude agent working in this repo. Follow them on every task. If something here conflicts with a request, ask before going ahead.
 
-_Last updated: Oct 19, 2026 (Week 8: scope set to Admin Web only)._
+_Last updated: Oct 21, 2026 (Week 9 practice build: Admin Web scope confirmed; implementation not started)._
 
 ## Project context
 
@@ -19,25 +19,26 @@ _Last updated: Oct 19, 2026 (Week 8: scope set to Admin Web only)._
 
 - **Active target: Admin Web**
 - Browser-based implementation direction
-- Framework remains to be confirmed. Don't pick one until the team approves it.
+- Admin Web is browser-based. The framework remains to be confirmed. Do not scaffold until Team 03 approves the framework.
 - **No active Expo or React Native Admin Mobile build**
 
 ## Product boundaries
 
 Admin Web stays inside the approved Cuidance scope. If a request goes past these lines, stop and ask.
 
-- **No marketplace tools.** No checkout, carts, pricing or seller tools.
+- **No marketplace tools.** No carts or pricing tools.
+- **No checkout or seller tools.**
 - **No provider or creator dashboards.**
 - **No public brand or retailer accounts.**
 - **No automated recommendations.** Admin Web organizes and reviews content. It never generates picks for people.
-- **No medical-review feature.** No clinician workflows, case review or medical sign-off.
+- **No medical-review workflows.** No clinician workflows, case review or medical sign-off.
 - **No diagnosis or medical advice.**
 - **No selfie analysis or skin scanning**, and no automated expert judgment.
 - **Product Barcode / Label Lookup** stays **product lookup only.**
 - **Saved Routine Notes** stays **saved-note organization**, not a routine builder.
 - **Product availability and retailer information** are **future scope or VERIFY.** Don't build them, and mark any mention as VERIFY.
 - **Commercial content must be clearly labeled** ("Partner") and kept separate from guidance.
-- No user-account management or analytics expansion beyond what the team approves.
+- No public user-account management or analytics expansion. Limited internal Account Support and Content Metrics views may be implemented only where already approved in the Admin Web architecture.
 
 ## Core stack (planned)
 
@@ -68,6 +69,7 @@ Cuidance_Admin/
     └── pull_request_template.md
 ```
 
+- Admin Web wireframes: **Available as reference; not yet implemented.**
 - Wireframe HTML in `docs/wireframes/` and `docs/archived/` is **reference only.** Never treat it as working app code or import from it.
 - Don't create empty placeholder folders just to make them show up in Git.
 - Update the "Project structure" section of `README.md` whenever folders change.
@@ -117,7 +119,7 @@ These match the main app. Admin Web content feeds the app, so the same rules app
 - Do not copy public app code or public prototype screens from `Cuidance_Prototype`.
 - Do not edit the `Cuidance_Prototype` repo or its `gh-pages` branch from here.
 - Do not treat wireframe HTML as working application code.
-- Do not add user-account management, analytics expansion, marketplace tools, provider or creator dashboards, brand or retailer accounts, automated recommendations, checkout or medical-review features.
+- Do not add public user-account management, analytics expansion, marketplace tools, provider or creator dashboards, brand or retailer accounts, automated recommendations, checkout or medical-review features.
 - Do not define terminology, quiz rules, result content or tokens outside `shared/`.
 - Do not commit secrets.
 

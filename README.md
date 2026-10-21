@@ -14,15 +14,16 @@ It is not the public app, it is not part of participant testing, and it is not a
 
 ## Status
 
-**Week 8: scope set to Admin Web only.** Docs and workflow are in place. No app code yet.
+**Week 9 practice build: Admin Web scope confirmed; implementation not started.**
 
 | Area | Status |
 | --- | --- |
-| Repository, README, CLAUDE.md and PR template | Done |
+| Repository documentation | Complete |
 | Admin Web | Supporting implementation direction / current scope |
 | Admin Mobile | Archived reference / no active implementation |
-| Admin Web wireframes | Not started (will live in `docs/wireframes/`) |
+| Admin Web wireframes | Available as reference; not yet implemented |
 | Shared content, quiz rules and design tokens | Not started |
+| Admin Web scaffold | Not started |
 | Supabase tables | Not started, pending team decision |
 
 ## What Admin Web is for
@@ -70,11 +71,12 @@ These are the approved limits for Cuidance. Admin Web must stay inside them.
 - Marketplace tools or checkout
 - Provider or creator dashboards
 - Public brand or retailer accounts
-- User-account management or analytics expansion
+
+**Accounts and metrics:** No public user-account management or analytics expansion. Limited internal Account Support and Content Metrics views may be implemented only where already approved in the Admin Web architecture.
 
 ## Tech stack
 
-- **Admin Web:** browser-based React or another approved web setup. The framework is still to be confirmed.
+- **Admin Web:** Browser-based React or another approved web setup. Framework to be confirmed before scaffolding.
 - [Supabase](https://supabase.com/) for the database, same project as the main app (pending team decision)
 - Shared content and tokens as local typed data in `shared/`
 
