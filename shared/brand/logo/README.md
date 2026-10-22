@@ -52,14 +52,16 @@ All 26 files are copied unchanged from `Cuidance_LogoAssets_ClaudeCode_v03.zip` 
 
 **Important:** the SVG files are not vector artwork. Each one is a small wrapper that displays the PNG with the same name from `../png/`. Keep `png/` and `svg/` side by side, or the SVGs show nothing.
 
-| File (in `png/` and `svg/`) | PNG size | What it is | For Admin Web? |
+| File (in `png/` and `svg/` unless a folder is named) | PNG size | What it is | For Admin Web? |
 | --- | --- | --- | --- |
-| `cuidance-logo-primary-lockup` | 1271 × 289 | Mark + wordmark, Grounded Green, transparent | **Candidate.** Grounded Green, no frame. Pending the edge-crop check (question 4) |
+| `svg/cuidance-logo-primary-lockup.svg` | 1271 × 289 (wrapper) | SVG wrapper for the primary lockup | **Do not use — clipped artwork** (decision 8) |
+| `png/cuidance-logo-primary-lockup.png` | 1271 × 289 | Mark + wordmark, Grounded Green, transparent | **Pending independent inspection.** Not approved for display (question 4) |
 | `cuidance-logo-horizontal-lockup` | 1974 × 609 | Mark + wordmark, near-black `#181818`, transparent | **Do not use.** Frame artifact (decision 4) |
 | `cuidance-logo-stacked-lockup` | 1485 × 973 | Stacked mark over wordmark, near-black `#050505`, transparent | **Do not use.** Frame artifact (decision 4) |
 | `cuidance-logo-reversed` | 1716 × 826 | Light mark + wordmark, `#F7F2E9`, transparent | **Do not use.** Frame artifact (decision 4) |
 | `cuidance-logo-one-color` | 1902 × 712 | One-color lockup, near-black `#0B0B0A`, transparent | **Do not use.** Frame artifact (decision 4) |
-| `cuidance-logo-symbol-mark` | 642 × 549 | Symbol only, Grounded Green, transparent | **Candidate, PNG only.** Grounded Green. SVG wrapper stretches the mark (question 3) |
+| `svg/cuidance-logo-symbol-mark.svg` | 1024 × 671 (wrapper) | SVG wrapper for the symbol mark | **Do not use — clipped artwork** (decision 8) |
+| `png/cuidance-logo-symbol-mark.png` | 642 × 549 | Symbol only, Grounded Green, transparent | **Pending independent inspection.** Not approved for display (question 4) |
 | `cuidance-logo-app-icon-mark` | 1024 × 1024 | Symbol only, Grounded Green, centered on transparent | **Candidate.** Grounded Green. Square compact uses |
 | `cuidance-app-icon-1024` | 1024 × 1024 | Quiet Paper symbol on a solid Grounded Green square | **Candidate.** Grounded Green. Only 1024 px exists (decision 6) |
 | `cuidance-favicon-16x16` | 16 × 16 | Symbol only, Grounded Green, transparent | **Candidate.** Browser tab icon |
@@ -68,7 +70,7 @@ All 26 files are copied unchanged from `Cuidance_LogoAssets_ClaudeCode_v03.zip` 
 | `cuidance-logo-care-terracotta` | 1205 × 275 | Lockup in terracotta `#AA4729` | **Reference only.** Never in the Admin Web interface (decision 2) |
 | `cuidance-logo-compass-blue` | 1175 × 291 | Lockup in blue `#0E34CE` | **Reference only.** Never in the Admin Web interface (decision 2) |
 
-**Admin Web logo integration: Pending clean approved asset.** Admin Web shows no logo and no favicon yet. "Candidate" means the file is Grounded Green and frame-free, but it isn't approved for display until its open question is resolved.
+**Admin Web logo integration: Pending clean approved asset.** Admin Web shows no logo and no favicon yet. "Candidate" means the file is Grounded Green and frame-free, but it isn't approved for display until its open question is resolved. "Pending independent inspection" means the file needs a separate visual check before anyone may use it.
 
 ### Team 03 decisions (Oct 22, 2026)
 
@@ -79,15 +81,16 @@ All 26 files are copied unchanged from `Cuidance_LogoAssets_ClaudeCode_v03.zip` 
 5. **The SVG files are raster-reference SVG wrappers**, not true vector masters.
 6. **Don't generate missing app-icon sizes.**
 7. **Don't add a logo to the Admin Web shell** unless the selected asset is visibly clean and has no border artifact.
+8. **`svg/cuidance-logo-primary-lockup.svg` and `svg/cuidance-logo-symbol-mark.svg` are clipped and must not be used in Admin Web.** Don't edit, regenerate, convert or integrate them. Their PNG files are listed separately and stay pending independent inspection.
 
 ### Open asset questions
 
-Questions 1 and 7 are settled and question 5 is partly settled. The rest stay open. Question 8 matters only for the Grounded Green files Admin Web may use, and those already match `#21332B` exactly.
+Questions 1, 3 and 7 are settled, and questions 4 and 5 are partly settled. The rest stay open. Question 8 matters only for the Grounded Green files Admin Web may use, and those already match `#21332B` exactly.
 
 1. **Care Terracotta and Compass Blue logos.** *Settled by decisions 1 and 2:* reference only, never in the Admin Web interface.
 2. **Thin frame around four PNGs.** `horizontal-lockup`, `one-color`, `reversed` and `stacked-lockup` have a 1 px light-gray line around the image edge (`reversed` also has a dark line), which looks like an export or crop leftover. On screen it would draw a box around the logo, which the board's clear-space rule doesn't allow. **Open:** these files wait for a manual correction (decision 4).
-3. **`cuidance-logo-symbol-mark.svg` would stretch the mark.** The SVG says 1024 × 671, but its PNG is 642 × 549. Displayed through the SVG, the mark would be distorted. Use the PNG, or re-export the SVG at 642 × 549.
-4. **Edge-to-edge crops.** `primary-lockup` and `symbol-mark` have artwork touching the image edge. Confirm nothing is clipped. The required clear space then has to come from the layout around them.
+3. **`cuidance-logo-symbol-mark.svg` would stretch the mark.** The SVG says 1024 × 671, but its PNG is 642 × 549. Displayed through the SVG, the mark would be distorted. *Settled by decision 8:* this SVG is marked Do not use (clipped artwork).
+4. **Edge-to-edge crops.** `primary-lockup` and `symbol-mark` have artwork touching the image edge. *Partly settled by decision 8:* both SVG files are clipped and must not be used. **Open:** the two PNG files are pending independent inspection. If they're approved, the required clear space has to come from the layout around them.
 5. **No true vector files.** The package has no real SVG artwork, so the logo can't scale beyond the PNG sizes. *Settled by decision 5:* treated as raster-reference wrappers. **Open:** whether true vector masters will be supplied.
 6. **App icon sizes.** The package has one 1024 × 1024 app icon. The board lists a 512 × 512 export master. No 180, 192 or 512 px files are included, and none were created (decision 6). **Open:** whether more sizes will be supplied.
 7. **Lockup roles.** *Settled by decision 1:* only Grounded Green is active for Admin Web. The near-black horizontal and stacked lockups aren't used.
