@@ -155,6 +155,19 @@ Five corrected PNG exports from Team 03, derived from the approved Cuidance symb
 - **Still pending:** a clean approved full lockup export, and true vector SVG masters made from original vector artwork. No lockup or SVG was created from raster artwork.
 - **Still excluded:** every clipped, framed, distorted or raster-wrapper asset listed above.
 
+### Vector source search (Oct 22, 2026)
+
+The supplied package (`Cuidance_LogoAssets_ClaudeCode_v03.zip`, folder `cuidance-logo-assets-v01/`) was searched recursively, read-only.
+
+- **Contents:** 27 files: 13 PNG, 13 SVG, 1 README. There are **no** `.ai`, `.eps`, `.pdf`, `.fig`, `.figma`, `.sketch`, `.afdesign`, `.cdr` or nested `.zip` files.
+- **SVGs:** all 13 were parsed. **None** contains vector shapes (`<path>`, `<circle>`, `<rect>`, `<polygon>`, `<polyline>`, `<ellipse>` or `<line>`). Each holds a single `<image>` that points to the matching file in `../png/`. They're PNG wrappers, not vector artwork. The copies in `svg/` are identical to the package.
+- **True vector artwork:** none in the package.
+- **Clean, uncut full lockup:** none. Every lockup PNG is clipped (`primary-lockup`), framed (`horizontal`, `stacked`, `reversed`, `one-color`) or a reference-only color (`compass-blue`, `care-terracotta`).
+- **Uncut symbol-mark vector:** none. The complete symbol exists only as raster (`png/cuidance-logo-symbol-mark.png`, and the mark inside `png/cuidance-logo-app-icon-mark.png`).
+- **Can anything here safely produce a clean full lockup, a true vector symbol mark, or Grounded Green and reversed variants?** No. Tracing or converting the PNGs would be redrawing the logo, which decision 3 forbids. The design-system board PDF isn't part of the package. Its logo images appear to be placed raster images, and it's a presentation board rather than an approved master, so it isn't a source either.
+
+**No editable vector master is present in the supplied package. A new export from the original design file is required.** That export should include a clean Grounded Green full lockup, a true vector symbol mark, and the reversed (Quiet Paper) variants.
+
 ### Team 03 decisions (Oct 22, 2026)
 
 1. **Grounded Green is the only approved active Cuidance logo color for Admin Web.**
