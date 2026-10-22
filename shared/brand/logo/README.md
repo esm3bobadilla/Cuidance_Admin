@@ -183,6 +183,8 @@ The full lockup integration stays pending until a lockup is approved. True vecto
 
 **The next export needs:** the complete round head (as in v02), even transparent margins on all four sides, and no stray pixels. Until then, the files above stay in place with their flattened-head warning, pending Team 03 approval.
 
+**Corrected lockups v03 reviewed, not copied (Oct 22, 2026).** `Cuidance_Corrected_Lockups_v03_upload.zip` fixes the margins: the canvas is now 1238 × 341, with exactly 32 px of transparent space on every side. The round head (120 × 117, ratio 1.026), the transparent background, the absence of a frame and the single exact color per file all still pass. **The 405 stray specks (561 px) are unchanged from v02**, in all three files, so v03 fails the no-stray-pixels check and wasn't copied. The next export only needs those specks removed.
+
 ### Vector source search (Oct 22, 2026)
 
 The supplied package (`Cuidance_LogoAssets_ClaudeCode_v03.zip`, folder `cuidance-logo-assets-v01/`) was searched recursively, read-only.
