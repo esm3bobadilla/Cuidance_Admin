@@ -54,6 +54,8 @@ Admin Web stays inside the approved Cuidance scope. If a request goes past these
 ```
 Cuidance_Admin/
 ├── admin-web/             # Admin Web app for the browser
+│   ├── app/               # Pages. /dev is an internal, static component preview
+│   └── components/        # One shared component per pattern, CSS Modules, tokens only
 ├── shared/                # Shared content and rules. Define things once, here.
 │   ├── content/           # Result content, safety lines, labels
 │   ├── quiz-rules/        # Answer cards, mixing rules, delivery rules

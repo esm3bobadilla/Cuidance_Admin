@@ -123,6 +123,8 @@ When setup starts, keys go in a `.env` file in the project root. Never commit re
 ```
 Cuidance_Admin/
 ├── admin-web/             Admin Web app for the browser
+│   ├── app/               Pages (`/` dashboard, `/dev` internal component preview)
+│   └── components/        Shared components: layout, ui, forms, data, feedback
 ├── shared/                Shared content and rules for Admin Web
 │   ├── content/           Result content, safety lines, labels
 │   ├── quiz-rules/        Answer cards, mixing rules, delivery rules

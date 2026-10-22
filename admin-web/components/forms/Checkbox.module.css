@@ -1,0 +1,71 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+/* The row is at least 44 px tall so the whole label is an easy target */
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
+  min-height: var(--size-touch-target);
+}
+
+/*
+ * Box size: the board shows about 22 px but has no size token. --space-24 is
+ * the nearest documented value; see the open items in shared/design-tokens/README.md.
+ */
+.box {
+  appearance: none;
+  display: inline-grid;
+  place-content: center;
+  flex: none;
+  width: var(--space-24);
+  height: var(--space-24);
+  margin: 0;
+  background: var(--color-surface);
+  border: var(--stroke-strong) solid var(--color-border-strong);
+  border-radius: var(--radius-small);
+  cursor: pointer;
+}
+
+/* Checked: Compass Blue fill plus a check mark, not color alone */
+.box:checked {
+  background: var(--color-selected);
+  border-color: var(--color-selected);
+}
+
+.box:checked::after {
+  content: '✓';
+  font: var(--type-label);
+  color: var(--color-on-accent);
+}
+
+.invalid {
+  border-color: var(--color-error);
+}
+
+.box:disabled {
+  background: var(--color-disabled-surface);
+  border-color: var(--color-disabled-ink);
+  cursor: not-allowed;
+}
+
+.label {
+  font: var(--type-body);
+  color: var(--color-ink);
+  cursor: pointer;
+}
+
+.labelDisabled {
+  color: var(--color-disabled-ink);
+  cursor: not-allowed;
+}
+
+.error {
+  margin: 0;
+  padding-inline-start: calc(var(--space-24) + var(--space-12));
+  font: var(--type-body-small);
+  color: var(--color-error);
+}

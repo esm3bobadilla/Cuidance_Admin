@@ -1,0 +1,41 @@
+/* Shared look for TextInput, Textarea, Select and SearchField (board section 07) */
+.control {
+  width: 100%;
+  min-height: var(--size-control-height);
+  padding: var(--space-12) var(--space-16);
+  font: var(--type-body);
+  color: var(--color-ink);
+  background: var(--color-surface);
+  border: var(--stroke-default) solid var(--color-border-strong);
+  border-radius: var(--radius-small);
+}
+
+.control::placeholder {
+  color: var(--color-ink-muted);
+}
+
+/* Focus: accent border plus the global 2 px focus ring */
+.control:focus-visible {
+  border-color: var(--color-accent);
+}
+
+/* Error: Dark Ruby, drawn 2 px wide (border plus a matching outline) */
+.invalid {
+  border-color: var(--color-error);
+  outline: var(--stroke-default) solid var(--color-error);
+}
+
+.invalid:focus-visible {
+  outline: var(--stroke-strong) solid var(--color-accent);
+}
+
+.control:disabled {
+  color: var(--color-disabled-ink);
+  background: var(--color-disabled-surface);
+  border-color: transparent;
+  cursor: not-allowed;
+}
+
+.control:disabled::placeholder {
+  color: var(--color-disabled-ink);
+}

@@ -1,0 +1,49 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-32);
+  padding: var(--space-48) var(--layout-outer-margin);
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+}
+
+.sectionTitle {
+  margin: 0;
+  font: var(--type-heading-4);
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-12);
+}
+
+/* Fields stack in one column: column counts are still an open decision */
+.grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-24);
+}
+
+.tiles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--layout-gutter);
+}
+
+.note {
+  margin: 0;
+  font: var(--type-body-small);
+  color: var(--color-ink);
+}
+
+@media (max-width: 767px) {
+  .page {
+    padding-block: var(--space-24);
+  }
+}

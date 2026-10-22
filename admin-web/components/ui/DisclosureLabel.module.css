@@ -1,0 +1,11 @@
+.label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-8);
+  padding: var(--space-4) var(--space-12);
+  font: var(--type-label);
+  color: var(--color-partner);
+  background: var(--color-partner-surface);
+  border: var(--stroke-default) solid var(--color-partner);
+  border-radius: var(--radius-small);
+}
