@@ -50,6 +50,8 @@ Everything above this line is the universal package README, copied unchanged fro
 
 All 26 files are copied unchanged from `Cuidance_LogoAssets_ClaudeCode_v03.zip` (folder `cuidance-logo-assets-v01/`), with the package's own filenames and its `png/` and `svg/` subfolders. **The package filenames are the authoritative Team 03 naming system.** The earlier 12-file list that used to be in this README is retired.
 
+One file was added later, outside the package: `png/cuidance-app-icon-512.png`, the Team 03 approved 512 px app-icon export (Oct 22, 2026). It was supplied separately and copied in unchanged. The original package files were not modified.
+
 **Important:** the SVG files are not vector artwork. Each one is a small wrapper that displays the PNG with the same name from `../png/`. Keep `png/` and `svg/` side by side, or the SVGs show nothing.
 
 | File (in `png/` and `svg/` unless a folder is named) | PNG size | What it is | For Admin Web? |
@@ -63,7 +65,8 @@ All 26 files are copied unchanged from `Cuidance_LogoAssets_ClaudeCode_v03.zip` 
 | `svg/cuidance-logo-symbol-mark.svg` | 1024 × 671 (wrapper) | SVG wrapper for the symbol mark | **Do not use — clipped artwork** (decision 8) |
 | `png/cuidance-logo-symbol-mark.png` | 642 × 549 | Symbol only, Grounded Green, transparent | **Candidate — clean, pending Team 03 approval.** Not clipped. No built-in clear space (see PNG inspection) |
 | `png/cuidance-logo-app-icon-mark.png` | 1024 × 1024 | Complete symbol, Grounded Green, centered on transparent | **Candidate — clean, pending Team 03 approval** (see icon and favicon inspection) |
-| `png/cuidance-app-icon-1024.png` | 1024 × 1024 | Complete Quiet Paper symbol, centered on a solid Grounded Green square | **Candidate — clean, pending Team 03 approval.** Only 1024 px exists (decision 6) |
+| `png/cuidance-app-icon-512.png` | 512 × 512 | Complete Quiet Paper symbol, centered on a solid Grounded Green square. Added separately, not part of the v03 package. PNG only, no SVG wrapper | **Approved — Team 03 approved 512 px app-icon export** |
+| `png/cuidance-app-icon-1024.png` | 1024 × 1024 | Complete Quiet Paper symbol, centered on a solid Grounded Green square | **Candidate — clean, pending Team 03 approval.** Separate from the approved 512 px export |
 | `png/cuidance-favicon-16x16.png` | 16 × 16 | Symbol, Grounded Green, stretched to fill the square | **Do not use — insufficient clear space.** Mark is also distorted (see icon and favicon inspection) |
 | `png/cuidance-favicon-32x32.png` | 32 × 32 | Symbol, Grounded Green, stretched to fill the square | **Do not use — insufficient clear space.** Mark is also distorted |
 | `png/cuidance-favicon-48x48.png` | 48 × 48 | Symbol, Grounded Green, stretched to fill the square | **Do not use — insufficient clear space.** Mark is also distorted |
@@ -118,6 +121,15 @@ All five files were inspected read-only. Nothing was edited, cropped, converted 
 
 The favicons carry **Do not use — insufficient clear space** because that's the closest allowed status: the mark fills the square edge to edge with no space around it. **The distortion is a second, separate problem:** it would still need fixing even if clear space were added. Correct favicons need a new export of the complete mark at its true proportions, centered in the square. They must not be generated here (decisions 3 and 6).
 
+### Approved 512 px app icon (Oct 22, 2026)
+
+Team 03 approved `png/cuidance-app-icon-512.png` as the 512 px app-icon export, which is the 512 × 512 master size the board lists. Checked read-only when it was added:
+
+- **Size:** 512 × 512, opaque PNG with no transparency.
+- **Color:** Grounded Green `#21332B` field and Quiet Paper `#F4F2EC` mark, matching the board's app icon spec. The only other pixels are a few hundred soft in-between edge pixels.
+- **Artwork:** the same artwork as `png/cuidance-app-icon-1024.png` at half size (0.07% mean difference from the 1024 file scaled down), so the mark is complete and centered the same way.
+- **Use:** approved as the app-icon export. Admin Web doesn't display it yet, and no other sizes were made from it (decisions 3 and 6).
+
 ### Team 03 decisions (Oct 22, 2026)
 
 1. **Grounded Green is the only approved active Cuidance logo color for Admin Web.**
@@ -138,7 +150,7 @@ Questions 1, 3, 4 and 7 are settled, and question 5 is partly settled. Questions
 3. **`cuidance-logo-symbol-mark.svg` would stretch the mark.** The SVG says 1024 × 671, but its PNG is 642 × 549. Displayed through the SVG, the mark would be distorted. *Settled by decision 8:* this SVG is marked Do not use (clipped artwork).
 4. **Edge-to-edge crops.** `primary-lockup` and `symbol-mark` have artwork touching the image edge. *Settled by decision 8 and the PNG inspection:* both SVG files and `png/cuidance-logo-primary-lockup.png` are clipped and must not be used. `png/cuidance-logo-symbol-mark.png` isn't clipped and is a Candidate, pending Team 03 approval. If it's approved, its clear space has to come from the layout around it.
 5. **No true vector files.** The package has no real SVG artwork, so the logo can't scale beyond the PNG sizes. *Settled by decision 5:* treated as raster-reference wrappers. **Open:** whether true vector masters will be supplied.
-6. **App icon sizes.** The package has one 1024 × 1024 app icon. The board lists a 512 × 512 export master. No 180, 192 or 512 px files are included, and none were created (decision 6). **Open:** whether more sizes will be supplied.
+6. **App icon sizes.** The package has one 1024 × 1024 app icon. *Partly settled:* Team 03 supplied and approved `png/cuidance-app-icon-512.png`, the 512 × 512 master the board lists. No 180 or 192 px files exist, and none were created (decision 6). **Open:** whether more sizes will be supplied.
 7. **Lockup roles.** *Settled by decision 1:* only Grounded Green is active for Admin Web. The near-black horizontal and stacked lockups aren't used.
 8. **Exact colors.** Only the Grounded Green files (`primary-lockup`, `symbol-mark`, `app-icon-mark`, `app-icon-1024` and the favicons) use an exact palette value (`#21332B`, with `#F4F2EC` on the app icon). The others are close to, but not exactly, the board colors: `#181818`, `#0B0B0A` and `#050505` instead of Guidance Ink `#111111`, and `#F7F2E9` instead of Quiet Paper `#F4F2EC`. The terracotta (`#AA4729`) and blue (`#0E34CE`) versions don't match Care Terracotta `#A8432A` or Compass Blue `#1F3FD1` either. Confirm these exports are final.
 9. **Favicons are stretched.** All three favicons squeeze the mark into a square, about 15% narrower than its true proportions, with no clear space. **Open:** new favicon exports from the complete mark at true proportions, centered with space around them. Until then Admin Web has no favicon.
