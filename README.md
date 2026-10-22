@@ -130,7 +130,7 @@ Cuidance_Admin/
 │   └── brand/
 │       └── logo/          Approved Logo Version 4 files (package v03)
 │           ├── png/
-│           │   └── derived/   Corrected Team 03 exports (favicons, 180 / 192 px app icons)
+│           │   └── derived/   Team 03 derived exports (favicons, 180 / 192 px app icons, raster lockups)
 │           └── svg/       Wrappers that display the matching PNG
 ├── docs/
 │   ├── wireframes/        Admin Web wireframes (reference only, not app code)
