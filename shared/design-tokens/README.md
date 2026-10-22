@@ -30,6 +30,25 @@ outline: var(--stroke-strong) solid var(--color-accent);
 - **Contrast:** only use the foreground and background pairings verified in the board's Color Contrast Sheet. Never use color as the only signal. Pair it with text, an icon, a border or a shape change.
 - Breakpoints can't be CSS variables. Use `max-width: 1279px` for tablet and `max-width: 767px` for mobile in media queries.
 
+## Component and state rules
+
+From the board's Core UI Components + States section (07) and Accessibility section (10). Follow these when building components.
+
+| Rule | How to apply it |
+| --- | --- |
+| **Selected** uses Compass Blue plus a non-color indicator | `--color-selected` / `--color-selected-surface`, plus a filled indicator, a check or a 2 px outline (`--stroke-strong`) |
+| **Error** uses Dark Ruby plus an icon and a message | `--color-error` / `--color-error-surface`, plus a warning icon and a plain-language message |
+| **Help and support** use Violet | `--color-info` / `--color-info-surface` |
+| **Partner and commercial** content uses Byzantium Plum plus a clear label | `--color-partner` / `--color-partner-surface`, plus a visible "Partner" or "Sponsored" label |
+| **Every state uses text or an icon in addition to color** | Never use color as the only signal (selection, error, success, focus, commercial content) |
+| **One primary button per screen** | Other actions use the secondary or ghost button styles |
+| **Consent checkboxes start unchecked** | Never pre-check a consent box |
+| **Active navigation tab** | The approved pill (`--radius-pill`), the blue selected state (`--color-selected`) and a visible label |
+| **Button padding** | 12 px vertical × 24 px horizontal (`--space-12` and `--space-24`). Buttons and inputs are 48 px tall (`--size-control-height`) |
+| **Empty and Loading states** | **Provisional.** Don't build them as final until Team 03 confirms them (see below) |
+
+**Don't guess.** Don't invent shadow values, and don't choose a desktop card-column count. When the board gives no exact value, keep the decision in the tables below as unresolved instead of quietly picking one.
+
 ## Status of open decisions
 
 Reviewed against the v04 board. "Unresolved" means the board doesn't give a final value, so Admin Web uses the most conservative option and nothing new was added to `tokens.css`.
@@ -51,3 +70,8 @@ These are documented on the board but have no exact implementation value, or nee
 | Logo files | Logo Version 4 rules: sizes, clear space, colors, reversed use | Files are in `shared/brand/logo/`. Admin Web shows the Team 03 approved v04 derived lockup (Grounded Green, reversed in dark mode) at `--size-logo-lockup-min` (160 px, board section 02). `--size-logo-lockup-max` (480 px) is also from the board. Favicon still pending. See `shared/brand/logo/README.md`. |
 | Gradients | "Introduce gradients only when a defined gradient token and application rule exist." | No gradient tokens are defined, so don't use gradients. |
 | Expanded tone scales | Nine tones per color family, with a Tone Legibility Guide | Only the semantic roles are tokenized. Other tones need separate contrast testing before use. |
+| Card gap (from the Oct 22 audit) | The board conflicts with itself: "Card lists: 12 px between cards" in Common rules, but desktop "Card / table gap 24". | Which applies on desktop. Admin Web currently uses 24 px on desktop and tablet and 12 px on mobile. |
+| Tablet section spacing (audit) | Tablet spacing says only "Content gaps 16–24". | A section-spacing value for tablet. Admin Web currently uses 32 px. |
+| Focus ring offset (audit) | "2 px ring", with no offset given. | An offset value. Admin Web currently offsets the ring by 2 px, reusing `--stroke-strong`. |
+| Type alias names (audit) | Cross-references Week 8 Step 2 names, such as "Mobile = type/heading" and "Desktop type/title =". | Whether `type/heading` and `type/title` aliases are needed as tokens. |
+| Hi-fi screens comparison (audit) | Not on the board. | `T03_CuidanceAdminWeb_HiFiScreens_v01_ART646` hasn't been supplied, so the layout hasn't been checked against it. |
