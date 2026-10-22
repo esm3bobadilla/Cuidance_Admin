@@ -127,7 +127,9 @@ Cuidance_Admin/
 │   ├── quiz-rules/        Answer cards, mixing rules, delivery rules
 │   ├── design-tokens/     Colors (light and dark), type, spacing, radius, stroke
 │   └── brand/
-│       └── logo/          Approved Logo Version 4 files (waiting on assets)
+│       └── logo/          Approved Logo Version 4 files (package v03)
+│           ├── png/
+│           └── svg/       Wrappers that display the matching PNG
 ├── docs/
 │   ├── wireframes/        Admin Web wireframes (reference only, not app code)
 │   └── archived/

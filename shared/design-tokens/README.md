@@ -48,6 +48,6 @@ These are documented on the board but have no exact implementation value, or nee
 
 | Item | What the board says | What's missing |
 | --- | --- | --- |
-| Logo files | Logo Version 4 rules: sizes, clear space, colors, reversed use | The approved artwork. See `shared/brand/logo/README.md` for the expected files. Admin Web shows no logo until they arrive. |
+| Logo files | Logo Version 4 rules: sizes, clear space, colors, reversed use | Files are now in `shared/brand/logo/` (package v03), but eight questions need Team 03 confirmation before use. See "Needs Team 03 confirmation" in `shared/brand/logo/README.md`. Admin Web doesn't display a logo yet. |
 | Gradients | "Introduce gradients only when a defined gradient token and application rule exist." | No gradient tokens are defined, so don't use gradients. |
 | Expanded tone scales | Nine tones per color family, with a Tone Legibility Guide | Only the semantic roles are tokenized. Other tones need separate contrast testing before use. |
