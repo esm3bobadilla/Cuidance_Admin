@@ -14,7 +14,7 @@ It is not the public app, it is not part of participant testing, and it is not a
 
 ## Status
 
-**Week 9 practice build: Admin Web scope confirmed; Next.js with TypeScript shell scaffolded in `admin-web/`; content features not started.**
+**Week 9 practice build: Next.js with TypeScript shell in `admin-web/`, Week 8 design tokens applied, and the approved v04 logo lockup in the header. Content features not started.**
 
 | Area | Status |
 | --- | --- |

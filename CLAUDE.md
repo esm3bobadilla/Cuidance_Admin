@@ -2,7 +2,7 @@
 
 Rules for any Claude agent working in this repo. Follow them on every task. If something here conflicts with a request, ask before going ahead.
 
-_Last updated: Oct 21, 2026 (Week 9 practice build: Admin Web scope confirmed; Next.js with TypeScript approved; implementation not started)._
+_Last updated: Oct 22, 2026 (Week 9 practice build: Next.js with TypeScript shell, design tokens and approved v04 logo lockup in place; content features not started)._
 
 ## Project context
 
