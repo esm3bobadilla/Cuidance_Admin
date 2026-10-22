@@ -117,6 +117,8 @@
 
   --size-touch-target: 44px; /* minimum 44 x 44 */
   --size-control-height: 48px; /* buttons and inputs */
+  --size-logo-lockup-min: 160px; /* primary lockup artwork width, board section 02 */
+  --size-logo-lockup-max: 480px; /* primary lockup max digital width, board section 02 */
 
   /* ---------- Layout (desktop >= 1280px) ---------- */
 

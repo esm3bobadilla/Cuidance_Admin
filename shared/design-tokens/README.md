@@ -48,6 +48,6 @@ These are documented on the board but have no exact implementation value, or nee
 
 | Item | What the board says | What's missing |
 | --- | --- | --- |
-| Logo files | Logo Version 4 rules: sizes, clear space, colors, reversed use | Files are in `shared/brand/logo/` (package v03, read-only). Team 03 approved Grounded Green as the only active logo color for Admin Web. **Admin Web logo integration: Pending clean approved asset.** See "Team 03 decisions" and "Open asset questions" in `shared/brand/logo/README.md`. |
+| Logo files | Logo Version 4 rules: sizes, clear space, colors, reversed use | Files are in `shared/brand/logo/`. Admin Web shows the Team 03 approved v04 derived lockup (Grounded Green, reversed in dark mode) at `--size-logo-lockup-min` (160 px, board section 02). `--size-logo-lockup-max` (480 px) is also from the board. Favicon still pending. See `shared/brand/logo/README.md`. |
 | Gradients | "Introduce gradients only when a defined gradient token and application rule exist." | No gradient tokens are defined, so don't use gradients. |
 | Expanded tone scales | Nine tones per color family, with a Tone Legibility Guide | Only the semantic roles are tokenized. Other tones need separate contrast testing before use. |

@@ -23,6 +23,22 @@ p {
   outline-offset: var(--stroke-strong);
 }
 
+.app-header {
+  padding: var(--space-32) var(--layout-outer-margin) 0;
+}
+
+/*
+ * The lockup PNG is 1238 px wide with 32 px of built-in transparent margin on
+ * each side (1174 px of artwork), so it's scaled to keep the artwork itself at
+ * the board's 160 px minimum. Height follows from the width, so proportions hold.
+ */
+.app-logo {
+  display: block;
+  width: calc(var(--size-logo-lockup-min) * 1238 / 1174);
+  max-width: 100%;
+  height: auto;
+}
+
 /* Full width within the outer margins, per the board's Admin Web layout */
 .shell {
   padding: var(--space-48) var(--layout-outer-margin);

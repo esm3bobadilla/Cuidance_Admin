@@ -79,7 +79,7 @@ One file was added later, outside the package: `png/cuidance-app-icon-512.png`, 
 | `cuidance-logo-care-terracotta` | 1205 × 275 | Lockup in terracotta `#AA4729` | **Reference only.** Never in the Admin Web interface (decision 2) |
 | `cuidance-logo-compass-blue` | 1175 × 291 | Lockup in blue `#0E34CE` | **Reference only.** Never in the Admin Web interface (decision 2) |
 
-**Admin Web logo integration: Pending clean approved asset.** Admin Web shows no logo and no favicon yet. **Full lockup integration stays pending until a clean full lockup is supplied:** every lockup in the package is clipped, framed or a reference-only color. "Candidate" means the file is Grounded Green and frame-free, but it isn't approved for display until its open question is resolved. 
+**Admin Web logo integration: Integrated (Oct 22, 2026).** Team 03 approved the v04 derived raster lockups in `png/derived/`, and Admin Web shows them in its header (see "Admin Web integration" below). No original package logo file is used. **No favicon yet:** the derived favicons are still candidates pending Team 03 approval. "Candidate" means the file is Grounded Green and frame-free, but it isn't approved for display until its open question is resolved. 
 
 ### PNG inspection (Oct 22, 2026)
 
@@ -161,9 +161,9 @@ Three derived raster composite lockups from Team 03 in `png/derived/`, from `Cui
 
 | File | Use | Checked (read-only) | Status |
 | --- | --- | --- | --- |
-| `png/derived/cuidance-logo-primary-lockup.png` | Light backgrounds | 1238 × 341 transparent PNG. Only Grounded Green `#21332B` | **Derived raster composite — pending Team 03 approval** |
-| `png/derived/cuidance-logo-primary-lockup-reversed.png` | Dark backgrounds | 1238 × 341 transparent PNG. Only Quiet Paper `#F4F2EC` | **Derived raster composite — pending Team 03 approval** |
-| `png/derived/cuidance-logo-primary-lockup-one-color.png` | Monochrome use | 1238 × 341 transparent PNG. Only Guidance Ink `#111111` | **Derived raster composite — pending Team 03 approval** |
+| `png/derived/cuidance-logo-primary-lockup.png` | Light backgrounds | 1238 × 341 transparent PNG. Only Grounded Green `#21332B` | **Approved — Team 03 approved v04 derived raster lockup for Admin Web** |
+| `png/derived/cuidance-logo-primary-lockup-reversed.png` | Dark backgrounds | 1238 × 341 transparent PNG. Only Quiet Paper `#F4F2EC` | **Approved — Team 03 approved v04 derived raster lockup for Admin Web** |
+| `png/derived/cuidance-logo-primary-lockup-one-color.png` | Monochrome use | 1238 × 341 transparent PNG. Only Guidance Ink `#111111` | **Approved — Team 03 approved v04 derived raster lockup for Admin Web** |
 
 Verification of the v04 files, all three:
 
@@ -176,7 +176,18 @@ Verification of the v04 files, all three:
 
 Earlier rounds (the first derived files and the v02 and v03 corrections) are superseded by these files.
 
-Full lockup integration into Admin Web stays pending until Team 03 approves a lockup. **True vector SVG masters are still unavailable** and need a new export from the original editable logo source.
+Team 03 approved all three for Admin Web use (Oct 22, 2026). **True vector SVG masters are still unavailable** and need a new export from the original editable logo source.
+
+### Admin Web integration (Oct 22, 2026)
+
+- **Where:** the header in `admin-web/app/layout.tsx`, above every page.
+- **Light mode:** `png/derived/cuidance-logo-primary-lockup.png` (Grounded Green) on the Quiet Paper page background.
+- **Dark mode:** `png/derived/cuidance-logo-primary-lockup-reversed.png` (Quiet Paper) on the dark background. The switch follows the browser's light/dark setting, using a `<picture>` element, the same way the design tokens switch.
+- **Monochrome:** `png/derived/cuidance-logo-primary-lockup-one-color.png` is approved for monochrome use but isn't shown anywhere yet, because Admin Web has no monochrome context.
+- **Size:** the artwork displays at the board's 160 px minimum width (`--size-logo-lockup-min`). The image width allows for the 32 px built-in margin, and its height follows automatically, so the proportions stay exact. It never grows wider than the screen.
+- **Clear space:** at this size the board's clear space (x = head height) is about 16 px. The page margins (64, 32 or 16 px plus the built-in margin) and the 48 px gap below the logo all exceed it.
+- **Accessibility:** alt text "Cuidance".
+- The files are served unchanged: no cropping, stretching, recoloring or conversion, and no SVG wrapper.
 
 ### Vector source search (Oct 22, 2026)
 

@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { Archivo, Newsreader } from 'next/font/google';
 import type { ReactNode } from 'react';
+import lockupPrimary from '../../shared/brand/logo/png/derived/cuidance-logo-primary-lockup.png';
+import lockupReversed from '../../shared/brand/logo/png/derived/cuidance-logo-primary-lockup-reversed.png';
 import '../../shared/design-tokens/tokens.css';
 import './globals.css';
 
@@ -33,7 +35,22 @@ type RootLayoutProps = {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" className={`${newsreader.variable} ${archivo.variable}`}>
-      <body>{children}</body>
+      <body>
+        <header className="app-header">
+          {/* Team 03 approved v04 derived lockups: Grounded Green on light, Quiet Paper on dark */}
+          <picture>
+            <source srcSet={lockupReversed.src} media="(prefers-color-scheme: dark)" />
+            <img
+              className="app-logo"
+              src={lockupPrimary.src}
+              width={lockupPrimary.width}
+              height={lockupPrimary.height}
+              alt="Cuidance"
+            />
+          </picture>
+        </header>
+        {children}
+      </body>
     </html>
   );
 }
