@@ -176,6 +176,13 @@ What checks out:
 
 The full lockup integration stays pending until a lockup is approved. True vector SVG masters still need a new export from the original design file.
 
+**Corrected lockups v02 reviewed, not copied (Oct 22, 2026).** `Cuidance_Corrected_Lockups_v02_upload.zip` held corrected versions of all three files. They fix the head: 120 × 117 (ratio 1.026), with a curve that matches the complete symbol. Each is one exact color, on a transparent background with no frame. Team 03 chose to wait for a re-export because of two problems:
+
+1. **Uneven margins:** 32 px on the left, top and bottom, but 41 px on the right. The canvas stayed 1247 px wide while the artwork got 9 px narrower.
+2. **Stray specks:** 405 isolated specks (561 px in all, the largest 15 px) sit just outside the letter and mark outlines in all three files.
+
+**The next export needs:** the complete round head (as in v02), even transparent margins on all four sides, and no stray pixels. Until then, the files above stay in place with their flattened-head warning, pending Team 03 approval.
+
 ### Vector source search (Oct 22, 2026)
 
 The supplied package (`Cuidance_LogoAssets_ClaudeCode_v03.zip`, folder `cuidance-logo-assets-v01/`) was searched recursively, read-only.
