@@ -62,15 +62,16 @@ All 26 files are copied unchanged from `Cuidance_LogoAssets_ClaudeCode_v03.zip` 
 | `cuidance-logo-one-color` | 1902 × 712 | One-color lockup, near-black `#0B0B0A`, transparent | **Do not use.** Frame artifact (decision 4) |
 | `svg/cuidance-logo-symbol-mark.svg` | 1024 × 671 (wrapper) | SVG wrapper for the symbol mark | **Do not use — clipped artwork** (decision 8) |
 | `png/cuidance-logo-symbol-mark.png` | 642 × 549 | Symbol only, Grounded Green, transparent | **Candidate — clean, pending Team 03 approval.** Not clipped. No built-in clear space (see PNG inspection) |
-| `cuidance-logo-app-icon-mark` | 1024 × 1024 | Symbol only, Grounded Green, centered on transparent | **Candidate.** Grounded Green. Square compact uses |
-| `cuidance-app-icon-1024` | 1024 × 1024 | Quiet Paper symbol on a solid Grounded Green square | **Candidate.** Grounded Green. Only 1024 px exists (decision 6) |
-| `cuidance-favicon-16x16` | 16 × 16 | Symbol only, Grounded Green, transparent | **Candidate.** Browser tab icon |
-| `cuidance-favicon-32x32` | 32 × 32 | Symbol only, Grounded Green, transparent | **Candidate.** Browser tab icon |
-| `cuidance-favicon-48x48` | 48 × 48 | Symbol only, Grounded Green, transparent | **Candidate.** Browser tab icon |
+| `png/cuidance-logo-app-icon-mark.png` | 1024 × 1024 | Complete symbol, Grounded Green, centered on transparent | **Candidate — clean, pending Team 03 approval** (see icon and favicon inspection) |
+| `png/cuidance-app-icon-1024.png` | 1024 × 1024 | Complete Quiet Paper symbol, centered on a solid Grounded Green square | **Candidate — clean, pending Team 03 approval.** Only 1024 px exists (decision 6) |
+| `png/cuidance-favicon-16x16.png` | 16 × 16 | Symbol, Grounded Green, stretched to fill the square | **Do not use — insufficient clear space.** Mark is also distorted (see icon and favicon inspection) |
+| `png/cuidance-favicon-32x32.png` | 32 × 32 | Symbol, Grounded Green, stretched to fill the square | **Do not use — insufficient clear space.** Mark is also distorted |
+| `png/cuidance-favicon-48x48.png` | 48 × 48 | Symbol, Grounded Green, stretched to fill the square | **Do not use — insufficient clear space.** Mark is also distorted |
+| `svg/` versions of the app icons and favicons | — | Raster-reference wrappers for the PNGs above (decision 5) | Follow the PNG's status. Not vector artwork |
 | `cuidance-logo-care-terracotta` | 1205 × 275 | Lockup in terracotta `#AA4729` | **Reference only.** Never in the Admin Web interface (decision 2) |
 | `cuidance-logo-compass-blue` | 1175 × 291 | Lockup in blue `#0E34CE` | **Reference only.** Never in the Admin Web interface (decision 2) |
 
-**Admin Web logo integration: Pending clean approved asset.** Admin Web shows no logo and no favicon yet. "Candidate" means the file is Grounded Green and frame-free, but it isn't approved for display until its open question is resolved. 
+**Admin Web logo integration: Pending clean approved asset.** Admin Web shows no logo and no favicon yet. **Full lockup integration stays pending until a clean full lockup is supplied:** every lockup in the package is clipped, framed or a reference-only color. "Candidate" means the file is Grounded Green and frame-free, but it isn't approved for display until its open question is resolved. 
 
 ### PNG inspection (Oct 22, 2026)
 
@@ -89,6 +90,34 @@ Both files were inspected read-only. Nothing was edited, cropped, converted or r
 
 The symbol mark is a Candidate and not "insufficient clear space" because the board's clear-space rule is about placement ("keep text, borders … outside this area"), and the artwork itself is complete. If Team 03 wants clear space built into the file, change its status to **Do not use — insufficient clear space**.
 
+### Icon and favicon inspection (Oct 22, 2026)
+
+All five files were inspected read-only. Nothing was edited, cropped, converted or renamed. The reference for "complete" is `png/cuidance-logo-symbol-mark.png`, which the earlier inspection showed to be the whole, uncut mark (642 × 549, so about 1.17 times wider than tall). Clear space is measured against the board's rule: x = the height of the circular head.
+
+| Check | `cuidance-logo-app-icon-mark.png` | `cuidance-app-icon-1024.png` |
+| --- | --- | --- |
+| 1. Pixel size | 1024 × 1024 | 1024 × 1024 |
+| 2. Transparency | Palette PNG, on/off transparency only (alpha 0 or 255). Artwork bounds (191, 237) to (833, 786) | Fully opaque, no transparency. The Quiet Paper mark sits at (191, 237) to (833, 786) |
+| 3. Clipped? | **No.** The artwork is identical, pixel for pixel, to the complete symbol mark, and it doesn't touch any edge | **No.** The Quiet Paper mark has exactly the same shape as `app-icon-mark` (0 differing pixels) |
+| 4. Centered? | Yes. 191 px left and right, 237 px top, 238 px bottom (within 1 px) | Yes. Same position: 191 / 191 / 237 / 238 px |
+| 5. Clear space | Present. Top and bottom (237 / 238 px) exceed x (230 px). Left and right (191 px) are 39 px short of x | Present, same as `app-icon-mark`. Inside an app icon the Grounded Green square is the solid field the board asks for. Whether the x rule applies inside an icon tile is a Team 03 call |
+| 6. Approved color? | Yes. One color only, `#21332B` | Yes. Only `#21332B` (field) and `#F4F2EC` Quiet Paper (mark), which matches the board's app icon spec |
+| 7. Fit for intended use? | Yes for square compact uses, shown at 24 to 128 px. Hard on/off edges look stair-stepped at 1:1 but smooth when scaled down | Fit as an app icon master. The board asks for a 512 × 512 master, and no 180, 192 or 512 px exports exist (none generated, decision 6). Admin Web is a browser tool, so it doesn't need an app icon yet |
+| **Status** | **Candidate — clean, pending Team 03 approval** | **Candidate — clean, pending Team 03 approval** |
+
+| Check | `cuidance-favicon-16x16.png` | `cuidance-favicon-32x32.png` | `cuidance-favicon-48x48.png` |
+| --- | --- | --- | --- |
+| 1. Pixel size | 16 × 16 | 32 × 32 | 48 × 48 |
+| 2. Transparency | Palette PNG with soft (anti-aliased) edges: 99 alpha levels. Artwork bounds fill the whole canvas | Same, 153 alpha levels. Fills the canvas | Same, 194 alpha levels. Fills the canvas |
+| 3. Clipped? | **No pixels are cut off, but the mark is distorted.** The favicon matches the complete mark squashed into a square (2.2% mean difference). The alternatives are a proportional fit (10.7%) or a side crop (10.5%) | Not clipped, same distortion (1.2% stretched vs 14.2% proportional and 8.9% cropped) | Not clipped, same distortion (0.8% stretched vs 12.7% proportional and 9.0% cropped) |
+| 4. Centered? | Fills the canvas edge to edge, so centered only by stretching | Same | Same |
+| 5. Clear space | **None.** The mark touches all four edges. A favicon is shown as-is, so layout can't add space | **None.** Touches all four edges | **None.** Touches all four edges |
+| 6. Approved color? | Yes. Only `#21332B` (solid and soft-edge pixels) | Yes. Only `#21332B` | Yes. Only `#21332B` |
+| 7. Fit for intended use? | **No.** The board says not to stretch or distort the logo. The mark's width is squeezed by about 15%, so the round head becomes a tall oval | **No**, same distortion | **No**, same distortion |
+| **Status** | **Do not use — insufficient clear space** | **Do not use — insufficient clear space** | **Do not use — insufficient clear space** |
+
+The favicons carry **Do not use — insufficient clear space** because that's the closest allowed status: the mark fills the square edge to edge with no space around it. **The distortion is a second, separate problem:** it would still need fixing even if clear space were added. Correct favicons need a new export of the complete mark at its true proportions, centered in the square. They must not be generated here (decisions 3 and 6).
+
 ### Team 03 decisions (Oct 22, 2026)
 
 1. **Grounded Green is the only approved active Cuidance logo color for Admin Web.**
@@ -102,7 +131,7 @@ The symbol mark is a Candidate and not "insufficient clear space" because the bo
 
 ### Open asset questions
 
-Questions 1, 3, 4 and 7 are settled, and question 5 is partly settled. The rest stay open. Question 8 matters only for the Grounded Green files Admin Web may use, and those already match `#21332B` exactly.
+Questions 1, 3, 4 and 7 are settled, and question 5 is partly settled. Questions 9 and 10 come from the icon and favicon inspection. The rest stay open. Question 8 matters only for the Grounded Green files Admin Web may use, and those already match `#21332B` exactly.
 
 1. **Care Terracotta and Compass Blue logos.** *Settled by decisions 1 and 2:* reference only, never in the Admin Web interface.
 2. **Thin frame around four PNGs.** `horizontal-lockup`, `one-color`, `reversed` and `stacked-lockup` have a 1 px light-gray line around the image edge (`reversed` also has a dark line), which looks like an export or crop leftover. On screen it would draw a box around the logo, which the board's clear-space rule doesn't allow. **Open:** these files wait for a manual correction (decision 4).
@@ -112,6 +141,8 @@ Questions 1, 3, 4 and 7 are settled, and question 5 is partly settled. The rest 
 6. **App icon sizes.** The package has one 1024 × 1024 app icon. The board lists a 512 × 512 export master. No 180, 192 or 512 px files are included, and none were created (decision 6). **Open:** whether more sizes will be supplied.
 7. **Lockup roles.** *Settled by decision 1:* only Grounded Green is active for Admin Web. The near-black horizontal and stacked lockups aren't used.
 8. **Exact colors.** Only the Grounded Green files (`primary-lockup`, `symbol-mark`, `app-icon-mark`, `app-icon-1024` and the favicons) use an exact palette value (`#21332B`, with `#F4F2EC` on the app icon). The others are close to, but not exactly, the board colors: `#181818`, `#0B0B0A` and `#050505` instead of Guidance Ink `#111111`, and `#F7F2E9` instead of Quiet Paper `#F4F2EC`. The terracotta (`#AA4729`) and blue (`#0E34CE`) versions don't match Care Terracotta `#A8432A` or Compass Blue `#1F3FD1` either. Confirm these exports are final.
+9. **Favicons are stretched.** All three favicons squeeze the mark into a square, about 15% narrower than its true proportions, with no clear space. **Open:** new favicon exports from the complete mark at true proportions, centered with space around them. Until then Admin Web has no favicon.
+10. **No clean full lockup.** Every lockup in the package is clipped (`primary-lockup`), framed (`horizontal`, `stacked`, `reversed`, `one-color`) or a reference-only color (`compass-blue`, `care-terracotta`). **Open:** a clean Grounded Green full lockup. Full lockup integration stays pending until one is supplied.
 
 ### Usage rules from the v04 design system board
 
