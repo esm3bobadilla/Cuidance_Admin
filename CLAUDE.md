@@ -2,7 +2,7 @@
 
 Rules for any Claude agent working in this repo. Follow them on every task. If something here conflicts with a request, ask before going ahead.
 
-_Last updated: Oct 21, 2026 (Week 9 practice build: Admin Web scope confirmed; Next.js with TypeScript approved; implementation not started)._
+_Last updated: Oct 22, 2026 (Week 9 practice build: Next.js with TypeScript shell, design tokens and approved v04 logo lockup in place; content features not started)._
 
 ## Project context
 
@@ -57,7 +57,9 @@ Cuidance_Admin/
 ├── shared/                # Shared content and rules. Define things once, here.
 │   ├── content/           # Result content, safety lines, labels
 │   ├── quiz-rules/        # Answer cards, mixing rules, delivery rules
-│   └── design-tokens/     # Colors, type, spacing
+│   ├── design-tokens/     # Colors, type, spacing
+│   └── brand/
+│       └── logo/          # Approved Logo Version 4 files only. Never create logo artwork.
 ├── docs/
 │   ├── wireframes/        # Admin Web wireframes (reference only)
 │   └── archived/
@@ -97,8 +99,9 @@ These match the main app. Admin Web content feeds the app, so the same rules app
 
 ## Styling
 
-- Use the design tokens in `shared/design-tokens/` once they exist. Never hard-code a color, size or spacing value in a screen.
-- Tokens come from Esme's Week 7 identity system. Check with Esme before changing any token or role.
+- Use the design tokens in `shared/design-tokens/tokens.css`. Never hard-code a color, size or spacing value in a screen.
+- Tokens come from the Week 8 Step 3 design system board (`T03_W08_S03_Board_DesignSystem_Cuidance_v04_ART646`), built on Esme's Week 7 identity system. Check with Esme before changing any token or role.
+- If the board has no exact value for something (for example, shadows), don't guess. Leave it out and add it to the open items in `shared/design-tokens/README.md`.
 
 ## AI use
 

@@ -1,0 +1,201 @@
+/*
+ * Cuidance design tokens (CSS custom properties)
+ *
+ * Source of truth: T03_W08_S03_Board_DesignSystem_Cuidance_v04_ART646
+ * (Week 8 Step 3 design system board). Values are copied from the board's
+ * Semantic Color Roles table, Typography System, Spacing + Layout tokens,
+ * and Radius + Stroke section. Do not add or change values here without
+ * Team 03 review. See README.md in this folder for open items.
+ *
+ * Components use semantic tokens only. Primitive palette values are not
+ * exposed, because the board says they are never applied directly.
+ *
+ * Font families are wired by each app: set --font-newsreader and
+ * --font-archivo to the loaded font, and these tokens pick them up.
+ */
+
+:root {
+  color-scheme: light dark;
+
+  /* ---------- Color: light mode ---------- */
+
+  /* Background and surface */
+  --color-background: #f4f2ec;
+  --color-surface: #ffffff;
+  --color-surface-warm: #f3e6d3;
+  --color-selected-surface: #e6eafb;
+  --color-disabled-surface: #e6e2d9;
+
+  /* Text and icon */
+  --color-ink: #111111;
+  --color-ink-muted: #57534b;
+  --color-on-accent: #ffffff;
+  --color-on-brand: #f4f2ec;
+  --color-disabled-ink: #8b867c;
+
+  /* Border and divider */
+  --color-border: #ddd7cb;
+  --color-border-strong: #7c766b;
+
+  /* Action and focus */
+  --color-accent: #1f3fd1;
+  --color-accent-hover: #1a36b5;
+  --color-accent-pressed: #152b91;
+  --color-selected: #1f3fd1;
+  --color-brand: #21332b;
+
+  /* Guidance and information */
+  --color-highlight: #a8432a;
+  --color-info: #5a1391;
+  --color-info-surface: #f3eafb;
+
+  /* Commercial disclosure */
+  --color-partner: #671253;
+  --color-partner-surface: #f7e6f1;
+
+  /* Success, warning and error */
+  --color-success: #5e6b3d;
+  --color-success-surface: #e9ecdd;
+  --color-alert: #a94e00;
+  --color-alert-surface: #f9e8d7;
+  --color-error: #70000e;
+  --color-error-surface: #fbe9eb;
+
+  /* ---------- Typography ---------- */
+
+  --font-display: var(--font-newsreader), serif;
+  --font-body: var(--font-archivo), sans-serif;
+
+  /* Display + heading styles (desktop values; tablet and mobile below) */
+  --type-display-xl: 400 56px / 64px var(--font-display);
+  --type-display: 400 40px / 46px var(--font-display);
+  --type-heading-1: 400 32px / 38px var(--font-display);
+  --type-heading-2: 400 28px / 34px var(--font-display);
+  --type-heading-3: 600 24px / 30px var(--font-body);
+  --type-heading-4: 600 20px / 26px var(--font-body);
+  --type-heading-5: 600 18px / 24px var(--font-body);
+  --type-heading-6: 600 16px / 24px var(--font-body);
+
+  /* Body styles */
+  --type-intro-body: 400 18px / 28px var(--font-body);
+  --type-body-large: 400 18px / 28px var(--font-body);
+  --type-body: 400 16px / 24px var(--font-body);
+  --type-body-small: 400 14px / 20px var(--font-body);
+  --type-body-xsmall: 400 13px / 18px var(--font-body);
+
+  /* UI + data styles */
+  --type-label: 600 15px / 20px var(--font-body);
+  --type-button: 600 15px / 20px var(--font-body);
+  --type-link: 600 15px / 20px var(--font-body);
+  --type-caption: 400 13px / 18px var(--font-body);
+  --type-breadcrumb: 400 13px / 18px var(--font-body);
+  --type-eyebrow: 600 12px / 16px var(--font-body);
+  --type-eyebrow-tracking: 0.08em; /* always uppercase */
+  --type-data-large: 600 32px / 38px var(--font-body);
+  --type-data-small: 500 13px / 18px var(--font-body);
+
+  /* ---------- Spacing ---------- */
+
+  --space-4: 4px;
+  --space-8: 8px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-24: 24px;
+  --space-32: 32px;
+  --space-48: 48px;
+
+  /* ---------- Radius + stroke ---------- */
+
+  --radius-small: 8px; /* inputs, checkboxes, tags */
+  --radius-medium: 16px; /* cards, sheets, answers */
+  --radius-pill: 999px; /* buttons, chips, help */
+
+  --stroke-default: 1px; /* dividers, outlines */
+  --stroke-strong: 2px; /* focus, strong outlines */
+
+  /* ---------- Sizing ---------- */
+
+  --size-touch-target: 44px; /* minimum 44 x 44 */
+  --size-control-height: 48px; /* buttons and inputs */
+  --size-logo-lockup-min: 160px; /* primary lockup artwork width, board section 02 */
+  --size-logo-lockup-max: 480px; /* primary lockup max digital width, board section 02 */
+
+  /* ---------- Layout (desktop >= 1280px) ---------- */
+
+  --layout-outer-margin: 64px;
+  --layout-gutter: 24px;
+  --layout-sidebar-width: 240px;
+  --layout-table-row-min-height: 56px;
+}
+
+/* ---------- Color: dark mode ---------- */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-background: #121714;
+    --color-surface: #1b221e;
+    --color-surface-warm: #26221d;
+    --color-selected-surface: #1e2650;
+    --color-disabled-surface: #252c28;
+
+    --color-ink: #f4f2ec;
+    --color-ink-muted: #bdb8ad;
+    --color-on-accent: #0b1440;
+    --color-on-brand: #121714;
+    --color-disabled-ink: #6f7570;
+
+    --color-border: #333b36;
+    --color-border-strong: #838b85;
+
+    --color-accent: #9aabff;
+    --color-accent-hover: #b0beff;
+    --color-accent-pressed: #8396f2;
+    --color-selected: #9aabff;
+    --color-brand: #cfddd4;
+
+    --color-highlight: #f2a68f;
+    --color-info: #cca4f4;
+    --color-info-surface: #2a1542;
+
+    --color-partner: #e09bcb;
+    --color-partner-surface: #36142c;
+
+    --color-success: #bccb8e;
+    --color-success-surface: #262d1c;
+    --color-alert: #f2a65e;
+    --color-alert-surface: #3a2918;
+    --color-error: #eb9ba6;
+    --color-error-surface: #3d0b14;
+  }
+}
+
+/* ---------- Tablet: 768-1279px ---------- */
+@media (max-width: 1279px) {
+  :root {
+    --type-display-xl: 400 48px / 56px var(--font-display);
+    --type-display: 400 36px / 42px var(--font-display);
+    --type-heading-1: 400 30px / 36px var(--font-display);
+    --type-heading-2: 400 26px / 32px var(--font-display);
+    --type-heading-3: 600 22px / 28px var(--font-body);
+
+    --layout-outer-margin: 32px;
+  }
+}
+
+/* ---------- Mobile: below 768px ---------- */
+@media (max-width: 767px) {
+  :root {
+    --type-display-xl: 400 40px / 46px var(--font-display);
+    --type-display: 400 32px / 38px var(--font-display);
+    --type-heading-1: 400 28px / 34px var(--font-display);
+    --type-heading-2: 400 24px / 30px var(--font-display);
+    --type-heading-3: 600 20px / 26px var(--font-body);
+    --type-heading-4: 600 18px / 24px var(--font-body);
+    --type-heading-5: 600 16px / 22px var(--font-body);
+    --type-heading-6: 600 15px / 20px var(--font-body);
+    --type-intro-body: 400 16px / 24px var(--font-body);
+    --type-body-large: 400 16px / 24px var(--font-body);
+
+    --layout-outer-margin: 16px;
+    --layout-gutter: 16px;
+  }
+}

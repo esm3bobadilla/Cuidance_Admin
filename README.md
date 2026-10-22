@@ -14,7 +14,7 @@ It is not the public app, it is not part of participant testing, and it is not a
 
 ## Status
 
-**Week 9 practice build: Admin Web scope confirmed; Next.js with TypeScript shell scaffolded in `admin-web/`; content features not started.**
+**Week 9 practice build: Next.js with TypeScript shell in `admin-web/`, Week 8 design tokens applied, and the approved v04 logo lockup in the header. Content features not started.**
 
 | Area | Status |
 | --- | --- |
@@ -22,12 +22,14 @@ It is not the public app, it is not part of participant testing, and it is not a
 | Admin Web | Supporting implementation direction / current scope |
 | Admin Mobile | Archived reference / no active implementation |
 | Admin Web wireframes | Available as reference; not yet implemented |
-| Shared content, quiz rules and design tokens | Not started |
+| Design tokens | Done: `shared/design-tokens/` from the Week 8 Step 3 design system board (v04); open items listed in its README |
+| Shared content and quiz rules | Not started |
 | Admin Web framework | Approved: Next.js with TypeScript |
 | Admin Web scaffold | Done: minimal shell with a placeholder dashboard |
 | Supabase connection | Not connected yet |
 | Authentication | Not started |
 | Supabase tables | Not started, pending team decision |
+| Admin Web logo | Done: Team 03 approved v04 derived lockup in the header, with a reversed version in dark mode. Favicon pending (see `shared/brand/logo/README.md`) |
 
 ## What Admin Web is for
 
@@ -124,7 +126,12 @@ Cuidance_Admin/
 ├── shared/                Shared content and rules for Admin Web
 │   ├── content/           Result content, safety lines, labels
 │   ├── quiz-rules/        Answer cards, mixing rules, delivery rules
-│   └── design-tokens/     Colors, type, spacing
+│   ├── design-tokens/     Colors (light and dark), type, spacing, radius, stroke
+│   └── brand/
+│       └── logo/          Approved Logo Version 4 files (package v03)
+│           ├── png/
+│           │   └── derived/   Team 03 derived exports (favicons, 180 / 192 px app icons, raster lockups)
+│           └── svg/       Wrappers that display the matching PNG
 ├── docs/
 │   ├── wireframes/        Admin Web wireframes (reference only, not app code)
 │   └── archived/
