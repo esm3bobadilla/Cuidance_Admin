@@ -55,13 +55,13 @@ All 26 files are copied unchanged from `Cuidance_LogoAssets_ClaudeCode_v03.zip` 
 | File (in `png/` and `svg/` unless a folder is named) | PNG size | What it is | For Admin Web? |
 | --- | --- | --- | --- |
 | `svg/cuidance-logo-primary-lockup.svg` | 1271 × 289 (wrapper) | SVG wrapper for the primary lockup | **Do not use — clipped artwork** (decision 8) |
-| `png/cuidance-logo-primary-lockup.png` | 1271 × 289 | Mark + wordmark, Grounded Green, transparent | **Pending independent inspection.** Not approved for display (question 4) |
+| `png/cuidance-logo-primary-lockup.png` | 1271 × 289 | Mark + wordmark, Grounded Green, transparent | **Do not use — clipped artwork.** Top of the head is cut off (see PNG inspection) |
 | `cuidance-logo-horizontal-lockup` | 1974 × 609 | Mark + wordmark, near-black `#181818`, transparent | **Do not use.** Frame artifact (decision 4) |
 | `cuidance-logo-stacked-lockup` | 1485 × 973 | Stacked mark over wordmark, near-black `#050505`, transparent | **Do not use.** Frame artifact (decision 4) |
 | `cuidance-logo-reversed` | 1716 × 826 | Light mark + wordmark, `#F7F2E9`, transparent | **Do not use.** Frame artifact (decision 4) |
 | `cuidance-logo-one-color` | 1902 × 712 | One-color lockup, near-black `#0B0B0A`, transparent | **Do not use.** Frame artifact (decision 4) |
 | `svg/cuidance-logo-symbol-mark.svg` | 1024 × 671 (wrapper) | SVG wrapper for the symbol mark | **Do not use — clipped artwork** (decision 8) |
-| `png/cuidance-logo-symbol-mark.png` | 642 × 549 | Symbol only, Grounded Green, transparent | **Pending independent inspection.** Not approved for display (question 4) |
+| `png/cuidance-logo-symbol-mark.png` | 642 × 549 | Symbol only, Grounded Green, transparent | **Candidate — clean, pending Team 03 approval.** Not clipped. No built-in clear space (see PNG inspection) |
 | `cuidance-logo-app-icon-mark` | 1024 × 1024 | Symbol only, Grounded Green, centered on transparent | **Candidate.** Grounded Green. Square compact uses |
 | `cuidance-app-icon-1024` | 1024 × 1024 | Quiet Paper symbol on a solid Grounded Green square | **Candidate.** Grounded Green. Only 1024 px exists (decision 6) |
 | `cuidance-favicon-16x16` | 16 × 16 | Symbol only, Grounded Green, transparent | **Candidate.** Browser tab icon |
@@ -70,7 +70,24 @@ All 26 files are copied unchanged from `Cuidance_LogoAssets_ClaudeCode_v03.zip` 
 | `cuidance-logo-care-terracotta` | 1205 × 275 | Lockup in terracotta `#AA4729` | **Reference only.** Never in the Admin Web interface (decision 2) |
 | `cuidance-logo-compass-blue` | 1175 × 291 | Lockup in blue `#0E34CE` | **Reference only.** Never in the Admin Web interface (decision 2) |
 
-**Admin Web logo integration: Pending clean approved asset.** Admin Web shows no logo and no favicon yet. "Candidate" means the file is Grounded Green and frame-free, but it isn't approved for display until its open question is resolved. "Pending independent inspection" means the file needs a separate visual check before anyone may use it.
+**Admin Web logo integration: Pending clean approved asset.** Admin Web shows no logo and no favicon yet. "Candidate" means the file is Grounded Green and frame-free, but it isn't approved for display until its open question is resolved. 
+
+### PNG inspection (Oct 22, 2026)
+
+Both files were inspected read-only. Nothing was edited, cropped, converted or renamed. "Clipped" means pixels are actually cut off, not just that the artwork touches the edge.
+
+| Check | `png/cuidance-logo-primary-lockup.png` | `png/cuidance-logo-symbol-mark.png` |
+| --- | --- | --- |
+| 1. Pixel size | 1271 × 289 | 642 × 549 |
+| 2. Transparency | Palette PNG with on/off transparency only (alpha 0 or 255, no soft edges). Visible artwork fills the whole canvas: bounds (0, 0) to (1271, 289) | Same type. Visible artwork fills the whole canvas: bounds (0, 0) to (642, 549) |
+| 3. Clipped? | **Yes, at the top of the head.** The head is 124 × 118 (width ÷ height 1.051). Every other copy of the mark in the package is 1.018 to 1.026, so the head is about 3 px short, and it touches only the top edge. Its first row is 23 px wide. The Compass Blue lockup's head, nearly the same size, starts with a 6 px row and then a 23 px row, so at least the rounded top row is missing here. The bowl's bottom and left edges and the wordmark's right edge match the other lockups and show no cut. | **No.** Its transparency is identical, pixel for pixel, to the artwork inside `png/cuidance-logo-app-icon-mark.png`, where the same mark sits on a 1024 × 1024 canvas with 191 to 238 px of empty space on every side. So this file is a tight crop of the complete mark. |
+| 4. Touches the edge? | Yes, all four sides: top (head, 23 px), bottom (bowl, 35 px), left (bowl, 23 px), right (the "e", 22 px) | Yes, all four sides: top (head, 20 px), bottom (bowl, 44 px), left (29 px), right (34 px) |
+| 5. Clear space in the file? | None | None. The board's clear space is x = the head's height (230 px at this file's size), so it has to come from the layout around the image |
+| 6. Approved color? | Yes. One color only, `#21332B` Grounded Green | Yes. One color only, `#21332B` Grounded Green |
+| 7. Fit at native size? | No. 1271 px is wider than the board's 480 px maximum for the primary lockup, and the hard on/off edges look stair-stepped at 1:1 | Not at native size. 642 px is wider than the board's 128 px maximum for the symbol mark, and the edges look stair-stepped at 1:1. Shown smaller (24 to 128 px), the browser smooths the edges, so the file is usable when scaled down |
+| **Status** | **Do not use — clipped artwork** | **Candidate — clean, pending Team 03 approval** |
+
+The symbol mark is a Candidate and not "insufficient clear space" because the board's clear-space rule is about placement ("keep text, borders … outside this area"), and the artwork itself is complete. If Team 03 wants clear space built into the file, change its status to **Do not use — insufficient clear space**.
 
 ### Team 03 decisions (Oct 22, 2026)
 
@@ -85,12 +102,12 @@ All 26 files are copied unchanged from `Cuidance_LogoAssets_ClaudeCode_v03.zip` 
 
 ### Open asset questions
 
-Questions 1, 3 and 7 are settled, and questions 4 and 5 are partly settled. The rest stay open. Question 8 matters only for the Grounded Green files Admin Web may use, and those already match `#21332B` exactly.
+Questions 1, 3, 4 and 7 are settled, and question 5 is partly settled. The rest stay open. Question 8 matters only for the Grounded Green files Admin Web may use, and those already match `#21332B` exactly.
 
 1. **Care Terracotta and Compass Blue logos.** *Settled by decisions 1 and 2:* reference only, never in the Admin Web interface.
 2. **Thin frame around four PNGs.** `horizontal-lockup`, `one-color`, `reversed` and `stacked-lockup` have a 1 px light-gray line around the image edge (`reversed` also has a dark line), which looks like an export or crop leftover. On screen it would draw a box around the logo, which the board's clear-space rule doesn't allow. **Open:** these files wait for a manual correction (decision 4).
 3. **`cuidance-logo-symbol-mark.svg` would stretch the mark.** The SVG says 1024 × 671, but its PNG is 642 × 549. Displayed through the SVG, the mark would be distorted. *Settled by decision 8:* this SVG is marked Do not use (clipped artwork).
-4. **Edge-to-edge crops.** `primary-lockup` and `symbol-mark` have artwork touching the image edge. *Partly settled by decision 8:* both SVG files are clipped and must not be used. **Open:** the two PNG files are pending independent inspection. If they're approved, the required clear space has to come from the layout around them.
+4. **Edge-to-edge crops.** `primary-lockup` and `symbol-mark` have artwork touching the image edge. *Settled by decision 8 and the PNG inspection:* both SVG files and `png/cuidance-logo-primary-lockup.png` are clipped and must not be used. `png/cuidance-logo-symbol-mark.png` isn't clipped and is a Candidate, pending Team 03 approval. If it's approved, its clear space has to come from the layout around it.
 5. **No true vector files.** The package has no real SVG artwork, so the logo can't scale beyond the PNG sizes. *Settled by decision 5:* treated as raster-reference wrappers. **Open:** whether true vector masters will be supplied.
 6. **App icon sizes.** The package has one 1024 × 1024 app icon. The board lists a 512 × 512 export master. No 180, 192 or 512 px files are included, and none were created (decision 6). **Open:** whether more sizes will be supplied.
 7. **Lockup roles.** *Settled by decision 1:* only Grounded Green is active for Admin Web. The near-black horizontal and stacked lockups aren't used.
