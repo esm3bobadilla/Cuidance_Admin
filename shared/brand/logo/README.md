@@ -157,33 +157,26 @@ Five corrected PNG exports from Team 03, derived from the approved Cuidance symb
 
 ### Derived raster lockups (Oct 22, 2026)
 
-Three derived raster lockups from Team 03, copied unchanged into `png/derived/`. Their names don't clash with any package file, and nothing in `png/` or `svg/` was overwritten. **These are raster PNGs, not vector SVG masters.** No SVG was made from them.
+Three derived raster composite lockups from Team 03 in `png/derived/`, from `Cuidance_Corrected_Lockups_v04_upload.zip`, copied in unchanged. They replace the earlier derived lockups with the same names. Nothing in the original package (`png/` and `svg/`) was overwritten. **These are raster PNGs, not true vector SVG masters.** No SVG was made from them.
 
 | File | Use | Checked (read-only) | Status |
 | --- | --- | --- | --- |
-| `png/derived/cuidance-logo-primary-lockup.png` | Light backgrounds | 1247 × 341 transparent PNG. Only Grounded Green `#21332B` | **Derived raster export — pending Team 03 approval** |
-| `png/derived/cuidance-logo-primary-lockup-reversed.png` | Dark backgrounds | 1247 × 341 transparent PNG. Only Quiet Paper `#F4F2EC` | **Derived raster export — pending Team 03 approval** |
-| `png/derived/cuidance-logo-primary-lockup-one-color.png` | Monochrome use | 1247 × 341 transparent PNG. Only Guidance Ink `#111111` | **Derived raster export — pending Team 03 approval** |
+| `png/derived/cuidance-logo-primary-lockup.png` | Light backgrounds | 1238 × 341 transparent PNG. Only Grounded Green `#21332B` | **Derived raster composite — pending Team 03 approval** |
+| `png/derived/cuidance-logo-primary-lockup-reversed.png` | Dark backgrounds | 1238 × 341 transparent PNG. Only Quiet Paper `#F4F2EC` | **Derived raster composite — pending Team 03 approval** |
+| `png/derived/cuidance-logo-primary-lockup-one-color.png` | Monochrome use | 1238 × 341 transparent PNG. Only Guidance Ink `#111111` | **Derived raster composite — pending Team 03 approval** |
 
-What checks out:
+Verification of the v04 files, all three:
 
-- **Colors:** each file uses exactly one board color, with no stray tints.
-- **No frame:** 32 px of transparent space on all four sides, and no visible pixel on any image edge.
-- **Same artwork:** all three have the identical shape, pixel for pixel. Only the color differs.
-- **Hard edges:** on/off transparency only (no soft edges), like the original package files. Best shown scaled down to the board's 160 to 480 px width.
+- **Complete round head:** 120 × 117, a width ÷ height ratio of 1.026, within the complete-mark range (1.018 to 1.026). Not clipped or flattened.
+- **Margins:** exactly 32 px of transparent space on all four sides. No visible pixel touches the image edge, and there's no frame or background.
+- **No stray pixels:** 0 isolated specks. The artwork is the 11 main shapes only (mark and letters).
+- **Color:** each file uses exactly one approved color, with no other tints.
+- **Transparent background**, with on/off transparency only (no soft edges). Best shown scaled down to the board's 160 to 480 px width.
+- **Same artwork:** all three files have the identical shape, pixel for pixel. Only the color differs.
 
-**Check before approving: the head looks flattened at the top.** The head is 118 × 112, a width ÷ height ratio of 1.054. The clipped original `png/cuidance-logo-primary-lockup.png` measures 1.051, and every complete copy of the mark in the package is 1.018 to 1.026. The head's top row is 20 px wide with no narrow cap row (the complete Compass Blue head starts at 6 px), and up close the top edge is visibly flat where the complete mark is round. That suggests these lockups were built from the clipped primary-lockup artwork, with space added around it. The cut no longer touches the image edge, but it may still be in the drawing. Team 03 should compare the head with the complete symbol before approving.
+Earlier rounds (the first derived files and the v02 and v03 corrections) are superseded by these files.
 
-The full lockup integration stays pending until a lockup is approved. True vector SVG masters still need a new export from the original design file.
-
-**Corrected lockups v02 reviewed, not copied (Oct 22, 2026).** `Cuidance_Corrected_Lockups_v02_upload.zip` held corrected versions of all three files. They fix the head: 120 × 117 (ratio 1.026), with a curve that matches the complete symbol. Each is one exact color, on a transparent background with no frame. Team 03 chose to wait for a re-export because of two problems:
-
-1. **Uneven margins:** 32 px on the left, top and bottom, but 41 px on the right. The canvas stayed 1247 px wide while the artwork got 9 px narrower.
-2. **Stray specks:** 405 isolated specks (561 px in all, the largest 15 px) sit just outside the letter and mark outlines in all three files.
-
-**The next export needs:** the complete round head (as in v02), even transparent margins on all four sides, and no stray pixels. Until then, the files above stay in place with their flattened-head warning, pending Team 03 approval.
-
-**Corrected lockups v03 reviewed, not copied (Oct 22, 2026).** `Cuidance_Corrected_Lockups_v03_upload.zip` fixes the margins: the canvas is now 1238 × 341, with exactly 32 px of transparent space on every side. The round head (120 × 117, ratio 1.026), the transparent background, the absence of a frame and the single exact color per file all still pass. **The 405 stray specks (561 px) are unchanged from v02**, in all three files, so v03 fails the no-stray-pixels check and wasn't copied. The next export only needs those specks removed.
+Full lockup integration into Admin Web stays pending until Team 03 approves a lockup. **True vector SVG masters are still unavailable** and need a new export from the original editable logo source.
 
 ### Vector source search (Oct 22, 2026)
 
@@ -222,7 +215,7 @@ Questions 1, 3, 4 and 7 are settled, and question 5 is partly settled. Questions
 7. **Lockup roles.** *Settled by decision 1:* only Grounded Green is active for Admin Web. The near-black horizontal and stacked lockups aren't used.
 8. **Exact colors.** Only the Grounded Green files (`primary-lockup`, `symbol-mark`, `app-icon-mark`, `app-icon-1024` and the favicons) use an exact palette value (`#21332B`, with `#F4F2EC` on the app icon). The others are close to, but not exactly, the board colors: `#181818`, `#0B0B0A` and `#050505` instead of Guidance Ink `#111111`, and `#F7F2E9` instead of Quiet Paper `#F4F2EC`. The terracotta (`#AA4729`) and blue (`#0E34CE`) versions don't match Care Terracotta `#A8432A` or Compass Blue `#1F3FD1` either. Confirm these exports are final.
 9. **Favicons are stretched.** All three favicons squeeze the mark into a square, about 15% narrower than its true proportions, with no clear space. *Partly settled:* Team 03 supplied corrected 16, 32 and 48 px favicon exports in `png/derived/`. They keep the mark's proportions and have transparent space around it, and they're candidates. The original stretched favicons in `png/` stay Do not use. **Open:** Team 03 approval of the derived favicons. Until then Admin Web has no favicon.
-10. **No clean full lockup.** Every lockup in the package is clipped (`primary-lockup`), framed (`horizontal`, `stacked`, `reversed`, `one-color`) or a reference-only color (`compass-blue`, `care-terracotta`). *Partly addressed:* Team 03 supplied three derived raster lockups in `png/derived/` (Grounded Green, reversed, one-color), pending approval. They have clean margins and exact colors, but the head may still be flattened at the top (see "Derived raster lockups"). **Open:** Team 03 approval, and a true vector master. Full lockup integration stays pending.
+10. **No clean full lockup.** Every lockup in the package is clipped (`primary-lockup`), framed (`horizontal`, `stacked`, `reversed`, `one-color`) or a reference-only color (`compass-blue`, `care-terracotta`). *Partly addressed:* Team 03 supplied three derived raster lockups in `png/derived/` (Grounded Green, reversed, one-color), pending approval. The v04 files have a complete round head, exactly 32 px margins, no stray pixels and one exact color each (see "Derived raster lockups"). **Open:** Team 03 approval, and a true vector master from the original editable source. Full lockup integration stays pending.
 
 ### Usage rules from the v04 design system board
 
