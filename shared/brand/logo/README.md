@@ -48,7 +48,12 @@ Everything above this line is the universal package README, copied unchanged fro
 
 ### What's in this folder
 
-All 26 files are copied unchanged from `Cuidance_LogoAssets_ClaudeCode_v03.zip` (folder `cuidance-logo-assets-v01/`), with the package's own filenames and its `png/` and `svg/` subfolders. **The package filenames are the authoritative Team 03 naming system.** The earlier 12-file list that used to be in this README is retired.
+The folder holds two kinds of files:
+
+1. **Original package assets:** the 26 files in `png/` and `svg/` from `Cuidance_LogoAssets_ClaudeCode_v03`, kept exactly as supplied. Their statuses are in the table directly below.
+2. **Team 03 additions:** the approved 512 px app icon in `png/`, and five corrected derived exports in `png/derived/`. See "Derived Team 03 exports" below.
+
+All 26 package files are copied unchanged from `Cuidance_LogoAssets_ClaudeCode_v03.zip` (folder `cuidance-logo-assets-v01/`), with the package's own filenames and its `png/` and `svg/` subfolders. **The package filenames are the authoritative Team 03 naming system.** The earlier 12-file list that used to be in this README is retired.
 
 One file was added later, outside the package: `png/cuidance-app-icon-512.png`, the Team 03 approved 512 px app-icon export (Oct 22, 2026). It was supplied separately and copied in unchanged. The original package files were not modified.
 
@@ -128,7 +133,27 @@ Team 03 approved `png/cuidance-app-icon-512.png` as the 512 px app-icon export, 
 - **Size:** 512 × 512, opaque PNG with no transparency.
 - **Color:** Grounded Green `#21332B` field and Quiet Paper `#F4F2EC` mark, matching the board's app icon spec. The only other pixels are a few hundred soft in-between edge pixels.
 - **Artwork:** the same artwork as `png/cuidance-app-icon-1024.png` at half size (0.07% mean difference from the 1024 file scaled down), so the mark is complete and centered the same way.
-- **Use:** approved as the app-icon export. Admin Web doesn't display it yet, and no other sizes were made from it (decisions 3 and 6).
+- **Use:** approved as the app-icon export. Admin Web doesn't display it yet. No sizes were generated in this repository (decisions 3 and 6). The 180 and 192 px exports below were made by Team 03.
+
+The approved 512 px app icon remains the **current Team 03-approved master**.
+
+### Derived Team 03 exports (Oct 22, 2026)
+
+Five corrected PNG exports from Team 03, derived from the approved Cuidance symbol and app-icon artwork. They're in **`png/derived/`**, with their exact filenames, because three of them share names with the original package favicons in `png/`. Putting them in a separate folder keeps both sets intact. They were copied in unchanged. Nothing in `png/` or `svg/` was overwritten, renamed or edited, and the package's favicon SVG wrappers still point at the original files in `png/`.
+
+| File | Size | Checked (read-only) | Status |
+| --- | --- | --- | --- |
+| `png/derived/cuidance-favicon-16x16.png` | 16 × 16 | Transparent PNG. Mark 12 × 10 (about 1.2 : 1, true mark 1.17 : 1). Transparent space: 2 px each side, 3 px top and bottom. Only `#21332B` | **Candidate — corrected derived export, pending Team 03 approval** |
+| `png/derived/cuidance-favicon-32x32.png` | 32 × 32 | Transparent PNG. Mark 25 × 21 (1.19 : 1). Transparent space: 3 / 4 px at the sides, 5 / 6 px top and bottom. Only `#21332B` | **Candidate — corrected derived export, pending Team 03 approval** |
+| `png/derived/cuidance-favicon-48x48.png` | 48 × 48 | Transparent PNG. Mark 38 × 32 (1.19 : 1). Transparent space: 5 px each side, 8 px top and bottom. Only `#21332B` | **Candidate — corrected derived export, pending Team 03 approval** |
+| `png/derived/cuidance-app-icon-180.png` | 180 × 180 | Opaque PNG. `#21332B` field, `#F4F2EC` mark. Matches the approved 512 px icon scaled down (0.24% mean difference) | **Candidate — corrected derived export, pending Team 03 approval** |
+| `png/derived/cuidance-app-icon-192.png` | 192 × 192 | Opaque PNG. `#21332B` field, `#F4F2EC` mark. Matches the approved 512 px icon scaled down (0.20% mean difference) | **Candidate — corrected derived export, pending Team 03 approval** |
+
+- **Favicons:** the derived favicons keep the symbol mark's proportions (within a pixel of rounding at these sizes) and include transparent space around the mark. They replace nothing. The **original stretched favicons in `png/` stay marked Do not use**.
+- **App icons:** the 180 and 192 px icons are derived from the approved 512 px app icon, which remains the current Team 03-approved master.
+- **Not integrated:** none of these files are used in Admin Web yet.
+- **Still pending:** a clean approved full lockup export, and true vector SVG masters made from original vector artwork. No lockup or SVG was created from raster artwork.
+- **Still excluded:** every clipped, framed, distorted or raster-wrapper asset listed above.
 
 ### Team 03 decisions (Oct 22, 2026)
 
@@ -149,11 +174,11 @@ Questions 1, 3, 4 and 7 are settled, and question 5 is partly settled. Questions
 2. **Thin frame around four PNGs.** `horizontal-lockup`, `one-color`, `reversed` and `stacked-lockup` have a 1 px light-gray line around the image edge (`reversed` also has a dark line), which looks like an export or crop leftover. On screen it would draw a box around the logo, which the board's clear-space rule doesn't allow. **Open:** these files wait for a manual correction (decision 4).
 3. **`cuidance-logo-symbol-mark.svg` would stretch the mark.** The SVG says 1024 × 671, but its PNG is 642 × 549. Displayed through the SVG, the mark would be distorted. *Settled by decision 8:* this SVG is marked Do not use (clipped artwork).
 4. **Edge-to-edge crops.** `primary-lockup` and `symbol-mark` have artwork touching the image edge. *Settled by decision 8 and the PNG inspection:* both SVG files and `png/cuidance-logo-primary-lockup.png` are clipped and must not be used. `png/cuidance-logo-symbol-mark.png` isn't clipped and is a Candidate, pending Team 03 approval. If it's approved, its clear space has to come from the layout around it.
-5. **No true vector files.** The package has no real SVG artwork, so the logo can't scale beyond the PNG sizes. *Settled by decision 5:* treated as raster-reference wrappers. **Open:** whether true vector masters will be supplied.
-6. **App icon sizes.** The package has one 1024 × 1024 app icon. *Partly settled:* Team 03 supplied and approved `png/cuidance-app-icon-512.png`, the 512 × 512 master the board lists. No 180 or 192 px files exist, and none were created (decision 6). **Open:** whether more sizes will be supplied.
+5. **No true vector files.** The package has no real SVG artwork, so the logo can't scale beyond the PNG sizes. *Settled by decision 5:* treated as raster-reference wrappers. **Open:** true vector SVG masters, pending original vector artwork. None are made from raster artwork.
+6. **App icon sizes.** The package has one 1024 × 1024 app icon. *Partly settled:* Team 03 supplied and approved `png/cuidance-app-icon-512.png`, the 512 × 512 master the board lists. Team 03 also supplied 180 and 192 px exports, derived from the 512 px master. They're in `png/derived/` as candidates. None were created in this repository (decision 6). **Open:** Team 03 approval of the 180 and 192 px exports.
 7. **Lockup roles.** *Settled by decision 1:* only Grounded Green is active for Admin Web. The near-black horizontal and stacked lockups aren't used.
 8. **Exact colors.** Only the Grounded Green files (`primary-lockup`, `symbol-mark`, `app-icon-mark`, `app-icon-1024` and the favicons) use an exact palette value (`#21332B`, with `#F4F2EC` on the app icon). The others are close to, but not exactly, the board colors: `#181818`, `#0B0B0A` and `#050505` instead of Guidance Ink `#111111`, and `#F7F2E9` instead of Quiet Paper `#F4F2EC`. The terracotta (`#AA4729`) and blue (`#0E34CE`) versions don't match Care Terracotta `#A8432A` or Compass Blue `#1F3FD1` either. Confirm these exports are final.
-9. **Favicons are stretched.** All three favicons squeeze the mark into a square, about 15% narrower than its true proportions, with no clear space. **Open:** new favicon exports from the complete mark at true proportions, centered with space around them. Until then Admin Web has no favicon.
+9. **Favicons are stretched.** All three favicons squeeze the mark into a square, about 15% narrower than its true proportions, with no clear space. *Partly settled:* Team 03 supplied corrected 16, 32 and 48 px favicon exports in `png/derived/`. They keep the mark's proportions and have transparent space around it, and they're candidates. The original stretched favicons in `png/` stay Do not use. **Open:** Team 03 approval of the derived favicons. Until then Admin Web has no favicon.
 10. **No clean full lockup.** Every lockup in the package is clipped (`primary-lockup`), framed (`horizontal`, `stacked`, `reversed`, `one-color`) or a reference-only color (`compass-blue`, `care-terracotta`). **Open:** a clean Grounded Green full lockup. Full lockup integration stays pending until one is supplied.
 
 ### Usage rules from the v04 design system board
