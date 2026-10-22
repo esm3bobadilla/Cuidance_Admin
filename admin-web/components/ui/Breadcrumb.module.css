@@ -1,0 +1,23 @@
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font: var(--type-breadcrumb);
+}
+
+.item {
+  display: flex;
+  gap: var(--space-4);
+}
+
+.link {
+  color: var(--color-accent);
+}
+
+.current,
+.separator {
+  color: var(--color-ink-muted);
+}

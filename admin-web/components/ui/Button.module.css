@@ -1,0 +1,69 @@
+/* Board section 07: 48 px tall, 12 x 24 px padding, pill shape, Archivo 600 15/20 */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-8);
+  min-height: var(--size-control-height);
+  padding: var(--space-12) var(--space-24);
+  font: var(--type-button);
+  border: var(--stroke-default) solid transparent;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+}
+
+.primary {
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+}
+
+.secondary {
+  background: var(--color-surface);
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.ghost {
+  background: transparent;
+  color: var(--color-accent);
+  text-decoration: underline;
+}
+
+/* Hover is web only */
+@media (hover: hover) {
+  .primary:hover {
+    background: var(--color-accent-hover);
+  }
+
+  .secondary:hover,
+  .ghost:hover {
+    background: var(--color-selected-surface);
+  }
+}
+
+.primary:active {
+  background: var(--color-accent-pressed);
+}
+
+.secondary:active {
+  background: var(--color-selected-surface);
+  outline: var(--stroke-default) solid var(--color-accent);
+}
+
+.ghost:active {
+  background: var(--color-selected-surface);
+}
+
+/* Disabled: muted, with the reason shown nearby by the caller */
+.button:disabled {
+  background: var(--color-disabled-surface);
+  color: var(--color-disabled-ink);
+  border-color: transparent;
+  outline: none;
+  text-decoration: none;
+  cursor: not-allowed;
+}
+
+.ghost:disabled {
+  background: transparent;
+}

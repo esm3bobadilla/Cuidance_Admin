@@ -1,0 +1,29 @@
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+.label {
+  font: var(--type-label);
+  color: var(--color-ink);
+}
+
+.labelDisabled {
+  color: var(--color-disabled-ink);
+}
+
+.helper,
+.error {
+  margin: 0;
+  font: var(--type-body-small);
+}
+
+.helper {
+  color: var(--color-ink-muted);
+}
+
+/* Error = Dark Ruby plus an icon and a message */
+.error {
+  color: var(--color-error);
+}

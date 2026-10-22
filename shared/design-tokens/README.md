@@ -49,6 +49,19 @@ From the board's Core UI Components + States section (07) and Accessibility sect
 
 **Don't guess.** Don't invent shadow values, and don't choose a desktop card-column count. When the board gives no exact value, keep the decision in the tables below as unresolved instead of quietly picking one.
 
+## Wireframe color decisions (Team 03, Week 9 Step 5)
+
+Where the Admin Web hi-fi wireframes differ from the Design System, **the Design System wins**:
+
+- **Primary buttons and selected or active states:** Compass Blue (`--color-accent`, `--color-selected`), not the wireframes' Grounded Green.
+- **Selected chips and rows:** Compass Blue plus a non-color indicator (a check, or a 2 px outline with "Selected" text for screen readers).
+- **Help and information notices:** Violet (`--color-info`, `--color-info-surface`), not blue.
+- **Claims, safety and error flags:** Dark Ruby (`--color-error`, `--color-error-surface`), not terracotta.
+- **Partner and commercial content:** Byzantium Plum plus a visible label (`--color-partner`, `--color-partner-surface`).
+- **Grounded Green** stays the brand and logo color (`--color-brand`).
+- **Logo:** the approved 160 px minimum, not the smaller size in the wireframes.
+- **Cards:** the 16 px radius (`--radius-medium`).
+
 ## Status of open decisions
 
 Reviewed against the v04 board. "Unresolved" means the board doesn't give a final value, so Admin Web uses the most conservative option and nothing new was added to `tokens.css`.
@@ -74,4 +87,10 @@ These are documented on the board but have no exact implementation value, or nee
 | Tablet section spacing (audit) | Tablet spacing says only "Content gaps 16–24". | A section-spacing value for tablet. Admin Web currently uses 32 px. |
 | Focus ring offset (audit) | "2 px ring", with no offset given. | An offset value. Admin Web currently offsets the ring by 2 px, reusing `--stroke-strong`. |
 | Type alias names (audit) | Cross-references Week 8 Step 2 names, such as "Mobile = type/heading" and "Desktop type/title =". | Whether `type/heading` and `type/title` aliases are needed as tokens. |
-| Hi-fi screens comparison (audit) | Not on the board. | `T03_CuidanceAdminWeb_HiFiScreens_v01_ART646` hasn't been supplied, so the layout hasn't been checked against it. |
+| Hi-fi screens comparison (audit) | Not on the board. | Reviewed in Week 9 Step 5. Color conflicts are settled above. Small text in the PDF is unreadable, so exact copy still needs the source file. |
+| Checkbox box size (Step 5) | The board shows a box about 22 px square, with no size token. | A box-size value. The Checkbox component uses `--space-24`, the nearest documented size. |
+| Icon set (Step 5) | The board uses text glyphs (✓, ⚠, ◆, ?) but defines no icon set. | An approved icon set. Components use those glyphs for now, and icon buttons use placeholder glyphs. |
+| "Commercial content" label (Step 5) | The board approves two disclosure labels, Partner and Sponsored. The wireframes add "Commercial content". | Whether a third label is approved. DisclosureLabel offers Partner and Sponsored only. |
+| Search label (Step 5) | The board requires visible labels. The wireframes show placeholder-only search fields. | Whether compact toolbar search may hide its label. SearchField always shows a visible label. |
+| Underline tabs, segmented control, avatar, image placeholder (Step 5) | In the wireframes, not on the board. | Approved styles before they're built. |
+| Status and priority colors (Step 5) | The wireframes use raw palette tones for label borders. | A status-to-token mapping. StatusLabel and PriorityLabel aren't built yet. |

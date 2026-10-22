@@ -1,0 +1,7 @@
+.eyebrow {
+  margin: 0;
+  font: var(--type-eyebrow);
+  letter-spacing: var(--type-eyebrow-tracking);
+  text-transform: uppercase;
+  color: var(--color-highlight);
+}

@@ -1,0 +1,33 @@
+/* 44 x 44 minimum touch target */
+.iconButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--size-touch-target);
+  height: var(--size-touch-target);
+  padding: 0;
+  font: var(--type-label);
+  color: var(--color-ink);
+  background: var(--color-surface);
+  border: var(--stroke-default) solid var(--color-border-strong);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+}
+
+@media (hover: hover) {
+  .iconButton:hover {
+    background: var(--color-selected-surface);
+  }
+}
+
+.iconButton:active {
+  background: var(--color-selected-surface);
+  border-color: var(--color-accent);
+}
+
+.iconButton:disabled {
+  background: var(--color-disabled-surface);
+  color: var(--color-disabled-ink);
+  border-color: transparent;
+  cursor: not-allowed;
+}

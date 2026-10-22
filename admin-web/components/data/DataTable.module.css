@@ -1,0 +1,64 @@
+.scroll {
+  overflow-x: auto;
+  background: var(--color-surface);
+  border: var(--stroke-default) solid var(--color-border);
+  border-radius: var(--radius-medium);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font: var(--type-body-small);
+  color: var(--color-ink);
+}
+
+.caption {
+  padding: var(--space-16);
+  font: var(--type-heading-6);
+  text-align: start;
+}
+
+.header {
+  padding: var(--space-12) var(--space-16);
+  font: var(--type-caption);
+  color: var(--color-ink);
+  text-align: start;
+  background: var(--color-background);
+  border-block: var(--stroke-default) solid var(--color-border);
+}
+
+/* Board: table rows are at least 56 px tall on desktop */
+.row {
+  height: var(--layout-table-row-min-height);
+  border-bottom: var(--stroke-default) solid var(--color-border);
+}
+
+.row:last-child {
+  border-bottom: none;
+}
+
+.cell {
+  padding: var(--space-12) var(--space-16);
+  vertical-align: middle;
+}
+
+.end {
+  text-align: end;
+}
+
+/* Selected: Compass Blue surface plus a 2 px outline, not color alone */
+.selected {
+  background: var(--color-selected-surface);
+  outline: var(--stroke-strong) solid var(--color-selected);
+  outline-offset: calc(var(--stroke-strong) * -1);
+}
+
+/* Screen-reader-only text. The 1 px values are the standard technique, not a design value. */
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

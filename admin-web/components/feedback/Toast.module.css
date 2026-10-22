@@ -1,0 +1,44 @@
+.toast {
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
+  padding: var(--space-12) var(--space-24);
+  border: var(--stroke-default) solid;
+  border-radius: var(--radius-pill);
+  color: var(--color-ink);
+}
+
+/* Success: Steady Olive plus a check and text */
+.success {
+  background: var(--color-success-surface);
+  border-color: var(--color-success);
+}
+
+.success .icon {
+  color: var(--color-success);
+}
+
+/* Error: Dark Ruby plus a warning icon and a message */
+.error {
+  background: var(--color-error-surface);
+  border-color: var(--color-error);
+}
+
+.error .icon {
+  color: var(--color-error);
+}
+
+.icon {
+  font: var(--type-label);
+}
+
+.message {
+  flex: 1;
+  margin: 0;
+  font: var(--type-body);
+}
+
+.action {
+  font: var(--type-link);
+  color: var(--color-accent);
+}
