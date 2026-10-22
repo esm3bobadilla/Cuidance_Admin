@@ -54,31 +54,43 @@ All 26 files are copied unchanged from `Cuidance_LogoAssets_ClaudeCode_v03.zip` 
 
 | File (in `png/` and `svg/`) | PNG size | What it is | For Admin Web? |
 | --- | --- | --- | --- |
-| `cuidance-logo-primary-lockup` | 1271 × 289 | Mark + wordmark, Grounded Green, transparent | **Yes.** Main light-mode logo |
-| `cuidance-logo-horizontal-lockup` | 1974 × 609 | Mark + wordmark, near-black `#181818`, transparent | **Yes, after the frame question below.** Board: website headers and desktop navigation |
-| `cuidance-logo-stacked-lockup` | 1485 × 973 | Stacked mark over wordmark, near-black `#050505`, transparent | **Yes, after the frame question below.** Centered or compact vertical spaces |
-| `cuidance-logo-reversed` | 1716 × 826 | Light mark + wordmark, `#F7F2E9`, transparent | **Yes, after the frame question below.** Dark mode and dark surfaces |
-| `cuidance-logo-one-color` | 1902 × 712 | One-color lockup, near-black `#0B0B0A`, transparent | Not needed on screen. Board: print and low-color reproduction |
-| `cuidance-logo-symbol-mark` | 642 × 549 | Symbol only, Grounded Green, transparent | **Yes, PNG only.** Compact spaces. See the SVG size question below |
-| `cuidance-logo-app-icon-mark` | 1024 × 1024 | Symbol only, Grounded Green, centered on transparent | Optional. Square compact uses |
-| `cuidance-app-icon-1024` | 1024 × 1024 | Quiet Paper symbol on a solid Grounded Green square | Optional for web (home-screen icon) |
-| `cuidance-favicon-16x16` | 16 × 16 | Symbol only, transparent | **Yes.** Browser tab icon |
-| `cuidance-favicon-32x32` | 32 × 32 | Symbol only, transparent | **Yes.** Browser tab icon |
-| `cuidance-favicon-48x48` | 48 × 48 | Symbol only, transparent | **Yes.** Browser tab icon |
-| `cuidance-logo-care-terracotta` | 1205 × 275 | Lockup in terracotta `#AA4729` | **No, until confirmed.** See below |
-| `cuidance-logo-compass-blue` | 1175 × 291 | Lockup in blue `#0E34CE` | **No, until confirmed.** See below |
+| `cuidance-logo-primary-lockup` | 1271 × 289 | Mark + wordmark, Grounded Green, transparent | **Candidate.** Grounded Green, no frame. Pending the edge-crop check (question 4) |
+| `cuidance-logo-horizontal-lockup` | 1974 × 609 | Mark + wordmark, near-black `#181818`, transparent | **Do not use.** Frame artifact (decision 4) |
+| `cuidance-logo-stacked-lockup` | 1485 × 973 | Stacked mark over wordmark, near-black `#050505`, transparent | **Do not use.** Frame artifact (decision 4) |
+| `cuidance-logo-reversed` | 1716 × 826 | Light mark + wordmark, `#F7F2E9`, transparent | **Do not use.** Frame artifact (decision 4) |
+| `cuidance-logo-one-color` | 1902 × 712 | One-color lockup, near-black `#0B0B0A`, transparent | **Do not use.** Frame artifact (decision 4) |
+| `cuidance-logo-symbol-mark` | 642 × 549 | Symbol only, Grounded Green, transparent | **Candidate, PNG only.** Grounded Green. SVG wrapper stretches the mark (question 3) |
+| `cuidance-logo-app-icon-mark` | 1024 × 1024 | Symbol only, Grounded Green, centered on transparent | **Candidate.** Grounded Green. Square compact uses |
+| `cuidance-app-icon-1024` | 1024 × 1024 | Quiet Paper symbol on a solid Grounded Green square | **Candidate.** Grounded Green. Only 1024 px exists (decision 6) |
+| `cuidance-favicon-16x16` | 16 × 16 | Symbol only, Grounded Green, transparent | **Candidate.** Browser tab icon |
+| `cuidance-favicon-32x32` | 32 × 32 | Symbol only, Grounded Green, transparent | **Candidate.** Browser tab icon |
+| `cuidance-favicon-48x48` | 48 × 48 | Symbol only, Grounded Green, transparent | **Candidate.** Browser tab icon |
+| `cuidance-logo-care-terracotta` | 1205 × 275 | Lockup in terracotta `#AA4729` | **Reference only.** Never in the Admin Web interface (decision 2) |
+| `cuidance-logo-compass-blue` | 1175 × 291 | Lockup in blue `#0E34CE` | **Reference only.** Never in the Admin Web interface (decision 2) |
 
-Admin Web doesn't display any of these yet. Adding the logo and favicon to the app is a separate step.
+**Admin Web logo integration: Pending clean approved asset.** Admin Web shows no logo and no favicon yet. "Candidate" means the file is Grounded Green and frame-free, but it isn't approved for display until its open question is resolved.
 
-### Needs Team 03 confirmation
+### Team 03 decisions (Oct 22, 2026)
 
-1. **Care Terracotta and Compass Blue logos.** The v04 board only approves Grounded Green, Guidance Ink and Quiet Paper as logo colors, and says not to recolor the logo arbitrarily. Confirm whether these two are approved, and where they may be used.
-2. **Thin frame around four PNGs.** `horizontal-lockup`, `one-color`, `reversed` and `stacked-lockup` have a 1 px light-gray line around the image edge (`reversed` also has a dark line), which looks like an export or crop leftover. On screen it would draw a box around the logo, which the board's clear-space rule doesn't allow. Please re-export without the frame, or confirm it's intended.
+1. **Grounded Green is the only approved active Cuidance logo color for Admin Web.**
+2. **Compass Blue and Care Terracotta are reference variants only.** Never use them in the Admin Web interface.
+3. **Don't edit, redraw, recolor, rename or regenerate any supplied logo asset.** The package is read-only source material.
+4. **Don't use the horizontal, one-color, reversed or stacked files** until their frame artifacts are corrected by hand.
+5. **The SVG files are raster-reference SVG wrappers**, not true vector masters.
+6. **Don't generate missing app-icon sizes.**
+7. **Don't add a logo to the Admin Web shell** unless the selected asset is visibly clean and has no border artifact.
+
+### Open asset questions
+
+Questions 1 and 7 are settled and question 5 is partly settled. The rest stay open. Question 8 matters only for the Grounded Green files Admin Web may use, and those already match `#21332B` exactly.
+
+1. **Care Terracotta and Compass Blue logos.** *Settled by decisions 1 and 2:* reference only, never in the Admin Web interface.
+2. **Thin frame around four PNGs.** `horizontal-lockup`, `one-color`, `reversed` and `stacked-lockup` have a 1 px light-gray line around the image edge (`reversed` also has a dark line), which looks like an export or crop leftover. On screen it would draw a box around the logo, which the board's clear-space rule doesn't allow. **Open:** these files wait for a manual correction (decision 4).
 3. **`cuidance-logo-symbol-mark.svg` would stretch the mark.** The SVG says 1024 × 671, but its PNG is 642 × 549. Displayed through the SVG, the mark would be distorted. Use the PNG, or re-export the SVG at 642 × 549.
 4. **Edge-to-edge crops.** `primary-lockup` and `symbol-mark` have artwork touching the image edge. Confirm nothing is clipped. The required clear space then has to come from the layout around them.
-5. **No true vector files.** The package has no real SVG artwork, so the logo can't scale beyond the PNG sizes. Confirm whether vector exports exist.
-6. **App icon sizes.** The package has one 1024 × 1024 app icon. The board lists a 512 × 512 export master. No 180, 192 or 512 px files are included, and none were created.
-7. **Lockup roles.** The board calls the Grounded Green version the primary lockup and lists Ink as the secondary color. In this package the horizontal and stacked lockups are near-black. Confirm that's the intended default for those layouts.
+5. **No true vector files.** The package has no real SVG artwork, so the logo can't scale beyond the PNG sizes. *Settled by decision 5:* treated as raster-reference wrappers. **Open:** whether true vector masters will be supplied.
+6. **App icon sizes.** The package has one 1024 × 1024 app icon. The board lists a 512 × 512 export master. No 180, 192 or 512 px files are included, and none were created (decision 6). **Open:** whether more sizes will be supplied.
+7. **Lockup roles.** *Settled by decision 1:* only Grounded Green is active for Admin Web. The near-black horizontal and stacked lockups aren't used.
 8. **Exact colors.** Only the Grounded Green files (`primary-lockup`, `symbol-mark`, `app-icon-mark`, `app-icon-1024` and the favicons) use an exact palette value (`#21332B`, with `#F4F2EC` on the app icon). The others are close to, but not exactly, the board colors: `#181818`, `#0B0B0A` and `#050505` instead of Guidance Ink `#111111`, and `#F7F2E9` instead of Quiet Paper `#F4F2EC`. The terracotta (`#AA4729`) and blue (`#0E34CE`) versions don't match Care Terracotta `#A8432A` or Compass Blue `#1F3FD1` either. Confirm these exports are final.
 
 ### Usage rules from the v04 design system board

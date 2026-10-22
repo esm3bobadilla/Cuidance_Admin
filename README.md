@@ -29,6 +29,7 @@ It is not the public app, it is not part of participant testing, and it is not a
 | Supabase connection | Not connected yet |
 | Authentication | Not started |
 | Supabase tables | Not started, pending team decision |
+| Admin Web logo | Pending clean approved asset (see `shared/brand/logo/README.md`) |
 
 ## What Admin Web is for
 

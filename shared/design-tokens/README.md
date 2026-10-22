@@ -48,6 +48,6 @@ These are documented on the board but have no exact implementation value, or nee
 
 | Item | What the board says | What's missing |
 | --- | --- | --- |
-| Logo files | Logo Version 4 rules: sizes, clear space, colors, reversed use | Files are now in `shared/brand/logo/` (package v03), but eight questions need Team 03 confirmation before use. See "Needs Team 03 confirmation" in `shared/brand/logo/README.md`. Admin Web doesn't display a logo yet. |
+| Logo files | Logo Version 4 rules: sizes, clear space, colors, reversed use | Files are in `shared/brand/logo/` (package v03, read-only). Team 03 approved Grounded Green as the only active logo color for Admin Web. **Admin Web logo integration: Pending clean approved asset.** See "Team 03 decisions" and "Open asset questions" in `shared/brand/logo/README.md`. |
 | Gradients | "Introduce gradients only when a defined gradient token and application rule exist." | No gradient tokens are defined, so don't use gradients. |
 | Expanded tone scales | Nine tones per color family, with a Tone Legibility Guide | Only the semantic roles are tokenized. Other tones need separate contrast testing before use. |
