@@ -102,6 +102,18 @@ These match the main app. Admin Web content feeds the app, so the same rules app
 - Use the design tokens in `shared/design-tokens/tokens.css`. Never hard-code a color, size or spacing value in a screen.
 - Tokens come from the Week 8 Step 3 design system board (`T03_W08_S03_Board_DesignSystem_Cuidance_v04_ART646`), built on Esme's Week 7 identity system. Check with Esme before changing any token or role.
 - If the board has no exact value for something (for example, shadows), don't guess. Leave it out and add it to the open items in `shared/design-tokens/README.md`.
+- Follow the component and state rules in `shared/design-tokens/README.md`:
+  - **Selected:** Compass Blue plus a non-color indicator.
+  - **Error:** Dark Ruby plus an icon and a message.
+  - **Help and support:** Violet.
+  - **Partner and commercial:** Byzantium Plum plus a clear label.
+  - **Every state** uses text or an icon in addition to color. Never color alone.
+  - **One primary button per screen.**
+  - **Consent checkboxes start unchecked.**
+  - **Active navigation tab:** the approved pill, blue selected state and a label.
+  - **Button padding:** 12 px vertical × 24 px horizontal.
+- **Empty and Loading states are provisional** until Team 03 confirms them.
+- **Don't invent shadow values, and don't guess a desktop card-column count.** Keep unresolved token decisions documented instead of quietly choosing values.
 
 ## AI use
 
