@@ -24,7 +24,7 @@ export default function ComponentPreviewPage() {
   return (
     <main className={styles.page}>
       <PageHeader
-        wayfinding={<Breadcrumb items={[{ label: 'Admin', href: '/' }, { label: 'Component preview' }]} />}
+        wayfinding={<Breadcrumb items={[{ label: 'Admin', href: `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/` }, { label: 'Component preview' }]} />}
         eyebrow="Internal preview"
         title="Component preview"
         description="Approved Admin Web components and their states. Switch your device to dark mode to check dark states."
