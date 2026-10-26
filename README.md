@@ -148,6 +148,7 @@ Cuidance_Admin/
 │           └── svg/       Wrappers that display the matching PNG
 ├── docs/
 │   ├── wireframes/        Admin Web wireframes (reference only, not app code)
+│   ├── Week-10/           Week 10 demo and validation log, with screenshot evidence
 │   └── archived/
 │       └── admin-mobile/  Archived Admin Mobile reference (no active work)
 ├── README.md
