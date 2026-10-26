@@ -182,7 +182,8 @@ None.
 - **Evidence:** `?? admin-web/AGENTS.md` in `git status`.
 - **Smallest fix:** Team 03 decides whether to commit the file or add it to `.gitignore`.
 - **Step 2 re-test:** reproduced. `npm run dev` created `admin-web/AGENTS.md` again. It was deleted after the run and not committed.
-- **Status:** **Open** (reproducible). Needs the Team 03 decision above.
+- **Final cleanup fix:** `admin-web/AGENTS.md` is added to `.gitignore`, so the generated file is ignored and never committed. Re-test: `npm run dev` created the file again, and `git status --ignored` lists it as ignored (`!! admin-web/AGENTS.md`), not untracked. `git check-ignore` matches the new `.gitignore` line.
+- **Status:** **Resolved** by ignoring the generated file.
 
 ## Issue counts
 
@@ -198,8 +199,9 @@ Severity is unchanged after Step 2. Status after Step 2:
 | --- | --- |
 | Accepted | W10-01 (public live demonstration) |
 | Fixed | W10-02, W10-03, W10-04, W10-05, W10-06, W10-07, W10-08 |
-| Deferred | W10-09 (navigation routes not implemented) |
-| Open | W10-10 (reproducible, needs a Team 03 decision) |
+| Resolved | W10-10 (generated `AGENTS.md` ignored in `.gitignore`) |
+| Deferred | W10-09 (navigation routes not implemented; deferred to Week 10 Step 2) |
+| Open | None |
 
 ## Week 10 Step 2 corrections
 
@@ -246,10 +248,10 @@ Not changed: logo files, `tokens.css`, the deploy workflow, the Admin Mobile arc
 | Keyboard focus order | `/dev/`: 19 stops in reading order (Admin, Export, Create task, buttons, Help, Back, fields, checkboxes, two tables), each with the 2 px focus ring in both modes. 404: one stop (Return to Dashboard), with the ring. Dashboard: no stops yet (W10-09) |
 | 404 route | Custom page in both builds and on the dev server. "Return to Dashboard" goes to the dashboard |
 | Favicon requests | 32 × 32 favicon loads (200). No `/favicon.ico` request. Built files match the approved files byte for byte |
-| JavaScript errors | None. The only console entry is the browser's own "404" notice on the unknown address, which is expected because the page returns status 404, as it will on GitHub Pages. One cancelled request appeared once in the Pages build and didn't happen again on a clean re-run |
+| JavaScript errors | None. The only console entry is the browser's own "404" notice on the unknown address, which is expected because the page returns status 404, as it will on GitHub Pages. In some runs the browser cancels and re-requests the dark-mode logo when the test switches color mode mid-session (traced in the final cleanup). The logo still loads every time |
 | Content wording | No banned words or em dashes on any page |
 | No JavaScript | All three pages render with JavaScript off |
-| Untracked files | `next dev` recreated `admin-web/AGENTS.md` (W10-10). Deleted. Only gitignored build output (`.next/`, `out/`) remains |
+| Untracked files | `next dev` recreated `admin-web/AGENTS.md` (W10-10). Deleted in Step 2. Now ignored (see the final cleanup). Only gitignored output remains |
 
 ### Step 2 evidence
 
@@ -265,6 +267,25 @@ Not changed: logo files, `tokens.css`, the deploy workflow, the Admin Mobile arc
 | `step2-dev-header-icons-light-dark.png` | Secondary header actions and the new icon glyphs, both modes |
 | `step2-dev-buttons-toasts-light.png` | One primary button, and plain-text toast actions |
 | `step2-focus-breadcrumb-light.png` | Focus ring showing the 44 × 44 "Admin" target |
+
+## Final cleanup before pull-request review
+
+Oct 26, 2026, on `feat/admin-web-scaffold`.
+
+| Item | Result |
+| --- | --- |
+| `.gitignore` | Added `admin-web/AGENTS.md` (W10-10 resolved) |
+| `/dev/` icon examples | **Kept Help (?) and Back (‹).** Both are in the design system board's Core UI Components section: "Help button · Default, Pressed" shows "? Help" (glyph 22 px on a 48 px button in the sizing notes), and "Top bar" shows "‹ Back" and "? Help". Search and Edit aren't on the board, so they weren't restored. Accessible labels and 44 px targets unchanged |
+| Unchanged | Favicons, 404 page, tokens, dashboard components, responsive layout, GitHub Pages deployment |
+| TypeScript (`npx tsc --noEmit`) | Passed |
+| `npm run build` | Passed: `/`, `/dev`, `/_not-found` |
+| GitHub Pages build | Passed |
+| `npm run dev` | `/` 200, `/dev/` 200, unknown address 404 with the custom page. Light and dark, no console errors. `admin-web/AGENTS.md` created and ignored (`!!`), not untracked |
+| Light and dark | Passed on all three pages in both builds: backgrounds `#F4F2EC` and `#121714`, matching logo per mode |
+| Widths 1440, 834, 390, 320 px | 48 runs, no sideways overflow, no target under 44 px, one primary on `/dev/` and the 404 page, none on the dashboard |
+| Keyboard | `/dev/` 19 stops, 404 page 1 stop, every stop with the focus ring, both modes |
+| Favicon | 32 × 32 favicon loads (200) in both builds with a fresh browser profile. No `/favicon.ico` request |
+| JavaScript errors | None. Two runs logged a cancelled dark-mode logo request, traced to the browser re-picking the `<picture>` image when the test switches color mode. The logo loaded in both runs |
 
 ## Not tested
 
@@ -289,7 +310,7 @@ Screenshots in `docs/Week-10/evidence/`:
 
 ## Recommended next step (written in Step 1)
 
-_Step 2 completed items 1 to 3, apart from W10-10 (still open). Item 4 is still open._
+_Step 2 and the final cleanup completed items 1 to 3. W10-10 was resolved by ignoring the generated file. Item 4 is still open._
 
 1. **Decide W10-01:** is a public static demo approved? Record the answer in CLAUDE.md.
 2. **Fix the small, safe S3 issues in one focused branch, with no new features:**
