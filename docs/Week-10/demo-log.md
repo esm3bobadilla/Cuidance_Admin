@@ -91,7 +91,7 @@ None.
 - **Evidence:** the deploy workflow file. `/Cuidance_Admin/dev/` built and served successfully in the Pages build.
 - **Smallest fix:** a Team 03 decision. Either note in CLAUDE.md that a public static demo (no data) is approved, or leave `/dev/` out of the deployed build.
 - **Step 2 decision (Team 03):** Admin Web is intentionally public for live class demonstration. The GitHub Pages deployment stays. Admin Web is still an internal support artifact and is not part of participant testing. Severity stays S2.
-- **Status:** **Accepted** for public live demonstration.
+- **Status:** **Accepted decision — public GitHub Pages demonstration is approved.** Not counted as an unresolved S2 defect.
 
 ### S3: cosmetic or low impact
 
@@ -172,7 +172,7 @@ None.
 - **Actual:** the dashboard has no links or focusable elements (Tab leaves the page right away). The logo isn't a home link. `/dev/` is reachable only by typing the URL.
 - **Evidence:** keyboard pass: dashboard 0 Tab stops.
 - **Smallest fix:** none until navigation is approved. Optionally, make the logo a link to the dashboard.
-- **Status:** **Deferred** until Week 10 Step 2, because navigation routes aren't implemented. Unchanged in this pass. The new 404 page's "Return to Dashboard" is the only added link.
+- **Status:** **Deferred to Week 10 Step 2 — Admin Web navigation routes are not implemented yet.** Not counted as an open defect. Unchanged in this pass. The new 404 page's "Return to Dashboard" is the only added link.
 
 **W10-10: `npm run dev` creates an untracked file**
 - **Screen:** repository.
@@ -183,25 +183,29 @@ None.
 - **Smallest fix:** Team 03 decides whether to commit the file or add it to `.gitignore`.
 - **Step 2 re-test:** reproduced. `npm run dev` created `admin-web/AGENTS.md` again. It was deleted after the run and not committed.
 - **Final cleanup fix:** `admin-web/AGENTS.md` is added to `.gitignore`, so the generated file is ignored and never committed. Re-test: `npm run dev` created the file again, and `git status --ignored` lists it as ignored (`!! admin-web/AGENTS.md`), not untracked. `git check-ignore` matches the new `.gitignore` line.
-- **Status:** **Resolved** by ignoring the generated file.
+- **Status:** **Resolved — generated `admin-web/AGENTS.md` is ignored and not committed.**
 
 ## Issue counts
 
-| Severity | Count | IDs |
+### Final summary
+
+| Group | Count | IDs |
 | --- | --- | --- |
-| S1 | 0 | — |
-| S2 | 1 | W10-01 |
-| S3 | 9 | W10-02 to W10-10 |
+| **Unresolved bugs** | **0** | None |
+| Fixed | 7 | W10-02, W10-03, W10-04, W10-05, W10-06, W10-07, W10-08 |
+| Resolved | 1 | W10-10 (generated `admin-web/AGENTS.md` ignored, not committed) |
+| Accepted decision (not a defect) | 1 | W10-01 (public GitHub Pages demonstration approved) |
+| Deferred (not an open defect) | 1 | W10-09 (navigation routes not implemented yet; Week 10 Step 2) |
 
-Severity is unchanged after Step 2. Status after Step 2:
+### Severity as recorded in Step 1
 
-| Status | IDs |
-| --- | --- |
-| Accepted | W10-01 (public live demonstration) |
-| Fixed | W10-02, W10-03, W10-04, W10-05, W10-06, W10-07, W10-08 |
-| Resolved | W10-10 (generated `AGENTS.md` ignored in `.gitignore`) |
-| Deferred | W10-09 (navigation routes not implemented; deferred to Week 10 Step 2) |
-| Open | None |
+Kept for the record. These counts describe what Step 1 found, not what is still open.
+
+| Severity | Found in Step 1 | Still unresolved |
+| --- | --- | --- |
+| S1 | 0 | 0 |
+| S2 | 1 (W10-01) | 0. W10-01 is an accepted decision |
+| S3 | 9 (W10-02 to W10-10) | 0. W10-02 to W10-08 fixed, W10-10 resolved, W10-09 deferred |
 
 ## Week 10 Step 2 corrections
 
