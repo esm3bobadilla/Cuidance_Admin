@@ -80,7 +80,7 @@ These are documented on the board but have no exact implementation value, or nee
 
 | Item | What the board says | What's missing |
 | --- | --- | --- |
-| Logo files | Logo Version 4 rules: sizes, clear space, colors, reversed use | Files are in `shared/brand/logo/`. Admin Web shows the Team 03 approved v04 derived lockup (Grounded Green, reversed in dark mode) at `--size-logo-lockup-min` (160 px, board section 02). `--size-logo-lockup-max` (480 px) is also from the board. Favicon still pending. See `shared/brand/logo/README.md`. |
+| Logo files | Logo Version 4 rules: sizes, clear space, colors, reversed use | Files are in `shared/brand/logo/`. Admin Web shows the Team 03 approved v04 derived lockup (Grounded Green, reversed in dark mode) at `--size-logo-lockup-min` (160 px, board section 02). `--size-logo-lockup-max` (480 px) is also from the board. The Team 03 approved derived favicons (16, 32 and 48 px) are integrated. See `shared/brand/logo/README.md`. |
 | Gradients | "Introduce gradients only when a defined gradient token and application rule exist." | No gradient tokens are defined, so don't use gradients. |
 | Expanded tone scales | Nine tones per color family, with a Tone Legibility Guide | Only the semantic roles are tokenized. Other tones need separate contrast testing before use. |
 | Card gap (from the Oct 22 audit) | The board conflicts with itself: "Card lists: 12 px between cards" in Common rules, but desktop "Card / table gap 24". | Which applies on desktop. Admin Web currently uses 24 px on desktop and tablet and 12 px on mobile. |
@@ -89,7 +89,7 @@ These are documented on the board but have no exact implementation value, or nee
 | Type alias names (audit) | Cross-references Week 8 Step 2 names, such as "Mobile = type/heading" and "Desktop type/title =". | Whether `type/heading` and `type/title` aliases are needed as tokens. |
 | Hi-fi screens comparison (audit) | Not on the board. | Reviewed in Week 9 Step 5. Color conflicts are settled above. Small text in the PDF is unreadable, so exact copy still needs the source file. |
 | Checkbox box size (Step 5) | The board shows a box about 22 px square, with no size token. | A box-size value. The Checkbox component uses `--space-24`, the nearest documented size. |
-| Icon set (Step 5) | The board uses text glyphs (✓, ⚠, ◆, ?) but defines no icon set. | An approved icon set. Components use those glyphs for now, and icon buttons use placeholder glyphs. |
+| Icon set (Step 5) | The board uses text glyphs (✓, ⚠, ◆, ?) but defines no icon set. | An approved icon set. Components use those glyphs for now. Icon buttons show only board glyphs (? for help, ‹ for back) at `--type-heading-4` so they stay legible. The board has no search or edit glyph, so those icon buttons wait for an icon set. |
 | "Commercial content" label (Step 5) | The board approves two disclosure labels, Partner and Sponsored. The wireframes add "Commercial content". | Whether a third label is approved. DisclosureLabel offers Partner and Sponsored only. |
 | Search label (Step 5) | The board requires visible labels. The wireframes show placeholder-only search fields. | Whether compact toolbar search may hide its label. SearchField always shows a visible label. |
 | Underline tabs, segmented control, avatar, image placeholder (Step 5) | In the wireframes, not on the board. | Approved styles before they're built. |

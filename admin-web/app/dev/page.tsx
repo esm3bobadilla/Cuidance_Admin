@@ -31,7 +31,7 @@ export default function ComponentPreviewPage() {
         actions={
           <>
             <Button variant="secondary">Export</Button>
-            <Button variant="primary">Create task</Button>
+            <Button variant="secondary">Create task</Button>
           </>
         }
       />
@@ -59,9 +59,9 @@ export default function ComponentPreviewPage() {
 
       <Card title="Icon buttons">
         <div className={styles.row}>
-          <IconButton icon="⌕" label="Search" />
-          <IconButton icon="✎" label="Edit" />
-          <IconButton icon="✎" label="Edit (disabled)" disabled />
+          <IconButton icon="?" label="Help" />
+          <IconButton icon="‹" label="Back" />
+          <IconButton icon="‹" label="Back (disabled)" disabled />
         </div>
       </Card>
 
@@ -147,8 +147,11 @@ export default function ComponentPreviewPage() {
       />
 
       <Card title="Toasts">
-        <Toast tone="success" message="Saved to the review queue" action={{ label: 'View', href: '#' }} />
-        <Toast tone="error" message="Couldn't save. Check your connection." action={{ label: 'Retry', href: '#' }} />
+        <Toast tone="success" message="Saved to the review queue" action={{ label: 'View' }} />
+        <Toast tone="error" message="Couldn't save. Check your connection." action={{ label: 'Retry' }} />
+        <p className={styles.note}>
+          Toast actions show as plain text in this static preview. They become links once a real page exists to go to.
+        </p>
       </Card>
     </main>
   );

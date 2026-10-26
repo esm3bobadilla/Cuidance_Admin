@@ -1,6 +1,9 @@
 import type { Metadata } from 'next';
 import { Archivo, Newsreader } from 'next/font/google';
 import type { ReactNode } from 'react';
+import favicon16 from '../../shared/brand/logo/png/derived/cuidance-favicon-16x16.png';
+import favicon32 from '../../shared/brand/logo/png/derived/cuidance-favicon-32x32.png';
+import favicon48 from '../../shared/brand/logo/png/derived/cuidance-favicon-48x48.png';
 import lockupPrimary from '../../shared/brand/logo/png/derived/cuidance-logo-primary-lockup.png';
 import lockupReversed from '../../shared/brand/logo/png/derived/cuidance-logo-primary-lockup-reversed.png';
 import '../../shared/design-tokens/tokens.css';
@@ -26,6 +29,14 @@ export const metadata: Metadata = {
   description: 'Internal support tool for the Cuidance team.',
   // Internal tool: keep it out of search results
   robots: { index: false, follow: false },
+  // Team 03 approved derived favicons (png/derived/), used as supplied
+  icons: {
+    icon: [favicon16, favicon32, favicon48].map((icon) => ({
+      url: icon.src,
+      sizes: `${icon.width}x${icon.height}`,
+      type: 'image/png',
+    })),
+  },
 };
 
 type RootLayoutProps = {

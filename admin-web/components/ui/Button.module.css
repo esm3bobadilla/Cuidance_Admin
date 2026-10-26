@@ -9,6 +9,7 @@
   font: var(--type-button);
   border: var(--stroke-default) solid transparent;
   border-radius: var(--radius-pill);
+  text-decoration: none;
   cursor: pointer;
 }
 

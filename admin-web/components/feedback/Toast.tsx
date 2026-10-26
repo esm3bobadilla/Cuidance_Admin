@@ -5,7 +5,8 @@ type ToastProps = {
   message: string;
   action?: {
     label: string;
-    href: string;
+    // Leave out when there's no real route yet; the label then shows as plain text
+    href?: string;
   };
 };
 
@@ -17,11 +18,12 @@ export function Toast({ tone, message, action }: ToastProps) {
         {tone === 'success' ? '✓' : '⚠'}
       </span>
       <p className={styles.message}>{message}</p>
-      {action && (
+      {action?.href && (
         <a className={styles.action} href={action.href}>
           {action.label}
         </a>
       )}
+      {action && !action.href && <span className={styles.actionStatic}>{action.label}</span>}
     </div>
   );
 }

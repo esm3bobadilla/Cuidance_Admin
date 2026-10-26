@@ -1,6 +1,6 @@
-# Week 10 Step 1: Admin Web demo and validation log
+# Week 10: Admin Web demo and validation log
 
-A browser demo and validation pass of the current Admin Web build, before any new features. Nothing was fixed during this pass. Issues are recorded below for Week 10 Step 2.
+Step 1 was a browser demo and validation pass of the Admin Web build, before any new features. Nothing was fixed during that pass. The Step 2 corrections and their re-test are recorded in "Week 10 Step 2 corrections" below. Each issue keeps its Step 1 findings and severity, with the Step 2 result added.
 
 ## Session details
 
@@ -90,7 +90,8 @@ None.
 - **Actual:** every merge to `main` publishes the dashboard and the internal component preview (including the static Team Access pattern) to a public GitHub Pages site. Pages are marked `noindex`, so search engines shouldn't list them, but anyone with the link can open them. No real data is included.
 - **Evidence:** the deploy workflow file. `/Cuidance_Admin/dev/` built and served successfully in the Pages build.
 - **Smallest fix:** a Team 03 decision. Either note in CLAUDE.md that a public static demo (no data) is approved, or leave `/dev/` out of the deployed build.
-- **Status:** Demoed.
+- **Step 2 decision (Team 03):** Admin Web is intentionally public for live class demonstration. The GitHub Pages deployment stays. Admin Web is still an internal support artifact and is not part of participant testing. Severity stays S2.
+- **Status:** **Accepted** for public live demonstration.
 
 ### S3: cosmetic or low impact
 
@@ -101,7 +102,8 @@ None.
 - **Actual:** white `#FFFFFF` background in light mode and black `#000000` in dark mode, from Next's built-in styles (not `#F4F2EC` / `#121714`). System font. Text "404 · This page could not be found." No link back. The logo header does show.
 - **Evidence:** `evidence/404-light.png`, `evidence/404-dark.png`.
 - **Smallest fix:** add `admin-web/app/not-found.tsx` using PageHeader and a ghost-button link to the dashboard, tokens only.
-- **Status:** Broke.
+- **Step 2 fix:** new `admin-web/app/not-found.tsx`, exported as `404.html`. It uses PageHeader, tokens only, with the title "Page not found", a one-sentence explanation, and one primary action, "Return to Dashboard". That action is a link styled as a button (new `ButtonLink` in `components/ui/Button.tsx`, same styles as Button). No new navigation. Re-test: token background (`#F4F2EC` light, `#121714` dark), Newsreader title, logo shown, no overflow at all four widths, and "Return to Dashboard" goes to `/` (local) and `/Cuidance_Admin/` (Pages).
+- **Status:** **Fixed.**
 
 **W10-03: favicon request fails on every page**
 - **Screen:** all pages.
@@ -110,7 +112,8 @@ None.
 - **Actual:** `GET /favicon.ico` returns 404, logging "Failed to load resource: the server responded with a status of 404."
 - **Evidence:** console output from the first load in each build.
 - **Smallest fix:** add the favicon once Team 03 approves the corrected derived favicons (`shared/brand/logo/png/derived/`). Favicon work is deferred by decision, so this is expected for now.
-- **Status:** Broke (known, deferred).
+- **Step 2 fix:** Team 03 approved the derived favicons. `admin-web/app/layout.tsx` lists `cuidance-favicon-16x16.png`, `-32x32.png` and `-48x48.png` from `shared/brand/logo/png/derived/` in the page metadata (`icons`). The files are used exactly as supplied: the built copies have the same SHA-256 as the originals. The rejected favicons in `png/` aren't used. Re-test: the browser requests the 32 × 32 favicon (status 200) and never requests `/favicon.ico`, in both builds and on the dev server. No console errors.
+- **Status:** **Fixed.**
 
 **W10-04: small tap targets on three links**
 - **Screen:** `/dev/`, at the 390 px and 320 px widths.
@@ -119,7 +122,8 @@ None.
 - **Actual:** Admin 38 × 18, View 34 × 20, Retry 37 × 20.
 - **Evidence:** measured during the mobile run.
 - **Smallest fix:** give inline links in Breadcrumb and Toast a minimum height and width of `--size-touch-target`, with padding.
-- **Status:** Broke.
+- **Step 2 fix:** Breadcrumb links and Toast action links now have a 44 × 44 px minimum touch target (`--size-touch-target`). The text, size, color and underline are unchanged, so they still read as text links, not buttons. The Toast link's target reaches into the toast's padding, so the toast keeps its height. Re-test: breadcrumb "Admin" measures 44 × 44 at every width. "View" and "Retry" are now plain text on `/dev/` (see W10-06), so they're no longer tap targets. No element under 44 px in any of the 48 runs.
+- **Status:** **Fixed.**
 
 **W10-05: two primary buttons on one screen**
 - **Screen:** `/dev/`.
@@ -128,7 +132,8 @@ None.
 - **Actual:** two Compass Blue primary buttons.
 - **Evidence:** `evidence/dev-1440-light.png`.
 - **Smallest fix:** change the header's "Create task" action to secondary on the preview page, or remove the header actions.
-- **Status:** Broke.
+- **Step 2 fix:** the header's "Create task" is now secondary. The Buttons card keeps its one "Primary" example, so every state is still shown. Re-test: one primary on `/dev/` ("Primary"), one on the 404 page ("Return to Dashboard") and none on the dashboard.
+- **Status:** **Fixed.**
 
 **W10-06: toast links go nowhere**
 - **Screen:** `/dev/`, Toasts card.
@@ -137,7 +142,8 @@ None.
 - **Actual:** both links point to `#`, so the page jumps to the top.
 - **Evidence:** links found: `View -> #`, `Retry -> #`.
 - **Smallest fix:** on the preview page, point the links at the page itself, or label them as examples.
-- **Status:** Demoed.
+- **Step 2 fix:** the Toast `href` is now optional. Without one, the action label shows as plain text (Guidance Ink, no underline, normal cursor), not a link. The `/dev/` toasts leave out the `href`, and a note under them says the actions become links once a real page exists. No routes were invented. Re-test: no `href="#"` anywhere, and no links inside toasts.
+- **Status:** **Fixed.**
 
 **W10-07: icon-button glyphs are small and unclear**
 - **Screen:** `/dev/`, Icon buttons card.
@@ -146,7 +152,8 @@ None.
 - **Actual:** placeholder glyphs (⌕, ✎) render at 15 px, and the search glyph is hard to recognize.
 - **Evidence:** `evidence/dev-1440-light.png`.
 - **Smallest fix:** wait for an approved icon set. It's an open decision in `shared/design-tokens/README.md`.
-- **Status:** Demoed.
+- **Step 2 fix:** the placeholder glyphs ⌕ and ✎ are replaced with glyphs the board already uses: "?" (Help) and "‹" (Back, plus a disabled Back). The glyph now uses `--type-heading-4` (20 px) instead of 15 px. Accessible names stay on every button (`aria-label` "Help", "Back", "Back (disabled)"). No new icon system. The board has no search or edit glyph, so those wait for an icon set (noted in `shared/design-tokens/README.md`). Re-test: legible in light and dark mode, and at 834, 390 and 320 px.
+- **Status:** **Fixed.**
 
 **W10-08: dashboard doesn't use the shared components**
 - **Screen:** `/` (dashboard).
@@ -155,7 +162,8 @@ None.
 - **Actual:** the dashboard still uses its own `.eyebrow`, `.page-title` and `.area` styles from Week 9, which duplicate Eyebrow, PageHeader and Card. They look the same today but could drift apart.
 - **Evidence:** `admin-web/app/globals.css` lines 50–117.
 - **Smallest fix:** switch the dashboard to PageHeader and Card, with no visual change.
-- **Status:** Demoed.
+- **Step 2 fix:** the dashboard now uses PageHeader (eyebrow "Internal tool", title, description) and Card (`as="li"`, h3 titles) for the seven content areas. All text is unchanged. The duplicate `.eyebrow`, `.page-title`, `.lead` and `.area` styles are removed from `globals.css`. Two visible differences come from matching the shared components and `/dev/`: the intro line is now 14 px muted text (PageHeader description) instead of 18 px, and card content is 12 px apart instead of 8 px. No new navigation, metrics, charts or data. Re-test: headings in order (h1 > h2 > h3), no overflow at any width, both modes.
+- **Status:** **Fixed.**
 
 **W10-09: no way to move between pages**
 - **Screen:** `/` and `/dev/`.
@@ -164,7 +172,7 @@ None.
 - **Actual:** the dashboard has no links or focusable elements (Tab leaves the page right away). The logo isn't a home link. `/dev/` is reachable only by typing the URL.
 - **Evidence:** keyboard pass: dashboard 0 Tab stops.
 - **Smallest fix:** none until navigation is approved. Optionally, make the logo a link to the dashboard.
-- **Status:** Demoed.
+- **Status:** **Deferred** until Week 10 Step 2, because navigation routes aren't implemented. Unchanged in this pass. The new 404 page's "Return to Dashboard" is the only added link.
 
 **W10-10: `npm run dev` creates an untracked file**
 - **Screen:** repository.
@@ -173,7 +181,8 @@ None.
 - **Actual:** Next.js 16 writes `admin-web/AGENTS.md` (coding-agent notes) on every dev run. It was deleted after this pass, not committed.
 - **Evidence:** `?? admin-web/AGENTS.md` in `git status`.
 - **Smallest fix:** Team 03 decides whether to commit the file or add it to `.gitignore`.
-- **Status:** Broke.
+- **Step 2 re-test:** reproduced. `npm run dev` created `admin-web/AGENTS.md` again. It was deleted after the run and not committed.
+- **Status:** **Open** (reproducible). Needs the Team 03 decision above.
 
 ## Issue counts
 
@@ -183,6 +192,80 @@ None.
 | S2 | 1 | W10-01 |
 | S3 | 9 | W10-02 to W10-10 |
 
+Severity is unchanged after Step 2. Status after Step 2:
+
+| Status | IDs |
+| --- | --- |
+| Accepted | W10-01 (public live demonstration) |
+| Fixed | W10-02, W10-03, W10-04, W10-05, W10-06, W10-07, W10-08 |
+| Deferred | W10-09 (navigation routes not implemented) |
+| Open | W10-10 (reproducible, needs a Team 03 decision) |
+
+## Week 10 Step 2 corrections
+
+### Session details
+
+| Item | Value |
+| --- | --- |
+| Date | Oct 26, 2026 |
+| Tester | Claude Code (automated browser pass) for Team 03. **Needs review by Alyssa and Esme** |
+| Branch | `feat/admin-web-scaffold` |
+| Starting commit | `3407b8b` (Step 1 log) |
+| Environment and browser | Same as Step 1 |
+| Pages | `/`, `/dev/`, and an unknown address (`/no-such-page/`). The test server answers unknown addresses with `404.html` and status 404, the way GitHub Pages does |
+
+### Files changed
+
+| File | Change |
+| --- | --- |
+| `admin-web/app/not-found.tsx` | New. Custom 404 page (W10-02) |
+| `admin-web/app/layout.tsx` | Favicon metadata (W10-03) |
+| `admin-web/app/page.tsx`, `admin-web/app/globals.css` | Dashboard uses PageHeader and Card; duplicate styles removed (W10-08) |
+| `admin-web/app/dev/page.tsx` | One primary, plain-text toast actions, board glyphs (W10-05, W10-06, W10-07) |
+| `admin-web/components/ui/Button.tsx`, `Button.module.css` | `ButtonLink` for the 404 action |
+| `admin-web/components/ui/Breadcrumb.module.css` | 44 px link target (W10-04) |
+| `admin-web/components/feedback/Toast.tsx`, `Toast.module.css` | Optional `href`, plain-text action, 44 px link target (W10-04, W10-06) |
+| `admin-web/components/ui/IconButton.tsx`, `IconButton.module.css` | Larger glyph size (W10-07) |
+| `shared/brand/logo/README.md`, `shared/design-tokens/README.md`, `README.md` | Favicon status, icon note, structure line. Documentation only |
+
+Not changed: logo files, `tokens.css`, the deploy workflow, the Admin Mobile archive, and the `Cuidance_Prototype` repository.
+
+### Verification
+
+| Check | Result |
+| --- | --- |
+| TypeScript (`npx tsc --noEmit`) | Passed |
+| Local build (`npm run build`) | Passed: `/`, `/dev`, `/_not-found` (exported as `404.html`) |
+| GitHub Pages build (`GITHUB_PAGES=true`) | Passed. Favicons, logo and the 404 link all use `/Cuidance_Admin/` |
+| Local production preview | 48 page loads: 2 builds × 3 pages × 4 widths × 2 modes |
+| Dev server (`npm run dev`) | Passed: `/` 200, `/dev/` 200, unknown address 404 with the custom page. Light and dark, no console errors |
+| Light and dark mode | Passed on all three pages. Backgrounds `#F4F2EC` and `#121714`. Dark logo switches |
+| Widths 1440, 834, 390, 320 px | Passed. No sideways overflow in any of the 48 runs |
+| Touch targets | No interactive element under 44 × 44 px in any run |
+| One primary per page | `/dev/` 1, 404 page 1, dashboard 0 |
+| Keyboard focus order | `/dev/`: 19 stops in reading order (Admin, Export, Create task, buttons, Help, Back, fields, checkboxes, two tables), each with the 2 px focus ring in both modes. 404: one stop (Return to Dashboard), with the ring. Dashboard: no stops yet (W10-09) |
+| 404 route | Custom page in both builds and on the dev server. "Return to Dashboard" goes to the dashboard |
+| Favicon requests | 32 × 32 favicon loads (200). No `/favicon.ico` request. Built files match the approved files byte for byte |
+| JavaScript errors | None. The only console entry is the browser's own "404" notice on the unknown address, which is expected because the page returns status 404, as it will on GitHub Pages. One cancelled request appeared once in the Pages build and didn't happen again on a clean re-run |
+| Content wording | No banned words or em dashes on any page |
+| No JavaScript | All three pages render with JavaScript off |
+| Untracked files | `next dev` recreated `admin-web/AGENTS.md` (W10-10). Deleted. Only gitignored build output (`.next/`, `out/`) remains |
+
+### Step 2 evidence
+
+| File | What it shows |
+| --- | --- |
+| `step2-404-1440-light.png`, `step2-404-1440-dark.png` | Custom 404 page on desktop, both modes |
+| `step2-404-320-dark.png` | Custom 404 page at 320 px |
+| `step2-404-focus-light.png` | Focus ring on "Return to Dashboard" |
+| `step2-dashboard-1440-light.png`, `step2-dashboard-1440-dark.png` | Dashboard with PageHeader and Card |
+| `step2-dashboard-320-light.png` | Dashboard at 320 px |
+| `step2-dev-1440-light.png`, `step2-dev-1440-dark.png` | Component preview on desktop, both modes |
+| `step2-dev-834-dark.png`, `step2-dev-320-light.png` | Component preview at tablet and narrow widths |
+| `step2-dev-header-icons-light-dark.png` | Secondary header actions and the new icon glyphs, both modes |
+| `step2-dev-buttons-toasts-light.png` | One primary button, and plain-text toast actions |
+| `step2-focus-breadcrumb-light.png` | Focus ring showing the 44 × 44 "Admin" target |
+
 ## Not tested
 
 - **The live site** (`https://esm3bobadilla.github.io/Cuidance_Admin/`): this cloud environment's network settings block `esm3bobadilla.github.io`. The identical GitHub Pages build was tested locally under `/Cuidance_Admin/` instead.
@@ -190,7 +273,7 @@ None.
 - **Other browsers** (Safari, Firefox) and screen readers: not available here.
 - **Zoom and text resizing:** the 320 px run approximates 400 % zoom at 1280 px. A real browser zoom check is still needed.
 
-## Evidence
+## Evidence (Step 1)
 
 Screenshots in `docs/Week-10/evidence/`:
 
@@ -202,9 +285,11 @@ Screenshots in `docs/Week-10/evidence/`:
 | `dev-1440-light.png`, `dev-1440-dark.png` | Component preview on desktop, both modes |
 | `dev-320-light.png` | Component preview at 320 px |
 | `focus-ring-light.png`, `focus-ring-dark.png` | Keyboard focus rings |
-| `404-light.png`, `404-dark.png` | Default 404 page (W10-02) |
+| `404-light.png`, `404-dark.png` | Default 404 page (W10-02, before the Step 2 fix) |
 
-## Recommended next step (Week 10 Step 2)
+## Recommended next step (written in Step 1)
+
+_Step 2 completed items 1 to 3, apart from W10-10 (still open). Item 4 is still open._
 
 1. **Decide W10-01:** is a public static demo approved? Record the answer in CLAUDE.md.
 2. **Fix the small, safe S3 issues in one focused branch, with no new features:**

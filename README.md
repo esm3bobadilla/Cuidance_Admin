@@ -30,7 +30,7 @@ It is not the public app, it is not part of participant testing, and it is not a
 | Authentication | Not started |
 | Supabase tables | Not started, pending team decision |
 | GitHub Pages hosting | Set up on branch `deploy-github-pages`: static export plus automatic deploy. Live after merge, once Esme sets Settings → Pages → Source to "GitHub Actions" |
-| Admin Web logo | Done: Team 03 approved v04 derived lockup in the header, with a reversed version in dark mode. Favicon pending (see `shared/brand/logo/README.md`) |
+| Admin Web logo | Done: Team 03 approved v04 derived lockup in the header, with a reversed version in dark mode. Team 03 approved derived favicons (16, 32 and 48 px) in place (see `shared/brand/logo/README.md`) |
 
 **Live link:** https://esm3bobadilla.github.io/Cuidance_Admin/
 
@@ -135,7 +135,7 @@ When setup starts, keys go in a `.env` file in the project root. Never commit re
 ```
 Cuidance_Admin/
 ├── admin-web/             Admin Web app for the browser
-│   ├── app/               Pages (`/` dashboard, `/dev` internal component preview)
+│   ├── app/               Pages (`/` dashboard, `/dev` internal component preview, custom 404)
 │   └── components/        Shared components: layout, ui, forms, data, feedback
 ├── shared/                Shared content and rules for Admin Web
 │   ├── content/           Result content, safety lines, labels

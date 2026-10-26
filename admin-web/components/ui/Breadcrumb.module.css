@@ -10,10 +10,17 @@
 
 .item {
   display: flex;
+  align-items: center;
   gap: var(--space-4);
 }
 
+/* Text link with a 44 x 44 minimum touch target; the text itself stays the same size */
 .link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--size-touch-target);
+  min-height: var(--size-touch-target);
   color: var(--color-accent);
 }
 
