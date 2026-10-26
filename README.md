@@ -29,7 +29,10 @@ It is not the public app, it is not part of participant testing, and it is not a
 | Supabase connection | Not connected yet |
 | Authentication | Not started |
 | Supabase tables | Not started, pending team decision |
+| GitHub Pages hosting | Set up on branch `deploy-github-pages`: static export plus automatic deploy. Live after merge, once Esme sets Settings → Pages → Source to "GitHub Actions" |
 | Admin Web logo | Done: Team 03 approved v04 derived lockup in the header, with a reversed version in dark mode. Favicon pending (see `shared/brand/logo/README.md`) |
+
+**Live link:** https://esm3bobadilla.github.io/Cuidance_Admin/
 
 ## What Admin Web is for
 
@@ -114,6 +117,15 @@ npm run dev
 npm run build
 ```
 
+## Deployment
+
+Admin Web is hosted on GitHub Pages as a static site.
+
+1. Every merge to `main` redeploys automatically (workflow: `.github/workflows/deploy-admin-web.yml`).
+2. You can also run the workflow by hand from the repo's Actions tab.
+3. Local development is still `npm run dev` in `admin-web/`, at http://localhost:3000.
+4. One-time setup: in the GitHub repo, go to Settings → Pages → Source and choose "GitHub Actions".
+
 ### Environment variables
 
 When setup starts, keys go in a `.env` file in the project root. Never commit real keys to the repo. `.env` is already in `.gitignore`.
@@ -142,7 +154,9 @@ Cuidance_Admin/
 ├── CLAUDE.md              Rules for AI agents working in this repo
 ├── .gitignore
 └── .github/
-    └── pull_request_template.md
+    ├── pull_request_template.md
+    └── workflows/
+        └── deploy-admin-web.yml   GitHub Pages deploy
 ```
 
 Folders are added to the repo when their first file lands. Git doesn't track empty folders.
