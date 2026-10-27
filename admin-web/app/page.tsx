@@ -1,20 +1,8 @@
+import { adminScreens, structureOnlyNote, topLevelScreenIds } from '../../shared/content/admin-web-screens';
 import { PageHeader } from '../components/layout/PageHeader';
+import { ButtonLink } from '../components/ui/Button';
 import { Card } from '../components/ui/Card';
-
-type ContentArea = {
-  name: string;
-  description: string;
-};
-
-const contentAreas: ContentArea[] = [
-  { name: 'Quiz content', description: 'Questions, answer cards and mixing rules.' },
-  { name: 'Guidance content', description: 'Result sections and guidance copy.' },
-  { name: 'Product information', description: 'Product types for Barcode / Label Lookup.' },
-  { name: 'Sources', description: 'Source links behind each guidance claim.' },
-  { name: 'Partner highlights', description: 'Commercial content, always labeled "Partner."' },
-  { name: 'Claims', description: 'Evidence labels: Strong, Moderate, Limited or Assumption.' },
-  { name: 'Safety notes', description: 'Safety lines and the emergency line on every result.' },
-];
+import { screenHref } from './_screens/ScreenPage';
 
 export default function DashboardPage() {
   return (
@@ -31,13 +19,18 @@ export default function DashboardPage() {
         </p>
       </div>
 
-      <section className="section" aria-labelledby="areas-heading">
-        <h2 id="areas-heading" className="section-title">Content areas</h2>
+      <section className="section" aria-labelledby="sections-heading">
+        <h2 id="sections-heading" className="section-title">Admin Web sections</h2>
+        <p className="note">{structureOnlyNote}</p>
         <ul className="areas">
-          {contentAreas.map((area) => (
-            <Card key={area.name} as="li" title={area.name} headingLevel={3}>
-              <p className="area-description">{area.description}</p>
-              <p className="area-status">Not built yet</p>
+          {topLevelScreenIds.map((id) => (
+            <Card key={id} as="li" title={adminScreens[id].name} headingLevel={3}>
+              <p className="area-description">{adminScreens[id].scopeNote}</p>
+              <div>
+                <ButtonLink variant="secondary" href={screenHref(id)}>
+                  Open {adminScreens[id].name}
+                </ButtonLink>
+              </div>
             </Card>
           ))}
         </ul>

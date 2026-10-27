@@ -1,0 +1,141 @@
+/* Grounded Green sidebar from the hi-fi references, using the brand pairing tokens */
+.sidebar {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-32);
+  height: 100vh;
+  overflow-y: auto;
+  padding: var(--space-32) var(--space-16);
+  background: var(--color-brand);
+  color: var(--color-on-brand);
+}
+
+/* The global accent focus ring is hard to see on Grounded Green, so it uses the on-brand color here */
+.sidebar :focus-visible {
+  outline-color: var(--color-on-brand);
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-12);
+  padding-inline: var(--space-8);
+}
+
+.menuButton {
+  display: none;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.list,
+.children {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.children {
+  margin-top: var(--space-4);
+  padding-left: var(--space-16);
+}
+
+.children[data-open='false'] {
+  display: none;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.link {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  min-height: var(--size-touch-target);
+  padding: 0 var(--space-16);
+  border-radius: var(--radius-pill);
+  font: var(--type-body);
+  color: var(--color-on-brand);
+  text-decoration: none;
+}
+
+.childLink {
+  font: var(--type-body-small);
+}
+
+@media (hover: hover) {
+  .link:hover {
+    text-decoration: underline;
+  }
+}
+
+/* Active page: the approved pill, Compass Blue selected state and a bolder label */
+.link[aria-current='page'] {
+  background: var(--color-selected);
+  color: var(--color-on-accent);
+  font: var(--type-label);
+}
+
+/* Content stays bold while one of its pages is open */
+.parentOfCurrent {
+  font: var(--type-label);
+}
+
+.toggle {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: var(--size-touch-target);
+  height: var(--size-touch-target);
+  padding: 0;
+  font: var(--type-heading-4);
+  color: var(--color-on-brand);
+  background: transparent;
+  border: var(--stroke-default) solid var(--color-on-brand);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+}
+
+.glyph {
+  display: inline-block;
+}
+
+/* Pointing down when open, right when closed. No animation. */
+.toggle[aria-expanded='true'] .glyph {
+  transform: rotate(90deg);
+}
+
+/* Narrow screens: the sidebar becomes a top bar, and the same list opens from Menu */
+@media (max-width: 767px) {
+  .sidebar {
+    position: static;
+    height: auto;
+    gap: var(--space-16);
+    padding: var(--space-16) var(--layout-outer-margin);
+  }
+
+  .top {
+    padding-inline: 0;
+  }
+
+  .menuButton {
+    display: block;
+  }
+
+  .nav[data-open='false'] {
+    display: none;
+  }
+}

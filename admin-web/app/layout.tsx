@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Archivo, Newsreader } from 'next/font/google';
 import type { ReactNode } from 'react';
+import { Sidebar } from '../components/layout/Sidebar';
 import favicon16 from '../../shared/brand/logo/png/derived/cuidance-favicon-16x16.png';
 import favicon32 from '../../shared/brand/logo/png/derived/cuidance-favicon-32x32.png';
 import favicon48 from '../../shared/brand/logo/png/derived/cuidance-favicon-48x48.png';
@@ -47,20 +48,31 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" className={`${newsreader.variable} ${archivo.variable}`}>
       <body>
-        <header className="app-header">
-          {/* Team 03 approved v04 derived lockups: Grounded Green on light, Quiet Paper on dark */}
-          <picture>
-            <source srcSet={lockupReversed.src} media="(prefers-color-scheme: dark)" />
-            <img
-              className="app-logo"
-              src={lockupPrimary.src}
-              width={lockupPrimary.width}
-              height={lockupPrimary.height}
-              alt="Cuidance"
-            />
-          </picture>
-        </header>
-        {children}
+        <a className="skip-link" href="#main-content">
+          Skip to main content
+        </a>
+        <div className="app">
+          <Sidebar
+            logo={
+              /* Team 03 approved v04 derived lockups. The sidebar is Grounded Green in light
+                 mode, so it takes the Quiet Paper reversed lockup; in dark mode the brand
+                 color is light, so it takes the Grounded Green lockup. */
+              <picture>
+                <source srcSet={lockupPrimary.src} media="(prefers-color-scheme: dark)" />
+                <img
+                  className="app-logo"
+                  src={lockupReversed.src}
+                  width={lockupReversed.width}
+                  height={lockupReversed.height}
+                  alt="Cuidance"
+                />
+              </picture>
+            }
+          />
+          <div id="main-content" className="app-main" tabIndex={-1}>
+            {children}
+          </div>
+        </div>
       </body>
     </html>
   );
