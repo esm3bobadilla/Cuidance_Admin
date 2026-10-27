@@ -3,7 +3,7 @@
 The first complete Admin Web screen. It's built from the Team 03 hi-fi reference with **seed data only**: no Supabase, sign-in or live content.
 
 - **Branch:** `feat/admin-web-dashboard-screen`, from `main` at `3c0a7f3` (after PR #7)
-- **Date:** Oct 27, 2026 (updated the same day for the Team 03 approvals in section 11)
+- **Date:** Oct 27, 2026 (updated the same day for the Team 03 approvals in sections 11 and 13)
 - **Route:** `/` (Dashboard, the landing page)
 - **Prepared by:** Claude Code for Team 03. **Needs review by Alyssa and Esme.** Items marked PROVISIONAL need a Team 03 decision.
 
@@ -106,7 +106,7 @@ The rule is in `openQuestionCount()` in `shared/content/dashboard-review-queue.t
 | --- | --- | --- |
 | Sidebar labels "Sources", "Guidance Rules", "Claims & Safety", "Metrics" | Full approved names | Team 03 confirmed sidebar labels (Week 10 Step 2) |
 | Sidebar "Admin" subtitle under the logo, illustration, tagline | Not shown | No approved assets; logo files unchanged |
-| Header search field and profile photo menu | Not built | **Unresolved** (section 12): the search magnifier and the avatar aren't approved symbols, and no approved artwork exists |
+| Header search field and profile photo menu | Not built | **Approved by Team 03, blocked by missing assets and specs** (section 13): no approved search icon, avatar artwork or menu specification exists in the repository |
 | Decorative leaf and bottle illustrations | Not built | No approved illustration assets |
 | Icons on the counts, Key Areas cards and table types | Not built | These are pictorial icons (document, warning triangle, people, speech bubble, leaf, book, link, shield). They aren't among the design system's approved symbols (section 12), and no approved icon files exist. Text labels carry the meaning |
 | Key Areas "Sources" and "Claims & Safety" | "Knowledge Sources", "Claims & Safety Review" | Approved screen names |
@@ -183,10 +183,11 @@ The older `dashboard-1440-*.png`, `dashboard-834-light.png` and `dashboard-320-d
 3. **Empty and loading designs** (provisional on the board). Confirm the message-only treatments, or supply the final ones.
 4. **Error wording** and whether the error state should offer a retry action.
 5. ~~Icon set~~ **Resolved for state symbols** (section 12): the design system's approved symbols are used. Pictorial icons from the hi-fi still have no approved source.
-6. ~~Header search and profile menu~~ **Approved by Team 03.** Still need the search icon and the profile image or avatar asset (section 11).
+6. ~~Header search and profile menu~~ **Approved for implementation by Team 03.** Blocked until the assets and specs in section 13 are supplied.
 7. ~~"Open questions" count~~ **Approved and implemented** (section 4).
 8. **Approval to connect real data** (Supabase) or add any library. Not started.
-9. **Header search label.** SearchField always shows a visible label (board rule). The hi-fi field shows only placeholder text. Confirm whether the header search may hide its label (an open item in `shared/design-tokens/README.md`).
+10. ~~`›` chevron~~ **Approved by Team 03** for the Key Areas cards and the sidebar Content toggle (section 13).
+9. **Header search label** (dependency for search, section 13). SearchField always shows a visible label (board rule). The hi-fi field shows only placeholder text. Confirm whether the header search may hide its label (an open item in `shared/design-tokens/README.md`).
 
 ## 11. Team 03 approvals (Oct 27, 2026) and blocked assets
 
@@ -196,8 +197,8 @@ Team 03 approved the final Cuidance icon set, the header search, the profile men
 | --- | --- | --- |
 | Open Questions count | **Implemented** (section 4) | Nothing |
 | Icon set | **Resolved for state symbols (section 12).** Pictorial icons still have no approved source | The design system's approved symbols are now used. Pictorial icons from the hi-fi (count, Key Areas and table-type icons, the reminder leaf) would need approved artwork files |
-| Header search | **Unresolved** (section 12) | An approved search visual and the visible-label decision. No search route exists |
-| Profile menu | **Unresolved** (section 12) | An approved avatar treatment, an avatar component and the menu contents. No sign-in |
+| Header search | **Approved; blocked by missing assets** (section 13) | The approved search icon, the visible-label decision and the intended behavior. No search route exists |
+| Profile menu | **Approved; blocked by missing assets and spec** (section 13) | The approved avatar treatment and artwork, the menu contents and behavior, and an avatar component. No sign-in |
 
 **Where I searched:** the working tree, every remote branch (`main`, `feat/admin-web-dashboard-screen`, `feat/admin-web-route-map`, `feat/admin-web-scaffold`, `deploy-github-pages`, `claude/clever-goldberg-vgmhex`) and the files uploaded in this session. The only icon-like files are the logo package in `shared/brand/logo/` (lockups, app icon, favicons). Those are brand marks, not interface icons. No icons were drawn, borrowed from a library, or made from the logo.
 
@@ -243,13 +244,38 @@ They're defined once in `shared/content/ui-symbols.ts`. They're text symbols, no
 
 **Font note:** Archivo and Newsreader don't include ◌ or ⋯, so the browser draws them with a system fallback font. ◌ looks a little small as a result. Nothing was redrawn.
 
-**Chevron "›":** the Key Areas cards and the sidebar Content toggle show "›". It isn't in the approved symbol list above, but the board's Core UI Components use it on result-card links ("Why this fits you ›", "View product ›"). It's kept as is, and **needs Team 03 confirmation**.
+**Chevron "›": APPROVED by Team 03 (Oct 27, 2026)** for the Key Areas cards and the sidebar Content toggle. It follows the Week 8 board's Core UI Components treatment: the text symbol "›" placed with a link label, as on the board's result-card links ("Why this fits you ›", "View product ›"). It stays a text symbol, hidden from screen readers, beside a visible label (the card title, or the toggle's "Content pages" name). No code change was needed. See section 13.
 
-**Still unresolved: search and profile**
+**Search and profile** (approved since: see section 13)
 
 | Item | Status | Why |
 | --- | --- | --- |
-| Header search | **Not implemented** | The hi-fi shows a search field with a magnifier icon and the placeholder "Search content, sources, or tasks…". The magnifier isn't an approved symbol, and there's no approved search icon. The hi-fi field has no visible label, but SearchField always shows one (an open board decision). There's also no search route, so the field would do nothing. Needed: the approved search visual (icon, or a confirmed treatment without one), the label decision, and confirmation that a non-working field is wanted |
-| Profile/avatar | **Not implemented** | The hi-fi shows a photo and a menu arrow. There's no approved avatar treatment (photo, initials or symbol) and no avatar component. Without sign-in there's no real user to show |
-| Profile menu contents | **Not implemented** | Not shown in any supplied source. Nothing was invented |
+| Header search | **Approved, not implemented: assets missing** (section 13) | The hi-fi shows a search field with a magnifier icon and the placeholder "Search content, sources, or tasks…". No approved search icon exists. Also needed: the visible-label decision and the intended behavior |
+| Profile/avatar | **Approved, not implemented: assets missing** (section 13) | The hi-fi shows a photo and a menu arrow. No approved avatar artwork or treatment specification exists, and there's no avatar component |
+| Profile menu contents | **Approved, not implemented: spec missing** (section 13) | The menu's items and behavior aren't shown in any supplied source |
+
+## 13. Team 03 decisions (Oct 27, 2026): search, profile and chevron
+
+| Decision | Status | Can implementation proceed? |
+| --- | --- | --- |
+| 1. Header search is approved | **APPROVED.** Not implemented | **No, blocked by a missing asset and two decisions** (below) |
+| 2. Profile/avatar treatment and profile-menu behavior are approved for implementation | **APPROVED.** Not implemented | **No, blocked by missing artwork and a missing specification** (below) |
+| 3. The `›` chevron is approved for the Key Areas cards and the Content sidebar toggle | **APPROVED and already in place.** Uses the Week 8 board's text-symbol treatment | Done. No code change needed |
+
+**Asset check (Oct 27, 2026).** I searched every remote branch (`main`, `feat/admin-web-dashboard-screen`, `feat/admin-web-route-map`, `feat/admin-web-scaffold`, `deploy-github-pages`, `claude/clever-goldberg-vgmhex`) and the session uploads. There are **no search, magnifier, avatar, profile, person or user assets**, and no `shared/brand/icons/` folder. Nothing was invented or traced. The rejected logo package isn't a source.
+
+**Implementation dependencies: search**
+
+1. **Search icon file:** the approved magnifier shown in the Dashboard hi-fi, as artwork (SVG with real vector paths preferred), for example in `shared/brand/icons/`. It isn't one of the board's approved text symbols, so it needs an artwork file.
+2. **Label decision:** the board requires visible labels, and SearchField always shows one, but the hi-fi field shows only placeholder text. Confirm whether the header search keeps a visible label or uses a hidden accessible label. This is still an open item in `shared/design-tokens/README.md`.
+3. **Behavior:** what happens on submit. No search route or search data exists, so today the field could only be presentation. Confirm "presentation only" or supply the target route or behavior.
+
+**Implementation dependencies: profile/avatar and menu**
+
+1. **Avatar treatment and artwork:** photo, initials or a generic person icon, with the artwork file if it's an image or icon, plus its size and shape (the hi-fi shows a round photo about 48 px wide).
+2. **Whose details show:** without sign-in there's no real user. Confirm the placeholder (for example a generic "Team member" with a person icon) so no name or photo is invented.
+3. **Menu contents and behavior:** the items (labels and where each goes) and how it opens and closes. The hi-fi shows only the closed control with a "⌄" arrow, which isn't one of the board's approved symbols either.
+4. **Component:** there's no avatar or menu component in the inventory, and the Week 9 Step 5 review listed "avatar" as not on the board. Once the above is supplied, one shared component would be added with a 44 px target, a visible or accessible label, and keyboard support (open, close, Escape, focus return).
+
+**No authentication or account management** comes with these decisions. The profile control stays presentation only until sign-in is a separate, approved step.
 
