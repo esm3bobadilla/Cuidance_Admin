@@ -38,7 +38,23 @@
   font: var(--type-body);
 }
 
+/*
+ * Text link with a 44 x 44 minimum touch target. The negative block margin
+ * lets the target extend into the toast's padding, so the toast keeps its height.
+ */
 .action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--size-touch-target);
+  min-height: var(--size-touch-target);
+  margin-block: calc(var(--space-12) * -1);
   font: var(--type-link);
   color: var(--color-accent);
+}
+
+/* Demo-only action: plain text, not a link, so it can't be mistaken for one */
+.actionStatic {
+  font: var(--type-label);
+  color: var(--color-ink);
 }

@@ -11,7 +11,9 @@ type IconButtonProps = {
 export function IconButton({ icon, label, type = 'button', ...rest }: IconButtonProps) {
   return (
     <button type={type} className={styles.iconButton} aria-label={label} title={label} {...rest}>
-      <span aria-hidden="true">{icon}</span>
+      <span className={styles.glyph} aria-hidden="true">
+        {icon}
+      </span>
     </button>
   );
 }

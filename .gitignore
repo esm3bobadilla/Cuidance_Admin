@@ -11,6 +11,8 @@ web-build/
 out/
 next-env.d.ts
 *.tsbuildinfo
+# Written by `next dev` on every run (Week 10, W10-10)
+admin-web/AGENTS.md
 
 # Vercel
 .vercel/

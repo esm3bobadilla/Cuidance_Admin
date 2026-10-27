@@ -14,6 +14,11 @@
   cursor: pointer;
 }
 
+/* Text glyphs need the larger heading size to read clearly at 44 px */
+.glyph {
+  font: var(--type-heading-4);
+}
+
 @media (hover: hover) {
   .iconButton:hover {
     background: var(--color-selected-surface);
