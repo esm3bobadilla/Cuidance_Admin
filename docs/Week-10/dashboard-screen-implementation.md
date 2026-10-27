@@ -66,7 +66,7 @@ There's no breadcrumb, as in the hi-fi: the Dashboard is the landing page.
 1. Every seed item has an explicit `openQuestion` field, `true` or `false`.
 2. **Open questions = the number of seed items with `openQuestion: true`.** Nothing else counts: not the item's type, status, priority or wording.
 3. When no item is marked, the count is **0**. That's the case today: all five seed items are `openQuestion: false`.
-4. The empty state still shows 0, and loading and error still show "…".
+4. The empty state still shows 0. Loading shows ⋯ and error shows ⚠ (section 12).
 
 The rule is in `openQuestionCount()` in `shared/content/dashboard-review-queue.ts`. It was checked with the shipped seed (0), no items (0), two items marked (2) and all five marked (5). No other review logic was added.
 
@@ -93,12 +93,12 @@ The rule is in `openQuestionCount()` in `shared/content/dashboard-review-queue.t
 | State | Review Queue counts | Needs attention area | Status |
 | --- | --- | --- | --- |
 | **Ready** (default) | Seed counts | Seeded table | Built from the hi-fi |
-| **Loading** | "…" | Plain panel: "Loading review items…" (`role="status"`, no animation, no skeleton bars) | **PROVISIONAL.** The board marks Loading provisional: "text status · reduced motion" |
-| **Empty** | 0 | Dashed panel: "Nothing needs attention right now." plus one next step, **Go to Review Tasks** (secondary) | **PROVISIONAL.** The board marks Empty provisional: "message + one next step". No icon (no approved icon set) |
-| **Error** | "…" | Dark Ruby panel with ⚠ and the message "Couldn't load review items. Check your connection, then reload the page." (`role="alert"`) | Follows the approved error rule (Ruby + icon + message). **The wording is provisional.** No retry button: that would be new behavior |
+| **Loading** | ⋯ (approved Loading symbol) | Plain panel: ⋯ "Loading review items…" (`role="status"`, no animation, no skeleton bars) | **PROVISIONAL.** The board marks Loading provisional: "text status · reduced motion" |
+| **Empty** | 0 | Dashed panel: ◌ (approved Empty symbol) "Nothing needs attention right now." plus one next step, **Go to Review Tasks** (secondary) | **PROVISIONAL.** The board marks Empty provisional: "message + one next step" |
+| **Error** | ⚠ (approved Error symbol) | Dark Ruby panel with ⚠ and the message "Couldn't load review items. Check your connection, then reload the page." (`role="alert"`) | Follows the approved error rule (Ruby + icon + message). **The wording is provisional.** No retry button: that would be new behavior |
 
 - **Key Areas and the reminder panel** don't change with the state, because they don't depend on data.
-- **"…" instead of "—":** the hi-fi shows "—" as a placeholder count. CLAUDE.md doesn't allow em dashes in app copy, so "…" is used, and the state message explains it.
+- **⋯ and ⚠ instead of "—":** the hi-fi shows "—" as a placeholder count. CLAUDE.md doesn't allow em dashes in app copy, so the counts use the approved state symbols, and the state message below explains them.
 
 ## 6. Known differences from the hi-fi reference
 
@@ -106,13 +106,13 @@ The rule is in `openQuestionCount()` in `shared/content/dashboard-review-queue.t
 | --- | --- | --- |
 | Sidebar labels "Sources", "Guidance Rules", "Claims & Safety", "Metrics" | Full approved names | Team 03 confirmed sidebar labels (Week 10 Step 2) |
 | Sidebar "Admin" subtitle under the logo, illustration, tagline | Not shown | No approved assets; logo files unchanged |
-| Header search field and profile photo menu | Not built | **Approved by Team 03 (Oct 27, 2026), but blocked:** the approved search icon and profile image or avatar assets aren't in the repository. See section 11 |
+| Header search field and profile photo menu | Not built | **Unresolved** (section 12): the search magnifier and the avatar aren't approved symbols, and no approved artwork exists |
 | Decorative leaf and bottle illustrations | Not built | No approved illustration assets |
-| Icons on the counts, Key Areas cards and table types | Not built | **Icon set approved by Team 03 (Oct 27, 2026), but the files aren't in the repository.** Text labels carry the meaning until they're added. See section 11 |
+| Icons on the counts, Key Areas cards and table types | Not built | These are pictorial icons (document, warning triangle, people, speech bubble, leaf, book, link, shield). They aren't among the design system's approved symbols (section 12), and no approved icon files exist. Text labels carry the meaning |
 | Key Areas "Sources" and "Claims & Safety" | "Knowledge Sources", "Claims & Safety Review" | Approved screen names |
 | Key Areas card titles in the serif display face | Archivo heading style from Card | Shared Card component |
 | Arrows (→) on View review tasks and View all review tasks | No arrows | No approved arrow glyph for buttons. The text is unchanged |
-| Counts show "—" | Seed counts ("…" while loading or on error) | Seed data; no em dashes in app copy |
+| Counts show "—" | Seed counts (⋯ while loading, ⚠ on error) | Seed data; approved state symbols; no em dashes in app copy |
 | Count tiles without borders, with icons | MetricTile with its border | Shared MetricTile component |
 | Needs attention as one panel around the heading and table | Heading above a bordered table with a visible caption | Shared DataTable component (caption required for screen readers) |
 | "…" row menu at the end of each row | Not built | New functionality |
@@ -181,7 +181,7 @@ The older `dashboard-1440-*.png`, `dashboard-834-light.png` and `dashboard-320-d
 2. **Key Areas column count:** three at desktop, following the hi-fi. Confirm, and update the open item in `shared/design-tokens/README.md`.
 3. **Empty and loading designs** (provisional on the board). Confirm the message-only treatments, or supply the final ones.
 4. **Error wording** and whether the error state should offer a retry action.
-5. ~~Icon set~~ **Approved by Team 03.** Still needs the icon files added to the repository (section 11).
+5. ~~Icon set~~ **Resolved for state symbols** (section 12): the design system's approved symbols are used. Pictorial icons from the hi-fi still have no approved source.
 6. ~~Header search and profile menu~~ **Approved by Team 03.** Still need the search icon and the profile image or avatar asset (section 11).
 7. ~~"Open questions" count~~ **Approved and implemented** (section 4).
 8. **Approval to connect real data** (Supabase) or add any library. Not started.
@@ -194,9 +194,59 @@ Team 03 approved the final Cuidance icon set, the header search, the profile men
 | Approval | Status | What's needed |
 | --- | --- | --- |
 | Open Questions count | **Implemented** (section 4) | Nothing |
-| Icon set | **Blocked: approved icon files aren't in the repository** | Add the approved icon files to the repository, for example in `shared/brand/icons/`, with their names and approved uses. Icons needed on the Dashboard: search; the four Review Queue counts (content for review, safety checks, partner content, open questions); the six Key Areas (quiz content, guidance content, product information, knowledge sources, partner highlights, claims and safety); the five table types; the "›" card chevron; the reminder panel leaf |
-| Header search | **Blocked: needs the approved search icon** | The search icon file. Then the header search uses the existing SearchField, presentation only. No search behavior, because no search route exists. Also decision 9 (visible label) |
-| Profile menu | **Blocked: needs an approved profile image or avatar asset, and a component** | The hi-fi shows a photo and a menu arrow. Needed: the approved avatar treatment (photo, initials or a generic person icon from the icon set), and what the menu shows when opened. There's no avatar in the component inventory (noted as not on the board in Week 9 Step 5). Without sign-in there's no real user, so a name, initials or photo would be invented |
+| Icon set | **Resolved for state symbols (section 12).** Pictorial icons still have no approved source | The design system's approved symbols are now used. Pictorial icons from the hi-fi (count, Key Areas and table-type icons, the reminder leaf) would need approved artwork files |
+| Header search | **Unresolved** (section 12) | An approved search visual and the visible-label decision. No search route exists |
+| Profile menu | **Unresolved** (section 12) | An approved avatar treatment, an avatar component and the menu contents. No sign-in |
 
 **Where I searched:** the working tree, every remote branch (`main`, `feat/admin-web-dashboard-screen`, `feat/admin-web-route-map`, `feat/admin-web-scaffold`, `deploy-github-pages`, `claude/clever-goldberg-vgmhex`) and the files uploaded in this session. The only icon-like files are the logo package in `shared/brand/logo/` (lockups, app icon, favicons). Those are brand marks, not interface icons. No icons were drawn, borrowed from a library, or made from the logo.
+
+## 12. Approved interface symbols (Week 8 design system)
+
+Team 03 confirmed that the Week 8 design system board is the authority for interface symbols. It approves these text symbols through its **Core UI Components** and **State Key** sections:
+
+| Symbol | Meaning | Board source |
+| --- | --- | --- |
+| ? | Help | Core UI Components: "? Help" |
+| ‹ | Back | Core UI Components: "‹ Back" |
+| ✓ | Selected, Success | State Key: "✓ Selected", "✓ Success" |
+| ⚠ | Error | State Key: "⚠ Error". Form errors: "⚠ Enter a full email address…" |
+| ◆ | Partner, Sponsored | Core UI Components: "◆ Partner content", "◆ Sponsored" |
+| ◌ | Empty | State Key: "◌ Empty" |
+| ⋯ | Loading | State Key: "⋯ Loading" |
+| ◎ | Focus | State Key: "◎ Focus" |
+| □ | Default | State Key: "□ Default" |
+| ⊘ | Disabled | State Key: "⊘ Disabled" |
+
+They're defined once in `shared/content/ui-symbols.ts`. They're text symbols, not icon artwork, so **no SVG files or icon library are needed**, and none were added.
+
+**Rules applied:**
+- Every symbol sits beside visible text, a label or a message.
+- The symbol itself is hidden from screen readers (`aria-hidden`), so it's never the only signal and isn't read out as a character name.
+- No symbol is a control on its own, so the 44 px targets are unchanged.
+
+**On the Dashboard:**
+
+| Symbol | Where | Status |
+| --- | --- | --- |
+| ⋯ Loading | Loading panel ("⋯ Loading review items…") and the four counts while loading | **Implemented.** Replaces "…" |
+| ◌ Empty | Empty panel ("◌ Nothing needs attention right now.") | **Implemented** |
+| ⚠ Error | Error panel, the four counts on error, and the "Needs changes" status label | **Implemented.** The counts used "…" before |
+| ◆ Partner | "Pending disclosure" status label | **Implemented** (already in place, now from the shared file) |
+| ? Help | Not used: the Dashboard hi-fi has no help control | Not applicable. Adding one would be a new feature. `/dev/` already shows "?" on its Help example |
+| ‹ Back | Not used: the Dashboard is the landing page and has no back link | Not applicable. The other screens' "‹ Back to …" links already use it |
+| ✓ Selected | Not used: the Dashboard has no selectable item. The sidebar's active page follows the active-tab rule (pill + blue + label), which has no check mark | Not applicable |
+| ✓ Success | Not used: the Dashboard has no success message | Not applicable |
+| ◎ Focus, □ Default, ⊘ Disabled | Not used on the Dashboard: focus shows as the 2 px ring, and the Dashboard has no disabled controls | Not applicable |
+
+**Shared components that already use these symbols** (unchanged): Toast (✓, ⚠), Field and Checkbox errors (⚠, ✓), DisclosureLabel (◆) and the back links (‹).
+
+**Chevron "›":** the Key Areas cards and the sidebar Content toggle show "›". It isn't in the approved symbol list above, but the board's Core UI Components use it on result-card links ("Why this fits you ›", "View product ›"). It's kept as is, and **needs Team 03 confirmation**.
+
+**Still unresolved: search and profile**
+
+| Item | Status | Why |
+| --- | --- | --- |
+| Header search | **Not implemented** | The hi-fi shows a search field with a magnifier icon and the placeholder "Search content, sources, or tasks…". The magnifier isn't an approved symbol, and there's no approved search icon. The hi-fi field has no visible label, but SearchField always shows one (an open board decision). There's also no search route, so the field would do nothing. Needed: the approved search visual (icon, or a confirmed treatment without one), the label decision, and confirmation that a non-working field is wanted |
+| Profile/avatar | **Not implemented** | The hi-fi shows a photo and a menu arrow. There's no approved avatar treatment (photo, initials or symbol) and no avatar component. Without sign-in there's no real user to show |
+| Profile menu contents | **Not implemented** | Not shown in any supplied source. Nothing was invented |
 
