@@ -192,6 +192,18 @@
   border-color: var(--color-border-strong);
 }
 
+/* Approved state symbol beside its message (board State Key: ◌ Empty, ⋯ Loading) */
+.symbolPanel {
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-12);
+}
+
+.stateSymbol {
+  font: var(--type-heading-4);
+  color: var(--color-ink-muted);
+}
+
 /* Error: Dark Ruby plus an icon and a message */
 .errorPanel {
   flex-direction: row;

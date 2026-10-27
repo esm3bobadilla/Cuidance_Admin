@@ -6,6 +6,7 @@ import {
   type ReviewStatus,
 } from '../../../shared/content/dashboard-review-queue';
 import { adminScreens, type AdminScreenId } from '../../../shared/content/admin-web-screens';
+import { uiSymbols } from '../../../shared/content/ui-symbols';
 import { DataTable } from '../../components/data/DataTable';
 import { MetricTile } from '../../components/data/MetricTile';
 import { ButtonLink } from '../../components/ui/Button';
@@ -20,8 +21,8 @@ const hrefFor = (id: AdminScreenId) => `${process.env.NEXT_PUBLIC_BASE_PATH ?? '
 // PROVISIONAL status treatment (no approved status-to-token mapping yet). Text always shows.
 const statusTreatment: Record<ReviewStatus, { className: string; icon?: string }> = {
   'In review': { className: styles.statusNeutral },
-  'Needs changes': { className: styles.statusError, icon: '⚠' },
-  'Pending disclosure': { className: styles.statusPartner, icon: '◆' },
+  'Needs changes': { className: styles.statusError, icon: uiSymbols.error },
+  'Pending disclosure': { className: styles.statusPartner, icon: uiSymbols.partner },
   'Needs review': { className: styles.statusAlert },
 };
 
@@ -42,6 +43,8 @@ function StatusText({ status }: { status: ReviewStatus }) {
 // Dashboard / Review Queue sections. The state comes from data later; today it's seed data.
 export function DashboardContent({ state }: { state: DashboardState }) {
   const hasCounts = state === 'ready' || state === 'empty';
+  // While loading or on error the counts show the approved state symbol; the message below explains it
+  const unavailableCount = state === 'error' ? uiSymbols.error : uiSymbols.loading;
   const items = state === 'ready' ? needsAttentionSeed : [];
 
   return (
@@ -57,7 +60,7 @@ export function DashboardContent({ state }: { state: DashboardState }) {
               <MetricTile
                 key={count.label}
                 label={count.label}
-                value={hasCounts ? String(state === 'empty' ? 0 : count.value) : '…'}
+                value={hasCounts ? String(state === 'empty' ? 0 : count.value) : unavailableCount}
               />
             ))}
           </div>
@@ -109,7 +112,10 @@ export function DashboardContent({ state }: { state: DashboardState }) {
         </div>
 
         {state === 'loading' && (
-          <p className={styles.statePanel} role="status">
+          <p className={`${styles.statePanel} ${styles.symbolPanel}`} role="status">
+            <span className={styles.stateSymbol} aria-hidden="true">
+              {uiSymbols.loading}
+            </span>
             {copy.states.loading}
           </p>
         )}
@@ -117,7 +123,7 @@ export function DashboardContent({ state }: { state: DashboardState }) {
         {state === 'error' && (
           <p className={`${styles.statePanel} ${styles.errorPanel}`} role="alert">
             <span className={styles.errorIcon} aria-hidden="true">
-              ⚠
+              {uiSymbols.error}
             </span>
             {copy.states.error}
           </p>
@@ -125,7 +131,12 @@ export function DashboardContent({ state }: { state: DashboardState }) {
 
         {state === 'empty' && (
           <div className={`${styles.statePanel} ${styles.emptyPanel}`}>
-            <p>{copy.states.empty}</p>
+            <p className={styles.symbolPanel}>
+              <span className={styles.stateSymbol} aria-hidden="true">
+                {uiSymbols.empty}
+              </span>
+              {copy.states.empty}
+            </p>
             <div>
               <ButtonLink variant="secondary" href={hrefFor('review-tasks')}>
                 {copy.states.emptyAction}
