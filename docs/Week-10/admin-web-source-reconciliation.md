@@ -1,104 +1,123 @@
 # Week 10 Step 2: Admin Web source reconciliation audit
 
-An audit only. It compares the current Team 03 Admin Web hi-fi screen references with the route map built on `feat/admin-web-route-map` (commit `c195ada`). **No application code, routes, navigation, tokens, components or assets were changed.** No pull request has been opened.
+An audit only. It compares the current Team 03 Admin Web hi-fi screen references with the route map on `feat/admin-web-route-map` (routes from commit `c195ada`). **No application code, routes, navigation, tokens, components or assets were changed.** No pull request has been opened.
 
-- **Date:** Oct 27, 2026
+- **Date:** Oct 27, 2026 (revised the same day)
 - **Prepared by:** Claude Code for Team 03. **Needs review by Alyssa and Esme.**
-- **Superseded source:** the older wireframe PDF (`T03_CuidanceAdminWeb_HiFiScreens_v01_ART646.pdf`) is no longer authoritative. Nothing below is based on it alone.
 
-## Sources compared
+## Source rules for this audit
 
-| # | Source | What it contributes |
-| --- | --- | --- |
-| A | **Current hi-fi screen references** (5 images supplied Oct 27, 2026) | Screen names, breadcrumbs, parents, sidebar labels |
-| B | Existing route map (the 13 routes in `admin-web/app/`) | Routes and parents as built |
-| C | `shared/content/admin-web-screens.ts` | Screen names, parents and scope notes as defined |
-| D | Current Admin Web navigation | Dashboard links to each section. Breadcrumb plus "‹ Back to …" link on each page. No sidebar |
-| E | `CLAUDE.md` | Approved scope: quiz content, guidance content, product information, sources, partner highlights, commercial labels, claims and safety notes. Limited Account Support and Content Metrics only |
-| F | `docs/Week-10/route-map.md` | The route tree, mapping and open questions from the first pass |
+1. **The five current hi-fi images are the visual source of truth** for the screens they show. Team 03 can supply only these five in this session.
+2. **For every other screen**, only the approved screen-name list and current CLAUDE.md terminology are used. No layouts, labels, parent relationships or detail screens are taken from anywhere else.
+3. **The older wireframe PDF** (`T03_CuidanceAdminWeb_HiFiScreens_v01_ART646.pdf`) **is not a source.** Nothing in this report depends on it.
+4. **Older labels are not reintroduced:** Product Catalog, Accounts, Metrics and Review Queue don't become standalone navigation items without Team 03 confirmation.
 
-### Which hi-fi references were supplied
+**Approved screen names:** Dashboard, Content, Quiz Content, Guidance Content, Product Information, Knowledge Sources, Partner Highlights, Commercial Content (only if the current source confirms it), Guidance Rules Review, Claims & Safety Review, Content Metrics, Account Support, Review Tasks, Settings.
 
-Twelve screens were named, but **five images** were supplied:
+## Evidence labels
 
-| Image | Screen | Breadcrumb shown | Sidebar shown |
-| --- | --- | --- | --- |
-| A1 | Dashboard / Review Queue (page title "Cuidance Admin Web") | None | Dashboard, Content, Sources, Guidance Rules, Claims & Safety, Metrics, Account Support, Review Tasks, Settings |
-| A2 | Quiz Content | Admin / Content / Quiz Content | Dashboard, Content (Quiz Content, Guidance Content, Care Areas, Resources), People, Settings |
-| A3 | Guidance Content | Admin / Content / Guidance Content | Home, Content (Guidance Content, Resource Topics, Collections, Media Library), Users, Settings, Help |
-| A4 | Product Information | Admin / Content / Product Information | Home, Content (Product Information, Articles, Topics, Collections), Users, Analytics, Settings |
-| A5 | Claims & Safety Review | Admin / Claims & Safety | Home, Content, Claims & Safety, Partners, Insights, Settings |
+| Label | Meaning |
+| --- | --- |
+| **VERIFIED** | Visible in one of the five current hi-fi images |
+| **STRUCTURAL ONLY** | The approved screen name exists, but no current hi-fi image was supplied |
+| **NEEDS TEAM CONFIRMATION** | The current source is missing, or conflicts with the route map |
 
-**No image was supplied** for Knowledge Sources, Partner Highlights, Guidance Rules Review, Content Metrics, Account Support, Review Tasks or Settings / Team Access. For those, the only current evidence is the Dashboard (A1): its sidebar and its "Key Areas" cards (Quiz Content, Guidance Content, Product Information, Sources, Partner Highlights, Claims & Safety).
+## The five current hi-fi images
 
-**The sidebars aren't consistent across the five images.** A1 has the full nine-item sidebar. The other four show shorter, different sets (Home or Dashboard; People or Users; Analytics or Insights; Partners; Help; different Content children). This audit treats **A1 as the navigation reference**, because it's the only complete one and it uses "Dashboard". That choice needs Team 03 confirmation (decision D1).
+| Image | Screen | Page title | Breadcrumb shown | Sidebar shown |
+| --- | --- | --- | --- | --- |
+| A1 | Dashboard | Cuidance Admin Web (eyebrow "INTERNAL TOOL") | None | Dashboard, Content, Sources, Guidance Rules, Claims & Safety, Metrics, Account Support, Review Tasks, Settings |
+| A2 | Quiz Content | Quiz Content | Admin / Content / Quiz Content | Dashboard, Content (Quiz Content, Guidance Content, Care Areas, Resources), People, Settings |
+| A3 | Guidance Content | Guidance Content | Admin / Content / Guidance Content | Home, Content (Guidance Content, Resource Topics, Collections, Media Library), Users, Settings, Help |
+| A4 | Product Information | Product Information | Admin / Content / Product Information | Home, Content (Product Information, Articles, Topics, Collections), Users, Analytics, Settings |
+| A5 | Claims & Safety Review | Claims & Safety Review | Admin / Claims & Safety | Home, Content, Claims & Safety, Partners, Insights, Settings |
+
+Notes on the images:
+
+- **Only the page titles and breadcrumbs are used as verified naming evidence.** The sidebars differ from image to image (Home or Dashboard; People or Users; Analytics or Insights; different Content children), so sidebar labels aren't treated as verified names. A1's sidebar is cited only where it supports a top-level placement, and its short labels (Sources, Guidance Rules, Metrics) aren't adopted.
+- **"Review Queue" appears twice, and neither is a navigation item:** as a section on the Dashboard (A1), and as an in-page tab on Claims & Safety Review (A5, next to Approved, Needs Changes and All Items). It isn't treated as a route.
+- **The detail panels** on A2 (Question Details), A3, A4 (Product details) and A5 (Review Details) are part of those screens, not separate detail screens. No detail routes are proposed.
 
 ## Reconciliation table
 
-Existing breadcrumbs and back links are as built in `c195ada`. Breadcrumbs start with "Dashboard", and the last item is the current page.
+Existing breadcrumbs and back links are as built in `c195ada`. Breadcrumbs start with "Dashboard", and the last item is the current page, not a link.
 
-| Current hi-fi screen name | Existing route | Existing parent | Current breadcrumb | Current back behavior | Match status | Recommended correction | Evidence source |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| Dashboard (Review Queue is a section on it) | `/` | (landing page) | None | None (landing page) | **MATCH** | None for routing. Review Queue stays a section of the Dashboard, not its own route. The hi-fi layout (Review Queue summary, Key Areas, Needs attention) is screen design for a later step | A1; B; C; D |
-| Content (parent) | `/content/` | Dashboard | Dashboard / Content | ‹ Back to Dashboard | **MATCH** (parent) | Keep Content as the parent. The hi-fi shows no Content landing screen, so whether `/content/` stays a page of links needs confirming (D4) | A1 to A4 sidebars; A2 to A4 breadcrumbs; B; C |
-| Quiz Content | `/content/quiz-content/` | Content | Dashboard / Content / Quiz Content | ‹ Back to Content | **MATCH** | Name, route and parent match. Breadcrumb root differs ("Admin" in the hi-fi, see D2). The hi-fi has no back link (see D3) | A2; B; C; E |
-| Guidance Content | None | None | None | None | **MISSING** | Add `/content/guidance-content/` as a Content child, named "Guidance Content". It's in the hi-fi (A1 Key Areas, A2 and A3 sidebars, A3 screen) and in CLAUDE.md scope | A1; A2; A3; E |
-| Product Information | `/content/product-information/` | Content | Dashboard / Content / Product Information | ‹ Back to Content | **MATCH** | Name, route and parent match. Breadcrumb root differs (D2). Don't use "Product Catalog" | A1 Key Areas; A4; B; C; E |
-| Knowledge Sources | `/content/knowledge-sources/` | Content | Dashboard / Content / Knowledge Sources | ‹ Back to Content | **NEEDS TEAM CONFIRMATION** | A1 shows **"Sources" as a top-level sidebar item** and a "Sources" Key Areas card, not "Knowledge Sources" under Content. No Knowledge Sources screen was supplied. Keep the route as is until Team 03 confirms the name and parent (D5) | A1 sidebar and Key Areas; B; C; E ("sources") |
-| Partner Highlights | `/content/partner-highlights/` | Content | Dashboard / Content / Partner Highlights | ‹ Back to Content | **NEEDS TEAM CONFIRMATION** | Name matches the A1 Key Areas card. Its place isn't shown: it's not in A1's sidebar, A5's sidebar has "Partners" instead, and no screen was supplied. Keep as is until its parent is confirmed (D6) | A1 Key Areas; A5 sidebar; B; C; E |
-| Guidance Rules Review | `/guidance-rules-review/` | Dashboard (top-level) | Dashboard / Guidance Rules Review | ‹ Back to Dashboard | **MATCH** (route and parent) | Top-level placement matches A1's sidebar ("Guidance Rules"). No screen was supplied to confirm the page title. Keep "Guidance Rules Review" as the page title. The shorter sidebar label is a navigation question (D7) | A1 sidebar; B; C |
-| Claims & Safety Review | `/claims-safety-review/` | Dashboard (top-level) | Dashboard / Claims & Safety Review | ‹ Back to Dashboard | **UPDATE** (breadcrumb only) | Title, route and top-level parent match A5. Only the breadcrumb differs: the hi-fi shows "Admin / Claims & Safety", with the short label as the last item and "Admin" as the root. Change only after D2 and D7 are decided | A5; A1 sidebar; B; C |
-| Content Metrics | `/content-metrics/` | Dashboard (top-level) | Dashboard / Content Metrics | ‹ Back to Dashboard | **MATCH** (route and parent) | Top-level placement matches A1's sidebar, where the label is **"Metrics"**. No screen was supplied. Keep "Content Metrics" (CLAUDE.md wording). Don't change it to "Metrics" without Team 03 (D7) | A1 sidebar; B; C; E |
-| Account Support | `/account-support/` | Dashboard (top-level) | Dashboard / Account Support | ‹ Back to Dashboard | **MATCH** | Name and top-level placement match A1's sidebar. Don't use "Accounts". (A2 to A4 show "People" or "Users". Those are older or inconsistent labels, not adopted) | A1 sidebar; B; C; E |
-| Review Tasks | `/review-tasks/` | Dashboard (top-level) | Dashboard / Review Tasks | ‹ Back to Dashboard | **MATCH** | Name and placement match A1's sidebar. A1 also links to it from the Review Queue ("View review tasks") and Needs attention ("View all review tasks"), which supports the critical path | A1; B; C |
-| Settings | `/settings/` | Dashboard (top-level) | Dashboard / Settings | ‹ Back to Dashboard | **MATCH** | Name and placement match A1 to A5 | A1 to A5 sidebars; B; C |
-| Team Access (Settings content or subpage) | None | None | None | None | **NEEDS TEAM CONFIRMATION** | No current reference shows Team Access. Don't add a route. If Team 03 confirms it, add it as Settings content (or a Settings subpage), internal team access only (D8) | Named in the request only. Not in A1 to A5 |
-| Commercial Content (existing route, not a current hi-fi screen) | `/content/commercial-content/` | Content | Dashboard / Content / Commercial Content | ‹ Back to Content | **NEEDS TEAM CONFIRMATION** | Not in the current hi-fi list or any image. A1's Partner Highlights card says "Manage partner and sponsored educational content", which may cover it. CLAUDE.md lists "commercial labels" as scope. Keep the route until Team 03 decides whether to keep it, fold it into Partner Highlights, or remove it (D6) | A1 Key Areas; B; C; E |
+| Approved screen name | Evidence | Existing route | Existing parent | Current breadcrumb | Current back behavior | Match status | Recommended correction | Evidence source |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Dashboard | **VERIFIED** | `/` | (landing page) | None | None (landing page) | MATCH | None for routing. A1's layout (Review Queue section, Key Areas, Needs attention) belongs to the screen-build step | A1 |
+| Content | **VERIFIED** (as the parent) | `/content/` | Dashboard | Dashboard / Content | ‹ Back to Dashboard | MATCH | Keep Content as the parent. No Content landing screen is shown, so keeping `/content/` as a page of links needs confirmation (C4) | A2, A3, A4 breadcrumbs |
+| Quiz Content | **VERIFIED** | `/content/quiz-content/` | Content | Dashboard / Content / Quiz Content | ‹ Back to Content | MATCH (breadcrumb root differs) | Name, route and parent match. The verified breadcrumb starts with "Admin" (C2). A2 shows no back link (C3) | A2 |
+| Guidance Content | **VERIFIED** | None | None | None | None | **MISSING** | Add `/content/guidance-content/` under Content, named "Guidance Content", with breadcrumb "… / Content / Guidance Content". Also in CLAUDE.md scope ("guidance content") | A3 (and A1 Key Areas) |
+| Product Information | **VERIFIED** | `/content/product-information/` | Content | Dashboard / Content / Product Information | ‹ Back to Content | MATCH (breadcrumb root differs) | Name, route and parent match. Breadcrumb root as C2 | A4 |
+| Claims & Safety Review | **VERIFIED** | `/claims-safety-review/` | Dashboard (top-level) | Dashboard / Claims & Safety Review | ‹ Back to Dashboard | **UPDATE** (breadcrumb only) | Title, route and top-level parent match. The verified breadcrumb is "Admin / Claims & Safety": a different root, and a short label as the last item. Change after C2 and C5 | A5 |
+| Knowledge Sources | **NEEDS TEAM CONFIRMATION** | `/content/knowledge-sources/` | Content | Dashboard / Content / Knowledge Sources | ‹ Back to Content | Parent not confirmed | The name is approved, but no image shows it. Placing it under Content isn't shown anywhere, and A1 has a top-level "Sources" item. Keep the route unchanged until Team 03 confirms the parent (C6) | Approved name list; CLAUDE.md ("sources"); conflicting placement in A1 |
+| Partner Highlights | **NEEDS TEAM CONFIRMATION** | `/content/partner-highlights/` | Content | Dashboard / Content / Partner Highlights | ‹ Back to Content | Parent not confirmed | The name is approved and appears as an A1 Key Areas card, but no screen and no parent are shown. Placing it under Content was never verified. Keep the route unchanged until Team 03 confirms the parent (C6) | Approved name list; CLAUDE.md; A1 card (name only) |
+| Commercial Content | **NEEDS TEAM CONFIRMATION** | `/content/commercial-content/` | Content | Dashboard / Content / Commercial Content | ‹ Back to Content | Not confirmed by the current source | Approved "only if confirmed by the current source", and none of the five images show it. Recommend removing the route, unless Team 03 confirms it (C7) | Approved name list (conditional); CLAUDE.md ("commercial labels") |
+| Guidance Rules Review | **STRUCTURAL ONLY** | `/guidance-rules-review/` | Dashboard (top-level) | Dashboard / Guidance Rules Review | ‹ Back to Dashboard | MATCH (structure) | Keep as is. No image shows the screen. Its top-level placement is consistent with A1's sidebar | Approved name list; A1 sidebar (placement only) |
+| Content Metrics | **STRUCTURAL ONLY** | `/content-metrics/` | Dashboard (top-level) | Dashboard / Content Metrics | ‹ Back to Dashboard | MATCH (structure) | Keep "Content Metrics" (CLAUDE.md wording). Don't change it to "Metrics" | Approved name list; CLAUDE.md; A1 sidebar (placement only) |
+| Account Support | **STRUCTURAL ONLY** | `/account-support/` | Dashboard (top-level) | Dashboard / Account Support | ‹ Back to Dashboard | MATCH (structure) | Keep as is. Don't use "Accounts" | Approved name list; CLAUDE.md; A1 sidebar |
+| Review Tasks | **STRUCTURAL ONLY** | `/review-tasks/` | Dashboard (top-level) | Dashboard / Review Tasks | ‹ Back to Dashboard | MATCH (structure) | Keep as is. A1's "View review tasks" and "View all review tasks" actions support the Quiz Content to Review Tasks path | Approved name list; A1 sidebar and actions |
+| Settings | **STRUCTURAL ONLY** | `/settings/` | Dashboard (top-level) | Dashboard / Settings | ‹ Back to Dashboard | MATCH (structure) | Keep as is. Settings appears in every sidebar, but no Settings screen was supplied. **No Team Access route**: no current image shows Team Access (C8) | Approved name list; A1 to A5 sidebars (placement only) |
 
 ## Patterns across every screen
 
-| Pattern | Current hi-fi | Existing build | Status |
-| --- | --- | --- | --- |
-| Breadcrumb root | "Admin" on A2 to A5 | "Dashboard" (`/dev/` uses "Admin") | NEEDS TEAM CONFIRMATION (D2) |
-| Last breadcrumb item | Short nav label on A5 ("Claims & Safety"); page name on A2 to A4 | Always the full page name | NEEDS TEAM CONFIRMATION (D7) |
-| Eyebrow | "INTERNAL TOOL" on every screen | "Content" on Content child pages, none elsewhere (the Dashboard has "Internal tool") | UPDATE, recommended with the page-layout step, not the route step |
-| Back link | None. Navigation is by sidebar and breadcrumb | "‹ Back to …" ghost link on every page | NEEDS TEAM CONFIRMATION (D3). Keep the back links until a sidebar exists |
-| Persistent sidebar | Shown on every screen | Not built (not in the component inventory) | Missing, expected. Needs an approved navigation component first |
-| Header search and user menu | Shown on A1, A5 and others | Not built | Out of scope for routes |
+| Pattern | Current hi-fi (A1 to A5) | Existing build | Evidence | Status |
+| --- | --- | --- | --- | --- |
+| Breadcrumb root | "Admin" on A2, A3, A4 and A5 | "Dashboard" (`/dev/` uses "Admin") | VERIFIED | NEEDS TEAM CONFIRMATION (C2). The images show "Admin", while "Dashboard" is the approved label for the landing page |
+| Last breadcrumb item | The page title on A2 to A4. A short label on A5 ("Claims & Safety") | Always the full page title | VERIFIED | NEEDS TEAM CONFIRMATION (C5) |
+| Eyebrow | "INTERNAL TOOL" on all five | "Internal tool" on the Dashboard. "Content" on Content child pages. None elsewhere | VERIFIED | UPDATE, at the screen-build step |
+| Back link | None visible | "‹ Back to …" on every page except the Dashboard | VERIFIED (absence) | NEEDS TEAM CONFIRMATION (C3). Keep them until a sidebar exists |
+| Persistent sidebar | On all five, with different items | Not built (not in the component inventory) | VERIFIED (presence); items inconsistent | Expected gap. Needs an approved navigation component and a confirmed item list (C1) |
 
-## Decisions that need Team 03 confirmation
+## Decisions for Team 03
 
-1. **D1. Navigation reference.** Confirm A1's nine-item sidebar is the approved navigation: Dashboard, Content, Sources, Guidance Rules, Claims & Safety, Metrics, Account Support, Review Tasks, Settings. The other images show different sidebars.
-2. **D2. Breadcrumb root.** "Admin" (hi-fi) or "Dashboard" (current build)?
-3. **D3. Back links.** Keep the "‹ Back to …" links, or rely on the breadcrumb and a future sidebar, as the hi-fi does?
-4. **D4. Content landing page.** Keep `/content/` as a page that links to its children, or make Content only a sidebar group?
-5. **D5. Sources.** "Sources" as a top-level item (A1), or "Knowledge Sources" under Content (current route)? Which name?
-6. **D6. Partner pages.** Where does Partner Highlights sit (under Content, top-level, or a "Partners" group)? Is Commercial Content a separate page, part of Partner Highlights, or removed?
-7. **D7. Short nav labels against page titles.** A1 uses "Guidance Rules", "Claims & Safety" and "Metrics" in the sidebar. A5 uses "Claims & Safety Review" as the page title but "Claims & Safety" in the breadcrumb. Confirm the rule: short labels in navigation and breadcrumbs, full names as page titles? "Metrics" isn't adopted until this is confirmed.
-8. **D8. Team Access.** Is it in scope? If so, as Settings content or a Settings subpage?
-9. **D9. Other Content children.** The images show more children that aren't in the requested list and weren't routed: Care Areas, Resources (A2); Resource Topics, Collections, Media Library (A3); Articles, Topics, Collections (A4). They differ between images. Confirm which, if any, are approved.
+1. **C1. Sidebar items.** The five images show five different sidebars. Which list is approved? Until then, navigation stays Dashboard links plus breadcrumbs and back links.
+2. **C2. Breadcrumb root.** Verified images use "Admin". The build uses "Dashboard". Which one?
+3. **C3. Back links.** Keep "‹ Back to …", or rely on the breadcrumb and a future sidebar, as the images do?
+4. **C4. Content landing page.** Keep `/content/` as a page of links to its children, or make Content only a navigation group?
+5. **C5. Short breadcrumb labels.** A5 ends its breadcrumb with "Claims & Safety", not the page title. Is that the rule for every screen?
+6. **C6. Knowledge Sources and Partner Highlights parents.** Both are currently under Content, which isn't shown in any image. Confirm or move them.
+7. **C7. Commercial Content.** Not in the current source. Keep, fold into Partner Highlights, or remove?
+8. **C8. Team Access.** Not in the current source. No route until confirmed.
+9. **C9. Other Content children in the sidebars.** Care Areas, Resources, Resource Topics, Collections, Media Library, Articles and Topics aren't in the approved list. They aren't routed, and they need confirmation before they are.
 
-## Content-rule flags in the hi-fi references
+## Content-rule flags in the five images
 
 Not routing issues, but they'll matter when these screens are built. Each needs a Team 03 check against CLAUDE.md:
 
 - **A3 Guidance Content:** "Based on dermatology-reviewed educational resources and expert input" and "Reviewed by clinical content lead" may read as a medical-review workflow, which is out of scope.
-- **A2 Quiz Content:** answer options "Understanding a condition or topic" and "Finding care and next steps", and the "Emotional Wellbeing" care area, go beyond hair, skin, makeup and body care.
-- **A4 Product Information:** brand names (Rivermere, Solara, Willow & Oak, Luma). They look like sample names, but CLAUDE.md says no real brand names in guidance. Also "A good option for those looking for…" is close to recommendation wording.
-- **A1, A2, A3, A4:** each screen has a primary action (View review tasks, Add question, Add guidance, Add product information). That's consistent with one primary per screen, but "Add …" actions are editing features, and they aren't built yet.
+- **A2 Quiz Content:** the answers "Understanding a condition or topic" and "Finding care and next steps", and the "Emotional Wellbeing" care area, go beyond hair, skin, makeup and body care.
+- **A4 Product Information:** brand names (Rivermere, Solara, Willow & Oak, Luma) appear. They look like sample names, but CLAUDE.md says no real brand names in guidance. "A good option for those looking for…" is close to recommendation wording.
+- **A1 to A4:** each has one primary action (View review tasks, Add question, Add guidance, Add product information). "Add …" actions are editing features, and they aren't built yet.
 
 ## Summary
 
-| Status | Screens |
+| Evidence | Screens |
 | --- | --- |
-| MATCH | Dashboard, Content (parent), Quiz Content, Product Information, Guidance Rules Review (route and parent), Content Metrics (route and parent), Account Support, Review Tasks, Settings |
-| UPDATE | Claims & Safety Review (breadcrumb only, after D2 and D7) |
+| VERIFIED (5 images) | Dashboard, Quiz Content, Guidance Content, Product Information, Claims & Safety Review. Content is verified as the parent through the A2 to A4 breadcrumbs |
+| STRUCTURAL ONLY | Guidance Rules Review, Content Metrics, Account Support, Review Tasks, Settings |
+| NEEDS TEAM CONFIRMATION | Knowledge Sources (parent), Partner Highlights (parent), Commercial Content (not in source), Team Access (no route) |
+
+| Route status | Screens |
+| --- | --- |
+| MATCH | Dashboard, Content, Quiz Content, Product Information, and the five STRUCTURAL ONLY screens |
+| UPDATE | Claims & Safety Review (breadcrumb, after C2 and C5) |
 | MISSING | Guidance Content |
-| NEEDS TEAM CONFIRMATION | Knowledge Sources, Partner Highlights, Commercial Content, Team Access |
 
-**Is the route map safe to revise?** Yes, with limits:
+## Should the route implementation be revised?
 
-- Adding **Guidance Content** under Content is supported by the current hi-fi and CLAUDE.md. It can be done without waiting.
-- Every other change (Sources, the partner pages, Team Access, breadcrumb root and labels, back links) depends on decisions D1 to D9. It should wait for Team 03.
-- No existing route conflicts with the current hi-fi badly enough to need removal now. The structural pages carry no data, so revising them later is low risk.
-- `docs/Week-10/route-map.md` still cites the older PDF and should be updated in the same revision.
+Yes, in two stages.
+
+**Stage 1. Supported by the current source; can go ahead once approved:**
+
+1. Add **Guidance Content** at `/content/guidance-content/` under Content (VERIFIED in A3).
+2. Update `shared/content/admin-web-screens.ts` and `docs/Week-10/route-map.md` to match. The route map should drop its older-PDF citations and its old open questions, and point to this report.
+
+**Stage 2. Waits for Team 03 decisions C1 to C9:**
+
+- Remove or keep **Commercial Content** (C7).
+- Confirm or move **Knowledge Sources** and **Partner Highlights** (C6).
+- Breadcrumb root and labels (C2, C5), back links (C3), the Content landing page (C4), the sidebar (C1).
+- Team Access (C8) and any other Content children (C9).
+
+The routes are structural only, with no data, so these revisions are low risk. No detail screens should be added yet.
