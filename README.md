@@ -25,7 +25,7 @@ It is not the public app, it is not part of participant testing, and it is not a
 | Design tokens | Done: `shared/design-tokens/` from the Week 8 Step 3 design system board (v04); open items listed in its README |
 | Shared content and quiz rules | Not started |
 | Admin Web framework | Approved: Next.js with TypeScript |
-| Admin Web scaffold | Done: minimal shell with a placeholder dashboard |
+| Admin Web scaffold | Done: shell, dashboard and Week 10 route map (structural screens only, no content or data) |
 | Supabase connection | Not connected yet |
 | Authentication | Not started |
 | Supabase tables | Not started, pending team decision |
@@ -135,10 +135,11 @@ When setup starts, keys go in a `.env` file in the project root. Never commit re
 ```
 Cuidance_Admin/
 ├── admin-web/             Admin Web app for the browser
-│   ├── app/               Pages (`/` dashboard, `/dev` internal component preview, custom 404)
+│   ├── app/               Routes from the Week 10 route map (see `docs/Week-10/route-map.md`), `/dev` component preview, custom 404
+│   │   └── _screens/      Shared structure for the route-map screens (not a route)
 │   └── components/        Shared components: layout, ui, forms, data, feedback
 ├── shared/                Shared content and rules for Admin Web
-│   ├── content/           Result content, safety lines, labels
+│   ├── content/           Admin Web screen names and scope notes; later result content, safety lines, labels
 │   ├── quiz-rules/        Answer cards, mixing rules, delivery rules
 │   ├── design-tokens/     Colors (light and dark), type, spacing, radius, stroke
 │   └── brand/
@@ -148,7 +149,7 @@ Cuidance_Admin/
 │           └── svg/       Wrappers that display the matching PNG
 ├── docs/
 │   ├── wireframes/        Admin Web wireframes (reference only, not app code)
-│   ├── Week-10/           Week 10 demo and validation log, with screenshot evidence
+│   ├── Week-10/           Week 10 demo log, route map and screenshot evidence
 │   └── archived/
 │       └── admin-mobile/  Archived Admin Mobile reference (no active work)
 ├── README.md
