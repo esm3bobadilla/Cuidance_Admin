@@ -23,8 +23,41 @@ p {
   outline-offset: var(--stroke-strong);
 }
 
-.app-header {
-  padding: var(--space-32) var(--layout-outer-margin) 0;
+/* Persistent sidebar beside the page on desktop and tablet; stacked above it on narrow screens */
+.app {
+  display: grid;
+  grid-template-columns: var(--layout-sidebar-width) minmax(0, 1fr);
+  min-height: 100vh;
+}
+
+.app-main {
+  min-width: 0;
+}
+
+/* The main region takes focus only from the skip link, so it needs no ring of its own */
+.app-main:focus {
+  outline: none;
+}
+
+/* Hidden until keyboard focus reaches it */
+.skip-link {
+  position: absolute;
+  top: var(--space-8);
+  left: var(--space-8);
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--size-touch-target);
+  padding: 0 var(--space-16);
+  font: var(--type-link);
+  color: var(--color-accent);
+  background: var(--color-surface);
+  border-radius: var(--radius-small);
+  transform: translateY(-200%);
+}
+
+.skip-link:focus {
+  transform: none;
 }
 
 /*
@@ -97,6 +130,10 @@ p {
 
 /* Mobile: below 768px. Card lists use a 12px gap, sections 24-32px. */
 @media (max-width: 767px) {
+  .app {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
   .shell {
     padding-block: var(--space-24);
     gap: var(--space-32);

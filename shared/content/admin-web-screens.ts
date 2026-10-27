@@ -152,6 +152,27 @@ export const topLevelScreenIds: AdminScreenId[] = [
   'settings',
 ];
 
+// Persistent sidebar (confirmed by Team 03, Week 10 Step 2), in display order.
+// Commercial Content keeps its route but stays out of the sidebar until Team 03 confirms it.
+export type SidebarItem = {
+  id: AdminScreenId;
+  children?: AdminScreenId[];
+};
+
+export const sidebarNav: SidebarItem[] = [
+  { id: 'dashboard' },
+  {
+    id: 'content',
+    children: ['quiz-content', 'guidance-content', 'product-information', 'knowledge-sources', 'partner-highlights'],
+  },
+  { id: 'guidance-rules-review' },
+  { id: 'claims-safety-review' },
+  { id: 'content-metrics' },
+  { id: 'account-support' },
+  { id: 'review-tasks' },
+  { id: 'settings' },
+];
+
 export function childScreens(id: AdminScreenId): AdminScreen[] {
   return Object.values(adminScreens).filter((screen) => screen.parent === id);
 }
