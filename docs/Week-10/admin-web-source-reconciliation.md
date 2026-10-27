@@ -1,8 +1,8 @@
 # Week 10 Step 2: Admin Web source reconciliation audit
 
-An audit only. It compares the current Team 03 Admin Web hi-fi screen references with the route map on `feat/admin-web-route-map` (routes from commit `c195ada`). **No application code, routes, navigation, tokens, components or assets were changed.** No pull request has been opened.
+It compares the current Team 03 Admin Web hi-fi screen references with the route map on `feat/admin-web-route-map` (routes from commit `c195ada`). The audit itself changed no code. **Stage 1 has since been implemented:** the Guidance Content route was added. Nothing else changed: no other routes, navigation, breadcrumb wording, back links, tokens, components or assets. No pull request has been opened.
 
-- **Date:** Oct 27, 2026 (revised the same day)
+- **Date:** Oct 27, 2026 (revised the same day; Stage 1 implemented the same day)
 - **Prepared by:** Claude Code for Team 03. **Needs review by Alyssa and Esme.**
 
 ## Source rules for this audit
@@ -47,7 +47,7 @@ Existing breadcrumbs and back links are as built in `c195ada`. Breadcrumbs start
 | Dashboard | **VERIFIED** | `/` | (landing page) | None | None (landing page) | MATCH | None for routing. A1's layout (Review Queue section, Key Areas, Needs attention) belongs to the screen-build step | A1 |
 | Content | **VERIFIED** (as the parent) | `/content/` | Dashboard | Dashboard / Content | ‹ Back to Dashboard | MATCH | Keep Content as the parent. No Content landing screen is shown, so keeping `/content/` as a page of links needs confirmation (C4) | A2, A3, A4 breadcrumbs |
 | Quiz Content | **VERIFIED** | `/content/quiz-content/` | Content | Dashboard / Content / Quiz Content | ‹ Back to Content | MATCH (breadcrumb root differs) | Name, route and parent match. The verified breadcrumb starts with "Admin" (C2). A2 shows no back link (C3) | A2 |
-| Guidance Content | **VERIFIED** | None | None | None | None | **MISSING** | Add `/content/guidance-content/` under Content, named "Guidance Content", with breadcrumb "… / Content / Guidance Content". Also in CLAUDE.md scope ("guidance content") | A3 (and A1 Key Areas) |
+| Guidance Content | **VERIFIED** | `/content/guidance-content/` (**implemented Oct 27, 2026**) | Content | Dashboard / Content / Guidance Content | ‹ Back to Content | **MATCH (implemented)** | Done. Title "Guidance Content", under Content, second after Quiz Content. The scope note is A3's description. Breadcrumb root (C2) and back link (C3) follow the same shared pattern as every other screen until those are decided | A3 (and A1 Key Areas, A2 sidebar order) |
 | Product Information | **VERIFIED** | `/content/product-information/` | Content | Dashboard / Content / Product Information | ‹ Back to Content | MATCH (breadcrumb root differs) | Name, route and parent match. Breadcrumb root as C2 | A4 |
 | Claims & Safety Review | **VERIFIED** | `/claims-safety-review/` | Dashboard (top-level) | Dashboard / Claims & Safety Review | ‹ Back to Dashboard | **UPDATE** (breadcrumb only) | Title, route and top-level parent match. The verified breadcrumb is "Admin / Claims & Safety": a different root, and a short label as the last item. Change after C2 and C5 | A5 |
 | Knowledge Sources | **NEEDS TEAM CONFIRMATION** | `/content/knowledge-sources/` | Content | Dashboard / Content / Knowledge Sources | ‹ Back to Content | Parent not confirmed | The name is approved, but no image shows it. Placing it under Content isn't shown anywhere, and A1 has a top-level "Sources" item. Keep the route unchanged until Team 03 confirms the parent (C6) | Approved name list; CLAUDE.md ("sources"); conflicting placement in A1 |
@@ -100,24 +100,24 @@ Not routing issues, but they'll matter when these screens are built. Each needs 
 
 | Route status | Screens |
 | --- | --- |
-| MATCH | Dashboard, Content, Quiz Content, Product Information, and the five STRUCTURAL ONLY screens |
+| MATCH | Dashboard, Content, Quiz Content, Guidance Content (implemented Oct 27, 2026), Product Information, and the five STRUCTURAL ONLY screens |
 | UPDATE | Claims & Safety Review (breadcrumb, after C2 and C5) |
-| MISSING | Guidance Content |
+| MISSING | None |
 
 ## Should the route implementation be revised?
 
 Yes, in two stages.
 
-**Stage 1. Supported by the current source; can go ahead once approved:**
+**Stage 1. Done (Oct 27, 2026).**
 
-1. Add **Guidance Content** at `/content/guidance-content/` under Content (VERIFIED in A3).
-2. Update `shared/content/admin-web-screens.ts` and `docs/Week-10/route-map.md` to match. The route map should drop its older-PDF citations and its old open questions, and point to this report.
+1. **Guidance Content** added at `/content/guidance-content/` under Content (VERIFIED in A3). Defined in `shared/content/admin-web-screens.ts`, with the route file `admin-web/app/content/guidance-content/page.tsx`.
+2. **Docs updated:** `docs/Week-10/route-map.md` no longer cites the older PDF. It lists the evidence for each screen and points to this report for the open decisions.
 
-**Stage 2. Waits for Team 03 decisions C1 to C9:**
+**Stage 2. Still waiting for Team 03 decisions C1 to C9.** Nothing here has changed:
 
-- Remove or keep **Commercial Content** (C7).
-- Confirm or move **Knowledge Sources** and **Partner Highlights** (C6).
+- Remove or keep **Commercial Content** (C7). Still NEEDS TEAM CONFIRMATION.
+- Confirm or move **Knowledge Sources** and **Partner Highlights** (C6). Still NEEDS TEAM CONFIRMATION.
 - Breadcrumb root and labels (C2, C5), back links (C3), the Content landing page (C4), the sidebar (C1).
-- Team Access (C8) and any other Content children (C9).
+- Team Access (C8) and any other Content children (C9). Still NEEDS TEAM CONFIRMATION.
 
 The routes are structural only, with no data, so these revisions are low risk. No detail screens should be added yet.

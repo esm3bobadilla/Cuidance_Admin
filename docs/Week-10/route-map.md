@@ -3,13 +3,16 @@
 A structural navigation pass. Each approved Admin Web screen now has a Next.js route that shows only its title, its parent (breadcrumb), a short scope note and working links. **No screen content, data, Supabase, authentication or backend logic was built.**
 
 - **Branch:** `feat/admin-web-route-map`, from `main` at `3df35a0`
-- **Date:** Oct 27, 2026
-- **Prepared by:** Claude Code for Team 03. **Needs review by Alyssa and Esme**, especially the open questions at the end.
+- **Date:** Oct 27, 2026 (Guidance Content added the same day)
+- **Prepared by:** Claude Code for Team 03. **Needs review by Alyssa and Esme**, especially the open decisions in `docs/Week-10/admin-web-source-reconciliation.md`.
 
 ## Sources
 
-- The screen list and names in the Week 10 Step 2 request, which match the terms in CLAUDE.md (Product Information, Partner Highlights, Commercial Content, Account Support, Content Metrics).
-- The Admin Web hi-fi wireframes (`T03_CuidanceAdminWeb_HiFiScreens_v01_ART646.pdf`), checked for names and hierarchy. **The PDF has no text layer, and its small text is pixelated in the file itself**, so wireframe names below are best readings and are marked "(best reading)" where unsure. Where the request and the wireframes differ, the request was followed and the difference is listed under "Open questions for Team 03".
+- **The five current Team 03 hi-fi screen images** (Dashboard, Quiz Content, Guidance Content, Product Information, Claims & Safety Review). They are the visual source of truth for those screens.
+- **For every other screen,** the approved screen-name list and current CLAUDE.md terminology only.
+- **The older wireframe PDF** (`T03_CuidanceAdminWeb_HiFiScreens_v01_ART646.pdf`) **is no longer a source.** The first version of this route map used it. The open questions that came from it are replaced by the reconciliation report.
+
+`docs/Week-10/admin-web-source-reconciliation.md` holds the full comparison, the evidence label for each screen, and the decisions waiting on Team 03.
 
 ## 1. Route map
 
@@ -19,6 +22,7 @@ Dashboard is the landing page. Content is the only parent with child pages.
 /                                  Dashboard
 ├── /content/                      Content
 │   ├── /content/quiz-content/          Quiz Content
+│   ├── /content/guidance-content/      Guidance Content
 │   ├── /content/product-information/   Product Information
 │   ├── /content/knowledge-sources/     Knowledge Sources
 │   ├── /content/partner-highlights/    Partner Highlights
@@ -35,23 +39,39 @@ Unchanged and outside the route map: `/dev/` (internal component preview, reacha
 
 On GitHub Pages every path starts with `/Cuidance_Admin` (for example `/Cuidance_Admin/content/quiz-content/`).
 
-## 2. Wireframe screens and routes
+## 2. Screens, routes and evidence
 
-| Screen (route name) | Route | Parent | File | Wireframe name or group |
+Evidence labels come from the reconciliation report: **VERIFIED** (visible in a current hi-fi image), **STRUCTURAL ONLY** (approved name, no current image) and **NEEDS TEAM CONFIRMATION** (the source is missing or conflicts with the route).
+
+| Screen | Route | Parent | File | Evidence |
 | --- | --- | --- | --- | --- |
-| Dashboard | `/` | (landing page) | `admin-web/app/page.tsx` | Dashboard group: Review Queue (default view) |
-| Content | `/content/` | Dashboard | `admin-web/app/content/page.tsx` | "Content" in the sidebar (parent item) |
-| Quiz Content | `/content/quiz-content/` | Content | `admin-web/app/content/quiz-content/page.tsx` | Quiz Content |
-| Product Information | `/content/product-information/` | Content | `admin-web/app/content/product-information/page.tsx` | **Product Catalog** |
-| Knowledge Sources | `/content/knowledge-sources/` | Content | `admin-web/app/content/knowledge-sources/page.tsx` | Knowledge Sources |
-| Partner Highlights | `/content/partner-highlights/` | Content | `admin-web/app/content/partner-highlights/page.tsx` | **Partner & Commercial Content: Highlights** |
-| Commercial Content | `/content/commercial-content/` | Content | `admin-web/app/content/commercial-content/page.tsx` | **Partner & Commercial Content: Management** |
-| Guidance Rules Review | `/guidance-rules-review/` | Dashboard | `admin-web/app/guidance-rules-review/page.tsx` | **Guidance Rules** (sidebar); Guidance Correction Detail (best reading) |
-| Claims & Safety Review | `/claims-safety-review/` | Dashboard | `admin-web/app/claims-safety-review/page.tsx` | **Claims & Safety** (sidebar); Claim Review Detail |
-| Content Metrics | `/content-metrics/` | Dashboard | `admin-web/app/content-metrics/page.tsx` | **Metrics**, under Dashboard; App Activity Report (best reading) |
-| Account Support | `/account-support/` | Dashboard | `admin-web/app/account-support/page.tsx` | **Accounts**, under Settings ("Support page · internal only", best reading) |
-| Review Tasks | `/review-tasks/` | Dashboard | `admin-web/app/review-tasks/page.tsx` | **Review Tasks**, under Dashboard; Review Task Detail |
-| Settings | `/settings/` | Dashboard | `admin-web/app/settings/page.tsx` | Settings (parent of Accounts and Team Access) |
+| Dashboard | `/` | (landing page) | `admin-web/app/page.tsx` | VERIFIED |
+| Content | `/content/` | Dashboard | `admin-web/app/content/page.tsx` | VERIFIED as the parent (breadcrumbs on the Content screens) |
+| Quiz Content | `/content/quiz-content/` | Content | `admin-web/app/content/quiz-content/page.tsx` | VERIFIED |
+| Guidance Content | `/content/guidance-content/` | Content | `admin-web/app/content/guidance-content/page.tsx` | VERIFIED. **Added Oct 27, 2026** |
+| Product Information | `/content/product-information/` | Content | `admin-web/app/content/product-information/page.tsx` | VERIFIED |
+| Knowledge Sources | `/content/knowledge-sources/` | Content | `admin-web/app/content/knowledge-sources/page.tsx` | NEEDS TEAM CONFIRMATION (parent) |
+| Partner Highlights | `/content/partner-highlights/` | Content | `admin-web/app/content/partner-highlights/page.tsx` | NEEDS TEAM CONFIRMATION (parent) |
+| Commercial Content | `/content/commercial-content/` | Content | `admin-web/app/content/commercial-content/page.tsx` | NEEDS TEAM CONFIRMATION (not in the current source) |
+| Guidance Rules Review | `/guidance-rules-review/` | Dashboard | `admin-web/app/guidance-rules-review/page.tsx` | STRUCTURAL ONLY |
+| Claims & Safety Review | `/claims-safety-review/` | Dashboard | `admin-web/app/claims-safety-review/page.tsx` | VERIFIED (breadcrumb wording waits on a Team 03 decision) |
+| Content Metrics | `/content-metrics/` | Dashboard | `admin-web/app/content-metrics/page.tsx` | STRUCTURAL ONLY |
+| Account Support | `/account-support/` | Dashboard | `admin-web/app/account-support/page.tsx` | STRUCTURAL ONLY |
+| Review Tasks | `/review-tasks/` | Dashboard | `admin-web/app/review-tasks/page.tsx` | STRUCTURAL ONLY |
+| Settings | `/settings/` | Dashboard | `admin-web/app/settings/page.tsx` | STRUCTURAL ONLY. No Team Access route |
+
+### Guidance Content against its hi-fi reference
+
+| Element | Hi-fi reference | Built | Note |
+| --- | --- | --- | --- |
+| Title | Guidance Content | Guidance Content | Matches |
+| Parent | Content (breadcrumb "Admin / Content / Guidance Content") | Content | Matches |
+| Order under Content | After Quiz Content (Quiz Content sidebar and Dashboard Key Areas) | Second, after Quiz Content | Matches |
+| Description | "Review educational articles, care guidance, and explanations that help people make better-informed choices." | Same text, as the scope note | Matches |
+| Breadcrumb root | Admin | Dashboard | Kept the same as every other screen. Breadcrumb wording isn't changed for one screen (decision C2) |
+| Eyebrow | INTERNAL TOOL | Content | Same pattern as the other Content pages (screen-build step) |
+| Back link | None shown | ‹ Back to Content | Kept the same as every other screen (decision C3) |
+| Search, status filter, "Add guidance", table, detail panel | Shown | Not built | Data, editing and detail views are out of scope for this pass |
 
 Names, parents and scope notes are defined once in `shared/content/admin-web-screens.ts`. Every route file renders the same structure through `admin-web/app/_screens/ScreenPage.tsx`, which only combines the existing PageHeader, Breadcrumb, Card and ButtonLink components. The `_screens` folder is private, so Next.js doesn't treat it as a route.
 
@@ -75,7 +95,7 @@ No sidebar or tab bar was built: navigation components aren't in the approved co
 | Parent | Children |
 | --- | --- |
 | Dashboard | Content, Guidance Rules Review, Claims & Safety Review, Content Metrics, Account Support, Review Tasks, Settings |
-| Content | Quiz Content, Product Information, Knowledge Sources, Partner Highlights, Commercial Content |
+| Content | Quiz Content, Guidance Content, Product Information, Knowledge Sources, Partner Highlights, Commercial Content |
 
 **What each screen shows:**
 
@@ -83,7 +103,7 @@ No sidebar or tab bar was built: navigation components aren't in the approved co
 | --- | --- | --- | --- | --- |
 | Dashboard | (none) | Internal tool | (none) | Open link to each top-level section |
 | Content | Dashboard / Content | (none) | ‹ Back to Dashboard | Open link to each child page |
-| Content child pages (5) | Dashboard / Content / *page* | Content | ‹ Back to Content | Quiz Content also links to Review Tasks |
+| Content child pages (6) | Dashboard / Content / *page* | Content | ‹ Back to Content | Quiz Content also links to Review Tasks |
 | Other top-level pages (6) | Dashboard / *page* | (none) | ‹ Back to Dashboard | (none) |
 
 The last breadcrumb item is the current page (`aria-current="page"`, not a link). Back links use the ghost button style, and Open and Go to links use the secondary style. No structural page has a primary button.
@@ -99,27 +119,16 @@ The last breadcrumb item is the current page (`aria-current="page"`, not a link)
 
 Tested by clicking through in both builds (site root and `/Cuidance_Admin/`). Every step lands on the expected page.
 
-## 5. Open questions for Team 03
+## 5. Open decisions for Team 03
 
-Each one is an ambiguity between the wireframes and the requested route list. The routes follow the request until Team 03 decides.
-
-1. **Product Information or Product Catalog.** The wireframe names the screen "Product Catalog". The route uses "Product Information" (CLAUDE.md and the request).
-2. **Partner Highlights and Commercial Content: one item or two.** The wireframe has one sidebar item, "Partner & Commercial Content", with two views (Highlights and Management). The routes are two separate Content children, as requested.
-3. **The "Review" suffix.** The wireframe sidebar says "Guidance Rules" and "Claims & Safety". The routes say "Guidance Rules Review" and "Claims & Safety Review".
-4. **Where Review Tasks and Content Metrics sit.** In the wireframe, Review Tasks and Metrics are under Dashboard (Dashboard > Review Queue, Review Tasks, Metrics). The routes make them top-level items, and the metrics screen is named "Content Metrics".
-5. **Where Account Support sits.** In the wireframe, "Accounts" is under Settings. The route is a top-level "Account Support" item.
-6. **Team Access.** The wireframe has a Team Access screen under Settings. It isn't in the requested list, so no route was made. Confirm whether it's in scope, and that it's internal team access only, not public account management.
-7. **Review Queue.** The wireframe shows Review Queue as the Dashboard's default view. The route map treats it as the Dashboard (`/`), with no separate route.
-8. **Detail and sub-screens.** The wireframes include detail and sub-screens with no route yet: Quiz Question Detail, Branch & Routing Rules, Quiz Configuration, Result Content Record, a guest and account status screen (best reading), Guidance Correction Detail, Claim Review Detail, Review Task Detail and App Activity Report. They need routes when their screens are built. Names need the source file, because the PDF text is unreadable at that size.
-9. **Breadcrumb root label.** The wireframe top bar appears to start with "Admin". The routes start with "Dashboard", because it's the landing page. `/dev/` still starts with "Admin". Pick one.
-10. **Navigation component.** The wireframes show a persistent sidebar. It isn't in the approved component inventory, so it wasn't built. Navigation works through the Dashboard and Content links and the back links for now.
+The open questions from the first version came from the older wireframe PDF, so they've been removed. The current open decisions (C1 to C9) are in `docs/Week-10/admin-web-source-reconciliation.md`. Still open: the sidebar items, breadcrumb root and labels, back links, the Content landing page, the parents of Knowledge Sources and Partner Highlights, Commercial Content, Team Access, and any other Content children.
 
 ## Verification
 
 | Check | Result |
 | --- | --- |
 | TypeScript (`npx tsc --noEmit`) | Passed |
-| `npm run build` | Passed. 13 route-map screens plus `/dev` and `/_not-found` exported as static pages |
+| `npm run build` | Passed. 14 route-map screens (13 at first, plus Guidance Content), `/dev` and `/_not-found` exported as static pages |
 | GitHub Pages build (`GITHUB_PAGES=true`) | Passed. Every link includes `/Cuidance_Admin/` |
 | Every route loads | 240 browser loads: 2 builds × 15 pages × 4 widths × 2 modes. Every route returned 200 (the 404 page returned 404) with the right title |
 | `npm run dev` | All 15 paths load with the right title. No console errors in light or dark mode |
@@ -134,6 +143,7 @@ Each one is an ambiguity between the wireframes and the requested route list. Th
 | Primary buttons | At most one per page (none on the structural pages) |
 | JavaScript errors | None |
 | Wording | No banned words, em dashes or `#` links. "Diagnosis" appears only in the boundary note "No diagnosis or medical review" and the existing `/dev/` helper text |
+| Guidance Content (added Oct 27, 2026) | 16 loads: 2 builds × 4 widths (1440, 834, 390, 320) × light and dark. Right title, breadcrumb and back link, no overflow, no target under 44 px, no errors. Click-through Dashboard → Content → Guidance Content → Back to Content works in both builds. Content lists it second, after Quiz Content. Keyboard: Dashboard, Content, Back to Content, each with the focus ring |
 | Dependencies | None added. `package.json` and the lockfile are unchanged |
 | Tokens, logo, favicon, components | Unchanged |
 
@@ -144,7 +154,9 @@ Screenshots in `docs/Week-10/evidence/`:
 | File | What it shows |
 | --- | --- |
 | `routes-dashboard-1440-light.png` | Dashboard with links to each section |
-| `routes-content-1440-light.png`, `routes-content-1440-dark.png` | Content parent page, both modes |
+| `routes-content-1440-light.png`, `routes-content-1440-dark.png` | Content parent page with all six children, both modes |
+| `routes-guidance-content-1440-light.png`, `routes-guidance-content-1440-dark.png` | Guidance Content on desktop, both modes |
+| `routes-guidance-content-320-dark.png` | Guidance Content at 320 px |
 | `routes-quiz-content-320-dark.png` | Quiz Content child page at 320 px |
 | `routes-review-tasks-1440-light.png` | Review Tasks top-level page |
 | `routes-claims-safety-review-320-dark.png` | Claims & Safety Review at 320 px |

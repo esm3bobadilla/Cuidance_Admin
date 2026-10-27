@@ -10,6 +10,7 @@ export type AdminScreenId =
   | 'dashboard'
   | 'content'
   | 'quiz-content'
+  | 'guidance-content'
   | 'product-information'
   | 'knowledge-sources'
   | 'partner-highlights'
@@ -54,6 +55,14 @@ export const adminScreens: Record<AdminScreenId, AdminScreen> = {
     parent: 'content',
     scopeNote: 'Questions, answer cards and mixing rules for the Cuidance quiz.',
     related: ['review-tasks'],
+  },
+  // Visually verified against the current Guidance Content hi-fi reference (Week 10 Step 2)
+  'guidance-content': {
+    id: 'guidance-content',
+    name: 'Guidance Content',
+    path: '/content/guidance-content/',
+    parent: 'content',
+    scopeNote: 'Review educational articles, care guidance, and explanations that help people make better-informed choices.',
   },
   'product-information': {
     id: 'product-information',
