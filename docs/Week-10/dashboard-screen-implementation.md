@@ -3,7 +3,7 @@
 The first complete Admin Web screen. It's built from the Team 03 hi-fi reference with **seed data only**: no Supabase, sign-in or live content.
 
 - **Branch:** `feat/admin-web-dashboard-screen`, from `main` at `3c0a7f3` (after PR #7)
-- **Date:** Oct 27, 2026
+- **Date:** Oct 27, 2026 (updated the same day for the Team 03 approvals in section 11)
 - **Route:** `/` (Dashboard, the landing page)
 - **Prepared by:** Claude Code for Team 03. **Needs review by Alyssa and Esme.** Items marked PROVISIONAL need a Team 03 decision.
 
@@ -52,14 +52,23 @@ There's no breadcrumb, as in the hi-fi: the Dashboard is the landing page.
 
 **Where it lives:** `shared/content/dashboard-review-queue.ts`, with the screen's wording. It's sample data for the first implementation only.
 
-**Review Queue counts:** fixed seed values, not calculated. No review logic was added.
+**Review Queue counts:**
 
-| Count | Seed value |
-| --- | --- |
-| Content for review | 3 |
-| Safety checks | 1 |
-| Partner content | 1 |
-| Open questions | 0 |
+| Count | Value | How it's set |
+| --- | --- | --- |
+| Content for review | 3 | Fixed seed value |
+| Safety checks | 1 | Fixed seed value |
+| Partner content | 1 | Fixed seed value |
+| Open questions | 0 | **Counted from the seed** (rule below) |
+
+**Open questions counting rule** (Team 03 approved the count, Oct 27, 2026):
+
+1. Every seed item has an explicit `openQuestion` field, `true` or `false`.
+2. **Open questions = the number of seed items with `openQuestion: true`.** Nothing else counts: not the item's type, status, priority or wording.
+3. When no item is marked, the count is **0**. That's the case today: all five seed items are `openQuestion: false`.
+4. The empty state still shows 0, and loading and error still show "…".
+
+The rule is in `openQuestionCount()` in `shared/content/dashboard-review-queue.ts`. It was checked with the shipped seed (0), no items (0), two items marked (2) and all five marked (5). No other review logic was added.
 
 **Needs attention rows:** the types, statuses and priorities are the hi-fi's five rows, in the same order. The hi-fi shows "—" for item, assignee and date, so these are filled with sample values:
 
@@ -97,9 +106,9 @@ There's no breadcrumb, as in the hi-fi: the Dashboard is the landing page.
 | --- | --- | --- |
 | Sidebar labels "Sources", "Guidance Rules", "Claims & Safety", "Metrics" | Full approved names | Team 03 confirmed sidebar labels (Week 10 Step 2) |
 | Sidebar "Admin" subtitle under the logo, illustration, tagline | Not shown | No approved assets; logo files unchanged |
-| Header search field and profile photo menu | Not built | Search is new functionality; profiles need sign-in |
+| Header search field and profile photo menu | Not built | **Approved by Team 03 (Oct 27, 2026), but blocked:** the approved search icon and profile image or avatar assets aren't in the repository. See section 11 |
 | Decorative leaf and bottle illustrations | Not built | No approved illustration assets |
-| Icons on the counts, Key Areas cards and table types | Not built | No approved icon set. Text labels carry the meaning |
+| Icons on the counts, Key Areas cards and table types | Not built | **Icon set approved by Team 03 (Oct 27, 2026), but the files aren't in the repository.** Text labels carry the meaning until they're added. See section 11 |
 | Key Areas "Sources" and "Claims & Safety" | "Knowledge Sources", "Claims & Safety Review" | Approved screen names |
 | Key Areas card titles in the serif display face | Archivo heading style from Card | Shared Card component |
 | Arrows (→) on View review tasks and View all review tasks | No arrows | No approved arrow glyph for buttons. The text is unchanged |
@@ -171,7 +180,22 @@ The older `dashboard-1440-*.png`, `dashboard-834-light.png` and `dashboard-320-d
 2. **Key Areas column count:** three at desktop, following the hi-fi. Confirm, and update the open item in `shared/design-tokens/README.md`.
 3. **Empty and loading designs** (provisional on the board). Confirm the message-only treatments, or supply the final ones.
 4. **Error wording** and whether the error state should offer a retry action.
-5. **Icon set** for counts, cards and table types.
-6. **Header search and profile menu** from the hi-fi: in scope later, or removed?
-7. **"Open questions" count:** what it counts, before real data is connected.
+5. ~~Icon set~~ **Approved by Team 03.** Still needs the icon files added to the repository (section 11).
+6. ~~Header search and profile menu~~ **Approved by Team 03.** Still need the search icon and the profile image or avatar asset (section 11).
+7. ~~"Open questions" count~~ **Approved and implemented** (section 4).
 8. **Approval to connect real data** (Supabase) or add any library. Not started.
+9. **Header search label.** SearchField always shows a visible label (board rule). The hi-fi field shows only placeholder text. Confirm whether the header search may hide its label (an open item in `shared/design-tokens/README.md`).
+
+## 11. Team 03 approvals (Oct 27, 2026) and blocked assets
+
+Team 03 approved the final Cuidance icon set, the header search, the profile menu and the Open Questions count.
+
+| Approval | Status | What's needed |
+| --- | --- | --- |
+| Open Questions count | **Implemented** (section 4) | Nothing |
+| Icon set | **Blocked: approved icon files aren't in the repository** | Add the approved icon files to the repository, for example in `shared/brand/icons/`, with their names and approved uses. Icons needed on the Dashboard: search; the four Review Queue counts (content for review, safety checks, partner content, open questions); the six Key Areas (quiz content, guidance content, product information, knowledge sources, partner highlights, claims and safety); the five table types; the "›" card chevron; the reminder panel leaf |
+| Header search | **Blocked: needs the approved search icon** | The search icon file. Then the header search uses the existing SearchField, presentation only. No search behavior, because no search route exists. Also decision 9 (visible label) |
+| Profile menu | **Blocked: needs an approved profile image or avatar asset, and a component** | The hi-fi shows a photo and a menu arrow. Needed: the approved avatar treatment (photo, initials or a generic person icon from the icon set), and what the menu shows when opened. There's no avatar in the component inventory (noted as not on the board in Week 9 Step 5). Without sign-in there's no real user, so a name, initials or photo would be invented |
+
+**Where I searched:** the working tree, every remote branch (`main`, `feat/admin-web-dashboard-screen`, `feat/admin-web-route-map`, `feat/admin-web-scaffold`, `deploy-github-pages`, `claude/clever-goldberg-vgmhex`) and the files uploaded in this session. The only icon-like files are the logo package in `shared/brand/logo/` (lockups, app icon, favicons). Those are brand marks, not interface icons. No icons were drawn, borrowed from a library, or made from the logo.
+

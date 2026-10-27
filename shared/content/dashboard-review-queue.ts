@@ -4,7 +4,8 @@
  * Source: the Team 03 Dashboard / Review Queue hi-fi screen
  * (T03_W09_AdminWeb_HiFiScreen_DashboardReviewQueue_Cuidance_v01_ART646).
  * Wording is taken from the hi-fi. The review items are SAMPLE DATA for the first
- * implementation only. Counts are fixed seed values, not calculated, and no review
+ * implementation only. Three Review Queue counts are fixed seed values. Open questions
+ * is counted from the seed items explicitly marked openQuestion: true. No other review
  * logic lives here. Supabase replaces this file when Team 03 starts that step.
  */
 
@@ -53,14 +54,6 @@ export const dashboardKeyAreas: { id: AdminScreenId; description: string }[] = [
   { id: 'claims-safety-review', description: 'Review claims, safety notes, and required disclosures.' },
 ];
 
-// Review Queue summary counts (fixed seed values)
-export const reviewQueueSummary: { label: string; value: number }[] = [
-  { label: 'Content for review', value: 3 },
-  { label: 'Safety checks', value: 1 },
-  { label: 'Partner content', value: 1 },
-  { label: 'Open questions', value: 0 },
-];
-
 // Status and priority labels as shown in the hi-fi
 export type ReviewStatus = 'In review' | 'Needs changes' | 'Pending disclosure' | 'Needs review';
 export type ReviewPriority = 'High' | 'Medium' | 'Low';
@@ -73,6 +66,8 @@ export type ReviewItem = {
   priority: ReviewPriority;
   assignedTo: string;
   updated: string;
+  // Explicitly marks an item as an open question. Only these count toward "Open questions".
+  openQuestion: boolean;
 };
 
 // Types, statuses and priorities follow the hi-fi rows. Item titles come from the
@@ -86,6 +81,7 @@ export const needsAttentionSeed: ReviewItem[] = [
     priority: 'High',
     assignedTo: 'Reviewer A',
     updated: 'Oct 26, 2026',
+    openQuestion: false,
   },
   {
     id: 'seed-2',
@@ -95,6 +91,7 @@ export const needsAttentionSeed: ReviewItem[] = [
     priority: 'High',
     assignedTo: 'Reviewer B',
     updated: 'Oct 26, 2026',
+    openQuestion: false,
   },
   {
     id: 'seed-3',
@@ -104,6 +101,7 @@ export const needsAttentionSeed: ReviewItem[] = [
     priority: 'Medium',
     assignedTo: 'Reviewer A',
     updated: 'Oct 25, 2026',
+    openQuestion: false,
   },
   {
     id: 'seed-4',
@@ -113,6 +111,7 @@ export const needsAttentionSeed: ReviewItem[] = [
     priority: 'Medium',
     assignedTo: 'Reviewer C',
     updated: 'Oct 24, 2026',
+    openQuestion: false,
   },
   {
     id: 'seed-5',
@@ -122,5 +121,19 @@ export const needsAttentionSeed: ReviewItem[] = [
     priority: 'Low',
     assignedTo: 'Reviewer B',
     updated: 'Oct 23, 2026',
+    openQuestion: false,
   },
+];
+
+// Open questions: the number of seed items explicitly marked openQuestion: true.
+// No seed item is an open question today, so the count is 0.
+export const openQuestionCount = (items: ReviewItem[]) => items.filter((item) => item.openQuestion).length;
+
+// Review Queue summary counts. The first three are fixed seed values (not calculated).
+// Open questions is counted from the seed rows with openQuestion: true.
+export const reviewQueueSummary: { label: string; value: number }[] = [
+  { label: 'Content for review', value: 3 },
+  { label: 'Safety checks', value: 1 },
+  { label: 'Partner content', value: 1 },
+  { label: 'Open questions', value: openQuestionCount(needsAttentionSeed) },
 ];
