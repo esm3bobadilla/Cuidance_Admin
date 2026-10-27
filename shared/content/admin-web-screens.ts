@@ -141,17 +141,6 @@ export const adminScreens: Record<AdminScreenId, AdminScreen> = {
 // Shown on every screen until its content is built
 export const structureOnlyNote = 'Structure only. Screen content and data are not built yet.';
 
-// Top-level sections in navigation order. Content is the only parent with child pages.
-export const topLevelScreenIds: AdminScreenId[] = [
-  'content',
-  'guidance-rules-review',
-  'claims-safety-review',
-  'content-metrics',
-  'account-support',
-  'review-tasks',
-  'settings',
-];
-
 // Persistent sidebar (confirmed by Team 03, Week 10 Step 2), in display order.
 // Commercial Content keeps its route but stays out of the sidebar until Team 03 confirms it.
 export type SidebarItem = {
