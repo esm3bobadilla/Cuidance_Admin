@@ -133,7 +133,7 @@ Team 03 confirmed on Oct 27, 2026 that Admin Web uses the persistent sidebar sho
 | Items and order | Dashboard; Content (Quiz Content, Guidance Content, Product Information, Knowledge Sources, Partner Highlights); Guidance Rules Review; Claims & Safety Review; Content Metrics; Account Support; Review Tasks; Settings | **CONFIRMED** by Team 03 |
 | Labels | The full approved names, taken from `shared/content/admin-web-screens.ts` (`sidebarNav`) | Approved name list |
 | Not in the sidebar | Commercial Content (route kept, C7), Team Access (no route, C8), `/dev/`, other Content children (C9) | Not confirmed |
-| Background | Grounded Green (`--color-brand`, text `--color-on-brand`), as in all five images. In dark mode these tokens switch to the dark-mode brand pair, so the sidebar turns light green | Hi-fi (light mode only); tokens |
+| Background | Light mode: Grounded Green (`--color-brand`, text `--color-on-brand`), as in all five images. Dark mode: the same tokens switch to the approved Week 8 dark-mode brand pair, so the sidebar is light green. **Dark-mode result CONFIRMED by Team 03 (Oct 27, 2026)**. See below | Hi-fi (light mode); Week 8 tokens; Team 03 decision |
 | Logo | Moved from the page header into the top of the sidebar, as in the images. Same approved v04 lockup files: the reversed (Quiet Paper) lockup on green in light mode, the Grounded Green lockup on the light dark-mode sidebar. Artwork stays at the 160 px minimum | Hi-fi; logo README rules |
 | Active page | The approved pill, Compass Blue selected state (`--color-selected`, text `--color-on-accent`), a bolder label and `aria-current="page"`. Not color alone | Design-system rule: active tab = pill + blue + label |
 | Content open and closed | A 44 × 44 px toggle next to Content (`aria-expanded`, named "Content pages"). Open on Content pages, closed elsewhere. Content stays bold while one of its pages is open | Chevron next to Content in A4; children shown under Content in A2 to A4 |
@@ -142,6 +142,14 @@ Team 03 confirmed on Oct 27, 2026 that Admin Web uses the persistent sidebar sho
 | No JavaScript | The whole list shows, and the Menu and toggle buttons are hidden | Accessibility |
 | Keyboard | A **Skip to main content** link comes first. The sidebar focus ring uses `--color-on-brand`, so it shows on green | Accessibility (WCAG 2.4.1, 2.4.7) |
 | Not built | Icons next to items (no approved icon set), the user profile block, the sidebar tagline art, header search | Not in scope or not approved |
+
+### Dark-mode sidebar decision (CONFIRMED by Team 03, Oct 27, 2026)
+
+“Team 03 confirmed that the Admin Web sidebar follows the approved design-system dark-mode token. The sidebar may appear light green in dark mode. This is intentional and should not be overridden to preserve the light-mode Grounded Green surface.”
+
+- **Light mode:** the sidebar stays Grounded Green (`--color-brand` `#21332B`, text `--color-on-brand` `#F4F2EC`).
+- **Dark mode:** the sidebar follows the same tokens' dark-mode values (`--color-brand` `#CFDDD4`, text `--color-on-brand` `#121714`), so it appears light green. The Grounded Green logo lockup is used on it.
+- **Don't override:** don't force the sidebar back to Grounded Green in dark mode, and don't add a sidebar-only color or token. No code or token change was needed for this decision.
 
 Breadcrumb wording (C2, C5) and back links (C3) are unchanged. They're still waiting on Team 03.
 

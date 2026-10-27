@@ -97,6 +97,8 @@ Names, parents and scope notes are defined once in `shared/content/admin-web-scr
 
 Commercial Content keeps its route and stays a Content page, but it isn't in the sidebar until Team 03 confirms it.
 
+**Sidebar colors:** Grounded Green in light mode. In dark mode it follows the approved Week 8 dark-mode token and appears light green. “Team 03 confirmed that the Admin Web sidebar follows the approved design-system dark-mode token. The sidebar may appear light green in dark mode. This is intentional and should not be overridden to preserve the light-mode Grounded Green surface.”
+
 | Behavior | Desktop and tablet (768 px and up) | Narrow (under 768 px) |
 | --- | --- | --- |
 | Sidebar | Always visible, 240 px, beside the page | Top bar with the logo and a Menu button. Menu shows the same list |
@@ -185,7 +187,7 @@ Screenshots in `docs/Week-10/evidence/`:
 | `routes-review-tasks-1440-light.png` | Review Tasks top-level page |
 | `routes-claims-safety-review-320-dark.png` | Claims & Safety Review at 320 px |
 | `routes-focus-quiz-content-dark.png` | Focus ring on the first breadcrumb link (before the sidebar) |
-| `sidebar-quiz-content-1440-light.png`, `sidebar-quiz-content-1440-dark.png` | Sidebar with Content open and Quiz Content active, both modes |
+| `sidebar-quiz-content-1440-light.png`, `sidebar-quiz-content-1440-dark.png` | Sidebar with Content open and Quiz Content active, both modes. The dark one shows the confirmed light-green dark-mode sidebar |
 | `sidebar-claims-safety-review-834-light.png` | Sidebar at tablet width, Content closed, Claims & Safety Review active |
 | `sidebar-dashboard-390-menu-closed-light.png` | Narrow width with the Menu closed |
 | `sidebar-quiz-content-320-menu-open-dark.png` | Menu open at 320 px, dark mode |
