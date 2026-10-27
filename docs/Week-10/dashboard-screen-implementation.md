@@ -148,6 +148,7 @@ The rule is in `openQuestionCount()` in `shared/content/dashboard-review-queue.t
 | Page loads | 304 browser loads: 2 builds × 19 pages (the Dashboard in 4 states, every other route, `/dev/` and the 404 page) × 1440, 834, 390 and 320 px × light and dark |
 | Dashboard states | Right counts in every run (ready 3, 1, 1, 0; empty 0, 0, 0, 0; loading and error "…"), 5 table rows only when ready, the loading status message, the error alert, 6 Key Areas cards, and exactly one primary action (View review tasks). No em dashes. **Re-run after the Open questions change: 304 loads, 0 problems.** Open questions showed 0 in every ready and empty view, in both builds, all four widths and both modes |
 | Open questions rule | `openQuestionCount()` checked directly: shipped seed 0, no items 0, two items marked 2, all five marked 5 |
+| Approved symbols (Oct 27, 2026) | Full run after the change: **304 loads, 0 problems** (2 builds × 19 pages × 4 widths × 2 modes). Checked: ⋯ on the loading counts and the loading message; ⚠ on the error counts and alert; ◌ only in the empty state; every panel and label symbol hidden from screen readers. After a spacing fix to the empty-state message, the Dashboard's 4 states and Review Tasks were re-run: **80 loads, 0 problems**. Keyboard order, links and back links unchanged |
 | Light and dark mode | Token backgrounds, matching sidebar and logo, provisional labels readable in both |
 | Horizontal overflow | None in any run. At 390 and 320 px the table scrolls inside its own panel |
 | 44 px targets | No interactive element under 44 × 44 px. Each Key Areas card is one large link target |
@@ -239,6 +240,8 @@ They're defined once in `shared/content/ui-symbols.ts`. They're text symbols, no
 | ◎ Focus, □ Default, ⊘ Disabled | Not used on the Dashboard: focus shows as the 2 px ring, and the Dashboard has no disabled controls | Not applicable |
 
 **Shared components that already use these symbols** (unchanged): Toast (✓, ⚠), Field and Checkbox errors (⚠, ✓), DisclosureLabel (◆) and the back links (‹).
+
+**Font note:** Archivo and Newsreader don't include ◌ or ⋯, so the browser draws them with a system fallback font. ◌ looks a little small as a result. Nothing was redrawn.
 
 **Chevron "›":** the Key Areas cards and the sidebar Content toggle show "›". It isn't in the approved symbol list above, but the board's Core UI Components use it on result-card links ("Why this fits you ›", "View product ›"). It's kept as is, and **needs Team 03 confirmation**.
 

@@ -194,6 +194,7 @@
 
 /* Approved state symbol beside its message (board State Key: ◌ Empty, ⋯ Loading) */
 .symbolPanel {
+  display: flex;
   flex-direction: row;
   align-items: center;
   gap: var(--space-12);
