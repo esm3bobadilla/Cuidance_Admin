@@ -146,7 +146,8 @@ The rule is in `openQuestionCount()` in `shared/content/dashboard-review-queue.t
 | TypeScript (`npx tsc --noEmit`) | Passed |
 | `npm run build` | Passed. All routes export as static pages, including the GitHub Pages build (`/Cuidance_Admin/`) |
 | Page loads | 304 browser loads: 2 builds × 19 pages (the Dashboard in 4 states, every other route, `/dev/` and the 404 page) × 1440, 834, 390 and 320 px × light and dark |
-| Dashboard states | Right counts in every run (ready 3, 1, 1, 0; empty 0, 0, 0, 0; loading and error "…"), 5 table rows only when ready, the loading status message, the error alert, 6 Key Areas cards, and exactly one primary action (View review tasks). No em dashes. During this run, a typo in the test script stopped its count check from reading digits. A corrected re-check confirmed the counts in both builds at 1440 and 320 px |
+| Dashboard states | Right counts in every run (ready 3, 1, 1, 0; empty 0, 0, 0, 0; loading and error "…"), 5 table rows only when ready, the loading status message, the error alert, 6 Key Areas cards, and exactly one primary action (View review tasks). No em dashes. **Re-run after the Open questions change: 304 loads, 0 problems.** Open questions showed 0 in every ready and empty view, in both builds, all four widths and both modes |
+| Open questions rule | `openQuestionCount()` checked directly: shipped seed 0, no items 0, two items marked 2, all five marked 5 |
 | Light and dark mode | Token backgrounds, matching sidebar and logo, provisional labels readable in both |
 | Horizontal overflow | None in any run. At 390 and 320 px the table scrolls inside its own panel |
 | 44 px targets | No interactive element under 44 × 44 px. Each Key Areas card is one large link target |
@@ -160,7 +161,7 @@ The rule is in `openQuestionCount()` in `shared/content/dashboard-review-queue.t
 
 ## 9. Evidence
 
-Screenshots in `docs/Week-10/evidence/`. Each is captured at full page height, so the sidebar shows as it does on screen.
+Screenshots in `docs/Week-10/evidence/`. Each is captured at full page height, so the sidebar shows as it does on screen. They were recaptured after the Open questions change and came out byte-for-byte identical, because the visible value is still 0.
 
 | File | What it shows |
 | --- | --- |
