@@ -3,7 +3,6 @@ import {
   dashboardKeyAreas,
   needsAttentionSeed,
   reviewQueueSummary,
-  type ReviewStatus,
 } from '../../../shared/content/dashboard-review-queue';
 import { adminScreens, type AdminScreenId } from '../../../shared/content/admin-web-screens';
 import { uiSymbols } from '../../../shared/content/ui-symbols';
@@ -11,34 +10,13 @@ import { DataTable } from '../../components/data/DataTable';
 import { MetricTile } from '../../components/data/MetricTile';
 import { ButtonLink } from '../../components/ui/Button';
 import { Card } from '../../components/ui/Card';
+import { reviewTableColumns, reviewTableRows, ReviewStatePanel, type ReviewViewState } from '../_review/ReviewShared';
 import styles from './dashboard.module.css';
 
-export type DashboardState = 'ready' | 'loading' | 'empty' | 'error';
+export type DashboardState = ReviewViewState;
 
 // Plain links need the GitHub Pages base path added by hand
 const hrefFor = (id: AdminScreenId) => `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}${adminScreens[id].path}`;
-
-// PROVISIONAL status treatment (no approved status-to-token mapping yet). Text always shows.
-const statusTreatment: Record<ReviewStatus, { className: string; icon?: string }> = {
-  'In review': { className: styles.statusNeutral },
-  'Needs changes': { className: styles.statusError, icon: uiSymbols.error },
-  'Pending disclosure': { className: styles.statusPartner, icon: uiSymbols.partner },
-  'Needs review': { className: styles.statusAlert },
-};
-
-function StatusText({ status }: { status: ReviewStatus }) {
-  const { className, icon } = statusTreatment[status];
-  return (
-    <span className={`${styles.label} ${className}`}>
-      {icon && (
-        <span className={styles.labelIcon} aria-hidden="true">
-          {icon}
-        </span>
-      )}
-      {status}
-    </span>
-  );
-}
 
 // Dashboard / Review Queue sections. The state comes from data later; today it's seed data.
 export function DashboardContent({ state }: { state: DashboardState }) {
@@ -111,62 +89,13 @@ export function DashboardContent({ state }: { state: DashboardState }) {
           </a>
         </div>
 
-        {state === 'loading' && (
-          <p className={`${styles.statePanel} ${styles.symbolPanel}`} role="status">
-            <span className={styles.stateSymbol} aria-hidden="true">
-              {uiSymbols.loading}
-            </span>
-            {copy.states.loading}
-          </p>
-        )}
-
-        {state === 'error' && (
-          <p className={`${styles.statePanel} ${styles.errorPanel}`} role="alert">
-            <span className={styles.errorIcon} aria-hidden="true">
-              {uiSymbols.error}
-            </span>
-            {copy.states.error}
-          </p>
-        )}
-
-        {state === 'empty' && (
-          <div className={`${styles.statePanel} ${styles.emptyPanel}`}>
-            <p className={styles.symbolPanel}>
-              <span className={styles.stateSymbol} aria-hidden="true">
-                {uiSymbols.empty}
-              </span>
-              {copy.states.empty}
-            </p>
-            <div>
-              <ButtonLink variant="secondary" href={hrefFor('review-tasks')}>
-                {copy.states.emptyAction}
-              </ButtonLink>
-            </div>
-          </div>
-        )}
+        <ReviewStatePanel state={state} messages={copy.states} emptyActionHref={hrefFor('review-tasks')} />
 
         {state === 'ready' && (
           <DataTable
             caption={copy.needsAttention.tableCaption}
-            columns={[
-              { key: 'item', header: 'Item' },
-              { key: 'type', header: 'Type' },
-              { key: 'status', header: 'Status' },
-              { key: 'priority', header: 'Priority' },
-              { key: 'assignedTo', header: 'Assigned to' },
-              { key: 'updated', header: 'Updated' },
-            ]}
-            rows={items.map((row) => ({
-              id: row.id,
-              cells: {
-                item: row.item,
-                type: row.type,
-                status: <StatusText status={row.status} />,
-                priority: <span className={`${styles.label} ${styles.statusNeutral}`}>{row.priority}</span>,
-                assignedTo: row.assignedTo,
-                updated: row.updated,
-              },
-            }))}
+            columns={reviewTableColumns}
+            rows={reviewTableRows(items)}
           />
         )}
       </section>

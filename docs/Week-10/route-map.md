@@ -123,6 +123,7 @@ The Dashboard's section links, the breadcrumbs and the back links all stay as th
 | Content | Dashboard / Content | (none) | ‹ Back to Dashboard | Open link to each child page |
 | Content child pages (6) | Dashboard / Content / *page* | Content | ‹ Back to Content | Quiz Content also links to Review Tasks |
 | Other top-level pages (6) | Dashboard / *page* | (none) | ‹ Back to Dashboard | (none) |
+| Review Tasks (built) | Dashboard / Review Tasks | (none) | ‹ Back to Dashboard | Seeded review task table with loading, empty and error states (see `docs/Week-10/review-tasks-screen-implementation.md`) |
 
 The last breadcrumb item is the current page (`aria-current="page"`, not a link). Back links use the ghost button style, and Open and Go to links use the secondary style. No structural page has a primary button.
 

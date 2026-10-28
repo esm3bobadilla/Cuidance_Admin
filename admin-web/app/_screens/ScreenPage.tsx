@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import type { ReactNode } from 'react';
 import {
   adminScreens,
   childScreens,
@@ -20,8 +21,9 @@ export function screenMetadata(id: AdminScreenId): Metadata {
   return { title: `${adminScreens[id].name} · Cuidance Admin Web` };
 }
 
-// Week 10 Step 2 structural screen: title, parent context, scope note and links only
-export function ScreenPage({ id }: { id: AdminScreenId }) {
+// Week 10 Step 2 structural screen: title, parent context, scope note and links.
+// A built screen passes its content as children, which replaces the "structure only" note.
+export function ScreenPage({ id, children: content }: { id: AdminScreenId; children?: ReactNode }) {
   const screen = adminScreens[id];
   const trail = screenTrail(id);
   const parent = screen.parent ? adminScreens[screen.parent] : undefined;
@@ -50,7 +52,7 @@ export function ScreenPage({ id }: { id: AdminScreenId }) {
         }
       />
 
-      <p className="note">{structureOnlyNote}</p>
+      {content ?? <p className="note">{structureOnlyNote}</p>}
 
       {children.length > 0 && (
         <section className="section" aria-labelledby={`${id}-children`}>
