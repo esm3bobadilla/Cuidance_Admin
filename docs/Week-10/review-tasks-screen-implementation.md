@@ -101,7 +101,23 @@ No library was added. Connecting data or adding a library needs Team 03 approval
 
 ## 9. Test results
 
-See the end of this file (filled in after the run).
+| Check | Result |
+| --- | --- |
+| TypeScript (`npx tsc --noEmit`) | Passed |
+| `npm run build` | Passed. The GitHub Pages build (`/Cuidance_Admin/`) also passed |
+| Page loads | **352 browser loads, 0 problems:** 2 builds × 22 pages (Review Tasks in 4 states, the Dashboard in 4 states, every other route, `/dev/` and the 404 page) × 1440, 834, 390 and 320 px × light and dark |
+| Review Tasks content | Ready: 5 rows, the six columns in order, the caption, and the sample-data note (no "Structure only" note). Loading: ⋯ with the status message. Empty: ◌ with the message, and Go to Dashboard linking to the Dashboard. Error: ⚠ with the alert. No primary button. Symbols hidden from screen readers. No em dashes |
+| Breadcrumb and back link | "Dashboard / Review Tasks" in every run. "‹ Back to Dashboard" lands on the Dashboard in both builds, from all four states |
+| Sidebar | Review Tasks highlighted, Content closed, persistent at 1440 and 834, Menu at 390 and 320 |
+| Light and dark mode | Token backgrounds and the matching sidebar and logo in every run |
+| Horizontal overflow | None. At 390 and 320 px the table scrolls inside its own panel |
+| 44 px targets | No interactive element under 44 × 44 px |
+| Keyboard | Skip link, then the sidebar, the breadcrumb's Dashboard link, Back to Dashboard, then the table panel. Every stop has a visible focus ring, in both modes |
+| No JavaScript | Review Tasks shows all 5 rows at 320 px, with no overflow |
+| JavaScript errors | None |
+| Dashboard after the refactor | All Dashboard checks still pass. Its 9 state and width screenshots are byte-for-byte identical to the merged ones |
+| Other routes | All load with the right title and sidebar state. 16 of 16 back links land on the right parent |
+| Dependencies | None added. No tokens, logo assets or icon artwork changed |
 
 ## 10. Evidence
 
