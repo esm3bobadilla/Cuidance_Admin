@@ -130,8 +130,10 @@ p {
 
 /* Mobile: below 768px. Card lists use a 12px gap, sections 24-32px. */
 @media (max-width: 767px) {
+  /* The top bar takes only its own height; the page fills the rest, even when it's short */
   .app {
     grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto 1fr;
   }
 
   .shell {
