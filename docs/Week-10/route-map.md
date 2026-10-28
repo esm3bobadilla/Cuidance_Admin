@@ -119,7 +119,7 @@ The Dashboard's section links, the breadcrumbs and the back links all stay as th
 
 | Screen | Breadcrumb | Eyebrow | Back link | Other links |
 | --- | --- | --- | --- | --- |
-| Dashboard | (none) | Internal tool | (none) | Open link to each top-level section |
+| Dashboard | (none) | Internal tool | (none) | Built as the Dashboard / Review Queue screen in Week 10 Step 3: View review tasks, six Key Areas cards, View all review tasks (see `docs/Week-10/dashboard-screen-implementation.md`) |
 | Content | Dashboard / Content | (none) | ‹ Back to Dashboard | Open link to each child page |
 | Content child pages (6) | Dashboard / Content / *page* | Content | ‹ Back to Content | Quiz Content also links to Review Tasks |
 | Other top-level pages (6) | Dashboard / *page* | (none) | ‹ Back to Dashboard | (none) |
