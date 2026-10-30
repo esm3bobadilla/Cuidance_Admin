@@ -13,10 +13,21 @@ import { Button } from '../../components/ui/Button';
 import { Card } from '../../components/ui/Card';
 import { DisclosureLabel } from '../../components/ui/DisclosureLabel';
 import { IconButton } from '../../components/ui/IconButton';
+import { ReviewStatePanel } from '../_review/ReviewShared';
 import styles from './dev.module.css';
 
 export const metadata: Metadata = {
-  title: 'Component preview · Cuidance Admin Web',
+  title: 'Component Preview · Cuidance Admin Web',
+};
+
+const dashboardHref = `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/`;
+
+// Example wording for the state panels on this preview page only
+const devStateMessages = {
+  loading: 'Loading example items…',
+  empty: 'Nothing to show in this example.',
+  emptyAction: 'Go to Dashboard',
+  error: "Couldn't load example items. Check your connection, then reload the page.",
 };
 
 // Internal, static preview of the approved components. Not linked from navigation.
@@ -24,10 +35,10 @@ export default function ComponentPreviewPage() {
   return (
     <main className={styles.page}>
       <PageHeader
-        wayfinding={<Breadcrumb items={[{ label: 'Admin', href: `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/` }, { label: 'Component preview' }]} />}
+        wayfinding={<Breadcrumb items={[{ label: 'Admin', href: `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/` }, { label: 'Component Preview' }]} />}
         eyebrow="Internal preview"
-        title="Component preview"
-        description="Approved Admin Web components and their states. Switch your device to dark mode to check dark states."
+        title="Component Preview"
+        description="Internal Admin Web development screen. It previews the approved components and their states, isn't linked from navigation, and isn't part of participant testing. Switch your device to dark mode to check dark states."
         actions={
           <>
             <Button variant="secondary">Export</Button>
@@ -145,6 +156,41 @@ export default function ComponentPreviewPage() {
           { id: 't2', cells: { name: 'Team member B', role: 'Reviewer', access: 'Quiz and guidance' } },
         ]}
       />
+
+      <section className={styles.section} aria-labelledby="dev-card">
+        <h2 id="dev-card" className={styles.sectionTitle}>
+          Card and panel
+        </h2>
+        <Card as="div" title="Example card">
+          <p className={styles.note}>
+            A bordered surface for grouped content, with the 16 px radius. Cards and panels are the same pattern.
+          </p>
+        </Card>
+      </section>
+
+      <section className={styles.section} aria-labelledby="dev-states">
+        <h2 id="dev-states" className={styles.sectionTitle}>
+          Loading, empty and error states
+        </h2>
+        <p className={styles.note}>
+          Static examples with the approved Week 8 symbols. Empty and Loading are provisional on the board.
+        </p>
+        <ReviewStatePanel
+          state="loading"
+          messages={devStateMessages}
+          emptyActionHref={dashboardHref}
+        />
+        <ReviewStatePanel
+          state="empty"
+          messages={devStateMessages}
+          emptyActionHref={dashboardHref}
+        />
+        <ReviewStatePanel
+          state="error"
+          messages={devStateMessages}
+          emptyActionHref={dashboardHref}
+        />
+      </section>
 
       <Card title="Toasts">
         <Toast tone="success" message="Saved to the review queue" action={{ label: 'View' }} />
