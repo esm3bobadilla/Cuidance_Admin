@@ -40,8 +40,14 @@ export const adminRoles: AdminRole[] = [
   {
     id: 'content-editor',
     name: 'Content Editor',
-    // Team 03 hasn't supplied this role's permissions yet. Don't fill them in without that wording.
-    summary: 'Details to be confirmed by Team 03.',
+    summary:
+      'Creates and edits educational content, sources, product information, and partner content. Submits content for review.',
+    can: [
+      'Create and edit content.',
+      'Manage sources, product information, and partner content.',
+      'Submit content for review.',
+    ],
+    cannot: ['Approve content.', 'Publish content independently.', 'Manage team members.', 'Assign roles.'],
   },
   {
     id: 'reviewer',

@@ -2,7 +2,7 @@
 
 - **Branch:** `feat/admin-web-theme-responsive`, from `main` at `2d929b7` (after PR #10)
 - **Date:** Nov 5, 2026
-- **Prepared by:** Claude Code for Team 03. **Needs review by Alyssa and Esme.** Items marked PROVISIONAL or TO CONFIRM need a Team 03 decision.
+- **Prepared by:** Claude Code for Team 03. **Needs review by Alyssa and Esme.** Items marked PROVISIONAL need a Team 03 decision.
 - **Not included:** Supabase, sign-in, live permissions, invitations, account creation, profile or avatar artwork, new routes, new dependencies, and Cuidance Mobile changes.
 
 ## 1. Theme control (Light, Dark or System)
@@ -62,7 +62,7 @@ Every main page was measured at **1440, 1280, 1024, 900, 834, 768, 767, 600, 480
 | --- | --- |
 | Main Admin / Owner | Publishes approved content |
 | Admin | Publishes approved content |
-| Content Editor | **TO CONFIRM:** "Details to be confirmed by Team 03." No Content Editor definition was supplied, so none was written |
+| Content Editor | Creates and edits educational content, sources, product information, and partner content. Submits content for review. **Can:** create and edit content; manage sources, product information, and partner content; submit content for review. **Cannot:** approve content, publish content independently, manage team members, assign roles |
 | Reviewer | **Can:** review assigned content, add notes, approve items, request changes. **Cannot:** publish independently, manage team members, assign roles, edit core content |
 
 - **Publishing rule shown on the card:** "Admin and Main Admin / Owner publish approved content."
@@ -102,7 +102,7 @@ Every main page was measured at **1440, 1280, 1024, 900, 834, 768, 767, 600, 480
 | Keyboard | Tab reaches Theme after Settings, with a visible focus ring. The arrow keys change it and the page updates. On mobile: Menu, then the links, then Theme |
 | Short screens (1440 × 560, 834 × 600) | Sidebar scrolls; Theme control reachable |
 | No JavaScript | Device setting applies, Theme control hidden, all 13 sidebar links visible, roles card shown, no overflow, at 1440 and 320 px |
-| Roles wording | Settings and `/dev/` cards are identical. The Team access table lists the four roles. No em dashes |
+| Roles wording | Settings and `/dev/` cards are identical, including the approved Content Editor wording. The Team access table lists the four roles with the same summaries. No em dashes |
 | Responsive audit (12 widths) | No problems after the 1280 px fix |
 | Dev server | No hydration warnings or errors in the theme cases (System, Light, Dark, and each against the device). The only console messages were the dev server's live-reload connection, which this sandbox blocks |
 | Dependencies | None added. No token values, logo assets or icons changed |
@@ -125,6 +125,5 @@ Screenshots in `docs/Week-10/evidence/`:
 
 | Item | Status |
 | --- | --- |
-| Content Editor permissions | **TO CONFIRM** with Team 03 |
 | Theme control placement and wording | Built as requested. Team 03 to confirm in review |
 | Status colors, Empty and Loading designs | **PROVISIONAL**, unchanged |
