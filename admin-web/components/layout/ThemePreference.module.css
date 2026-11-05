@@ -1,0 +1,4 @@
+/* Sits on the sidebar's brand surface, so the label uses the on-brand text color */
+.theme label {
+  color: var(--color-on-brand);
+}

@@ -35,9 +35,11 @@
   gap: var(--space-8);
 }
 
+/* From 1280 px up, the tiles keep room for their labels and move onto their own line when the row is too narrow */
 .tiles {
   display: grid;
   flex: 3 1 0;
+  min-width: calc(var(--layout-sidebar-width) * 1.75);
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: var(--space-12);
 }
@@ -130,6 +132,7 @@
 
   .tiles {
     flex-basis: 100%;
+    min-width: 0;
   }
 }
 

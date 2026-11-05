@@ -72,6 +72,29 @@ p {
   height: auto;
 }
 
+/* One lockup per theme, matching the sidebar's brand color (same rule as tokens.css) */
+.app-logo-dark-theme {
+  display: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .app-logo-light-theme {
+    display: none;
+  }
+
+  :root:not([data-theme='light']) .app-logo-dark-theme {
+    display: block;
+  }
+}
+
+:root[data-theme='dark'] .app-logo-light-theme {
+  display: none;
+}
+
+:root[data-theme='dark'] .app-logo-dark-theme {
+  display: block;
+}
+
 /* Full width within the outer margins, per the board's Admin Web layout */
 .shell {
   padding: var(--space-48) var(--layout-outer-margin);

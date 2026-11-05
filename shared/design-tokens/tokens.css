@@ -129,8 +129,14 @@
 }
 
 /* ---------- Color: dark mode ---------- */
+/*
+ * Admin Web lets people choose Light, Dark or System (data-theme on <html>).
+ * System (no data-theme) follows the device; Light keeps the light values above
+ * even on a dark device; Dark uses the dark values on any device. The two blocks
+ * below hold the same dark values: change them together, never one alone.
+ */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme='light']) {
     --color-background: #121714;
     --color-surface: #1b221e;
     --color-surface-warm: #26221d;
@@ -166,6 +172,52 @@
     --color-error: #eb9ba6;
     --color-error-surface: #3d0b14;
   }
+}
+
+:root[data-theme='dark'] {
+  --color-background: #121714;
+  --color-surface: #1b221e;
+  --color-surface-warm: #26221d;
+  --color-selected-surface: #1e2650;
+  --color-disabled-surface: #252c28;
+
+  --color-ink: #f4f2ec;
+  --color-ink-muted: #bdb8ad;
+  --color-on-accent: #0b1440;
+  --color-on-brand: #121714;
+  --color-disabled-ink: #6f7570;
+
+  --color-border: #333b36;
+  --color-border-strong: #838b85;
+
+  --color-accent: #9aabff;
+  --color-accent-hover: #b0beff;
+  --color-accent-pressed: #8396f2;
+  --color-selected: #9aabff;
+  --color-brand: #cfddd4;
+
+  --color-highlight: #f2a68f;
+  --color-info: #cca4f4;
+  --color-info-surface: #2a1542;
+
+  --color-partner: #e09bcb;
+  --color-partner-surface: #36142c;
+
+  --color-success: #bccb8e;
+  --color-success-surface: #262d1c;
+  --color-alert: #f2a65e;
+  --color-alert-surface: #3a2918;
+  --color-error: #eb9ba6;
+  --color-error-surface: #3d0b14;
+}
+
+/* Browser-drawn parts (scrollbars, form controls) follow the chosen theme too */
+:root[data-theme='light'] {
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
 }
 
 /* ---------- Tablet: 768-1279px ---------- */

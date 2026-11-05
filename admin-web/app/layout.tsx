@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Archivo, Newsreader } from 'next/font/google';
 import type { ReactNode } from 'react';
 import { Sidebar } from '../components/layout/Sidebar';
+import { themeBootScript } from '../../shared/content/theme';
 import favicon16 from '../../shared/brand/logo/png/derived/cuidance-favicon-16x16.png';
 import favicon32 from '../../shared/brand/logo/png/derived/cuidance-favicon-32x32.png';
 import favicon48 from '../../shared/brand/logo/png/derived/cuidance-favicon-48x48.png';
@@ -46,7 +47,12 @@ type RootLayoutProps = {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en" className={`${newsreader.variable} ${archivo.variable}`}>
+    // suppressHydrationWarning: the theme script below may set data-theme on <html> before React loads
+    <html lang="en" className={`${newsreader.variable} ${archivo.variable}`} suppressHydrationWarning>
+      <head>
+        {/* Applies a saved Light or Dark choice before the page draws */}
+        <script dangerouslySetInnerHTML={{ __html: themeBootScript }} />
+      </head>
       <body>
         <a className="skip-link" href="#main-content">
           Skip to main content
@@ -54,19 +60,26 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <div className="app">
           <Sidebar
             logo={
-              /* Team 03 approved v04 derived lockups. The sidebar is Grounded Green in light
-                 mode, so it takes the Quiet Paper reversed lockup; in dark mode the brand
-                 color is light, so it takes the Grounded Green lockup. */
-              <picture>
-                <source srcSet={lockupPrimary.src} media="(prefers-color-scheme: dark)" />
+              /* Team 03 approved v04 derived lockups. The sidebar is Grounded Green in the light
+                 theme, so it takes the Quiet Paper reversed lockup; in the dark theme the brand
+                 color is light, so it takes the Grounded Green lockup. CSS in globals.css shows
+                 the one that matches the chosen theme (System, Light or Dark). */
+              <>
                 <img
-                  className="app-logo"
+                  className="app-logo app-logo-light-theme"
                   src={lockupReversed.src}
                   width={lockupReversed.width}
                   height={lockupReversed.height}
                   alt="Cuidance"
                 />
-              </picture>
+                <img
+                  className="app-logo app-logo-dark-theme"
+                  src={lockupPrimary.src}
+                  width={lockupPrimary.width}
+                  height={lockupPrimary.height}
+                  alt="Cuidance"
+                />
+              </>
             }
           />
           <div id="main-content" className="app-main" tabIndex={-1}>
