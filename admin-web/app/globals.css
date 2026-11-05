@@ -30,6 +30,8 @@ p {
   min-height: 100vh;
 }
 
+/* The top bar (Theme menu and profile area), then the page */
+.app-column,
 .app-main {
   min-width: 0;
 }

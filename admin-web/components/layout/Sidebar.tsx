@@ -5,7 +5,6 @@ import { useState, type ReactNode } from 'react';
 import { adminScreens, sidebarNav, type AdminScreenId } from '../../../shared/content/admin-web-screens';
 import { Button } from '../ui/Button';
 import styles from './Sidebar.module.css';
-import { ThemePreference } from './ThemePreference';
 
 type SidebarProps = {
   // The logo, rendered by the layout so the approved image files stay in one place
@@ -18,8 +17,7 @@ const trimSlash = (path: string) => path.replace(/\/+$/, '') || '/';
 const hrefFor = (id: AdminScreenId) => `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}${adminScreens[id].path}`;
 
 // Persistent Admin Web sidebar (confirmed by Team 03). On narrow screens the same
-// list sits behind a Menu button, with the Theme control at the bottom. Without
-// JavaScript the list stays visible and the Theme control is hidden (it can't work).
+// list sits behind a Menu button. Without JavaScript, everything stays visible.
 export function Sidebar({ logo }: SidebarProps) {
   const current = trimSlash(usePathname() ?? '/');
   const isCurrent = (id: AdminScreenId) => trimSlash(adminScreens[id].path) === current;
@@ -31,7 +29,7 @@ export function Sidebar({ logo }: SidebarProps) {
   return (
     <div className={styles.sidebar}>
       <noscript>
-        <style>{`.${styles.menuArea}, .${styles.nav}, .${styles.children} { display: flex !important; } .${styles.menuButton}, .${styles.toggle}, .${styles.themeArea} { display: none !important; }`}</style>
+        <style>{`.${styles.nav}, .${styles.children} { display: flex !important; } .${styles.menuButton}, .${styles.toggle} { display: none !important; }`}</style>
       </noscript>
 
       <div className={styles.top}>
@@ -40,7 +38,7 @@ export function Sidebar({ logo }: SidebarProps) {
           <Button
             variant="secondary"
             aria-expanded={menuOpen}
-            aria-controls="admin-sidebar-menu"
+            aria-controls="admin-sidebar-nav"
             onClick={() => setMenuOpen(!menuOpen)}
           >
             Menu
@@ -48,65 +46,58 @@ export function Sidebar({ logo }: SidebarProps) {
         </div>
       </div>
 
-      {/* Navigation and the Theme control: always shown from 768 px up, behind Menu below that */}
-      <div id="admin-sidebar-menu" className={styles.menuArea} data-open={menuOpen}>
-        <nav id="admin-sidebar-nav" aria-label="Admin Web" className={styles.nav}>
-          <ul className={styles.list}>
-            {sidebarNav.map((item) => {
-              const screen = adminScreens[item.id];
-              const childListId = `admin-sidebar-${item.id}`;
-              const holdsCurrent = isWithin(item.id) && item.id !== 'dashboard';
-              return (
-                <li key={item.id}>
-                  <div className={styles.row}>
-                    <a
-                      className={`${styles.link} ${holdsCurrent ? styles.parentOfCurrent : ''}`}
-                      href={hrefFor(item.id)}
-                      aria-current={isCurrent(item.id) ? 'page' : undefined}
-                    >
-                      {screen.name}
-                    </a>
-                    {item.children && (
-                      <button
-                        type="button"
-                        className={styles.toggle}
-                        aria-expanded={contentOpen}
-                        aria-controls={childListId}
-                        aria-label={`${screen.name} pages`}
-                        title={`${screen.name} pages`}
-                        onClick={() => setContentOpen(!contentOpen)}
-                      >
-                        <span className={styles.glyph} aria-hidden="true">
-                          ›
-                        </span>
-                      </button>
-                    )}
-                  </div>
+      <nav id="admin-sidebar-nav" aria-label="Admin Web" className={styles.nav} data-open={menuOpen}>
+        <ul className={styles.list}>
+          {sidebarNav.map((item) => {
+            const screen = adminScreens[item.id];
+            const childListId = `admin-sidebar-${item.id}`;
+            const holdsCurrent = isWithin(item.id) && item.id !== 'dashboard';
+            return (
+              <li key={item.id}>
+                <div className={styles.row}>
+                  <a
+                    className={`${styles.link} ${holdsCurrent ? styles.parentOfCurrent : ''}`}
+                    href={hrefFor(item.id)}
+                    aria-current={isCurrent(item.id) ? 'page' : undefined}
+                  >
+                    {screen.name}
+                  </a>
                   {item.children && (
-                    <ul id={childListId} className={styles.children} data-open={contentOpen}>
-                      {item.children.map((childId) => (
-                        <li key={childId}>
-                          <a
-                            className={`${styles.link} ${styles.childLink}`}
-                            href={hrefFor(childId)}
-                            aria-current={isCurrent(childId) ? 'page' : undefined}
-                          >
-                            {adminScreens[childId].name}
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
+                    <button
+                      type="button"
+                      className={styles.toggle}
+                      aria-expanded={contentOpen}
+                      aria-controls={childListId}
+                      aria-label={`${screen.name} pages`}
+                      title={`${screen.name} pages`}
+                      onClick={() => setContentOpen(!contentOpen)}
+                    >
+                      <span className={styles.glyph} aria-hidden="true">
+                        ›
+                      </span>
+                    </button>
                   )}
-                </li>
-              );
-            })}
-          </ul>
-        </nav>
-
-        <div className={styles.themeArea}>
-          <ThemePreference id="admin-theme" />
-        </div>
-      </div>
+                </div>
+                {item.children && (
+                  <ul id={childListId} className={styles.children} data-open={contentOpen}>
+                    {item.children.map((childId) => (
+                      <li key={childId}>
+                        <a
+                          className={`${styles.link} ${styles.childLink}`}
+                          href={hrefFor(childId)}
+                          aria-current={isCurrent(childId) ? 'page' : undefined}
+                        >
+                          {adminScreens[childId].name}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
     </div>
   );
 }

@@ -25,7 +25,7 @@ border-radius: var(--radius-medium);
 outline: var(--stroke-strong) solid var(--color-accent);
 ```
 
-- **Color:** semantic roles only (for example `--color-accent`, not a Compass Blue tone). Dark mode follows the browser's `prefers-color-scheme` setting unless someone picks Light or Dark in Admin Web's Theme control, which sets `data-theme` on `<html>`. The dark values therefore appear twice in `tokens.css` (once for System, once for a manual Dark choice). **Change both copies together.** Token values were not changed when this was added.
+- **Color:** semantic roles only (for example `--color-accent`, not a Compass Blue tone). Dark mode follows the browser's `prefers-color-scheme` setting unless someone picks Light or Dark in Admin Web's Theme menu (top bar, beside the profile area), which sets `data-theme` on `<html>`. The dark values therefore appear twice in `tokens.css` (once for System, once for a manual Dark choice). **Change both copies together.** Token values were not changed when this was added.
 - **Type:** each `--type-*` token is a `font` shorthand. Tablet (768 to 1279 px) and mobile (below 768 px) sizes switch automatically. Eyebrows also need `text-transform: uppercase` and `letter-spacing: var(--type-eyebrow-tracking)`.
 - **Contrast:** only use the foreground and background pairings verified in the board's Color Contrast Sheet. Never use color as the only signal. Pair it with text, an icon, a border or a shape change.
 - Breakpoints can't be CSS variables. Use `max-width: 1279px` for tablet and `max-width: 767px` for mobile in media queries.

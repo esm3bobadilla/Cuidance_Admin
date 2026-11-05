@@ -12,10 +12,22 @@ export const themeStorageKey = 'cuidance-admin-theme';
 
 export const themeLabel = 'Theme';
 
-export const themeOptions: { value: ThemePreference; label: string }[] = [
-  { value: 'system', label: 'System' },
-  { value: 'light', label: 'Light' },
-  { value: 'dark', label: 'Dark' },
+// Wording for the Theme menu beside the profile area, in the prototype's order
+export const themeMenuCopy = {
+  heading: 'Theme',
+  savedNote: 'Saved on this device.',
+  // The button reads "Theme: System" and so on
+  buttonLabel: (current: string) => `${themeLabel}: ${current}`,
+};
+
+export const themeOptions: { value: ThemePreference; label: string; description: (deviceIsDark: boolean) => string }[] = [
+  { value: 'light', label: 'Light', description: () => 'Always use the light theme' },
+  { value: 'dark', label: 'Dark', description: () => 'Always use the dark theme' },
+  {
+    value: 'system',
+    label: 'System',
+    description: (deviceIsDark) => `Follows your device (now ${deviceIsDark ? 'dark' : 'light'})`,
+  },
 ];
 
 // Runs in <head> before the page draws, so a saved choice never flashes the wrong colors.

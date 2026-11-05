@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Archivo, Newsreader } from 'next/font/google';
 import type { ReactNode } from 'react';
 import { Sidebar } from '../components/layout/Sidebar';
+import { TopBar } from '../components/layout/TopBar';
 import { themeBootScript } from '../../shared/content/theme';
 import favicon16 from '../../shared/brand/logo/png/derived/cuidance-favicon-16x16.png';
 import favicon32 from '../../shared/brand/logo/png/derived/cuidance-favicon-32x32.png';
@@ -82,8 +83,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
               </>
             }
           />
-          <div id="main-content" className="app-main" tabIndex={-1}>
-            {children}
+          <div className="app-column">
+            <TopBar />
+            <div id="main-content" className="app-main" tabIndex={-1}>
+              {children}
+            </div>
           </div>
         </div>
       </body>

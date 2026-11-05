@@ -34,19 +34,6 @@
   flex-direction: column;
 }
 
-/* Navigation, then the Theme control pushed to the bottom of the sidebar */
-.menuArea {
-  display: flex;
-  flex: 1 0 auto;
-  flex-direction: column;
-  gap: var(--space-32);
-}
-
-.themeArea {
-  margin-top: auto;
-  padding-inline: var(--space-8);
-}
-
 .list,
 .children {
   display: flex;
@@ -148,12 +135,7 @@
     display: block;
   }
 
-  .menuArea[data-open='false'] {
+  .nav[data-open='false'] {
     display: none;
-  }
-
-  .themeArea {
-    margin-top: 0;
-    padding-inline: 0;
   }
 }
