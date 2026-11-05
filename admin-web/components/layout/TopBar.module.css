@@ -1,0 +1,32 @@
+/* Top bar: Theme menu beside the profile area, right-aligned. Tokens only. */
+.bar {
+  display: flex;
+  justify-content: flex-end;
+  padding: var(--space-12) var(--layout-outer-margin);
+  border-bottom: var(--stroke-default) solid var(--color-border);
+}
+
+.actions {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
+}
+
+.theme {
+  display: flex;
+}
+
+/* Approved initials treatment: brand circle, no artwork */
+.profile {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: var(--size-touch-target);
+  height: var(--size-touch-target);
+  font: var(--type-label);
+  color: var(--color-on-brand);
+  background: var(--color-brand);
+  border-radius: var(--radius-pill);
+}

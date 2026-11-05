@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { adminRoles } from '../../../shared/content/admin-roles';
 import { DataTable } from '../../components/data/DataTable';
 import { MetricTile } from '../../components/data/MetricTile';
 import { Toast } from '../../components/feedback/Toast';
@@ -7,6 +8,7 @@ import { SearchField } from '../../components/forms/SearchField';
 import { Select } from '../../components/forms/Select';
 import { TextInput } from '../../components/forms/TextInput';
 import { Textarea } from '../../components/forms/Textarea';
+import { RolesPolicy } from '../../components/content/RolesPolicy';
 import { PageHeader } from '../../components/layout/PageHeader';
 import { Breadcrumb } from '../../components/ui/Breadcrumb';
 import { Button } from '../../components/ui/Button';
@@ -151,11 +153,19 @@ export default function ComponentPreviewPage() {
           { key: 'role', header: 'Role' },
           { key: 'access', header: 'Access' },
         ]}
-        rows={[
-          { id: 't1', cells: { name: 'Team member A', role: 'Admin', access: 'All content' } },
-          { id: 't2', cells: { name: 'Team member B', role: 'Reviewer', access: 'Quiz and guidance' } },
-        ]}
+        rows={adminRoles.map((role, index) => ({
+          id: role.id,
+          cells: { name: `Team member ${String.fromCharCode(65 + index)}`, role: role.name, access: role.summary },
+        }))}
       />
+
+      <section className={styles.section} aria-labelledby="dev-roles">
+        <h2 id="dev-roles" className={styles.sectionTitle}>
+          Roles policy card
+        </h2>
+        <p className={styles.note}>The same static card shown in Settings, with the shared role wording.</p>
+        <RolesPolicy headingLevel={3} />
+      </section>
 
       <section className={styles.section} aria-labelledby="dev-card">
         <h2 id="dev-card" className={styles.sectionTitle}>

@@ -14,7 +14,7 @@ It is not the public app, it is not part of participant testing, and it is not a
 
 ## Status
 
-**Week 9 practice build: Next.js with TypeScript shell in `admin-web/`, Week 8 design tokens applied, and the approved v04 logo lockup in the header. Content features not started.**
+**Week 10: Next.js with TypeScript in `admin-web/`, Week 8 design tokens, the persistent sidebar, two sample-data screens and a Theme control. Nothing is connected to live data.**
 
 | Area | Status |
 | --- | --- |
@@ -25,12 +25,12 @@ It is not the public app, it is not part of participant testing, and it is not a
 | Design tokens | Done: `shared/design-tokens/` from the Week 8 Step 3 design system board (v04); open items listed in its README |
 | Shared content and quiz rules | Not started |
 | Admin Web framework | Approved: Next.js with TypeScript |
-| Admin Web scaffold | Done: shell, dashboard and Week 10 route map (structural screens only, no content or data) |
+| Admin Web scaffold | Done: persistent sidebar, Dashboard / Review Queue and Review Tasks (sample data), the Week 10 route map, and a Light / Dark / System Theme control. Settings shows a static roles policy card (no live permissions) |
 | Supabase connection | Not connected yet |
 | Authentication | Not started |
 | Supabase tables | Not started, pending team decision |
-| GitHub Pages hosting | Set up on branch `deploy-github-pages`: static export plus automatic deploy. Live after merge, once Esme sets Settings → Pages → Source to "GitHub Actions" |
-| Admin Web logo | Done: Team 03 approved v04 derived lockup in the header, with a reversed version in dark mode. Team 03 approved derived favicons (16, 32 and 48 px) in place (see `shared/brand/logo/README.md`) |
+| GitHub Pages hosting | Live: static export, deployed automatically from `main` by GitHub Actions |
+| Admin Web logo | Done: Team 03 approved v04 derived lockup in the sidebar, with the reversed version in the light theme's green sidebar. It follows the chosen theme (System, Light or Dark). Team 03 approved derived favicons (16, 32 and 48 px) in place (see `shared/brand/logo/README.md`) |
 
 **Live link:** https://esm3bobadilla.github.io/Cuidance_Admin/
 
@@ -137,9 +137,9 @@ Cuidance_Admin/
 ├── admin-web/             Admin Web app for the browser
 │   ├── app/               Routes from the Week 10 route map (see `docs/Week-10/route-map.md`), `/dev` component preview, custom 404
 │   │   └── _screens/      Shared structure for the route-map screens (not a route)
-│   └── components/        Shared components: layout, ui, forms, data, feedback
+│   └── components/        Shared components: layout, ui, forms, data, feedback, content
 ├── shared/                Shared content and rules for Admin Web
-│   ├── content/           Admin Web screen names and scope notes; later result content, safety lines, labels
+│   ├── content/           Admin Web screen names, scope notes, role wording and theme labels; later result content, safety lines, labels
 │   ├── quiz-rules/        Answer cards, mixing rules, delivery rules
 │   ├── design-tokens/     Colors (light and dark), type, spacing, radius, stroke
 │   └── brand/
