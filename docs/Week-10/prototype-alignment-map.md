@@ -189,14 +189,14 @@ P's wording for these states is readable and could be reused. B's state wording 
 | D1 | **RESOLVED (Nov 5):** P for the shell and Team Access flows; A1 to A5 for content screens; B for layout reference only (section 0) |
 | D2 | **RESOLVED for this sprint:** keep the current sidebar destinations |
 | D3 | **RESOLVED:** keep the blue active treatment |
-| D4 | Breadcrumb in the top bar starting with "Admin" (C2), and removing back links (C3) |
+| D4 | **RESOLVED (Nov 5):** the breadcrumb is in the top bar, starts with "Admin", and the back links are removed. This settles C2 and C3. Built in Slice 1 (`shell-alignment-implementation.md`) |
 | D5 | Dashboard: A1 (built), B Review Queue or P role-based. P's invitation tiles and tasks point to deferred features |
 | D6 | **Partly resolved:** no icons unless an icon set is formally approved, and the theme control stays text-based. **Still open:** whether to approve an icon set at all (it would affect the tablet icon strip, search and status chips) |
 | D7 | **RESOLVED:** keep the approved dark-mode sidebar |
 | D8 | Names: "Product Catalog" vs "Product Information"; "Content Management" vs "Commercial Content" |
 | D9 | Where Branch & Routing Rules and Guidance Connection Detail belong, and what Guidance Rules Review should show |
 | D10 | Approve the new routes in section 2b |
-| D11 | Profile menu contents (no sign-in, so no Sign out), and the top-bar search |
+| D11 | **Partly resolved (Nov 5):** the profile menu has the identity line and Appearance only; no Sign out, Team Access, workspace or role switching. **Still open:** top-bar search |
 | D12 | Scope checks: App Activity Detail (analytics), Guest + Account States and Account Support must stay within the approved limited views |
 | D13 | Charts on Content Metrics: CSS-only bars with token colors (no library), or leave them out |
 | D14 | Detail panel below 1280 px: under the list, or as its own page |

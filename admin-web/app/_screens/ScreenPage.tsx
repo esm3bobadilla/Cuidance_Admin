@@ -1,14 +1,7 @@
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
-import {
-  adminScreens,
-  childScreens,
-  screenTrail,
-  structureOnlyNote,
-  type AdminScreenId,
-} from '../../../shared/content/admin-web-screens';
+import { adminScreens, childScreens, structureOnlyNote, type AdminScreenId } from '../../../shared/content/admin-web-screens';
 import { PageHeader } from '../../components/layout/PageHeader';
-import { Breadcrumb } from '../../components/ui/Breadcrumb';
 import { ButtonLink } from '../../components/ui/Button';
 import { Card } from '../../components/ui/Card';
 
@@ -23,33 +16,18 @@ export function screenMetadata(id: AdminScreenId): Metadata {
 
 // Week 10 Step 2 structural screen: title, parent context, scope note and links.
 // A built screen passes its content as children, which replaces the "structure only" note.
+// The breadcrumb is in the shared top bar, and there are no back links (prototype shell, Team 03).
 export function ScreenPage({ id, children: content }: { id: AdminScreenId; children?: ReactNode }) {
   const screen = adminScreens[id];
-  const trail = screenTrail(id);
   const parent = screen.parent ? adminScreens[screen.parent] : undefined;
   const children = childScreens(id);
 
   return (
     <main className="shell">
       <PageHeader
-        wayfinding={
-          <Breadcrumb
-            items={trail.map((item) => ({
-              label: item.name,
-              href: item.id === id ? undefined : screenHref(item.id),
-            }))}
-          />
-        }
         eyebrow={parent && parent.id !== 'dashboard' ? parent.name : undefined}
         title={screen.name}
         description={screen.scopeNote}
-        actions={
-          parent && (
-            <ButtonLink variant="ghost" href={screenHref(parent.id)}>
-              <span aria-hidden="true">‹</span> Back to {parent.name}
-            </ButtonLink>
-          )
-        }
       />
 
       {content ?? <p className="note">{structureOnlyNote}</p>}

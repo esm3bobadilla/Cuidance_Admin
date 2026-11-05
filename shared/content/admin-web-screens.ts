@@ -174,3 +174,14 @@ export function screenTrail(id: AdminScreenId): AdminScreen[] {
   }
   return trail;
 }
+
+// Shared shell wording (current prototype). Breadcrumbs start at "Admin", which links to the Dashboard.
+export const shellCopy = {
+  breadcrumbRoot: 'Admin',
+  // Plain text under the sidebar logo, shown in capitals
+  sidebarLabel: 'Admin Web · Internal',
+  menuButton: 'Menu',
+  // Breadcrumb names for the two pages that aren't route-map screens
+  devPreviewName: 'Component Preview',
+  notFoundName: 'Page not found',
+};

@@ -1,8 +1,7 @@
 import type { Metadata } from 'next';
 import { Archivo, Newsreader } from 'next/font/google';
 import type { ReactNode } from 'react';
-import { Sidebar } from '../components/layout/Sidebar';
-import { TopBar } from '../components/layout/TopBar';
+import { AdminShell } from '../components/layout/AdminShell';
 import { themeBootScript } from '../../shared/content/theme';
 import favicon16 from '../../shared/brand/logo/png/derived/cuidance-favicon-16x16.png';
 import favicon32 from '../../shared/brand/logo/png/derived/cuidance-favicon-32x32.png';
@@ -58,38 +57,28 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <a className="skip-link" href="#main-content">
           Skip to main content
         </a>
-        <div className="app">
-          <Sidebar
-            logo={
-              /* Team 03 approved v04 derived lockups. The sidebar is Grounded Green in the light
-                 theme, so it takes the Quiet Paper reversed lockup; in the dark theme the brand
-                 color is light, so it takes the Grounded Green lockup. CSS in globals.css shows
-                 the one that matches the chosen theme (System, Light or Dark). */
-              <>
-                <img
-                  className="app-logo app-logo-light-theme"
-                  src={lockupReversed.src}
-                  width={lockupReversed.width}
-                  height={lockupReversed.height}
-                  alt="Cuidance"
-                />
-                <img
-                  className="app-logo app-logo-dark-theme"
-                  src={lockupPrimary.src}
-                  width={lockupPrimary.width}
-                  height={lockupPrimary.height}
-                  alt="Cuidance"
-                />
-              </>
-            }
-          />
-          <div className="app-column">
-            <TopBar />
-            <div id="main-content" className="app-main" tabIndex={-1}>
-              {children}
-            </div>
-          </div>
-        </div>
+        {/* Team 03 approved v04 derived lockups, used as supplied. CSS in globals.css shows the
+            one that matches the chosen theme (System, Light or Dark):
+            - Sidebar (Grounded Green in the light theme, light green in the dark theme):
+              the Quiet Paper reversed lockup in light, the Grounded Green lockup in dark.
+            - Phone top row (on the page background): the Grounded Green lockup in light,
+              the Quiet Paper reversed lockup in dark. */}
+        <AdminShell
+          sidebarLogo={
+            <>
+              <img className="app-logo app-logo-light-theme" src={lockupReversed.src} width={lockupReversed.width} height={lockupReversed.height} alt="Cuidance" />
+              <img className="app-logo app-logo-dark-theme" src={lockupPrimary.src} width={lockupPrimary.width} height={lockupPrimary.height} alt="Cuidance" />
+            </>
+          }
+          barLogo={
+            <>
+              <img className="app-logo app-logo-light-theme" src={lockupPrimary.src} width={lockupPrimary.width} height={lockupPrimary.height} alt="Cuidance" />
+              <img className="app-logo app-logo-dark-theme" src={lockupReversed.src} width={lockupReversed.width} height={lockupReversed.height} alt="Cuidance" />
+            </>
+          }
+        >
+          {children}
+        </AdminShell>
       </body>
     </html>
   );

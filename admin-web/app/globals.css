@@ -23,16 +23,30 @@ p {
   outline-offset: var(--stroke-strong);
 }
 
-/* Persistent sidebar beside the page on desktop and tablet; stacked above it on narrow screens */
+/* Shared shell: persistent sidebar on the left, the top bar above the page (desktop and tablet).
+   Phones stack the top bar, the sidebar list (when Menu is open) and the page. */
 .app {
   display: grid;
   grid-template-columns: var(--layout-sidebar-width) minmax(0, 1fr);
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    'sidebar bar'
+    'sidebar main';
   min-height: 100vh;
 }
 
-/* The top bar (Theme menu and profile area), then the page */
-.app-column,
+.app-bar {
+  grid-area: bar;
+  min-width: 0;
+}
+
+.app-sidebar {
+  grid-area: sidebar;
+  align-self: start;
+}
+
 .app-main {
+  grid-area: main;
   min-width: 0;
 }
 
@@ -155,10 +169,14 @@ p {
 
 /* Mobile: below 768px. Card lists use a 12px gap, sections 24-32px. */
 @media (max-width: 767px) {
-  /* The top bar takes only its own height; the page fills the rest, even when it's short */
+  /* The top bar and the open list take only their own height; the page fills the rest, even when it's short */
   .app {
     grid-template-columns: minmax(0, 1fr);
-    grid-template-rows: auto 1fr;
+    grid-template-rows: auto auto 1fr;
+    grid-template-areas:
+      'bar'
+      'sidebar'
+      'main';
   }
 
   .shell {
