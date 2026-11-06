@@ -7,6 +7,16 @@
 - **Visual source:** the approved Week 9 hi-fi screenshot of Product Information (**A4**). The unreadable PDF supplied nothing.
 - **Scope:** Product Information only. Other content screens are unchanged.
 
+## 0. Team 03 review (Nov 6, 2026)
+
+Product Information is **approved as a provisional implementation.** These decisions are accepted and stay **PROVISIONAL**:
+1. **Brands:** use "Brand A" to "Brand D" until Team 03 approves brand names.
+2. **Partner content:** stays visibly labeled with the Byzantium Plum treatment.
+3. **Wording:** recommendation-style wording stays out.
+4. **Missing details:** "To be confirmed by Team 03." stays for unavailable product details and for the Partner disclosure wording.
+5. **Table width:** the table keeps scrolling inside its panel at 1280 to 1439 px.
+6. **Unchanged:** tests, routes, states and theme behavior.
+
 ## 1. What changed
 
 The screen was structure-only. It now follows A4's layout.

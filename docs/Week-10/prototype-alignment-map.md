@@ -44,6 +44,15 @@
 
 See `quiz-content-alignment-implementation.md`.
 
+**Product Information (Nov 6, 2026):** approved as a provisional implementation. Accepted as PROVISIONAL decisions:
+- Brand A to Brand D until brands are approved.
+- Partner content labeled in Byzantium Plum.
+- No recommendation-style wording.
+- "To be confirmed by Team 03." for unavailable details and Partner disclosure wording.
+- Table scrolling inside its panel at 1280 to 1439 px.
+
+See `product-information-alignment-implementation.md`.
+
 ## 1. Sources compared
 
 | Code | Source | What it gives | Limits |
@@ -78,7 +87,7 @@ The three visual sources disagree with each other on the shell. Section 3 compar
 | `/content/partner-highlights/` | Partner Highlights | Structural | B §04 "Partner Highlights" (filters, table, preview panel, Partner labels) | **Yes** | Partner labels use Byzantium Plum plus "Partner" text |
 | `/content/commercial-content/` | Commercial Content | Structural, **not in the sidebar** (C7) | B §04 "Content Management" under "Partner & Commercial Content" | Possibly | B supports keeping it. Its title differs (D8) |
 | `/guidance-rules-review/` | Guidance Rules Review | Structural | **None.** B's sidebar shows "Guidance Rules", but no screen. B §02 "Branch & Routing Rules" may be this screen | Unknown | **D9**: which source screen this is |
-| `/claims-safety-review/` | Claims & Safety Review | Structural | A5; B §05 "Claims Review Detail" (queue on the left; detail on the right with Approve and Request changes) | **Yes** | Approve and Request changes are static only. No workflow |
+| `/claims-safety-review/` | Claims & Safety Review | **Built (Slice 5)**: tabs, content-area filter, search, review table, details panel with pager, banner, states | A5 (visual source) | **Done** (`claims-safety-review-alignment-implementation.md`) | Tab meaning, reviewer placeholders, VERIFY source, unbuilt review actions, and details for seven items "To be confirmed" (all PROVISIONAL) |
 | `/content-metrics/` | Content Metrics | Structural | B §01 "Metrics" (tiles with small bar charts, a bar chart, a table, ranked bars) | **Yes** | Charts with CSS only, or ask (D13). Stays a "limited internal view" (CLAUDE.md) |
 | `/account-support/` | Account Support | Structural | B §05 "Account Support" (filters, table, detail panel) | **Yes** | Must stay limited internal support, not public account management (D12) |
 | `/review-tasks/` | Review Tasks | **Built** (table, sample data) | B §05 "Review Task Detail" (detail only). B's sidebar puts Review Tasks under Dashboard | **Yes:** shell and chips, plus a link to the detail route | |
