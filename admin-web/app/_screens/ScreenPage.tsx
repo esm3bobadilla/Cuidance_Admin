@@ -17,7 +17,8 @@ export function screenMetadata(id: AdminScreenId): Metadata {
 // Week 10 Step 2 structural screen: title, parent context, scope note and links.
 // A built screen passes its content as children, which replaces the "structure only" note.
 // The breadcrumb is in the shared top bar, and there are no back links (prototype shell, Team 03).
-export function ScreenPage({ id, children: content }: { id: AdminScreenId; children?: ReactNode }) {
+// `eyebrow` replaces the default (the parent's name) on screens aligned with a hi-fi reference.
+export function ScreenPage({ id, eyebrow, children: content }: { id: AdminScreenId; eyebrow?: string; children?: ReactNode }) {
   const screen = adminScreens[id];
   const parent = screen.parent ? adminScreens[screen.parent] : undefined;
   const children = childScreens(id);
@@ -25,7 +26,7 @@ export function ScreenPage({ id, children: content }: { id: AdminScreenId; child
   return (
     <main className="shell">
       <PageHeader
-        eyebrow={parent && parent.id !== 'dashboard' ? parent.name : undefined}
+        eyebrow={eyebrow ?? (parent && parent.id !== 'dashboard' ? parent.name : undefined)}
         title={screen.name}
         description={screen.scopeNote}
       />

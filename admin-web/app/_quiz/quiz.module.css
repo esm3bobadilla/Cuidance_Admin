@@ -1,0 +1,214 @@
+/*
+ * Quiz Content, aligned with the approved Week 9 hi-fi (A2): toolbar, the question
+ * list, and the selected question's details beside it (below it under 1280 px).
+ * Tokens only.
+ */
+.view {
+  display: flex;
+  flex-direction: column;
+  gap: var(--layout-gutter);
+}
+
+/* Search and status filter */
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--space-16);
+}
+
+.search {
+  flex: 2 1 calc(var(--layout-sidebar-width) * 1.5);
+  min-width: 0;
+}
+
+.filter {
+  flex: 1 1 var(--layout-sidebar-width);
+  min-width: 0;
+}
+
+/* List and details side by side from 1280 px */
+.body {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  align-items: start;
+  gap: var(--layout-gutter);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+  min-width: 0;
+}
+
+/* The question text selects the row and shows its details */
+.rowButton {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--size-touch-target);
+  padding: 0;
+  font: var(--type-body-small);
+  font-weight: 600;
+  color: var(--color-ink);
+  text-align: start;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+@media (hover: hover) {
+  .rowButton:hover {
+    text-decoration: underline;
+  }
+}
+
+.updated {
+  display: flex;
+  flex-direction: column;
+  white-space: nowrap;
+}
+
+.updatedBy {
+  font: var(--type-caption);
+  color: var(--color-ink-muted);
+}
+
+.count {
+  margin: 0;
+  font: var(--type-caption);
+  color: var(--color-ink-muted);
+}
+
+/* Status labels: PROVISIONAL mapping. Text always shows; Published also shows ✓ */
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-8);
+  font: var(--type-data-small);
+  color: var(--color-ink);
+  white-space: nowrap;
+  border: var(--stroke-default) solid;
+  border-radius: var(--radius-small);
+}
+
+.statusIcon {
+  color: var(--color-success);
+}
+
+.statusPublished {
+  background: var(--color-success-surface);
+  border-color: var(--color-success);
+}
+
+.statusReview {
+  background: var(--color-surface);
+  border-color: var(--color-border-strong);
+}
+
+.statusDraft {
+  background: var(--color-surface);
+  border-color: var(--color-border-strong);
+  border-style: dashed;
+}
+
+/* No results for the current search or filter: ◌, a message and one next step */
+.noResults {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+  padding: var(--space-24);
+  background: var(--color-surface);
+  border: var(--stroke-default) dashed var(--color-border-strong);
+  border-radius: var(--radius-medium);
+}
+
+.noResultsMessage {
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
+  margin: 0;
+  font: var(--type-body);
+}
+
+.noResultsSymbol {
+  font: var(--type-heading-4);
+}
+
+/* Question details panel */
+.detail {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+  padding: var(--space-24);
+  color: var(--color-ink);
+  background: var(--color-surface);
+  border: var(--stroke-default) solid var(--color-border);
+  border-radius: var(--radius-medium);
+}
+
+.detailLabel {
+  margin: 0;
+  font: var(--type-eyebrow);
+  letter-spacing: var(--type-eyebrow-tracking);
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+}
+
+.detailTitle {
+  margin: 0;
+  font: var(--type-heading-2);
+}
+
+.detailMeta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-8) var(--space-12);
+  padding-bottom: var(--space-16);
+  font: var(--type-caption);
+  color: var(--color-ink-muted);
+  border-bottom: var(--stroke-default) solid var(--color-border);
+}
+
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+  margin: 0;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.field dt {
+  font: var(--type-label);
+}
+
+.field dd {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin: 0;
+  font: var(--type-body);
+}
+
+.fieldNote {
+  font: var(--type-caption);
+  color: var(--color-ink-muted);
+}
+
+.pending {
+  color: var(--color-ink-muted);
+}
+
+/* Under 1280 px the details move below the list (PROVISIONAL, D14) */
+@media (max-width: 1279px) {
+  .body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
