@@ -115,6 +115,8 @@ The banner shows in every state. All state wording is **PROVISIONAL**.
 
 **Found and fixed during testing:** at 390 px the page scrolled sideways by 177 px. The screen-reader-only reviewer names were positioned outside the table's scrolling panel. Each reviewer cell now contains its hidden name.
 
+**Batch 1 (Nov 6, 2026):** re-tested with the Batch 1 suite: 0 failures in its own tests, and 352 of 352 in the full suite.
+
 ## 6. Screenshots
 
 In `docs/Week-10/evidence/`:

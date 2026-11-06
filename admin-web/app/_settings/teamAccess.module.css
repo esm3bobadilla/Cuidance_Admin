@@ -1,0 +1,116 @@
+/* Settings: static Team Access (prototype F09). Tokens only. */
+.view {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-32);
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+}
+
+.sectionText {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+.description {
+  margin: 0;
+  font: var(--type-body-small);
+  color: var(--color-ink-muted);
+}
+
+/* Status filter chips (prototype F09); the selected one is Compass Blue plus ✓ */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-8);
+}
+
+.filter {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-4);
+  min-height: var(--size-touch-target);
+  padding: 0 var(--space-16);
+  font: var(--type-body-small);
+  color: var(--color-ink);
+  background: var(--color-surface);
+  border: var(--stroke-default) solid var(--color-border-strong);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+}
+
+.filter[aria-pressed='true'] {
+  font: var(--type-label);
+  color: var(--color-on-accent);
+  background: var(--color-selected);
+  border-color: var(--color-selected);
+}
+
+.filter[aria-pressed='true']:focus-visible {
+  outline-color: var(--color-selected);
+}
+
+.filter:disabled {
+  cursor: default;
+}
+
+.member {
+  font-weight: 600;
+}
+
+.role {
+  display: inline-flex;
+  padding: var(--space-4) var(--space-8);
+  font: var(--type-data-small);
+  white-space: nowrap;
+  background: var(--color-background);
+  border: var(--stroke-default) solid var(--color-border);
+  border-radius: var(--radius-pill);
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-8);
+  font: var(--type-data-small);
+  color: var(--color-ink);
+  white-space: nowrap;
+  border: var(--stroke-default) solid;
+  border-radius: var(--radius-small);
+}
+
+.statusActive {
+  background: var(--color-success-surface);
+  border-color: var(--color-success);
+}
+
+.statusIcon {
+  color: var(--color-success);
+}
+
+.statusPending {
+  background: var(--color-alert-surface);
+  border-color: var(--color-alert);
+}
+
+.statusOff {
+  background: var(--color-surface);
+  border-color: var(--color-border-strong);
+  border-style: dashed;
+}
+
+/* Prototype boundary note: dashed panel */
+.boundary {
+  margin: 0;
+  padding: var(--space-16);
+  font: var(--type-body-small);
+  color: var(--color-ink-muted);
+  border: var(--stroke-default) dashed var(--color-border-strong);
+  border-radius: var(--radius-medium);
+}

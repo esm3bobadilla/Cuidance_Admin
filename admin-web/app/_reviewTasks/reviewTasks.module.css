@@ -1,0 +1,179 @@
+/*
+ * Review Tasks, aligned with the approved Week 9 hi-fi: search, the review table,
+ * and the selected task beside it (below it under 1280 px). Tokens only.
+ */
+.view {
+  display: flex;
+  flex-direction: column;
+  gap: var(--layout-gutter);
+}
+
+.toolbar {
+  max-width: calc(var(--layout-sidebar-width) * 3);
+}
+
+.body {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  align-items: start;
+  gap: var(--layout-gutter);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+  min-width: 0;
+}
+
+/* The task title selects the row and shows the task */
+.rowButton {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--size-touch-target);
+  padding: 0;
+  font: var(--type-body-small);
+  font-weight: 600;
+  color: var(--color-ink);
+  text-align: start;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+@media (hover: hover) {
+  .rowButton:hover {
+    text-decoration: underline;
+  }
+}
+
+.count {
+  margin: 0;
+  font: var(--type-caption);
+  color: var(--color-ink-muted);
+}
+
+.noResults {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+  padding: var(--space-24);
+  background: var(--color-surface);
+  border: var(--stroke-default) dashed var(--color-border-strong);
+  border-radius: var(--radius-medium);
+}
+
+.noResultsMessage {
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
+  margin: 0;
+  font: var(--type-body);
+}
+
+.noResultsSymbol {
+  font: var(--type-heading-4);
+}
+
+.detail {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+  padding: var(--space-24);
+  color: var(--color-ink);
+  background: var(--color-surface);
+  border: var(--stroke-default) solid var(--color-border);
+  border-radius: var(--radius-medium);
+}
+
+.detailLabel,
+.sectionLabel {
+  margin: 0;
+  font: var(--type-eyebrow);
+  letter-spacing: var(--type-eyebrow-tracking);
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+}
+
+.detailTitle {
+  margin: 0;
+  font: var(--type-heading-2);
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-8) var(--space-16);
+  margin: 0;
+  font: var(--type-caption);
+  color: var(--color-ink-muted);
+}
+
+.fields {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-12);
+  margin: 0;
+  padding-block: var(--space-16);
+  border-block: var(--stroke-default) solid var(--color-border);
+}
+
+.fields dt {
+  font: var(--type-caption);
+  color: var(--color-ink-muted);
+}
+
+.fields dd {
+  margin: 0;
+  font: var(--type-body-small);
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+.pending {
+  margin: 0;
+  font: var(--type-body-small);
+  color: var(--color-ink-muted);
+}
+
+/* Read-only checklist: □ is the approved "Default" symbol; nothing is ticked or saved */
+.checklist {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  margin: 0;
+  padding: 0;
+  font: var(--type-body-small);
+  list-style: none;
+}
+
+.checklist li {
+  display: flex;
+  gap: var(--space-8);
+}
+
+.box {
+  flex: none;
+  color: var(--color-ink-muted);
+}
+
+@media (max-width: 1279px) {
+  .body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .toolbar {
+    max-width: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .fields {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
