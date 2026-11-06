@@ -1,0 +1,351 @@
+/*
+ * Shared layout for the list-and-details content screens (Guidance Content,
+ * Knowledge Sources, Partner Highlights, Commercial Content): toolbar, the list,
+ * and the selected item's details beside it from 1280 px (below it under 1280 px,
+ * PROVISIONAL, D14). Tokens only.
+ */
+.view {
+  display: flex;
+  flex-direction: column;
+  gap: var(--layout-gutter);
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--space-16);
+}
+
+.search {
+  flex: 2 1 calc(var(--layout-sidebar-width) * 1.5);
+  min-width: 0;
+  max-width: calc(var(--layout-sidebar-width) * 3);
+}
+
+.filter {
+  flex: 1 1 var(--layout-sidebar-width);
+  min-width: 0;
+  max-width: calc(var(--layout-sidebar-width) * 1.5);
+}
+
+.body {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  align-items: start;
+  gap: var(--layout-gutter);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+  min-width: 0;
+}
+
+/* The item title selects the row and shows its details */
+.rowButton {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--size-touch-target);
+  padding: 0;
+  font: var(--type-body-small);
+  font-weight: 600;
+  color: var(--color-ink);
+  text-align: start;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+@media (hover: hover) {
+  .rowButton:hover {
+    text-decoration: underline;
+  }
+}
+
+/* Title with a one-line summary under it (Guidance Content, A3) */
+.titleCell {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.titleCell .rowButton {
+  min-height: var(--size-touch-target);
+}
+
+.subtle {
+  font: var(--type-caption);
+  color: var(--color-ink-muted);
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-4);
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
+.count {
+  margin: 0;
+  font: var(--type-caption);
+  color: var(--color-ink-muted);
+}
+
+/* Chips: PROVISIONAL tone mapping; text always shows */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-8);
+  font: var(--type-data-small);
+  color: var(--color-ink);
+  border: var(--stroke-default) solid;
+  border-radius: var(--radius-small);
+}
+
+.chipSuccess {
+  background: var(--color-success-surface);
+  border-color: var(--color-success);
+}
+
+.chipSuccess .chipSymbol {
+  color: var(--color-success);
+}
+
+.chipNeutral {
+  background: var(--color-surface);
+  border-color: var(--color-border-strong);
+}
+
+.chipDraft {
+  background: var(--color-surface);
+  border-color: var(--color-border-strong);
+  border-style: dashed;
+}
+
+.chipAlert {
+  background: var(--color-alert-surface);
+  border-color: var(--color-alert);
+}
+
+.chipError {
+  background: var(--color-error-surface);
+  border-color: var(--color-error);
+}
+
+.chipError .chipSymbol {
+  color: var(--color-error);
+}
+
+/* Partner, Sponsored and Commercial: Byzantium Plum plus ◆ and the text label (CLAUDE.md) */
+.chipPartner {
+  background: var(--color-partner-surface);
+  border-color: var(--color-partner);
+}
+
+.chipPartner .chipSymbol {
+  color: var(--color-partner);
+}
+
+/* Small tags, for example content areas */
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tag {
+  padding: var(--space-4) var(--space-8);
+  font: var(--type-data-small);
+  background: var(--color-background);
+  border: var(--stroke-default) solid var(--color-border);
+  border-radius: var(--radius-pill);
+}
+
+.noResults {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+  padding: var(--space-24);
+  background: var(--color-surface);
+  border: var(--stroke-default) dashed var(--color-border-strong);
+  border-radius: var(--radius-medium);
+}
+
+.noResultsMessage {
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
+  margin: 0;
+  font: var(--type-body);
+}
+
+.noResultsSymbol {
+  font: var(--type-heading-4);
+}
+
+/* Details panel */
+.detail {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+  padding: var(--space-24);
+  color: var(--color-ink);
+  background: var(--color-surface);
+  border: var(--stroke-default) solid var(--color-border);
+  border-radius: var(--radius-medium);
+}
+
+.detailLabel,
+.sectionLabel {
+  margin: 0;
+  font: var(--type-eyebrow);
+  letter-spacing: var(--type-eyebrow-tracking);
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+}
+
+.detailTitle {
+  margin: 0;
+  font: var(--type-heading-2);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-8);
+  margin: 0;
+}
+
+.lead {
+  margin: 0;
+  font: var(--type-body);
+  color: var(--color-ink-muted);
+}
+
+/* Label and value rows, as in the hi-fi details panels */
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+  margin: 0;
+  padding-top: var(--space-16);
+  border-top: var(--stroke-default) solid var(--color-border);
+}
+
+.field {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+  gap: var(--space-12);
+}
+
+.field dt {
+  font: var(--type-label);
+}
+
+.field dd {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-4);
+  margin: 0;
+  font: var(--type-body-small);
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  padding-top: var(--space-16);
+  border-top: var(--stroke-default) solid var(--color-border);
+}
+
+.sectionText {
+  margin: 0;
+  font: var(--type-body-small);
+}
+
+.box {
+  margin: 0;
+  padding: var(--space-12) var(--space-16);
+  font: var(--type-body-small);
+  background: var(--color-background);
+  border: var(--stroke-default) solid var(--color-border);
+  border-radius: var(--radius-small);
+}
+
+/* Partner content preview: kept visibly separate from neutral guidance */
+.partnerBox {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  padding: var(--space-16);
+  background: var(--color-partner-surface);
+  border: var(--stroke-default) solid var(--color-partner);
+  border-radius: var(--radius-medium);
+}
+
+.previewTitle {
+  margin: 0;
+  font: var(--type-heading-4);
+}
+
+.pending {
+  margin: 0;
+  font: var(--type-body-small);
+  color: var(--color-ink-muted);
+}
+
+/* Commercial and Partner rule banner (Partner Highlights hi-fi); plum edge, text first */
+.banner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin: 0;
+  padding: var(--space-16) var(--space-24);
+  font: var(--type-body-small);
+  background: var(--color-surface);
+  border: var(--stroke-default) solid var(--color-border);
+  border-left: var(--stroke-strong) solid var(--color-partner);
+  border-radius: var(--radius-medium);
+}
+
+.bannerTitle {
+  font: var(--type-label);
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--size-touch-target);
+  font: var(--type-link);
+  color: var(--color-accent);
+}
+
+@media (max-width: 1279px) {
+  .body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .search,
+  .filter {
+    max-width: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .field {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-4);
+  }
+}
