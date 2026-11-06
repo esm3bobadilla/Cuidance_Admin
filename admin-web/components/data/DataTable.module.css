@@ -5,6 +5,13 @@
   border-radius: var(--radius-medium);
 }
 
+/* Inside a panel: the panel draws the border */
+.flush {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+}
+
 .table {
   width: 100%;
   border-collapse: collapse;

@@ -19,13 +19,15 @@ type DataTableProps = {
   rows: Row[];
   // Selected row: Compass Blue surface plus a 2 px outline and a text marker
   selectedRowId?: string;
+  // Inside a panel that already has its own border (for example the Dashboard panels)
+  flush?: boolean;
 };
 
 // Structure only: status color mappings are not part of this component yet.
-export function DataTable({ caption, columns, rows, selectedRowId }: DataTableProps) {
+export function DataTable({ caption, columns, rows, selectedRowId, flush = false }: DataTableProps) {
   return (
     // Controlled horizontal scroll on narrow screens (board responsive rule)
-    <div className={styles.scroll} role="region" aria-label={caption} tabIndex={0}>
+    <div className={flush ? `${styles.scroll} ${styles.flush}` : styles.scroll} role="region" aria-label={caption} tabIndex={0}>
       <table className={styles.table}>
         <caption className={styles.caption}>{caption}</caption>
         <thead>

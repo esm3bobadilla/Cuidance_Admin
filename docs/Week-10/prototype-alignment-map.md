@@ -61,7 +61,7 @@ The three visual sources disagree with each other on the shell. Section 3 compar
 
 | Route | Screen | Built today | Source screens | Visual update needed | Notes |
 | --- | --- | --- | --- | --- | --- |
-| `/` | Dashboard | **Built** (follows A1): Review Queue panel, Key Areas, Needs attention table | A1; B §01 "Review Queue" (6 tiles, filter chips, table with a right detail panel); P F08 (role-based: welcome, role tiles, Your work, Your access) | **Yes.** The three sources show three different dashboards | **D5** decides which one |
+| `/` | Dashboard | **Built** (follows A1): Review Queue panel, Key Areas, Needs attention table | A1; B §01 "Review Queue" (6 tiles, filter chips, table with a right detail panel); P F08 (role-based: welcome, role tiles, Your work, Your access) | **Done (Slice 2).** Prototype F08 layout with the current content | D5 resolved |
 | `/content/` | Content | Structural (page of links) | None show a Content landing page | Shell only | C4 is still open: keep or remove the landing page |
 | `/content/quiz-content/` | Quiz Content | Structural | A2; B §02 "Quiz Content" (tabs, search, filter chips, grouped rows that expand) | **Yes:** list, tabs, filters, expandable rows, detail panel | Detail routes in 2b |
 | `/content/guidance-content/` | Guidance Content | Structural | A3 only | **Yes:** list and detail panel from A3 | No B screen with this title. B "Guidance Connection Detail" may belong here (D9) |
@@ -142,7 +142,7 @@ Every state can be previewed with `?state=` until real data exists.
 
 | Screen | Loading | Empty | Error | Success | Extra states |
 | --- | --- | --- | --- | --- | --- |
-| Dashboard | Exists | Exists | Exists | None | P "Limited access" banner for Editor and Reviewer (only if D5 keeps role views) |
+| Dashboard | Exists | Exists | Exists | None | None: D5 keeps no role-based views, so no "Limited access" banner |
 | Review Tasks and Task Detail | Exists (list) | Exists (list) | Exists (list) | Toast after a static action, such as "Saved as a draft (sample)" | Task not found |
 | Content lists (Quiz, Guidance, Product, Sources, Partner, Commercial) | New | New, including "No matches for these filters" | New | None | Detail panel with nothing selected |
 | Detail screens (2b) | New | Not applicable | New, including "Item not found" | Toast for static actions | Partner content always shows "Partner" |
@@ -190,7 +190,7 @@ P's wording for these states is readable and could be reused. B's state wording 
 | D2 | **RESOLVED for this sprint:** keep the current sidebar destinations |
 | D3 | **RESOLVED:** keep the blue active treatment |
 | D4 | **RESOLVED (Nov 5):** the breadcrumb is in the top bar, starts with "Admin", and the back links are removed. This settles C2 and C3. Built in Slice 1 (`shell-alignment-implementation.md`) |
-| D5 | Dashboard: A1 (built), B Review Queue or P role-based. P's invitation tiles and tasks point to deferred features |
+| D5 | **RESOLVED (Nov 6):** follow the prototype's Dashboard layout and hierarchy, keeping the current approved content and behavior. No role-based Dashboard. Built in Slice 2 (`dashboard-alignment-implementation.md`) |
 | D6 | **Partly resolved:** no icons unless an icon set is formally approved, and the theme control stays text-based. **Still open:** whether to approve an icon set at all (it would affect the tablet icon strip, search and status chips) |
 | D7 | **RESOLVED:** keep the approved dark-mode sidebar |
 | D8 | Names: "Product Catalog" vs "Product Information"; "Content Management" vs "Commercial Content" |
