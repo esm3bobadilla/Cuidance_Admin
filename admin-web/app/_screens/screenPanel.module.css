@@ -1,0 +1,104 @@
+/*
+ * Child pages as one panel of link tiles: the Dashboard Key Areas pattern
+ * (Slice 2, following the prototype). Three across from 1280 px, one below. Tokens only.
+ */
+.panel {
+  display: flex;
+  flex-direction: column;
+  color: var(--color-ink);
+  background: var(--color-surface);
+  border: var(--stroke-default) solid var(--color-border);
+  border-radius: var(--radius-medium);
+}
+
+.panelHeader {
+  padding: var(--space-12) var(--space-16);
+  border-bottom: var(--stroke-default) solid var(--color-border);
+}
+
+.label {
+  margin: 0;
+  font: var(--type-eyebrow);
+  letter-spacing: var(--type-eyebrow-tracking);
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+}
+
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-12);
+  margin: 0;
+  padding: var(--space-16);
+  list-style: none;
+}
+
+.tile {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
+  min-height: var(--layout-table-row-min-height);
+  padding: var(--space-12) var(--space-16);
+  border: var(--stroke-default) solid var(--color-border);
+  border-radius: var(--radius-medium);
+}
+
+.tileText {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+.tileTitle {
+  margin: 0;
+  font: var(--type-label);
+}
+
+.tileLink {
+  color: var(--color-ink);
+  text-decoration: none;
+}
+
+/* The whole tile is the link target */
+.tileLink::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-medium);
+}
+
+@media (hover: hover) {
+  .tileLink:hover {
+    text-decoration: underline;
+  }
+}
+
+.tileLink:focus-visible {
+  outline: none;
+}
+
+.tileLink:focus-visible::after {
+  outline: var(--stroke-strong) solid var(--color-accent);
+  outline-offset: var(--stroke-strong);
+}
+
+.tileDescription {
+  margin: 0;
+  font: var(--type-body-small);
+  color: var(--color-ink-muted);
+}
+
+.chevron {
+  flex: none;
+  font: var(--type-heading-4);
+  color: var(--color-ink);
+}
+
+@media (max-width: 1279px) {
+  .tiles {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

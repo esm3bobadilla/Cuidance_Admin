@@ -4,6 +4,7 @@ import { adminScreens, childScreens, structureOnlyNote, type AdminScreenId } fro
 import { PageHeader } from '../../components/layout/PageHeader';
 import { ButtonLink } from '../../components/ui/Button';
 import { Card } from '../../components/ui/Card';
+import panel from './screenPanel.module.css';
 
 // Plain links need the GitHub Pages base path added by hand
 export function screenHref(id: AdminScreenId) {
@@ -18,7 +19,18 @@ export function screenMetadata(id: AdminScreenId): Metadata {
 // A built screen passes its content as children, which replaces the "structure only" note.
 // The breadcrumb is in the shared top bar, and there are no back links (prototype shell, Team 03).
 // `eyebrow` replaces the default (the parent's name) on screens aligned with a hi-fi reference.
-export function ScreenPage({ id, eyebrow, children: content }: { id: AdminScreenId; eyebrow?: string; children?: ReactNode }) {
+// `childLayout="panel"` shows the child pages as one panel of link tiles, like the Dashboard's Key Areas.
+export function ScreenPage({
+  id,
+  eyebrow,
+  childLayout = 'cards',
+  children: content,
+}: {
+  id: AdminScreenId;
+  eyebrow?: string;
+  childLayout?: 'cards' | 'panel';
+  children?: ReactNode;
+}) {
   const screen = adminScreens[id];
   const parent = screen.parent ? adminScreens[screen.parent] : undefined;
   const children = childScreens(id);
@@ -33,7 +45,34 @@ export function ScreenPage({ id, eyebrow, children: content }: { id: AdminScreen
 
       {content ?? <p className="note">{structureOnlyNote}</p>}
 
-      {children.length > 0 && (
+      {children.length > 0 && childLayout === 'panel' && (
+        <section className={panel.panel} aria-labelledby={`${id}-children`}>
+          <div className={panel.panelHeader}>
+            <h2 id={`${id}-children`} className={panel.label}>
+              {screen.name} pages
+            </h2>
+          </div>
+          <ul className={panel.tiles}>
+            {children.map((child) => (
+              <li key={child.id} className={panel.tile}>
+                <div className={panel.tileText}>
+                  <h3 className={panel.tileTitle}>
+                    <a className={panel.tileLink} href={screenHref(child.id)}>
+                      {child.name}
+                    </a>
+                  </h3>
+                  <p className={panel.tileDescription}>{child.scopeNote}</p>
+                </div>
+                <span className={panel.chevron} aria-hidden="true">
+                  ›
+                </span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {children.length > 0 && childLayout === 'cards' && (
         <section className="section" aria-labelledby={`${id}-children`}>
           <h2 id={`${id}-children`} className="section-title">
             {screen.name} pages

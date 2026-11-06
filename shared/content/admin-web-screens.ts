@@ -178,6 +178,8 @@ export function screenTrail(id: AdminScreenId): AdminScreen[] {
 // Shared shell wording (current prototype). Breadcrumbs start at "Admin", which links to the Dashboard.
 export const shellCopy = {
   breadcrumbRoot: 'Admin',
+  // Eyebrow on screens aligned with the hi-fi references
+  internalToolEyebrow: 'Internal tool',
   // Plain text under the sidebar logo, shown in capitals
   sidebarLabel: 'Admin Web · Internal',
   menuButton: 'Menu',

@@ -60,6 +60,16 @@ See `product-information-alignment-implementation.md`.
   - Knowledge Sources and Partner Highlights: only the unreadable PDF.
 - **Combined results:** TypeScript, production and GitHub Pages builds, and the full suite (352 loads, 0 problems). Each screen's tests passed: theme, Quiz Content, Product Information, Claims & Safety Review, Review Tasks and Settings. The responsive and 44 px audit passed at 12 widths in both builds. Contrast, keyboard and focus, no JavaScript and hydration all passed.
 
+**Batch 2 (Nov 6, 2026):**
+- **Done:** Content landing page.
+- **Blocked:**
+  - Guidance Rules Review: no source; D9.
+  - Content Metrics: only the unreadable PDF; D13.
+  - Account Support: only the unreadable PDF; D12.
+- **Skipped:** Commercial Content (C7 not confirmed).
+- **Detail screens:** none built, because none is approved yet (D10).
+- **Combined results:** TypeScript, production and GitHub Pages builds, and the full suite (352 loads, 0 problems). All eight per-screen test suites passed. The responsive and 44 px audit passed at 12 widths in both builds. Contrast, keyboard and focus, no JavaScript and hydration all passed.
+
 ## 1. Sources compared
 
 | Code | Source | What it gives | Limits |
@@ -86,17 +96,17 @@ The three visual sources disagree with each other on the shell. Section 3 compar
 | Route | Screen | Built today | Source screens | Visual update needed | Notes |
 | --- | --- | --- | --- | --- | --- |
 | `/` | Dashboard | **Built** (follows A1): Review Queue panel, Key Areas, Needs attention table | A1; B §01 "Review Queue" (6 tiles, filter chips, table with a right detail panel); P F08 (role-based: welcome, role tiles, Your work, Your access) | **Done (Slice 2).** Prototype F08 layout with the current content | D5 resolved |
-| `/content/` | Content | Structural (page of links) | None show a Content landing page | Shell only | C4 is still open: keep or remove the landing page |
+| `/content/` | Content | **Built (Batch 2)**: one panel of six link tiles (Dashboard Key Areas pattern) | No source shows this page | **Done** (`content-landing-alignment-implementation.md`) | C4 still open; layout PROVISIONAL |
 | `/content/quiz-content/` | Quiz Content | **Built (Slice 3a)**: search, status filter, list, details panel, states | A2 (visual source) | **Done** (`quiz-content-alignment-implementation.md`) | Detail routes in 2b; three A2 rows and the answer options left out for Team 03 to confirm |
 | `/content/guidance-content/` | Guidance Content | Structural | A3, **not available in this session** | **BLOCKED (Batch 1):** needs the A3 screenshot | The prototype has no Guidance Content screen |
 | `/content/product-information/` | Product Information | **Built (Slice 4)**: search, list, details panel with disclosure and source sections, states | A4 (visual source) | **Done** (`product-information-alignment-implementation.md`) | Brands shown as placeholders, one A4 sentence left out, and details for three products "To be confirmed" (all PROVISIONAL). Availability stays VERIFY |
 | `/content/knowledge-sources/` | Knowledge Sources | Structural | Only B §03 (unreadable, layout only under D1) | **BLOCKED (Batch 1):** needs an approved hi-fi screenshot | |
 | `/content/partner-highlights/` | Partner Highlights | Structural | Only B §04 (unreadable, layout only under D1) | **BLOCKED (Batch 1):** needs an approved hi-fi screenshot | Partner labels use Byzantium Plum plus "Partner" text |
-| `/content/commercial-content/` | Commercial Content | Structural, **not in the sidebar** (C7) | B §04 "Content Management" under "Partner & Commercial Content" | Possibly | B supports keeping it. Its title differs (D8) |
-| `/guidance-rules-review/` | Guidance Rules Review | Structural | **None.** B's sidebar shows "Guidance Rules", but no screen. B §02 "Branch & Routing Rules" may be this screen | Unknown | **D9**: which source screen this is |
+| `/content/commercial-content/` | Commercial Content | Structural, **not in the sidebar** (C7) | B §04 "Content Management" (unreadable) | **SKIPPED (Batch 2):** still needs Team 03 confirmation in the route map (C7) | Still listed on the Content page, as before |
+| `/guidance-rules-review/` | Guidance Rules Review | Structural | **None.** B's sidebar shows "Guidance Rules" but no screen; B §02 "Branch & Routing Rules" may be it (D9) | **BLOCKED (Batch 2):** needs an approved source and the D9 decision | |
 | `/claims-safety-review/` | Claims & Safety Review | **Built (Slice 5)**: tabs, content-area filter, search, review table, details panel with pager, banner, states | A5 (visual source) | **Done** (`claims-safety-review-alignment-implementation.md`) | Tab meaning, reviewer placeholders, VERIFY source, unbuilt review actions, and details for seven items "To be confirmed" (all PROVISIONAL) |
-| `/content-metrics/` | Content Metrics | Structural | B §01 "Metrics" (tiles with small bar charts, a bar chart, a table, ranked bars) | **Yes** | Charts with CSS only, or ask (D13). Stays a "limited internal view" (CLAUDE.md) |
-| `/account-support/` | Account Support | Structural | B §05 "Account Support" (filters, table, detail panel) | **Yes** | Must stay limited internal support, not public account management (D12) |
+| `/content-metrics/` | Content Metrics | Structural | Only B §01 "Metrics" (unreadable, layout only under D1) | **BLOCKED (Batch 2):** needs an approved hi-fi screenshot; charts also need D13 | Stays a limited internal view (CLAUDE.md) |
+| `/account-support/` | Account Support | Structural | Only B §05 "Account Support" (unreadable, layout only under D1) | **BLOCKED (Batch 2):** needs an approved hi-fi screenshot; scope check D12 | Must stay limited internal support |
 | `/review-tasks/` | Review Tasks | **Built (Batch 1)**: search, selectable table, task panel with the hi-fi checklist, states | Review Tasks hi-fi screenshot | **Done** (`review-tasks-alignment-implementation.md`) | Dashboard sample data kept; hi-fi context, tabs, due dates and actions left out (PROVISIONAL) |
 | `/settings/` | Settings | **Built (Batch 1)**: static Team Access (prototype F09) and the approved roles card | P F09 | **Done** (`settings-team-access-implementation.md`) | No new route (D10); invites, actions and access denied not built (PROVISIONAL) |
 | `/dev/` | Component Preview | Built | None | Yes: add new shared patterns | Internal only |
