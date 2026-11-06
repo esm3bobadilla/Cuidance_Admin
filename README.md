@@ -150,9 +150,11 @@ Cuidance_Admin/
 ├── docs/
 │   ├── wireframes/        Admin Web wireframes (reference only, not app code)
 │   ├── Week-10/           Week 10 demo log, route map and screenshot evidence
+│   ├── Week-11/           Week 11 Close the Loop plan and feature notes
 │   └── archived/
 │       └── admin-mobile/  Archived Admin Mobile reference (no active work)
 ├── README.md
+├── ARCHITECTURE.md        How Admin Web is put together (routes, screens, state)
 ├── CLAUDE.md              Rules for AI agents working in this repo
 ├── .gitignore
 └── .github/
