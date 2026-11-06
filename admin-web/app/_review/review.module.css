@@ -46,6 +46,29 @@
   border-color: var(--color-alert);
 }
 
+/* Week 11: Approved (set by a Reviewer's decision) */
+.statusSuccess {
+  background: var(--color-success-surface);
+  border-color: var(--color-success);
+}
+
+.statusSuccess .labelIcon {
+  color: var(--color-success);
+}
+
+/* Week 11: a task title that opens its detail page. Ink text, underlined so it reads as a link,
+   with a 44 px tall target */
+.itemLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--size-touch-target);
+  font: var(--type-body-small);
+  font-weight: 600;
+  color: var(--color-ink);
+  text-decoration: underline;
+  text-underline-offset: var(--space-4);
+}
+
 /* Loading, empty and error panels (Empty and Loading are PROVISIONAL on the board) */
 .statePanel {
   display: flex;

@@ -3,7 +3,7 @@
 - **Branch:** `feat/week-11-review-task-loop`, from `main` at `be2042f` (PR #12 merged)
 - **Date:** Nov 6, 2026
 - **Prepared by:** Claude Code for Team 03. **Needs review by Alyssa and Esme before any implementation starts.** Items marked **PROVISIONAL** or **DECISION** need a Team 03 answer.
-- **Status:** plan only. No screens, routes or data have been built yet.
+- **Status:** plan **approved by Team 03 (Nov 6, 2026)**. **Feature 1 (Review Task Detail and the decision loop) is built** on this branch, waiting for its pull request and review. See `docs/Week-11/review-task-loop-implementation.md`. Features 2 and 3 (Accept Invitation, Account Setup) are still planned.
 - **Related:** `ARCHITECTURE.md` (how Admin Web is put together), `docs/Week-10/route-map.md` (current routes), `docs/Week-10/prototype-alignment-map.md` (Week 10 visual decisions).
 
 ## 0. Ground rules for Week 11
@@ -105,10 +105,10 @@ All other Week 10 routes are not part of the loop and are not touched.
 | Screen | Change | Visual change? |
 | --- | --- | --- |
 | Dashboard | Counts and rows come from `applyDecisions(...)` instead of fixed values. An approved item leaves Needs attention | Only the data. Layout, tokens and wording unchanged |
-| Dashboard | **DECISION W11-4:** a short success note after a decision ("Review recorded for … View task") | Yes, one new note. Not built unless approved |
-| Dashboard | **DECISION W11-5:** item titles in Needs attention link to their detail page | A link style on existing text. Not built unless approved |
+| Dashboard | **W11-4, approved and built:** a temporary "Decision recorded" message after a decision, with View task and Dismiss | Yes, one new message, shown once |
+| Dashboard | **W11-5, approved and built:** item titles in Needs attention link to their detail page | Underlined titles, 44 px tall |
 | Review Tasks | Statuses come from `applyDecisions(...)` | Only the data |
-| Review Tasks | An "Open task" link in the selected-task panel | One secondary link |
+| Review Tasks | An "Open task" link in the selected-task panel, and the panel title links to the task (built). Row titles still select the row | One secondary link; a one-line panel title grows to 44 px |
 | Shared status label (`_review/ReviewShared.tsx`) | A new **Approved** status: success colors plus ✓, the same treatment Week 10 already uses for approved items on other screens | New status only; existing statuses unchanged |
 
 **Dashboard counts today are fixed numbers** (3, 1, 1, 0). They happen to match the seed: 3 open items of type Guidance, Quiz or Sources; 1 Claims & safety; 1 Partner. The plan replaces the fixed numbers with that same calculation, so on first load the Dashboard looks exactly as it does now. **DECISION W11-3** asks Team 03 to confirm this mapping.
@@ -162,9 +162,9 @@ Week 10 already uses `?state=loading`, `?state=empty` and `?state=error` as a re
 | **Accept Invitation** | ⋯ "Checking your invitation…" | ◌ "No invitation found. Ask an Admin to send a new one." | Dark Ruby ⚠ "Couldn't load this invitation. Check your connection, then reload the page." Also: **expired** ⚠ "This invitation has expired. Ask an Admin to send a new one." | ✓ "Invitation accepted." plus **Continue to account setup** |
 | **Account Setup** | ⋯ "Loading your account details…" | (none: you only arrive here with an accepted invitation; without one it shows "Accept your invitation first." plus a link) | Field errors: Dark Ruby ⚠ beside the field ("Enter a display name.", "Confirm you've read the content and safety rules."). Load error: ⚠ "Couldn't load your account details…" | ✓ "Your account is set up." plus **Go to Review Tasks** |
 | **Review Tasks** (reuse) | Unchanged Week 10 | Unchanged Week 10 | Unchanged Week 10 | (none) |
-| **Review Task Detail** | ⋯ "Loading this task…" | **Not found:** ◌ "This task isn't available." plus **Go to Review Tasks** | ⚠ "Couldn't load this task. Check your connection, then reload the page." | (see decision panel) |
+| **Review Task Detail** | ⋯ "Loading this task…" | **Unavailable:** ◌ "This task isn't available." plus **Go to Review Tasks** (`?state=unavailable`). An unbuilt task address shows the site's Page not found | ⚠ "Couldn't load this task. Check your connection, then reload the page." | (see decision panel) |
 | **Decision panel** (inside detail) | ⋯ "Saving your decision…" (buttons disabled; brief, so it's visible in seeded mode only with `?state=saving`) | (none) | Note missing: ⚠ "Add a note so the editor knows what to change." Save failed: ⚠ "Couldn't save your decision. Try again." | ✓ "Decision recorded." plus the new status and **Go to Dashboard** |
-| **Dashboard** (reuse) | Unchanged Week 10 | Unchanged Week 10 ("Nothing needs attention right now.") and now reachable for real by approving every item | Unchanged Week 10 | DECISION W11-4 (success note) |
+| **Dashboard** (reuse) | Unchanged Week 10 | Unchanged Week 10 ("Nothing needs attention right now.") and now reachable for real by approving every item | Unchanged Week 10 | ✓ "Decision recorded for “*task*”. Status: *status*." with View task and Dismiss, once after a decision (built) |
 
 Every state uses text or a symbol as well as color. Errors are Dark Ruby with ⚠ and a message. Messages use `role="status"` (loading, success) or `role="alert"` (errors), as in Week 10. One primary button per screen: **Accept invitation**, **Finish setup**, **Submit decision**.
 
@@ -202,6 +202,8 @@ Until Team 03 starts the Supabase step, none of these are built, and CLAUDE.md's
 
 ### Decisions for Team 03
 
+**Answered by Team 03 (Nov 6, 2026):** W11-1 (yes, a Reviewer; cannot publish), W11-3 (counts calculated from shared state, starting at 3 / 1 / 1 / 0), W11-4 (Dashboard message, built), W11-5 (title links on Review Tasks and Dashboard, built), W11-8 (fixed placeholder "Reviewer B"). Also decided: Request changes needs a note, Approve has an optional note, decisions are kept in the browser session only, one static page per seeded task. W11-6 was built as proposed (Reset under the recorded decision). **Still open:** W11-2, W11-7 (built as "Approved" for now), W11-9, W11-Q7.
+
 | ID | Question | Proposal |
 | --- | --- | --- |
 | **W11-1** | Is a **Reviewer** the right person for this loop? | Yes. The approved policy gives Reviewers Approve and Request changes, and no publishing |
@@ -234,7 +236,7 @@ Each feature: its own branch from the latest `main`, its own pull request, teamm
 
 | Order | Branch | Feature | Loop steps | New screens |
 | --- | --- | --- | --- | --- |
-| **1** | `feat/week-11-review-task-loop` | **Review Task Detail and the review decision**, with the shared review state read by Review Tasks and the Dashboard | 3, 4, 5, 6 | 1 |
+| **1** | `feat/week-11-review-task-loop` | **Review Task Detail and the review decision**, with the shared review state read by Review Tasks and the Dashboard. **Built, awaiting pull request and review** | 3, 4, 5, 6 | 1 |
 | 2 | `feat/week-11-accept-invitation` | Accept Invitation | 1 | 1 |
 | 3 | `feat/week-11-account-setup` | Account Setup, ending with Go to Review Tasks | 2 | 1 |
 
@@ -242,7 +244,7 @@ After feature 3 there are three new screens, so `ARCHITECTURE.md` is updated aga
 
 **Why the review loop first:** it reuses the Week 10 data and screens, and it proves the hardest part, the state change from a decision to the Dashboard. The invitation and account screens are mostly static forms whose real behavior needs sign-in anyway.
 
-### Feature 1 scope (proposed, not started)
+### Feature 1 scope (built Nov 6, 2026; see `review-task-loop-implementation.md`)
 
 1. `shared/review-loop/`: decision types, the Approved status, `applyDecisions`, `dashboardSummary`, `needsAttention`.
 2. `admin-web/app/_reviewLoop/reviewStore.ts`: session-storage store, the same pattern as the theme store.

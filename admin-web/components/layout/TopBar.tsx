@@ -3,6 +3,7 @@
 import { usePathname } from 'next/navigation';
 import type { ReactNode } from 'react';
 import { adminScreens, screenTrail, shellCopy, type AdminScreen } from '../../../shared/content/admin-web-screens';
+import { reviewTaskFromPath } from '../../../shared/content/review-task-detail';
 import { Breadcrumb } from '../ui/Breadcrumb';
 import { Button } from '../ui/Button';
 import { ProfileMenu } from './ProfileMenu';
@@ -21,6 +22,12 @@ function crumbsFor(pathname: string) {
   if (screen) {
     const trail = screenTrail(screen.id).filter((item) => item.id !== 'dashboard' || screen.id === 'dashboard');
     return [root, ...trail.map((item) => ({ label: item.name, href: item.id === screen.id ? undefined : `${base}${item.path}` }))];
+  }
+  // Week 11: a review task's detail page sits under Review Tasks
+  const task = reviewTaskFromPath(current);
+  if (task) {
+    const reviewTasks = adminScreens['review-tasks'];
+    return [root, { label: reviewTasks.name, href: `${base}${reviewTasks.path}` }, { label: task.item }];
   }
   return [root, { label: current === '/dev' ? shellCopy.devPreviewName : shellCopy.notFoundName }];
 }

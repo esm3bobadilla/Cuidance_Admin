@@ -140,6 +140,7 @@ Cuidance_Admin/
 │   └── components/        Shared components: layout, ui, forms, data, feedback, content
 ├── shared/                Shared content and rules for Admin Web
 │   ├── content/           Admin Web screen names, scope notes, role wording and theme labels; later result content, safety lines, labels
+│   ├── review-loop/       Week 11 review decision rules (statuses, Dashboard counts), shared by every screen
 │   ├── quiz-rules/        Answer cards, mixing rules, delivery rules
 │   ├── design-tokens/     Colors (light and dark), type, spacing, radius, stroke
 │   └── brand/

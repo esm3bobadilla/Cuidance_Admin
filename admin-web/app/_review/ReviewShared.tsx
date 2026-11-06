@@ -1,4 +1,5 @@
 import type { ReviewItem, ReviewPriority, ReviewStatus } from '../../../shared/content/dashboard-review-queue';
+import { reviewTaskPath } from '../../../shared/content/review-task-detail';
 import { uiSymbols } from '../../../shared/content/ui-symbols';
 import { ButtonLink } from '../../components/ui/Button';
 import styles from './review.module.css';
@@ -13,7 +14,20 @@ const statusTreatment: Record<ReviewStatus, { className: string; icon?: string }
   'Needs changes': { className: styles.statusError, icon: uiSymbols.error },
   'Pending disclosure': { className: styles.statusPartner, icon: uiSymbols.partner },
   'Needs review': { className: styles.statusAlert },
+  // Week 11: set by a Reviewer's decision. Success colors plus ✓, as Week 10 uses for approved items
+  Approved: { className: styles.statusSuccess, icon: uiSymbols.success },
 };
+
+// Link to a task's detail page (plain links need the GitHub Pages base path added by hand)
+export const reviewTaskHref = (taskId: string) => `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}${reviewTaskPath(taskId)}`;
+
+export function ReviewTaskLink({ task }: { task: ReviewItem }) {
+  return (
+    <a className={styles.itemLink} href={reviewTaskHref(task.id)}>
+      {task.item}
+    </a>
+  );
+}
 
 export function ReviewStatusLabel({ status }: { status: ReviewStatus }) {
   const { className, icon } = statusTreatment[status];
@@ -47,7 +61,8 @@ export function reviewTableRows(items: ReviewItem[]) {
   return items.map((row) => ({
     id: row.id,
     cells: {
-      item: row.item,
+      // Week 11: the title opens the task's detail page
+      item: <ReviewTaskLink task={row} />,
       type: row.type,
       status: <ReviewStatusLabel status={row.status} />,
       priority: <ReviewPriorityLabel priority={row.priority} />,

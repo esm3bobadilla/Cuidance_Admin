@@ -1,10 +1,10 @@
 # Cuidance Admin Web: architecture
 
-_Last updated: Nov 6, 2026 (Week 11 start, on `feat/week-11-review-task-loop`). Planned Week 11 parts are marked **PLANNED**; nothing marked PLANNED is built yet._
+_Last updated: Nov 6, 2026 (Week 11 feature 1, Review Task Detail and the decision loop, on `feat/week-11-review-task-loop`). Built Week 11 parts are marked **BUILT (Week 11)**; parts still marked **PLANNED** are not built yet._
 
 How Admin Web is put together, in plain words. Read this with `CLAUDE.md` (the rules) and `docs/Week-11/close-the-loop-implementation-plan.md` (the current plan).
 
-**Keep this file current.** Update it in the same pull request whenever a screen, route, shared store or data file is added or removed. Week 11 adds three new screens, so this file is updated with each of those pull requests.
+**Keep this file current.** Update it in the same pull request whenever a screen, route, shared store or data file is added or removed. Week 11 adds three new screens (one built so far: Review Task Detail), so this file is updated with each of those pull requests.
 
 ## 1. What it is
 
@@ -21,17 +21,19 @@ Cuidance_Admin/
 │   ├── app/                   One folder per route (page.tsx), plus private folders starting with _
 │   │   ├── page.tsx           Dashboard (/)
 │   │   ├── content/…          Content and its six child screens
-│   │   ├── review-tasks/      Review Tasks
+│   │   ├── review-tasks/      Review Tasks, and [taskId]/ for Review Task Detail (Week 11)
 │   │   ├── …                  The other top-level screens
 │   │   ├── _screens/          Shared screen frame (ScreenPage) and panel styles
 │   │   ├── _review/           Status and priority labels shared by Dashboard and Review Tasks
 │   │   ├── _listDetail/       Shared list-and-details pieces (StatusChip, NoResults)
+│   │   ├── _reviewLoop/       Week 11: review store, Review Task Detail view, Dashboard decision message
 │   │   ├── _dashboard/, _reviewTasks/, _quiz/, …   One private folder per built screen
 │   │   ├── dev/               Internal component preview (URL only)
 │   │   └── not-found.tsx      Custom 404
 │   └── components/            One shared component per pattern (layout, ui, forms, data, feedback, content)
 ├── shared/                    Defined once, used everywhere
 │   ├── content/               Screen names, wording and seed data, one file per screen
+│   ├── review-loop/           Week 11: review decision rules (no React), shared by every screen
 │   ├── design-tokens/         tokens.css (colors light and dark, type, spacing, radius, stroke)
 │   └── brand/logo/            Approved Logo Version 4 files only
 ├── docs/                      Week 10 and Week 11 notes, maps and evidence
@@ -62,7 +64,7 @@ Names, paths, parents and scope notes are defined once in `shared/content/admin-
 | `/account-support/` | Account Support | Built (Week 10) |
 | `/review-tasks/` | Review Tasks | Built (Week 10) |
 | `/settings/` | Settings / Team Access | Built (Week 10) |
-| `/review-tasks/[taskId]/` | Review Task Detail | **PLANNED** (Week 11, feature 1). One page per seeded task, built ahead with `generateStaticParams` |
+| `/review-tasks/[taskId]/` | Review Task Detail | **BUILT (Week 11, feature 1).** One static page per seeded task (`seed-1` to `seed-5`), built with `generateStaticParams` and `dynamicParams = false`; other task addresses show Page not found. Layout PROVISIONAL |
 | `/accept-invitation/` | Accept Invitation | **PLANNED** (Week 11, feature 2) |
 | `/account-setup/` | Account Setup | **PLANNED** (Week 11, feature 3) |
 | `/dev/` | Component preview | Internal, URL only |
@@ -90,14 +92,14 @@ Names, paths, parents and scope notes are defined once in `shared/content/admin-
 | Preview state (`?state=`) | Each screen's `StateFromUrl` | The address | Review aid only |
 | Screen state (search, filters, selected row, menus) | Each screen | Memory | Lost when you leave the page |
 | Theme (Light, Dark, System) | `components/layout/themeStore.ts` | Local storage `cuidance-admin-theme` | Applied before paint by a small script in the root layout |
-| **Review decisions** | **PLANNED** `app/_reviewLoop/reviewStore.ts`; rules in `shared/review-loop/` | Session storage (one tab) | Only Review Task Detail records decisions. Dashboard and Review Tasks read them |
+| **Review decisions** | **BUILT (Week 11)** `app/_reviewLoop/reviewStore.ts`; rules in `shared/review-loop/review-decisions.ts` | Session storage `cuidance-admin-review-session` (one tab) | Only Review Task Detail records decisions and resets them. Dashboard, Review Tasks and Review Task Detail read them through `useReviewTasks()`. Also holds the one-time Dashboard message |
 | **Invitation and account setup** | **PLANNED** `app/_onboarding/onboardingStore.ts`; wording in `shared/content/` | Session storage (one tab) | Seeded; nothing sent anywhere |
 
 **Stores follow one pattern** (the theme store): a small module with `subscribe`, a getter and a setter, read through React's `useSyncExternalStore`. The server build uses the plain seed, then the browser adds what's in storage after the page loads, so pages don't show hydration warnings.
 
-**Derived, not duplicated (PLANNED):** current task status, Dashboard counts and the Needs attention list are worked out from seed + decisions by shared functions in `shared/review-loop/` (`applyDecisions`, `dashboardSummary`, `needsAttention`). No screen keeps its own copy.
+**Derived, not duplicated (BUILT, Week 11):** current task status, Dashboard counts and the Needs attention list are worked out from seed + decisions by shared functions in `shared/review-loop/` (`applyDecisions`, `dashboardSummary`, `needsAttention`). No screen keeps its own copy.
 
-## 6. Week 11 loop (PLANNED)
+## 6. Week 11 loop (steps 3 to 6 BUILT; steps 1 and 2 PLANNED)
 
 ```
 Accept Invitation → Account Setup → Review Tasks → Review Task Detail (decide)
@@ -115,7 +117,21 @@ Review Task Detail ──record decision──▶ reviewStore ──saves──�
                (statuses)      (counts, rows) (status, history)
 ```
 
-Full detail: `docs/Week-11/close-the-loop-implementation-plan.md`, sections 3 and 5.
+Full detail: `docs/Week-11/close-the-loop-implementation-plan.md`, sections 3 and 5, and `docs/Week-11/review-task-loop-implementation.md` (what was built and tested).
+
+**Built in feature 1:**
+
+| Piece | File | Job |
+| --- | --- | --- |
+| Rules | `shared/review-loop/review-decisions.ts` | `applyDecisions` (seed + decisions → current tasks), `needsAttention`, `dashboardSummary` (3 / 1 / 1 / 0 on the seed), `validateDecision` (Request changes needs a note), `parseReviewSession` (ignores bad saved data), the "Reviewer B" placeholder |
+| Wording and paths | `shared/content/review-task-detail.ts` | Detail screen and Dashboard message wording, `reviewTaskPath`, `reviewTaskFromPath` (breadcrumb) |
+| Store | `admin-web/app/_reviewLoop/reviewStore.ts` | `recordDecision`, `resetReviewSession`, `clearReviewNotice`, `useReviewTasks()` |
+| Screen | `admin-web/app/_reviewLoop/ReviewTaskDetailView.tsx` (+ `StateFromUrl`) | Summary, decision history, decision form, recorded decision, states (`?state=loading`, `error`, `unavailable`, `saving`, `save-error`, `success`) |
+| Dashboard message | `admin-web/app/_reviewLoop/DecisionNotice.tsx` | "Decision recorded" once after a decision |
+| Readers | `_dashboard/DashboardContent.tsx`, `_reviewTasks/ReviewTasksContent.tsx`, `_review/ReviewShared.tsx` | Counts, rows and statuses from `useReviewTasks()`; title links; the Approved status |
+| Breadcrumb | `components/layout/TopBar.tsx` | Admin / Review Tasks / *task* on detail pages |
+
+**Status changes:** Approve → Approved (note optional; the task leaves Needs attention and its count drops by 1). Request changes → Needs changes (note required; the task stays and counts don't change). A decided task shows its decision instead of the form until **Reset sample data**.
 
 ## 7. Styling and accessibility
 
@@ -143,5 +159,5 @@ Full detail: `docs/Week-11/close-the-loop-implementation-plan.md`, sections 3 an
 | Sign-in and accounts | None; the profile shows placeholder initials | Supabase Auth |
 | Roles and permissions | Policy wording only (`shared/content/admin-roles.ts`), nothing enforced | Supabase roles and row-level security |
 | Data | Seeded files in `shared/content/` | Supabase tables, same project as the main app |
-| Saving changes | Nothing saved, except theme (local storage) and, from Week 11, review decisions and onboarding (session storage, one tab) | Supabase |
+| Saving changes | Nothing saved, except theme (local storage) and, from Week 11, review decisions (session storage, one tab; built). Onboarding will use the same approach (planned) | Supabase |
 | Pages for data unknown at build time | Not possible on a static site | Decided with the Supabase and hosting step |
