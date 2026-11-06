@@ -1,0 +1,273 @@
+/*
+ * Product Information, aligned with the approved Week 9 hi-fi (A4): search, the
+ * product list, and the selected product's details beside it (below it under
+ * 1280 px). Tokens only.
+ */
+.view {
+  display: flex;
+  flex-direction: column;
+  gap: var(--layout-gutter);
+}
+
+/* A4 has search only (no filter) */
+.toolbar {
+  max-width: calc(var(--layout-sidebar-width) * 3);
+}
+
+/* List and details side by side from 1280 px */
+.body {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  align-items: start;
+  gap: var(--layout-gutter);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+  min-width: 0;
+}
+
+/* The product name selects the row and shows its details */
+.rowButton {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--size-touch-target);
+  padding: 0;
+  font: var(--type-body-small);
+  font-weight: 600;
+  color: var(--color-ink);
+  text-align: start;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+@media (hover: hover) {
+  .rowButton:hover {
+    text-decoration: underline;
+  }
+}
+
+.count {
+  margin: 0;
+  font: var(--type-caption);
+  color: var(--color-ink-muted);
+}
+
+/* Status labels: PROVISIONAL mapping. Text always shows; done states also show ✓ */
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-8);
+  font: var(--type-data-small);
+  color: var(--color-ink);
+  border: var(--stroke-default) solid;
+  border-radius: var(--radius-small);
+}
+
+.statusIcon {
+  color: var(--color-success);
+}
+
+.statusDone {
+  white-space: nowrap;
+  background: var(--color-success-surface);
+  border-color: var(--color-success);
+}
+
+.statusNeutral {
+  white-space: nowrap;
+  background: var(--color-surface);
+  border-color: var(--color-border-strong);
+}
+
+.statusAlert {
+  white-space: nowrap;
+  background: var(--color-alert-surface);
+  border-color: var(--color-alert);
+}
+
+/* Partner: Byzantium Plum plus ◆ and the text label */
+.statusPartner {
+  background: var(--color-partner-surface);
+  border-color: var(--color-partner);
+}
+
+.partnerIcon {
+  color: var(--color-partner);
+}
+
+/* No results for the current search: ◌, a message and one next step */
+.noResults {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+  padding: var(--space-24);
+  background: var(--color-surface);
+  border: var(--stroke-default) dashed var(--color-border-strong);
+  border-radius: var(--radius-medium);
+}
+
+.noResultsMessage {
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
+  margin: 0;
+  font: var(--type-body);
+}
+
+.noResultsSymbol {
+  font: var(--type-heading-4);
+}
+
+/* Product details panel: sections divided by rules, as in A4 */
+.detail {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+  padding: var(--space-24);
+  color: var(--color-ink);
+  background: var(--color-surface);
+  border: var(--stroke-default) solid var(--color-border);
+  border-radius: var(--radius-medium);
+}
+
+.detailLabel {
+  margin: 0;
+  font: var(--type-label);
+  color: var(--color-ink-muted);
+}
+
+.titleGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+.detailTitle {
+  margin: 0;
+  font: var(--type-heading-2);
+}
+
+.brandLine {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-8) var(--space-12);
+  margin: 0;
+}
+
+.brand {
+  font: var(--type-label);
+}
+
+.tag {
+  padding: var(--space-4) var(--space-8);
+  font: var(--type-data-small);
+  background: var(--color-background);
+  border: var(--stroke-default) solid var(--color-border);
+  border-radius: var(--radius-pill);
+}
+
+.sectionLabel {
+  margin: 0;
+  font: var(--type-eyebrow);
+  letter-spacing: var(--type-eyebrow-tracking);
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+}
+
+/* Disclosure box: educational on a quiet surface; Partner in Byzantium Plum */
+.disclosure {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  padding: var(--space-16);
+  background: var(--color-background);
+  border: var(--stroke-default) solid var(--color-border);
+  border-radius: var(--radius-medium);
+}
+
+.disclosurePartner {
+  background: var(--color-partner-surface);
+  border-color: var(--color-partner);
+}
+
+.disclosureTitle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  margin: 0;
+  font: var(--type-label);
+}
+
+.disclosureText,
+.sectionText {
+  margin: 0;
+  font: var(--type-body-small);
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  padding-top: var(--space-16);
+  border-top: var(--stroke-default) solid var(--color-border);
+}
+
+.source {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin: 0;
+}
+
+.sourceTitle {
+  font: var(--type-body-small);
+  font-weight: 600;
+}
+
+.caption {
+  margin: 0;
+  font: var(--type-caption);
+  color: var(--color-ink-muted);
+}
+
+.pending {
+  margin: 0;
+  font: var(--type-body-small);
+  color: var(--color-ink-muted);
+}
+
+.statusGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-16);
+}
+
+.statusBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+/* Under 1280 px the details move below the list (PROVISIONAL, D14) */
+@media (max-width: 1279px) {
+  .body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .toolbar {
+    max-width: none;
+  }
+}
+
+/* Phones: the two status blocks stack */
+@media (max-width: 767px) {
+  .statusGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

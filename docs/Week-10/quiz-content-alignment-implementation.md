@@ -7,6 +7,14 @@
 - **Visual source:** the approved Week 9 hi-fi screenshot of Quiz Content (**A2**, attached Nov 6, 2026). The unreadable PDF supplied nothing.
 - **Scope:** Quiz Content only. Other content screens are unchanged.
 
+## 0. Team 03 review (Nov 6, 2026)
+
+Quiz Content is **approved as a provisional implementation.** These sample-data decisions are accepted and stay **PROVISIONAL**:
+1. Keep the five Cuidance-relevant questions.
+2. Keep A2's "Emotional Wellbeing" and "Practical Support" care areas, and their three questions, out of the build.
+3. Keep the answer-options note "To be confirmed by Team 03."
+4. No other care areas or question data are added.
+
 ## 1. What changed
 
 The screen was structure-only: title, scope note, "Structure only" note and a Related link. It now follows A2's layout.

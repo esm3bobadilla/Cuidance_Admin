@@ -36,6 +36,14 @@
 
 **Note on the A1 to A5 screenshots:** only their written record (`admin-web-source-reconciliation.md`) is available in this session, not the image files. They need to be re-supplied before step 3.
 
+**Quiz Content (Nov 6, 2026):** approved as a provisional implementation. Accepted as PROVISIONAL decisions:
+- The five Cuidance-relevant questions.
+- No "Emotional Wellbeing" or "Practical Support" care areas.
+- Answer options "To be confirmed by Team 03."
+- No invented care areas or question data.
+
+See `quiz-content-alignment-implementation.md`.
+
 ## 1. Sources compared
 
 | Code | Source | What it gives | Limits |
@@ -65,7 +73,7 @@ The three visual sources disagree with each other on the shell. Section 3 compar
 | `/content/` | Content | Structural (page of links) | None show a Content landing page | Shell only | C4 is still open: keep or remove the landing page |
 | `/content/quiz-content/` | Quiz Content | **Built (Slice 3a)**: search, status filter, list, details panel, states | A2 (visual source) | **Done** (`quiz-content-alignment-implementation.md`) | Detail routes in 2b; three A2 rows and the answer options left out for Team 03 to confirm |
 | `/content/guidance-content/` | Guidance Content | Structural | A3 only | **Yes:** list and detail panel from A3 | No B screen with this title. B "Guidance Connection Detail" may belong here (D9) |
-| `/content/product-information/` | Product Information | Structural | A4; B §03 "Product Catalog" (filter chips, table, detail panel with image placeholder) | **Yes** | B calls it "Product Catalog". The approved name is "Product Information" (D8). B's detail panel appears to show availability fields: **VERIFY**, not built (CLAUDE.md) |
+| `/content/product-information/` | Product Information | **Built (Slice 4)**: search, list, details panel with disclosure and source sections, states | A4 (visual source) | **Done** (`product-information-alignment-implementation.md`) | Brands shown as placeholders, one A4 sentence left out, and details for three products "To be confirmed" (all PROVISIONAL). Availability stays VERIFY |
 | `/content/knowledge-sources/` | Knowledge Sources | Structural | B §03 "Knowledge Sources" (filters, table, detail panel) | **Yes** | |
 | `/content/partner-highlights/` | Partner Highlights | Structural | B §04 "Partner Highlights" (filters, table, preview panel, Partner labels) | **Yes** | Partner labels use Byzantium Plum plus "Partner" text |
 | `/content/commercial-content/` | Commercial Content | Structural, **not in the sidebar** (C7) | B §04 "Content Management" under "Partner & Commercial Content" | Possibly | B supports keeping it. Its title differs (D8) |
