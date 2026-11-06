@@ -1,0 +1,368 @@
+/*
+ * Claims & Safety Review, aligned with the approved Week 9 hi-fi (A5): list tabs,
+ * content-area filter and search, the review table, the selected item's details
+ * beside it (below it under 1280 px), and the educational-guidance banner.
+ * Tokens only.
+ */
+.view {
+  display: flex;
+  flex-direction: column;
+  gap: var(--layout-gutter);
+}
+
+/* Tabs on the left, filter and search on the right; they wrap when narrow */
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-16) var(--space-24);
+}
+
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  border-bottom: var(--stroke-default) solid var(--color-border);
+}
+
+.tab {
+  min-height: var(--size-touch-target);
+  padding: 0 var(--space-16);
+  font: var(--type-body);
+  color: var(--color-ink-muted);
+  background: transparent;
+  border: 0;
+  border-bottom: var(--stroke-strong) solid transparent;
+  cursor: pointer;
+}
+
+/* Selected tab: Compass Blue text and underline, plus heavier text (not color alone) */
+.tab[aria-selected='true'] {
+  font: var(--type-label);
+  color: var(--color-selected);
+  border-bottom-color: var(--color-selected);
+}
+
+@media (hover: hover) {
+  .tab:hover {
+    text-decoration: underline;
+  }
+}
+
+.tab:focus-visible {
+  outline-offset: calc(-1 * var(--stroke-strong));
+}
+
+.tab:disabled {
+  cursor: default;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--space-12);
+}
+
+.area {
+  flex: 1 1 calc(var(--layout-sidebar-width) * 0.75);
+  min-width: 0;
+}
+
+.search {
+  flex: 1 1 var(--layout-sidebar-width);
+  min-width: 0;
+}
+
+/* List and details side by side from 1280 px */
+.body {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  align-items: start;
+  gap: var(--layout-gutter);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+  min-width: 0;
+}
+
+/* The item text selects the row and shows its details */
+.rowButton {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--size-touch-target);
+  padding: 0;
+  font: var(--type-body-small);
+  font-weight: 600;
+  color: var(--color-ink);
+  text-align: start;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+@media (hover: hover) {
+  .rowButton:hover {
+    text-decoration: underline;
+  }
+}
+
+.count {
+  margin: 0;
+  font: var(--type-caption);
+  color: var(--color-ink-muted);
+}
+
+/* Status labels: PROVISIONAL mapping. Text always shows; longer labels may wrap so the table fits beside the details */
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-8);
+  font: var(--type-data-small);
+  color: var(--color-ink);
+  border: var(--stroke-default) solid;
+  border-radius: var(--radius-small);
+}
+
+.statusNeutral {
+  white-space: nowrap;
+  background: var(--color-surface);
+  border-color: var(--color-border-strong);
+}
+
+.statusAlert {
+  background: var(--color-alert-surface);
+  border-color: var(--color-alert);
+}
+
+/* Needs changes: Dark Ruby plus ⚠ and the text */
+.statusError {
+  background: var(--color-error-surface);
+  border-color: var(--color-error);
+}
+
+.statusError .statusIcon {
+  color: var(--color-error);
+}
+
+.statusDone {
+  background: var(--color-success-surface);
+  border-color: var(--color-success);
+}
+
+.statusDone .statusIcon {
+  color: var(--color-success);
+}
+
+/* Assigned reviewer: initials in a neutral circle (no artwork). It isn't interactive,
+   so it uses the 32 px spacing step rather than the 44 px touch-target size */
+.reviewer {
+  position: relative;
+  display: inline-flex;
+}
+
+.initials {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--space-32);
+  height: var(--space-32);
+  font: var(--type-data-small);
+  color: var(--color-ink);
+  background: var(--color-background);
+  border: var(--stroke-default) solid var(--color-border-strong);
+  border-radius: var(--radius-pill);
+}
+
+/* Last updated: the date, then the time on its own line, as in A5 */
+.updated {
+  display: flex;
+  flex-direction: column;
+  white-space: nowrap;
+}
+
+.time {
+  font: var(--type-caption);
+  color: var(--color-ink-muted);
+}
+
+/* Screen-reader-only text. The 1 px values are the standard technique, not a design value. */
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* No results for the current tab, filter or search: ◌, a message and one next step */
+.noResults {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+  padding: var(--space-24);
+  background: var(--color-surface);
+  border: var(--stroke-default) dashed var(--color-border-strong);
+  border-radius: var(--radius-medium);
+}
+
+.noResultsMessage {
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
+  margin: 0;
+  font: var(--type-body);
+}
+
+.noResultsSymbol {
+  font: var(--type-heading-4);
+}
+
+/* Review details panel */
+.detail {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+  padding: var(--space-24);
+  color: var(--color-ink);
+  background: var(--color-surface);
+  border: var(--stroke-default) solid var(--color-border);
+  border-radius: var(--radius-medium);
+}
+
+.detailTop {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-8);
+}
+
+.detailLabel {
+  margin: 0;
+  font: var(--type-eyebrow);
+  letter-spacing: var(--type-eyebrow-tracking);
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+}
+
+.pager {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.position {
+  margin-right: var(--space-4);
+  font: var(--type-caption);
+  color: var(--color-ink-muted);
+}
+
+.pagerButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--size-touch-target);
+  height: var(--size-touch-target);
+  padding: 0;
+  font: var(--type-heading-4);
+  color: var(--color-ink);
+  background: transparent;
+  border: var(--stroke-default) solid var(--color-border-strong);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+}
+
+.pagerButton:disabled {
+  color: var(--color-disabled-ink);
+  border-color: var(--color-border);
+  cursor: default;
+}
+
+.titleGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+.detailTitle {
+  margin: 0;
+  font: var(--type-heading-2);
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4) var(--space-8);
+  margin: 0;
+  font: var(--type-caption);
+  color: var(--color-ink-muted);
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+.sectionHeading {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  margin: 0;
+  font: var(--type-label);
+}
+
+.flagIcon {
+  color: var(--color-error);
+}
+
+.box {
+  margin: 0;
+  padding: var(--space-12) var(--space-16);
+  font: var(--type-body-small);
+  background: var(--color-background);
+  border: var(--stroke-default) solid var(--color-border);
+  border-radius: var(--radius-small);
+}
+
+/* Claims and safety flags: Dark Ruby (CLAUDE.md), with ⚠ on the heading */
+.boxFlag {
+  background: var(--color-error-surface);
+  border-color: var(--color-error);
+}
+
+.quote {
+  font: var(--type-body);
+  font-family: var(--font-display);
+}
+
+.pending {
+  margin: 0;
+  font: var(--type-body-small);
+  color: var(--color-ink-muted);
+}
+
+/* A5's educational-guidance banner */
+.disclaimer {
+  margin: 0;
+  padding: var(--space-16) var(--space-24);
+  font: var(--type-body-small);
+  color: var(--color-ink);
+  background: var(--color-surface);
+  border: var(--stroke-default) solid var(--color-border);
+  border-radius: var(--radius-medium);
+}
+
+/* Under 1280 px the details move below the list (PROVISIONAL, D14) */
+@media (max-width: 1279px) {
+  .body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

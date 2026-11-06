@@ -1,5 +1,7 @@
 # Week 10: Review Tasks screen
 
+> **Update (Nov 6, 2026):** Review Tasks now follows the approved Week 9 hi-fi (Batch 1). See `review-tasks-alignment-implementation.md`. The structure-only build described below is the earlier version; its sample data and states are unchanged.
+
 The second built Admin Web screen, after the Dashboard / Review Queue. It uses **seed data only**: no Supabase, sign-in or live content.
 
 - **Branch:** `feat/admin-web-review-tasks`, from `main` at `c99a393` (after PR #8)

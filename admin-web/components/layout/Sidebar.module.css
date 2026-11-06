@@ -19,14 +19,18 @@
 
 .top {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-12);
+  flex-direction: column;
+  gap: var(--space-8);
   padding-inline: var(--space-8);
 }
 
-.menuButton {
-  display: none;
+/* "ADMIN WEB · INTERNAL", plain text under the logo (current prototype) */
+.label {
+  margin: 0;
+  font: var(--type-eyebrow);
+  letter-spacing: var(--type-eyebrow-tracking);
+  text-transform: uppercase;
+  color: var(--color-on-brand);
 }
 
 .nav {
@@ -118,7 +122,7 @@
   transform: rotate(90deg);
 }
 
-/* Narrow screens: the sidebar becomes a top bar, and the same list opens from Menu */
+/* Phones: the list opens below the top bar from its Menu button; the logo is in the top bar */
 @media (max-width: 767px) {
   .sidebar {
     position: static;
@@ -127,15 +131,11 @@
     padding: var(--space-16) var(--layout-outer-margin);
   }
 
+  .sidebar[data-open='false'] {
+    display: none;
+  }
+
   .top {
-    padding-inline: 0;
-  }
-
-  .menuButton {
-    display: block;
-  }
-
-  .nav[data-open='false'] {
     display: none;
   }
 }

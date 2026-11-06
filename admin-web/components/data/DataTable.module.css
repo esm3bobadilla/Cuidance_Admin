@@ -5,6 +5,13 @@
   border-radius: var(--radius-medium);
 }
 
+/* Inside a panel: the panel draws the border */
+.flush {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+}
+
 .table {
   width: 100%;
   border-collapse: collapse;
@@ -61,4 +68,10 @@
   overflow: hidden;
   clip-path: inset(50%);
   white-space: nowrap;
+}
+
+/* Compact: 12 px side padding in the header and cells */
+.compact .header,
+.compact .cell {
+  padding-inline: var(--space-12);
 }

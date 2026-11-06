@@ -1,32 +1,52 @@
-/* Top bar: Theme menu beside the profile area, right-aligned. Tokens only. */
+/* Shared top bar, following the current prototype. Tokens only. */
 .bar {
   display: flex;
-  justify-content: flex-end;
+  align-items: center;
+  gap: var(--space-16);
   padding: var(--space-12) var(--layout-outer-margin);
   border-bottom: var(--stroke-default) solid var(--color-border);
 }
 
+/* Phone only: Menu and the logo */
+.start {
+  display: none;
+}
+
+/* Hidden without JavaScript (TopBar.tsx), where the list is always shown */
+.menuButton {
+  display: flex;
+}
+
+.crumbs {
+  flex: 1;
+  min-width: 0;
+}
+
+/* The menus' panels line up with this group's right edge */
 .actions {
   position: relative;
   display: flex;
-  align-items: center;
-  gap: var(--space-12);
-}
-
-.theme {
-  display: flex;
-}
-
-/* Approved initials treatment: brand circle, no artwork */
-.profile {
-  display: inline-flex;
   flex: none;
   align-items: center;
-  justify-content: center;
-  width: var(--size-touch-target);
-  height: var(--size-touch-target);
-  font: var(--type-label);
-  color: var(--color-on-brand);
-  background: var(--color-brand);
-  border-radius: var(--radius-pill);
+  gap: var(--space-12);
+  margin-left: auto;
+}
+
+/* Phones: Menu, logo, Theme and profile. When the text buttons and the 160 px
+   logo don't fit on one line, Theme and profile move to a second line, on the right. */
+@media (max-width: 767px) {
+  .bar {
+    flex-wrap: wrap;
+    gap: var(--space-12);
+  }
+
+  .start {
+    display: flex;
+    align-items: center;
+    gap: var(--space-12);
+  }
+
+  .crumbs {
+    display: none;
+  }
 }

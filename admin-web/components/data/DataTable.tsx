@@ -19,14 +19,18 @@ type DataTableProps = {
   rows: Row[];
   // Selected row: Compass Blue surface plus a 2 px outline and a text marker
   selectedRowId?: string;
+  // Inside a panel that already has its own border (for example the Dashboard panels)
+  flush?: boolean;
+  // Tighter horizontal cell padding (12 px) for wide tables beside a details panel
+  compact?: boolean;
 };
 
 // Structure only: status color mappings are not part of this component yet.
-export function DataTable({ caption, columns, rows, selectedRowId }: DataTableProps) {
+export function DataTable({ caption, columns, rows, selectedRowId, flush = false, compact = false }: DataTableProps) {
   return (
     // Controlled horizontal scroll on narrow screens (board responsive rule)
-    <div className={styles.scroll} role="region" aria-label={caption} tabIndex={0}>
-      <table className={styles.table}>
+    <div className={flush ? `${styles.scroll} ${styles.flush}` : styles.scroll} role="region" aria-label={caption} tabIndex={0}>
+      <table className={compact ? `${styles.table} ${styles.compact}` : styles.table}>
         <caption className={styles.caption}>{caption}</caption>
         <thead>
           <tr>

@@ -1,4 +1,37 @@
-/* Dashboard / Review Queue screen. Tokens only. */
+/*
+ * Dashboard / Review Queue, aligned with the current prototype's Dashboard (F08):
+ * page header, standalone count tiles, then panels with a header bar.
+ * Tokens only.
+ */
+
+/* Blocks sit one gutter apart (24 px on desktop and tablet, 16 px on phones) */
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--layout-gutter);
+}
+
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+}
+
+.sectionText {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+/* Section and panel labels: the prototype's small uppercase headers */
+.label {
+  margin: 0;
+  font: var(--type-eyebrow);
+  letter-spacing: var(--type-eyebrow-tracking);
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+}
 
 .description {
   margin: 0;
@@ -6,71 +39,74 @@
   color: var(--color-ink-muted);
 }
 
-.sectionText {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-8);
-}
-
-.sectionHeader {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: var(--space-12);
-}
-
-/* Review Queue panel: text, four counts and the one primary action in a row, wrapping when narrow */
-.queue {
+/* Label and description on the left, the action on the right; the action wraps under when narrow */
+.blockHeader,
+.panelHeader {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: var(--space-24);
+  justify-content: space-between;
+  gap: var(--space-12) var(--space-16);
 }
 
-.queueText {
-  display: flex;
-  flex: 1 1 var(--layout-sidebar-width);
-  flex-direction: column;
-  gap: var(--space-8);
-}
-
-/* From 1280 px up, the tiles keep room for their labels and move onto their own line when the row is too narrow */
+/* Four counts in a row on desktop and tablet, two by two on phones */
 .tiles {
   display: grid;
-  flex: 3 1 0;
-  min-width: calc(var(--layout-sidebar-width) * 1.75);
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: var(--space-12);
+  gap: var(--space-16);
 }
 
-.queueAction {
-  flex: none;
+/* Panel: one bordered surface with a header bar, like the prototype's "Your work" and "Your access" */
+.panel {
+  display: flex;
+  flex-direction: column;
+  color: var(--color-ink);
+  background: var(--color-surface);
+  border: var(--stroke-default) solid var(--color-border);
+  border-radius: var(--radius-medium);
 }
 
-/* Key Areas: three columns on desktop, as in the hi-fi; one column below 1280 px */
+.panelHeader {
+  padding: var(--space-12) var(--space-16);
+  border-bottom: var(--stroke-default) solid var(--color-border);
+}
+
+.panelBody {
+  padding: var(--space-16);
+}
+
+/* Key Areas: three across on desktop (hi-fi), one below 1280 px */
 .keyAreas {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--layout-gutter);
+  gap: var(--space-12);
   margin: 0;
-  padding: 0;
+  padding: var(--space-16);
   list-style: none;
 }
 
 .keyArea {
   position: relative;
   display: flex;
+  align-items: center;
+  gap: var(--space-12);
+  min-height: var(--layout-table-row-min-height);
+  padding: var(--space-12) var(--space-16);
+  border: var(--stroke-default) solid var(--color-border);
+  border-radius: var(--radius-medium);
 }
 
-.keyArea > div {
+.keyAreaText {
+  display: flex;
   flex: 1;
-  padding-right: calc(var(--space-16) + var(--size-touch-target));
+  flex-direction: column;
+  gap: var(--space-4);
+  min-width: 0;
 }
 
 .keyAreaTitle {
   margin: 0;
-  font: var(--type-heading-4);
+  font: var(--type-label);
 }
 
 .keyAreaLink {
@@ -78,7 +114,7 @@
   text-decoration: none;
 }
 
-/* The whole card is the link target */
+/* The whole tile is the link target */
 .keyAreaLink::after {
   content: '';
   position: absolute;
@@ -104,16 +140,13 @@
 .keyAreaDescription {
   margin: 0;
   font: var(--type-body-small);
-  color: var(--color-ink);
+  color: var(--color-ink-muted);
 }
 
 .chevron {
-  position: absolute;
-  top: 50%;
-  right: var(--space-16);
+  flex: none;
   font: var(--type-heading-4);
   color: var(--color-ink);
-  transform: translateY(-50%);
 }
 
 /* Text link with a 44 px touch target */
@@ -129,19 +162,11 @@
   .keyAreas {
     grid-template-columns: minmax(0, 1fr);
   }
-
-  .tiles {
-    flex-basis: 100%;
-    min-width: 0;
-  }
 }
 
 @media (max-width: 767px) {
   .tiles {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .keyAreas {
     gap: var(--space-12);
   }
 }

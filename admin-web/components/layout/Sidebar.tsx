@@ -2,13 +2,14 @@
 
 import { usePathname } from 'next/navigation';
 import { useState, type ReactNode } from 'react';
-import { adminScreens, sidebarNav, type AdminScreenId } from '../../../shared/content/admin-web-screens';
-import { Button } from '../ui/Button';
+import { adminScreens, shellCopy, sidebarNav, type AdminScreenId } from '../../../shared/content/admin-web-screens';
 import styles from './Sidebar.module.css';
 
 type SidebarProps = {
   // The logo, rendered by the layout so the approved image files stay in one place
   logo: ReactNode;
+  // Phones only: whether the Menu button in the top bar has opened the list
+  menuOpen: boolean;
 };
 
 const trimSlash = (path: string) => path.replace(/\/+$/, '') || '/';
@@ -16,37 +17,28 @@ const trimSlash = (path: string) => path.replace(/\/+$/, '') || '/';
 // Plain links need the GitHub Pages base path added by hand
 const hrefFor = (id: AdminScreenId) => `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}${adminScreens[id].path}`;
 
-// Persistent Admin Web sidebar (confirmed by Team 03). On narrow screens the same
-// list sits behind a Menu button. Without JavaScript, everything stays visible.
-export function Sidebar({ logo }: SidebarProps) {
+// Persistent Admin Web sidebar (confirmed by Team 03). On phones the same list opens
+// below the top bar from its Menu button. Without JavaScript, everything stays visible.
+export function Sidebar({ logo, menuOpen }: SidebarProps) {
   const current = trimSlash(usePathname() ?? '/');
   const isCurrent = (id: AdminScreenId) => trimSlash(adminScreens[id].path) === current;
   const isWithin = (id: AdminScreenId) => current.startsWith(`${trimSlash(adminScreens[id].path)}/`);
 
-  const [menuOpen, setMenuOpen] = useState(false);
   const [contentOpen, setContentOpen] = useState(isCurrent('content') || isWithin('content'));
 
   return (
-    <div className={styles.sidebar}>
+    <div id="admin-sidebar" className={`app-sidebar ${styles.sidebar}`} data-open={menuOpen}>
       <noscript>
-        <style>{`.${styles.nav}, .${styles.children} { display: flex !important; } .${styles.menuButton}, .${styles.toggle} { display: none !important; }`}</style>
+        <style>{`.${styles.sidebar}, .${styles.children} { display: flex !important; } .${styles.toggle} { display: none !important; }`}</style>
       </noscript>
 
+      {/* Desktop and tablet only: the phone top row shows its own logo */}
       <div className={styles.top}>
         {logo}
-        <div className={styles.menuButton}>
-          <Button
-            variant="secondary"
-            aria-expanded={menuOpen}
-            aria-controls="admin-sidebar-nav"
-            onClick={() => setMenuOpen(!menuOpen)}
-          >
-            Menu
-          </Button>
-        </div>
+        <p className={styles.label}>{shellCopy.sidebarLabel}</p>
       </div>
 
-      <nav id="admin-sidebar-nav" aria-label="Admin Web" className={styles.nav} data-open={menuOpen}>
+      <nav id="admin-sidebar-nav" aria-label="Admin Web" className={styles.nav}>
         <ul className={styles.list}>
           {sidebarNav.map((item) => {
             const screen = adminScreens[item.id];

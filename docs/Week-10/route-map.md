@@ -1,5 +1,7 @@
 # Week 10 Step 2: Admin Web route map
 
+> **Update (Nov 5, 2026):** breadcrumbs and back links have changed since this map was written. Breadcrumbs now sit in the shared top bar and start with "Admin", and the "‹ Back to …" links are removed (decisions C2 and C3, settled by Team 03). The breadcrumb and back-link columns below describe the earlier build. See `shell-alignment-implementation.md`. Routes and parents are unchanged.
+
 A structural navigation pass. Each approved Admin Web screen now has a Next.js route that shows only its title, its parent (breadcrumb), a short scope note and working links. **No screen content, data, Supabase, authentication or backend logic was built.**
 
 - **Branch:** `feat/admin-web-route-map`, from `main` at `3df35a0`

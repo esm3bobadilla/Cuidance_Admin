@@ -10,7 +10,6 @@ import { TextInput } from '../../components/forms/TextInput';
 import { Textarea } from '../../components/forms/Textarea';
 import { RolesPolicy } from '../../components/content/RolesPolicy';
 import { PageHeader } from '../../components/layout/PageHeader';
-import { Breadcrumb } from '../../components/ui/Breadcrumb';
 import { Button } from '../../components/ui/Button';
 import { Card } from '../../components/ui/Card';
 import { DisclosureLabel } from '../../components/ui/DisclosureLabel';
@@ -37,7 +36,6 @@ export default function ComponentPreviewPage() {
   return (
     <main className={styles.page}>
       <PageHeader
-        wayfinding={<Breadcrumb items={[{ label: 'Admin', href: `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/` }, { label: 'Component Preview' }]} />}
         eyebrow="Internal preview"
         title="Component Preview"
         description="Internal Admin Web development screen. It previews the approved components and their states, isn't linked from navigation, and isn't part of participant testing. Switch your device to dark mode to check dark states."

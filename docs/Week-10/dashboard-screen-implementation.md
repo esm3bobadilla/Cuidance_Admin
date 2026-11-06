@@ -1,5 +1,7 @@
 # Week 10 Step 3: Dashboard / Review Queue screen
 
+> **Update (Nov 6, 2026):** the Dashboard's layout now follows the responsive prototype (Slice 2). Its content, sample data and links are unchanged. See `dashboard-alignment-implementation.md`. The layout described below is the earlier build.
+
 The first complete Admin Web screen. It's built from the Team 03 hi-fi reference with **seed data only**: no Supabase, sign-in or live content.
 
 - **Branch:** `feat/admin-web-dashboard-screen`, from `main` at `3c0a7f3` (after PR #7)
