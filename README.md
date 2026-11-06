@@ -25,7 +25,7 @@ It is not the public app, it is not part of participant testing, and it is not a
 | Design tokens | Done: `shared/design-tokens/` from the Week 8 Step 3 design system board (v04); open items listed in its README |
 | Shared content and quiz rules | Not started |
 | Admin Web framework | Approved: Next.js with TypeScript |
-| Admin Web scaffold | Done: persistent sidebar, Dashboard / Review Queue and Review Tasks (sample data), the Week 10 route map, and a Light / Dark / System Theme control. Settings shows static Team Access and the roles policy card (no live permissions). Prototype alignment on `feat/admin-web-prototype-alignment`: shell, Dashboard, Quiz Content, Product Information, Claims & Safety Review, Review Tasks, Settings / Team Access, Content landing page, Guidance Content, Knowledge Sources, Partner Highlights and Commercial Content (approved by Team 03; layout provisional) done. Waiting on approved sources: Guidance Rules Review, Content Metrics, Account Support |
+| Admin Web scaffold | Done: persistent sidebar, a Light / Dark / System Theme control, and every route in the Week 10 route map aligned with the approved Week 9 hi-fi screens and the responsive prototype on `feat/admin-web-prototype-alignment`: shell, Dashboard, Quiz Content, Guidance Content, Product Information, Knowledge Sources, Partner Highlights, Commercial Content, Content landing page, Guidance Rules Review, Claims & Safety Review, Content Metrics, Account Support, Review Tasks and Settings / Team Access. Sample data only; no live permissions. Provisional items are listed in each implementation note in `docs/Week-10/` |
 | Supabase connection | Not connected yet |
 | Authentication | Not started |
 | Supabase tables | Not started, pending team decision |

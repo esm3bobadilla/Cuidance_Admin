@@ -82,6 +82,15 @@ See `product-information-alignment-implementation.md`.
 - **Still blocked by missing approved sources:** Guidance Rules Review (D9), Content Metrics (D13) and Account Support (D12).
 - **Combined results:** TypeScript, production and GitHub Pages builds, and the full suite (352 loads, 0 problems). All screen tests passed. The responsive and 44 px audit passed at 12 widths in both builds. Contrast, keyboard and focus, no JavaScript and hydration all passed.
 
+**Final batch (Nov 6, 2026):**
+- **Done:** Guidance Rules Review, Content Metrics and Account Support, from the hi-fi screenshots attached Nov 6.
+- **Decisions:** D9 resolved, D13 resolved, D12 partly resolved.
+- **Combined results:** TypeScript, production and GitHub Pages builds, and the full suite (352 loads, 0 problems). Every screen's tests passed. The responsive and 44 px audit passed at 12 widths in both builds. Contrast, keyboard and focus, no JavaScript and hydration all passed.
+
+**Phase status:**
+- **Every route in the route map now has an aligned screen:** shell, Dashboard, all six content screens, Content landing, Guidance Rules Review, Claims & Safety Review, Content Metrics, Account Support, Review Tasks and Settings / Team Access.
+- **Still not built:** detail screens (D10: none approved) and the provisional items in each note.
+
 ## 1. Sources compared
 
 | Code | Source | What it gives | Limits |
@@ -115,10 +124,10 @@ The three visual sources disagree with each other on the shell. Section 3 compar
 | `/content/knowledge-sources/` | Knowledge Sources | **Built (completion Batch 1)**: search, list, source details | Knowledge Sources hi-fi (attached Nov 6) | **Done** (`knowledge-sources-alignment-implementation.md`) | Owner placeholders; Open and Add source not built |
 | `/content/partner-highlights/` | Partner Highlights | **Built (completion Batch 1)**: banner, search, labeled list, details with plum preview | Partner Highlights hi-fi (attached Nov 6) | **Done** (`partner-highlights-alignment-implementation.md`) | Partner A to D; artwork and actions not built |
 | `/content/commercial-content/` | Commercial Content | **Built (completion Batch 2)**: banner, search, label filter, labeled list of the existing commercial items, details with links | **No hi-fi**: layout PROVISIONAL; approved by Team 03 (C7 resolved) | **Done** (`commercial-content-implementation.md`) | Disclosure wording "To be confirmed"; not in the sidebar |
-| `/guidance-rules-review/` | Guidance Rules Review | Structural | **None.** B's sidebar shows "Guidance Rules" but no screen; B §02 "Branch & Routing Rules" may be it (D9) | **BLOCKED (Batch 2):** needs an approved source and the D9 decision | |
+| `/guidance-rules-review/` | Guidance Rules Review | **Built (final batch)**: banner, search, care-area and status filters, rule list, details with safety boundary | Guidance Rules Review hi-fi (attached Nov 6) | **Done** (`guidance-rules-review-alignment-implementation.md`) | **D9 resolved**: top-level screen; covers the PDF's Branch & Routing Rules |
 | `/claims-safety-review/` | Claims & Safety Review | **Built (Slice 5)**: tabs, content-area filter, search, review table, details panel with pager, banner, states | A5 (visual source) | **Done** (`claims-safety-review-alignment-implementation.md`) | Tab meaning, reviewer placeholders, VERIFY source, unbuilt review actions, and details for seven items "To be confirmed" (all PROVISIONAL) |
-| `/content-metrics/` | Content Metrics | Structural | Only B §01 "Metrics" (unreadable, layout only under D1) | **BLOCKED (Batch 2):** needs an approved hi-fi screenshot; charts also need D13 | Stays a limited internal view (CLAUDE.md) |
-| `/account-support/` | Account Support | Structural | Only B §05 "Account Support" (unreadable, layout only under D1) | **BLOCKED (Batch 2):** needs an approved hi-fi screenshot; scope check D12 | Must stay limited internal support |
+| `/content-metrics/` | Content Metrics | **Built (final batch)**: totals, CSS-only chart, care-area table, internal-metrics banner | Content Metrics hi-fi (attached Nov 6) | **Done** (`content-metrics-alignment-implementation.md`) | Hi-fi totals don't match its table (PROVISIONAL); filters not built; chart colors provisional (D13 resolved: CSS only) |
+| `/account-support/` | Account Support | **Built (final batch)**: search, status and request-type filters, masked request list, read-only details with privacy note | Account Support hi-fi (attached Nov 6) | **Done** (`account-support-alignment-implementation.md`) | Read-only; masked references; D12 scope check: limited internal view |
 | `/review-tasks/` | Review Tasks | **Built (Batch 1)**: search, selectable table, task panel with the hi-fi checklist, states | Review Tasks hi-fi screenshot | **Done** (`review-tasks-alignment-implementation.md`) | Dashboard sample data kept; hi-fi context, tabs, due dates and actions left out (PROVISIONAL) |
 | `/settings/` | Settings | **Built (Batch 1)**: static Team Access (prototype F09) and the approved roles card | P F09 | **Done** (`settings-team-access-implementation.md`) | No new route (D10); invites, actions and access denied not built (PROVISIONAL) |
 | `/dev/` | Component Preview | Built | None | Yes: add new shared patterns | Internal only |
@@ -240,11 +249,11 @@ P's wording for these states is readable and could be reused. B's state wording 
 | D6 | **Partly resolved:** no icons unless an icon set is formally approved, and the theme control stays text-based. **Still open:** whether to approve an icon set at all (it would affect the tablet icon strip, search and status chips) |
 | D7 | **RESOLVED:** keep the approved dark-mode sidebar |
 | D8 | Names: "Product Catalog" vs "Product Information"; "Content Management" vs "Commercial Content" |
-| D9 | Where Branch & Routing Rules and Guidance Connection Detail belong, and what Guidance Rules Review should show |
+| D9 | **RESOLVED (Nov 6, 2026):** the Guidance Rules Review hi-fi is the Guidance Rules Review screen, at its existing top-level route and sidebar item. The PDF's "Branch & Routing Rules" isn't a separate screen. Guidance Connection Detail (B §02) stays a possible detail screen (D10) |
 | D10 | Approve the new routes in section 2b |
 | D11 | **Partly resolved (Nov 5):** the profile menu has the identity line and Appearance only; no Sign out, Team Access, workspace or role switching. **Still open:** top-bar search |
-| D12 | Scope checks: App Activity Detail (analytics), Guest + Account States and Account Support must stay within the approved limited views |
-| D13 | Charts on Content Metrics: CSS-only bars with token colors (no library), or leave them out |
+| D12 | **Partly resolved (Nov 6, 2026):** Content Metrics stays internal content counts only, and Account Support is a limited, read-only, masked support view. App Activity Detail and Guest + Account States are not built |
+| D13 | **RESOLVED (Nov 6, 2026):** CSS-only bars with token colors, no chart dependency. Chart colors stay provisional until data-visualization tokens are approved |
 | D14 | Detail panel below 1280 px: under the list, or as its own page |
 | D15 | Permission grid: approve P's extra rows, or show R only |
 | D16 | **Partly resolved:** no unapproved illustrations. **Still open:** the "View as" role switcher, the "PROTOTYPE · SAMPLE DATA" label and the workspace card |

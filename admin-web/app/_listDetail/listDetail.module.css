@@ -349,3 +349,15 @@
     gap: var(--space-4);
   }
 }
+
+/* Boundary or privacy notice from a hi-fi (Guidance Rules Review, Account Support):
+   warm surface with an alert edge, text first, no icon */
+.notice {
+  margin: 0;
+  padding: var(--space-12) var(--space-16);
+  font: var(--type-body-small);
+  color: var(--color-ink);
+  background: var(--color-alert-surface);
+  border: var(--stroke-default) solid var(--color-alert);
+  border-radius: var(--radius-small);
+}
