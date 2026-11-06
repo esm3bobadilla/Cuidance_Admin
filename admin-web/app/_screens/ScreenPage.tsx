@@ -24,11 +24,14 @@ export function ScreenPage({
   id,
   eyebrow,
   childLayout = 'cards',
+  showStructureNote = true,
   children: content,
 }: {
   id: AdminScreenId;
   eyebrow?: string;
   childLayout?: 'cards' | 'panel';
+  // Off for a landing page whose links all lead to built screens
+  showStructureNote?: boolean;
   children?: ReactNode;
 }) {
   const screen = adminScreens[id];
@@ -43,7 +46,7 @@ export function ScreenPage({
         description={screen.scopeNote}
       />
 
-      {content ?? <p className="note">{structureOnlyNote}</p>}
+      {content ?? (showStructureNote && <p className="note">{structureOnlyNote}</p>)}
 
       {children.length > 0 && childLayout === 'panel' && (
         <section className={panel.panel} aria-labelledby={`${id}-children`}>

@@ -8,7 +8,8 @@
 
 ## 1. What changed
 
-1. **Header:** the eyebrow is "Internal tool", as on the hi-fi-aligned screens. The title and scope note are unchanged. The "Structure only" note stays: this page has no content of its own.
+1. **Header:** the eyebrow is "Internal tool", as on the hi-fi-aligned screens. The title and scope note are unchanged.
+   - **Correction (completion Batch 2):** the "Structure only. Screen content and data are not built yet." note is removed. Every content page it links to now has a built screen. `ScreenPage` has a new `showStructureNote` option, used only here.
 2. **Content pages:**
    - The separate cards with "Open …" buttons are now **one panel**, with the "CONTENT PAGES" label and **six link tiles**.
    - Each tile shows the page name and its existing scope note, plus ›. The whole tile is the link.
@@ -24,7 +25,7 @@
 | Keeping a Content landing page at all | C4: no source shows one |
 | The tile layout | No source for this page; it follows the approved Dashboard Key Areas panel |
 | The "Open …" button wording is gone | The tile name is now the link, as on the Dashboard |
-| Commercial Content is listed | It's a child of Content in the route map, but its place still needs Team 03 confirmation (C7). It stays out of the sidebar |
+| Commercial Content tile | **C7 resolved (Nov 6, 2026): Commercial Content is approved** and keeps its tile. It stays out of the sidebar (confirmed destinations, D2) |
 
 ## 3. Files
 

@@ -74,6 +74,14 @@ See `product-information-alignment-implementation.md`.
 - **Done:** Guidance Content (A3), Knowledge Sources and Partner Highlights, from the hi-fi screenshots attached Nov 6.
 - **Combined results:** TypeScript, production and GitHub Pages builds, and the full suite (352 loads, 0 problems). All screen tests passed. The responsive and 44 px audit passed at 12 widths in both builds. Contrast, keyboard and focus, no JavaScript and hydration all passed.
 
+**Completion sprint Batch 2 (Nov 6, 2026):**
+- **C7 resolved:** Commercial Content is approved by Team 03.
+- **Done:**
+  - Commercial Content: layout PROVISIONAL, no hi-fi.
+  - The Content landing page correction.
+- **Still blocked by missing approved sources:** Guidance Rules Review (D9), Content Metrics (D13) and Account Support (D12).
+- **Combined results:** TypeScript, production and GitHub Pages builds, and the full suite (352 loads, 0 problems). All screen tests passed. The responsive and 44 px audit passed at 12 widths in both builds. Contrast, keyboard and focus, no JavaScript and hydration all passed.
+
 ## 1. Sources compared
 
 | Code | Source | What it gives | Limits |
@@ -100,13 +108,13 @@ The three visual sources disagree with each other on the shell. Section 3 compar
 | Route | Screen | Built today | Source screens | Visual update needed | Notes |
 | --- | --- | --- | --- | --- | --- |
 | `/` | Dashboard | **Built** (follows A1): Review Queue panel, Key Areas, Needs attention table | A1; B §01 "Review Queue" (6 tiles, filter chips, table with a right detail panel); P F08 (role-based: welcome, role tiles, Your work, Your access) | **Done (Slice 2).** Prototype F08 layout with the current content | D5 resolved |
-| `/content/` | Content | **Built (Batch 2)**: one panel of six link tiles (Dashboard Key Areas pattern) | No source shows this page | **Done** (`content-landing-alignment-implementation.md`) | C4 still open; layout PROVISIONAL |
+| `/content/` | Content | **Built**: one panel of six link tiles (Commercial Content tile kept); structure-only note removed | No source shows this page | **Done** (`content-landing-alignment-implementation.md`) | C4 still open; layout PROVISIONAL |
 | `/content/quiz-content/` | Quiz Content | **Built (Slice 3a)**: search, status filter, list, details panel, states | A2 (visual source) | **Done** (`quiz-content-alignment-implementation.md`) | Detail routes in 2b; three A2 rows and the answer options left out for Team 03 to confirm |
 | `/content/guidance-content/` | Guidance Content | **Built (completion Batch 1)**: search, status filter, list with summaries, details | A3 (attached Nov 6) | **Done** (`guidance-content-alignment-implementation.md`) | Clinical-review wording left out; evidence labels and other details "To be confirmed" |
 | `/content/product-information/` | Product Information | **Built (Slice 4)**: search, list, details panel with disclosure and source sections, states | A4 (visual source) | **Done** (`product-information-alignment-implementation.md`) | Brands shown as placeholders, one A4 sentence left out, and details for three products "To be confirmed" (all PROVISIONAL). Availability stays VERIFY |
 | `/content/knowledge-sources/` | Knowledge Sources | **Built (completion Batch 1)**: search, list, source details | Knowledge Sources hi-fi (attached Nov 6) | **Done** (`knowledge-sources-alignment-implementation.md`) | Owner placeholders; Open and Add source not built |
 | `/content/partner-highlights/` | Partner Highlights | **Built (completion Batch 1)**: banner, search, labeled list, details with plum preview | Partner Highlights hi-fi (attached Nov 6) | **Done** (`partner-highlights-alignment-implementation.md`) | Partner A to D; artwork and actions not built |
-| `/content/commercial-content/` | Commercial Content | Structural, **not in the sidebar** (C7) | B §04 "Content Management" (unreadable) | **SKIPPED (Batch 2):** still needs Team 03 confirmation in the route map (C7) | Still listed on the Content page, as before |
+| `/content/commercial-content/` | Commercial Content | **Built (completion Batch 2)**: banner, search, label filter, labeled list of the existing commercial items, details with links | **No hi-fi**: layout PROVISIONAL; approved by Team 03 (C7 resolved) | **Done** (`commercial-content-implementation.md`) | Disclosure wording "To be confirmed"; not in the sidebar |
 | `/guidance-rules-review/` | Guidance Rules Review | Structural | **None.** B's sidebar shows "Guidance Rules" but no screen; B §02 "Branch & Routing Rules" may be it (D9) | **BLOCKED (Batch 2):** needs an approved source and the D9 decision | |
 | `/claims-safety-review/` | Claims & Safety Review | **Built (Slice 5)**: tabs, content-area filter, search, review table, details panel with pager, banner, states | A5 (visual source) | **Done** (`claims-safety-review-alignment-implementation.md`) | Tab meaning, reviewer placeholders, VERIFY source, unbuilt review actions, and details for seven items "To be confirmed" (all PROVISIONAL) |
 | `/content-metrics/` | Content Metrics | Structural | Only B §01 "Metrics" (unreadable, layout only under D1) | **BLOCKED (Batch 2):** needs an approved hi-fi screenshot; charts also need D13 | Stays a limited internal view (CLAUDE.md) |
