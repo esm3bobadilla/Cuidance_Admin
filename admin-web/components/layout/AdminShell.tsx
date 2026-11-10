@@ -1,6 +1,9 @@
 'use client';
 
+import { usePathname } from 'next/navigation';
 import { useState, type ReactNode } from 'react';
+import { isSetupPath } from '../../../shared/content/admin-web-screens';
+import { SetupBar } from './SetupBar';
 import { Sidebar } from './Sidebar';
 import { TopBar } from './TopBar';
 
@@ -17,6 +20,19 @@ type AdminShellProps = {
 // Phones: the top bar first, the sidebar list below it when Menu is open, then the page.
 export function AdminShell({ sidebarLogo, barLogo, children }: AdminShellProps) {
   const [menuOpen, setMenuOpen] = useState(false);
+
+  // Week 11: Accept Invitation and Account Setup come before Admin Web, so they have
+  // no sidebar (Team 03 decision A8). Every other page is unchanged.
+  if (isSetupPath(usePathname() ?? '/')) {
+    return (
+      <div className="app app-setup">
+        <SetupBar logo={barLogo} />
+        <div id="main-content" className="app-main" tabIndex={-1}>
+          {children}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="app">

@@ -40,6 +40,15 @@ p {
   min-width: 0;
 }
 
+/* Week 11: Accept Invitation and Account Setup. The top bar, then the page; no sidebar */
+.app.app-setup {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    'bar'
+    'main';
+}
+
 .app-sidebar {
   grid-area: sidebar;
   align-self: start;
@@ -176,6 +185,13 @@ p {
     grid-template-areas:
       'bar'
       'sidebar'
+      'main';
+  }
+
+  .app.app-setup {
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+      'bar'
       'main';
   }
 

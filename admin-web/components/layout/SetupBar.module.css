@@ -1,0 +1,17 @@
+/* Week 11 setup bar: the logo on the page background and the Theme menu. Tokens only. */
+.bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-12) var(--space-16);
+  padding: var(--space-12) var(--layout-outer-margin);
+  border-bottom: var(--stroke-default) solid var(--color-border);
+}
+
+/* The Theme menu's panel lines up with this group's right edge */
+.actions {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}

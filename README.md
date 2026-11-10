@@ -141,6 +141,7 @@ Cuidance_Admin/
 ├── shared/                Shared content and rules for Admin Web
 │   ├── content/           Admin Web screen names, scope notes, role wording and theme labels; later result content, safety lines, labels
 │   ├── review-loop/       Week 11 review decision rules (statuses, Dashboard counts), shared by every screen
+│   ├── onboarding/        Week 11 invitation and account setup rules (password, email, states)
 │   ├── quiz-rules/        Answer cards, mixing rules, delivery rules
 │   ├── design-tokens/     Colors (light and dark), type, spacing, radius, stroke
 │   └── brand/

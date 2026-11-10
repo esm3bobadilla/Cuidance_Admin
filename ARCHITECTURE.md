@@ -1,10 +1,10 @@
 # Cuidance Admin Web: architecture
 
-_Last updated: Nov 6, 2026 (Week 11 feature 1, Review Task Detail and the decision loop, on `feat/week-11-review-task-loop`). Built Week 11 parts are marked **BUILT (Week 11)**; parts still marked **PLANNED** are not built yet._
+_Last updated: Nov 10, 2026 (Week 11 feature 2, Accept Invitation and Account Setup, on `feat/week-11-account-setup`). Built Week 11 parts are marked **BUILT (Week 11)**. Feature 1 (Review Task Detail) is merged into `main` (PR #13)._
 
 How Admin Web is put together, in plain words. Read this with `CLAUDE.md` (the rules) and `docs/Week-11/close-the-loop-implementation-plan.md` (the current plan).
 
-**Keep this file current.** Update it in the same pull request whenever a screen, route, shared store or data file is added or removed. Week 11 adds three new screens (one built so far: Review Task Detail), so this file is updated with each of those pull requests.
+**Keep this file current.** Update it in the same pull request whenever a screen, route, shared store or data file is added or removed. Week 11 adds three new screens: Review Task Detail (feature 1, merged) and Accept Invitation and Account Setup (feature 2, this branch).
 
 ## 1. What it is
 
@@ -65,8 +65,8 @@ Names, paths, parents and scope notes are defined once in `shared/content/admin-
 | `/review-tasks/` | Review Tasks | Built (Week 10) |
 | `/settings/` | Settings / Team Access | Built (Week 10) |
 | `/review-tasks/[taskId]/` | Review Task Detail | **BUILT (Week 11, feature 1).** One static page per seeded task (`seed-1` to `seed-5`), built with `generateStaticParams` and `dynamicParams = false`; other task addresses show Page not found. Layout PROVISIONAL |
-| `/accept-invitation/` | Accept Invitation | **PLANNED** (Week 11, feature 2) |
-| `/account-setup/` | Account Setup | **PLANNED** (Week 11, feature 3) |
+| `/accept-invitation/` | Accept Invitation | **BUILT (Week 11, feature 2).** Prototype only. Uses the setup shell (no sidebar). `?invite=` picks a sample invitation; `?state=` previews |
+| `/account-setup/` | Account Setup | **BUILT (Week 11, feature 2).** Prototype only. Uses the setup shell (no sidebar). Ends with Go to Review Tasks |
 | `/dev/` | Component preview | Internal, URL only |
 
 **GitHub Pages:** every path starts with `/Cuidance_Admin` there. `next.config.ts` sets this when `GITHUB_PAGES=true`, and plain `<a href>` links add it from `NEXT_PUBLIC_BASE_PATH`. Local builds use the site root.
@@ -93,13 +93,13 @@ Names, paths, parents and scope notes are defined once in `shared/content/admin-
 | Screen state (search, filters, selected row, menus) | Each screen | Memory | Lost when you leave the page |
 | Theme (Light, Dark, System) | `components/layout/themeStore.ts` | Local storage `cuidance-admin-theme` | Applied before paint by a small script in the root layout |
 | **Review decisions** | **BUILT (Week 11)** `app/_reviewLoop/reviewStore.ts`; rules in `shared/review-loop/review-decisions.ts` | Session storage `cuidance-admin-review-session` (one tab) | Only Review Task Detail records decisions and resets them. Dashboard, Review Tasks and Review Task Detail read them through `useReviewTasks()`. Also holds the one-time Dashboard message |
-| **Invitation and account setup** | **PLANNED** `app/_onboarding/onboardingStore.ts`; wording in `shared/content/` | Session storage (one tab) | Seeded; nothing sent anywhere |
+| **Invitation and account setup** | **BUILT (Week 11)** `app/_onboarding/onboardingStore.ts`; rules in `shared/onboarding/onboarding-rules.ts`; wording in `shared/content/invitation.ts` and `account-setup.ts` | Session storage `cuidance-admin-onboarding` (one tab) | Holds the invitation answer, the full name and the work email. **Never the password.** Doesn't touch review decisions. Nothing is sent anywhere |
 
 **Stores follow one pattern** (the theme store): a small module with `subscribe`, a getter and a setter, read through React's `useSyncExternalStore`. The server build uses the plain seed, then the browser adds what's in storage after the page loads, so pages don't show hydration warnings.
 
 **Derived, not duplicated (BUILT, Week 11):** current task status, Dashboard counts and the Needs attention list are worked out from seed + decisions by shared functions in `shared/review-loop/` (`applyDecisions`, `dashboardSummary`, `needsAttention`). No screen keeps its own copy.
 
-## 6. Week 11 loop (steps 3 to 6 BUILT; steps 1 and 2 PLANNED)
+## 6. Week 11 loop (all steps BUILT)
 
 ```
 Accept Invitation → Account Setup → Review Tasks → Review Task Detail (decide)
@@ -133,6 +133,18 @@ Full detail: `docs/Week-11/close-the-loop-implementation-plan.md`, sections 3 an
 
 **Status changes:** Approve → Approved (note optional; the task leaves Needs attention and its count drops by 1). Request changes → Needs changes (note required; the task stays and counts don't change). A decided task shows its decision instead of the form until **Reset sample data**.
 
+**Built in feature 2 (Accept Invitation and Account Setup):**
+
+| Piece | File | Job |
+| --- | --- | --- |
+| Setup shell | `components/layout/AdminShell.tsx`, `SetupBar.tsx`; `isSetupPath` in `shared/content/admin-web-screens.ts` | On `/accept-invitation/` and `/account-setup/` only: the logo and the Theme menu, no sidebar, Menu, breadcrumb or profile. Every other route renders the full shell as before |
+| Sample invitations and wording | `shared/content/invitation.ts`, `shared/content/account-setup.ts` | Valid and expired sample invitations (Reviewer B, `reviewer.b@example.com`, Reviewer, Cuidance Content Team), `invitationFromParam` |
+| Rules | `shared/onboarding/onboarding-rules.ts` | Password requirements (12+ characters, a letter, a number), email format and match, `validateSetup`, `invitationView`, `setupView`, `parseOnboardingSession` (ignores bad or unexpected saved data) |
+| Store | `admin-web/app/_onboarding/onboardingStore.ts` | `acceptInvitation`, `declineInvitation`, `requestNewInvitation`, `createAccount` (name and email only), `resetOnboarding` |
+| Screens | `admin-web/app/_onboarding/AcceptInvitationView.tsx`, `AccountSetupView.tsx`, `SetupFrame.tsx`, `OnboardingStateFromUrl.tsx` | The two screens, the Grounded Green welcome panel with the three steps, and the `?state=` / `?invite=` readers |
+
+**Flow:** Accept Invitation (valid → Accept or Decline) → Account Setup (missing until accepted) → Create account → Account created → Go to Review Tasks, where the sidebar starts. Invitation states: valid, expired, declined, not found, already accepted, with Request a new invitation (nothing is sent).
+
 ## 7. Styling and accessibility
 
 - Tokens only (`shared/design-tokens/tokens.css`), light and dark. No invented shadows.
@@ -159,5 +171,5 @@ Full detail: `docs/Week-11/close-the-loop-implementation-plan.md`, sections 3 an
 | Sign-in and accounts | None; the profile shows placeholder initials | Supabase Auth |
 | Roles and permissions | Policy wording only (`shared/content/admin-roles.ts`), nothing enforced | Supabase roles and row-level security |
 | Data | Seeded files in `shared/content/` | Supabase tables, same project as the main app |
-| Saving changes | Nothing saved, except theme (local storage) and, from Week 11, review decisions (session storage, one tab; built). Onboarding will use the same approach (planned) | Supabase |
+| Saving changes | Nothing saved, except theme (local storage) and, from Week 11, review decisions and the invitation and account setup (session storage, one tab). Passwords are never saved | Supabase |
 | Pages for data unknown at build time | Not possible on a static site | Decided with the Supabase and hosting step |
