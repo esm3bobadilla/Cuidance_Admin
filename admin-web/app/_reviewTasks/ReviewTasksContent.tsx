@@ -3,12 +3,21 @@
 import { useId, useMemo, useState } from 'react';
 import { adminScreens } from '../../../shared/content/admin-web-screens';
 import type { ReviewItem } from '../../../shared/content/dashboard-review-queue';
-import { reviewChecklists, reviewTasksCopy as copy, reviewTasksSeed } from '../../../shared/content/review-tasks';
+import { reviewChecklists, reviewTasksCopy as copy } from '../../../shared/content/review-tasks';
+import { reviewTaskDetailCopy } from '../../../shared/content/review-task-detail';
 import { uiSymbols } from '../../../shared/content/ui-symbols';
 import { DataTable } from '../../components/data/DataTable';
 import { SearchField } from '../../components/forms/SearchField';
-import { Button } from '../../components/ui/Button';
-import { reviewTableColumns, ReviewPriorityLabel, ReviewStatePanel, ReviewStatusLabel, type ReviewViewState } from '../_review/ReviewShared';
+import { Button, ButtonLink } from '../../components/ui/Button';
+import {
+  reviewTableColumns,
+  reviewTaskHref,
+  ReviewPriorityLabel,
+  ReviewStatePanel,
+  ReviewStatusLabel,
+  type ReviewViewState,
+} from '../_review/ReviewShared';
+import { useReviewTasks } from '../_reviewLoop/reviewStore';
 import styles from './reviewTasks.module.css';
 
 const dashboardHref = `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}${adminScreens.dashboard.path}`;
@@ -23,10 +32,12 @@ const matches = (task: ReviewItem, query: string) => {
 // and the selected task beside it. Sample data only; nothing is assigned or saved.
 export function ReviewTasksContent({ state }: { state: ReviewViewState }) {
   const [query, setQuery] = useState('');
-  const [selectedId, setSelectedId] = useState(reviewTasksSeed[0].id);
+  // Week 11: statuses come from the seed plus this tab's review decisions
+  const tasks = useReviewTasks();
+  const [selectedId, setSelectedId] = useState(tasks[0].id);
   const detailId = useId();
 
-  const all = state === 'ready' ? reviewTasksSeed : [];
+  const all = state === 'ready' ? tasks : [];
   const shown = useMemo(() => all.filter((task) => matches(task, query)), [all, query]);
   const selected = shown.find((task) => task.id === selectedId) ?? shown[0];
   const checklist = selected ? reviewChecklists[selected.item] : undefined;
@@ -111,8 +122,11 @@ export function ReviewTasksContent({ state }: { state: ReviewViewState }) {
             {selected && (
               <aside id={detailId} className={styles.detail} aria-labelledby={`${detailId}-title`}>
                 <p className={styles.detailLabel}>{copy.detail.heading}</p>
+                {/* Week 11: the title opens the task's detail page */}
                 <h2 id={`${detailId}-title`} className={styles.detailTitle}>
-                  {selected.item}
+                  <a className={styles.detailTitleLink} href={reviewTaskHref(selected.id)}>
+                    {selected.item}
+                  </a>
                 </h2>
                 <p className={styles.meta}>
                   <ReviewStatusLabel status={selected.status} />
@@ -156,6 +170,12 @@ export function ReviewTasksContent({ state }: { state: ReviewViewState }) {
                   ) : (
                     <p className={styles.pending}>{copy.detail.pending}</p>
                   )}
+                </div>
+                {/* Week 11: open the task to approve it or request changes */}
+                <div>
+                  <ButtonLink variant="secondary" href={reviewTaskHref(selected.id)}>
+                    {reviewTaskDetailCopy.openTask}
+                  </ButtonLink>
                 </div>
               </aside>
             )}

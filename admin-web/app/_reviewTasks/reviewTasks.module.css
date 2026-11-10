@@ -100,6 +100,18 @@
   font: var(--type-heading-2);
 }
 
+/* Week 11: the title opens the task's detail page. Same type, underlined so it reads as a link,
+   and at least 44 px tall (a one-line title grows from its 34 px line to 44 px) */
+.detailTitleLink {
+  display: flex;
+  align-items: center;
+  min-height: var(--size-touch-target);
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: var(--stroke-default);
+  text-underline-offset: var(--space-4);
+}
+
 .meta {
   display: flex;
   flex-wrap: wrap;

@@ -55,7 +55,9 @@ export const dashboardKeyAreas: { id: AdminScreenId; description: string }[] = [
 ];
 
 // Status and priority labels as shown in the hi-fi
-export type ReviewStatus = 'In review' | 'Needs changes' | 'Pending disclosure' | 'Needs review';
+// "Approved" is added in Week 11 (Close the Loop): a Reviewer's decision can set it.
+// No seed item starts as Approved.
+export type ReviewStatus = 'In review' | 'Needs changes' | 'Pending disclosure' | 'Needs review' | 'Approved';
 export type ReviewPriority = 'High' | 'Medium' | 'Low';
 
 export type ReviewItem = {
