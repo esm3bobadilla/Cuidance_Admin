@@ -20,7 +20,10 @@ export type AdminScreenId =
   | 'content-metrics'
   | 'account-support'
   | 'review-tasks'
-  | 'settings';
+  | 'settings'
+  // Week 11 feature 2: before the person enters Admin Web (no sidebar)
+  | 'accept-invitation'
+  | 'account-setup';
 
 export type AdminScreen = {
   id: AdminScreenId;
@@ -136,7 +139,31 @@ export const adminScreens: Record<AdminScreenId, AdminScreen> = {
     parent: 'dashboard',
     scopeNote: 'Internal settings for Admin Web.',
   },
+  // Week 11 feature 2 (prototype only). No parent: these come before the Admin Web
+  // screens, so they aren't in the sidebar or the breadcrumb trail.
+  'accept-invitation': {
+    id: 'accept-invitation',
+    name: 'Accept Invitation',
+    path: '/accept-invitation/',
+    scopeNote: 'Accept or decline an invitation to Cuidance Admin Web. Prototype only.',
+  },
+  'account-setup': {
+    id: 'account-setup',
+    name: 'Account Setup',
+    path: '/account-setup/',
+    scopeNote: 'Set up an Admin Web account after accepting an invitation. Prototype only.',
+  },
 };
+
+// Week 11 feature 2 (Team 03 decision A8): these screens use the setup shell, with the
+// logo and the Theme menu only. No sidebar, Menu, breadcrumb or profile. The sidebar
+// starts once the person has set up their account and enters Admin Web.
+export const setupScreens: AdminScreenId[] = ['accept-invitation', 'account-setup'];
+
+export function isSetupPath(pathname: string) {
+  const current = pathname.replace(/\/+$/, '') || '/';
+  return setupScreens.some((id) => (adminScreens[id].path.replace(/\/+$/, '') || '/') === current);
+}
 
 // Shown on every screen until its content is built
 export const structureOnlyNote = 'Structure only. Screen content and data are not built yet.';

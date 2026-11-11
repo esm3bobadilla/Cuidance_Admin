@@ -3,7 +3,7 @@
 - **Branch:** `feat/week-11-review-task-loop`, from `main` at `be2042f` (PR #12 merged)
 - **Date:** Nov 6, 2026
 - **Prepared by:** Claude Code for Team 03. **Needs review by Alyssa and Esme before any implementation starts.** Items marked **PROVISIONAL** or **DECISION** need a Team 03 answer.
-- **Status:** plan **approved by Team 03 (Nov 6, 2026)**. **Feature 1 (Review Task Detail and the decision loop) is built** on this branch, waiting for its pull request and review. See `docs/Week-11/review-task-loop-implementation.md`. Features 2 and 3 (Accept Invitation, Account Setup) are still planned.
+- **Status:** plan **approved by Team 03 (Nov 6, 2026)**. **Feature 1 (Review Task Detail and the decision loop) is built** on this branch, waiting for its pull request and review. See `docs/Week-11/review-task-loop-implementation.md`. Feature 1 is **merged** (PR #13, Nov 10, 2026, deployed as `03af20a`). **Feature 2 (Accept Invitation and Account Setup, combined by Team 03) is built** on `feat/week-11-account-setup`; see `docs/Week-11/account-setup-implementation.md`.
 - **Related:** `ARCHITECTURE.md` (how Admin Web is put together), `docs/Week-10/route-map.md` (current routes), `docs/Week-10/prototype-alignment-map.md` (Week 10 visual decisions).
 
 ## 0. Ground rules for Week 11
@@ -40,8 +40,8 @@ In plain words: a new team member accepts an invitation, sets up their account, 
 
 | Step | Screen | Route | Exists? | Notes |
 | --- | --- | --- | --- | --- |
-| 1 | Accept Invitation | `/accept-invitation/` | **New** | Shows one seeded invitation. Outside the normal sidebar flow (see DECISION W11-2) |
-| 2 | Account Setup | `/account-setup/` | **New** | Display name and an unchecked acknowledgement. Nothing is saved to a server |
+| 1 | Accept Invitation | `/accept-invitation/` | **Built (feature 2)** | One sample invitation (plus an expired one). Setup shell, no sidebar (W11-2 / A8) |
+| 2 | Account Setup | `/account-setup/` | **Built (feature 2)** | Full name, work email, password and confirm password (never saved), password requirements, workspace and role summary. Nothing is saved to a server |
 | 3 | Review Tasks (list) | `/review-tasks/` | **Reuse** (Week 10) | The assigned task is found here. Gains an "Open task" link to the detail page |
 | 4 | Review Task Detail, decision panel | `/review-tasks/[taskId]/` | **New** | Approve, or Request changes with a required note |
 | 5 | Dashboard | `/` | **Reuse** (Week 10) | Reads the shared review state, so the Review Queue counts and Needs attention table reflect the decision |
@@ -66,8 +66,8 @@ All other Week 10 routes are not part of the loop and are not touched.
 | Route | Screen | Planned branch |
 | --- | --- | --- |
 | `/review-tasks/[taskId]/` | Review Task Detail (with the decision panel) | `feat/week-11-review-task-loop` (this branch) |
-| `/accept-invitation/` | Accept Invitation | `feat/week-11-accept-invitation` |
-| `/account-setup/` | Account Setup | `feat/week-11-account-setup` |
+| `/accept-invitation/` | Accept Invitation | `feat/week-11-account-setup` (built) |
+| `/account-setup/` | Account Setup | `feat/week-11-account-setup` (built) |
 
 ## 3. Screen ownership and state ownership
 
@@ -78,7 +78,7 @@ All other Week 10 routes are not part of the loop and are not touched.
 | Screen | Owns (can change) | Reads only |
 | --- | --- | --- |
 | Accept Invitation | The invitation's accepted flag (seeded, this browser tab only) | The seeded invitation |
-| Account Setup | Display name, acknowledgement, setup-complete flag (this tab only) | The accepted invitation (role name, placeholder email hidden) |
+| Account Setup | Full name, work email and the account-created flag (this tab only). The password is checked on screen and never saved | The accepted invitation (workspace, role, invited email) |
 | Review Tasks | Search text and selected row (as today, on the screen only) | The shared review state |
 | **Review Task Detail** | **Review decisions** (the only screen that records Approve or Request changes) | The shared review state, the seeded checklist |
 | Dashboard | Nothing new | The shared review state (counts and Needs attention rows) |
@@ -172,8 +172,8 @@ Every state uses text or a symbol as well as color. Errors are Dark Ruby with âš
 
 1. **Tasks:** the five Week 10 seed tasks, unchanged. IDs `seed-1` to `seed-5`.
 2. **The reviewer persona (PROVISIONAL):** "Reviewer B", because seed-2 and seed-5 are already assigned to Reviewer B. "Assigned to me" means "assigned to Reviewer B" while sign-in doesn't exist.
-3. **Invitation (PROVISIONAL):** one seeded invitation for the role **Reviewer**, from "Team member A" (Main Admin / Owner), with a placeholder expiry date. No email address, no real link token. A second seeded invitation is marked expired so the expired state can be reviewed (`?invite=expired`).
-4. **Account setup:** display name prefilled with "Reviewer B"; one acknowledgement checkbox, **unchecked** at the start (CLAUDE.md consent rule): "I've read the Cuidance content and safety rules." No password, no email, no photo.
+3. **Invitation (as built, decisions A1 to A5):** one sample invitation for **Reviewer B**, role **Reviewer**, workspace "Cuidance Content Team", invited by "Team member A (Main Admin / Owner)", email `reviewer.b@example.com` (a reserved sample domain), expiring Nov 24, 2026. No real link token. A second sample invitation is expired (Nov 3, 2026) so that state can be reviewed (`?invite=expired`).
+4. **Account setup (as built, A6 and A7, superseding the earlier acknowledgement-checkbox idea):** full name, work email (prefilled, must match the invitation), password (12+ characters, a letter and a number) and confirm password. The password is never saved or sent. No photo.
 5. **Decisions:** saved in this browser tab only. Closing the tab, or **Reset sample data**, returns to the seed.
 6. **Dates:** the decision date is today's date in the browser, formatted like the seed ("Nov 6, 2026").
 7. **Sample-data note:** every new screen shows the same note as Week 10: "Sample data. Nothing here is connected to live content, and these screens are not part of participant testing."
@@ -202,7 +202,7 @@ Until Team 03 starts the Supabase step, none of these are built, and CLAUDE.md's
 
 ### Decisions for Team 03
 
-**Answered by Team 03 (Nov 6, 2026):** W11-1 (yes, a Reviewer; cannot publish), W11-3 (counts calculated from shared state, starting at 3 / 1 / 1 / 0), W11-4 (Dashboard message, built), W11-5 (title links on Review Tasks and Dashboard, built), W11-8 (fixed placeholder "Reviewer B"). Also decided: Request changes needs a note, Approve has an optional note, decisions are kept in the browser session only, one static page per seeded task. W11-6 was built as proposed (Reset under the recorded decision). **Still open:** W11-2, W11-7 (built as "Approved" for now), W11-9, W11-Q7.
+**Answered by Team 03 (Nov 6, 2026):** W11-1 (yes, a Reviewer; cannot publish), W11-3 (counts calculated from shared state, starting at 3 / 1 / 1 / 0), W11-4 (Dashboard message, built), W11-5 (title links on Review Tasks and Dashboard, built), W11-8 (fixed placeholder "Reviewer B"). Also decided: Request changes needs a note, Approve has an optional note, decisions are kept in the browser session only, one static page per seeded task. W11-6 was built as proposed (Reset under the recorded decision). **Still open:** W11-7 (built as "Approved" for now), W11-9, W11-Q7. **W11-2 answered Nov 10, 2026** (decision A8: logo and Theme menu only, no sidebar). Feature 2 decisions A1 to A14 are recorded in `account-setup-implementation.md`.
 
 | ID | Question | Proposal |
 | --- | --- | --- |
@@ -237,8 +237,7 @@ Each feature: its own branch from the latest `main`, its own pull request, teamm
 | Order | Branch | Feature | Loop steps | New screens |
 | --- | --- | --- | --- | --- |
 | **1** | `feat/week-11-review-task-loop` | **Review Task Detail and the review decision**, with the shared review state read by Review Tasks and the Dashboard. **Built, awaiting pull request and review** | 3, 4, 5, 6 | 1 |
-| 2 | `feat/week-11-accept-invitation` | Accept Invitation | 1 | 1 |
-| 3 | `feat/week-11-account-setup` | Account Setup, ending with Go to Review Tasks | 2 | 1 |
+| 2 | `feat/week-11-account-setup` | **Accept Invitation and Account Setup, ending with Go to Review Tasks** (combined into one feature by Team 03, decision A14). **Built, awaiting pull request and review** | 1, 2 | 2 |
 
 After feature 3 there are three new screens, so `ARCHITECTURE.md` is updated again (it is also updated in each feature's own pull request).
 
