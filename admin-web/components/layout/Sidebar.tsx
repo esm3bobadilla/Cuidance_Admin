@@ -2,7 +2,18 @@
 
 import { usePathname } from 'next/navigation';
 import { useState, type ReactNode } from 'react';
-import { adminScreens, shellCopy, sidebarNav, type AdminScreenId } from '../../../shared/content/admin-web-screens';
+import {
+  adminScreens,
+  sidebarFooter,
+  sidebarNav,
+  sidebarProfileLinks,
+  type AdminScreenId,
+  type SidebarItem,
+} from '../../../shared/content/admin-web-screens';
+import { notificationsCopy } from '../../../shared/content/notifications';
+import { profileCopy } from '../../../shared/content/profile';
+import leafHand from '../../../shared/brand/illustrations/illus-leaf-hand.png';
+import { setPanelOpen, unreadCount, useNotifications } from './notificationsStore';
 import styles from './Sidebar.module.css';
 
 type SidebarProps = {
@@ -17,52 +28,69 @@ const trimSlash = (path: string) => path.replace(/\/+$/, '') || '/';
 // Plain links need the GitHub Pages base path added by hand
 const hrefFor = (id: AdminScreenId) => `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}${adminScreens[id].path}`;
 
-// Persistent Admin Web sidebar (confirmed by Team 03). On phones the same list opens
-// below the top bar from its Menu button. Without JavaScript, everything stays visible.
+// Persistent Admin Web sidebar (Phase A1): Dashboard, Content, Review Tasks and Metrics,
+// a flat Cuidance illustration, then the Profile card (Account Support and Notifications)
+// and Settings at the bottom. On phones the same list opens below the top bar from its
+// Menu button. Without JavaScript, everything stays visible.
 export function Sidebar({ logo, menuOpen }: SidebarProps) {
   const current = trimSlash(usePathname() ?? '/');
   const isCurrent = (id: AdminScreenId) => trimSlash(adminScreens[id].path) === current;
-  const isWithin = (id: AdminScreenId) => current.startsWith(`${trimSlash(adminScreens[id].path)}/`);
+  const isWithin = (id: AdminScreenId) => id !== 'dashboard' && current.startsWith(`${trimSlash(adminScreens[id].path)}/`);
+  const holdsCurrent = (item: SidebarItem) => (item.id ? isWithin(item.id) : false) || (item.children ?? []).some(isCurrent);
+  const notifications = useNotifications();
+  const unread = unreadCount(notifications);
 
-  const [contentOpen, setContentOpen] = useState(isCurrent('content') || isWithin('content'));
+  const [open, setOpen] = useState<Record<string, boolean>>(() =>
+    Object.fromEntries(sidebarNav.map((item) => [item.group, (item.id ? isCurrent(item.id) : false) || holdsCurrent(item)])),
+  );
 
   return (
     <div id="admin-sidebar" className={`app-sidebar ${styles.sidebar}`} data-open={menuOpen}>
       <noscript>
-        <style>{`.${styles.sidebar}, .${styles.children} { display: flex !important; } .${styles.toggle} { display: none !important; }`}</style>
+        <style>{`.${styles.sidebar}, .${styles.children} { display: flex !important; } .${styles.toggle}, .${styles.notificationsButton} { display: none !important; }`}</style>
       </noscript>
 
       {/* Desktop and tablet only: the phone top row shows its own logo */}
-      <div className={styles.top}>
-        {logo}
-        <p className={styles.label}>{shellCopy.sidebarLabel}</p>
-      </div>
+      <div className={styles.top}>{logo}</div>
 
       <nav id="admin-sidebar-nav" aria-label="Admin Web" className={styles.nav}>
         <ul className={styles.list}>
           {sidebarNav.map((item) => {
-            const screen = adminScreens[item.id];
-            const childListId = `admin-sidebar-${item.id}`;
-            const holdsCurrent = isWithin(item.id) && item.id !== 'dashboard';
+            const childListId = `admin-sidebar-${item.group}`;
+            const groupOpen = open[item.group];
+            const toggle = () => setOpen((state) => ({ ...state, [item.group]: !state[item.group] }));
+            const bold = holdsCurrent(item) ? styles.parentOfCurrent : '';
             return (
-              <li key={item.id}>
+              <li key={item.group}>
                 <div className={styles.row}>
-                  <a
-                    className={`${styles.link} ${holdsCurrent ? styles.parentOfCurrent : ''}`}
-                    href={hrefFor(item.id)}
-                    aria-current={isCurrent(item.id) ? 'page' : undefined}
-                  >
-                    {screen.name}
-                  </a>
-                  {item.children && (
+                  {item.id ? (
+                    <a className={`${styles.link} ${bold}`} href={hrefFor(item.id)} aria-current={isCurrent(item.id) ? 'page' : undefined}>
+                      {item.label}
+                    </a>
+                  ) : (
+                    // Metrics has no page of its own: the whole row opens and closes its list
+                    <button
+                      type="button"
+                      className={`${styles.link} ${styles.groupButton} ${bold}`}
+                      aria-expanded={groupOpen}
+                      aria-controls={childListId}
+                      onClick={toggle}
+                    >
+                      {item.label}
+                      <span className={styles.groupGlyph} aria-hidden="true">
+                        ›
+                      </span>
+                    </button>
+                  )}
+                  {item.id && item.children && (
                     <button
                       type="button"
                       className={styles.toggle}
-                      aria-expanded={contentOpen}
+                      aria-expanded={groupOpen}
                       aria-controls={childListId}
-                      aria-label={`${screen.name} pages`}
-                      title={`${screen.name} pages`}
-                      onClick={() => setContentOpen(!contentOpen)}
+                      aria-label={`${item.label} pages`}
+                      title={`${item.label} pages`}
+                      onClick={toggle}
                     >
                       <span className={styles.glyph} aria-hidden="true">
                         ›
@@ -71,7 +99,7 @@ export function Sidebar({ logo, menuOpen }: SidebarProps) {
                   )}
                 </div>
                 {item.children && (
-                  <ul id={childListId} className={styles.children} data-open={contentOpen}>
+                  <ul id={childListId} className={styles.children} data-open={groupOpen} aria-label={`${item.label} pages`}>
                     {item.children.map((childId) => (
                       <li key={childId}>
                         <a
@@ -89,6 +117,53 @@ export function Sidebar({ logo, menuOpen }: SidebarProps) {
             );
           })}
         </ul>
+
+        {/* Area 5 in the annotated reference: a flat 2D Cuidance illustration (decorative) */}
+        <div className={styles.art} aria-hidden="true">
+          <span className={styles.artBackdrop}>
+            <img src={leafHand.src} width={leafHand.width} height={leafHand.height} alt="" className={styles.artImage} />
+          </span>
+        </div>
+
+        <div className={styles.bottom}>
+          <section className={styles.profile} aria-label={profileCopy.cardLabel}>
+            <div className={styles.identity}>
+              <span className={styles.initials} aria-hidden="true">
+                {profileCopy.initials}
+              </span>
+              <div className={styles.identityText}>
+                <p className={styles.profileName}>{profileCopy.name}</p>
+                <p className={styles.profileRole}>{profileCopy.role}</p>
+              </div>
+            </div>
+            <ul className={styles.profileLinks}>
+              {sidebarProfileLinks.map((id) => (
+                <li key={id}>
+                  <a className={`${styles.link} ${styles.childLink}`} href={hrefFor(id)} aria-current={isCurrent(id) ? 'page' : undefined}>
+                    {adminScreens[id].name}
+                  </a>
+                </li>
+              ))}
+              <li>
+                <button
+                  type="button"
+                  className={`${styles.link} ${styles.childLink} ${styles.notificationsButton}`}
+                  aria-controls="profile-panel"
+                  onClick={() => {
+                    setPanelOpen(true);
+                    window.scrollTo({ top: 0 });
+                  }}
+                >
+                  {notificationsCopy.sidebarButton}
+                  {unread > 0 && <span className={styles.count}>{notificationsCopy.unreadCount(unread)}</span>}
+                </button>
+              </li>
+            </ul>
+          </section>
+          <a className={styles.link} href={hrefFor(sidebarFooter)} aria-current={isCurrent(sidebarFooter) ? 'page' : undefined}>
+            {adminScreens[sidebarFooter].name}
+          </a>
+        </div>
       </nav>
     </div>
   );

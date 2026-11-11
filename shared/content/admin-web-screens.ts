@@ -21,7 +21,9 @@ export type AdminScreenId =
   | 'account-support'
   | 'review-tasks'
   | 'settings'
-  // Week 11 feature 2: before the person enters Admin Web (no sidebar)
+  // Week 11 feature 2 and Phase A1: before the person enters Admin Web (no sidebar)
+  | 'sign-in'
+  | 'create-account'
   | 'accept-invitation'
   | 'account-setup';
 
@@ -141,6 +143,19 @@ export const adminScreens: Record<AdminScreenId, AdminScreen> = {
   },
   // Week 11 feature 2 (prototype only). No parent: these come before the Admin Web
   // screens, so they aren't in the sidebar or the breadcrumb trail.
+  // Phase A1 (prototype only, sample mode): the Admin Web landing and sign-in entry
+  'sign-in': {
+    id: 'sign-in',
+    name: 'Sign In',
+    path: '/sign-in/',
+    scopeNote: 'Sign in to Cuidance Admin Web. Prototype only: sign-in isn\'t connected yet.',
+  },
+  'create-account': {
+    id: 'create-account',
+    name: 'Create Account',
+    path: '/create-account/',
+    scopeNote: 'Accounts are invitation only. Find your invitation to set up your account. Prototype only.',
+  },
   'accept-invitation': {
     id: 'accept-invitation',
     name: 'Accept Invitation',
@@ -158,7 +173,7 @@ export const adminScreens: Record<AdminScreenId, AdminScreen> = {
 // Week 11 feature 2 (Team 03 decision A8): these screens use the setup shell, with the
 // logo and the Theme menu only. No sidebar, Menu, breadcrumb or profile. The sidebar
 // starts once the person has set up their account and enters Admin Web.
-export const setupScreens: AdminScreenId[] = ['accept-invitation', 'account-setup'];
+export const setupScreens: AdminScreenId[] = ['sign-in', 'create-account', 'accept-invitation', 'account-setup'];
 
 export function isSetupPath(pathname: string) {
   const current = pathname.replace(/\/+$/, '') || '/';
@@ -168,26 +183,35 @@ export function isSetupPath(pathname: string) {
 // Shown on every screen until its content is built
 export const structureOnlyNote = 'Structure only. Screen content and data are not built yet.';
 
-// Persistent sidebar (confirmed by Team 03, Week 10 Step 2), in display order.
+// Persistent sidebar, in display order (Phase A1, Team 03, Nov 11, 2026): four groups,
+// then the Profile card (Account Support and Notifications) and Settings at the bottom.
+// Routes and breadcrumbs are unchanged: grouping here is navigation only.
 // Commercial Content keeps its route but stays out of the sidebar until Team 03 confirms it.
+export type SidebarGroupId = 'dashboard' | 'content' | 'review-tasks' | 'metrics';
+
 export type SidebarItem = {
-  id: AdminScreenId;
+  group: SidebarGroupId;
+  // The screen the group's own link opens. Metrics has no page of its own, so it's a toggle only.
+  id?: AdminScreenId;
+  label: string;
   children?: AdminScreenId[];
 };
 
 export const sidebarNav: SidebarItem[] = [
-  { id: 'dashboard' },
+  { group: 'dashboard', id: 'dashboard', label: 'Dashboard' },
   {
+    group: 'content',
     id: 'content',
+    label: 'Content',
     children: ['quiz-content', 'guidance-content', 'product-information', 'knowledge-sources', 'partner-highlights'],
   },
-  { id: 'guidance-rules-review' },
-  { id: 'claims-safety-review' },
-  { id: 'content-metrics' },
-  { id: 'account-support' },
-  { id: 'review-tasks' },
-  { id: 'settings' },
+  { group: 'review-tasks', id: 'review-tasks', label: 'Review Tasks', children: ['guidance-rules-review', 'claims-safety-review'] },
+  { group: 'metrics', label: 'Metrics', children: ['content-metrics'] },
 ];
+
+// Under the Profile card, then Settings last
+export const sidebarProfileLinks: AdminScreenId[] = ['account-support'];
+export const sidebarFooter: AdminScreenId = 'settings';
 
 export function childScreens(id: AdminScreenId): AdminScreen[] {
   return Object.values(adminScreens).filter((screen) => screen.parent === id);
@@ -207,8 +231,6 @@ export const shellCopy = {
   breadcrumbRoot: 'Admin',
   // Eyebrow on screens aligned with the hi-fi references
   internalToolEyebrow: 'Internal tool',
-  // Plain text under the sidebar logo, shown in capitals
-  sidebarLabel: 'Admin Web · Internal',
   menuButton: 'Menu',
   // Breadcrumb names for the two pages that aren't route-map screens
   devPreviewName: 'Component Preview',

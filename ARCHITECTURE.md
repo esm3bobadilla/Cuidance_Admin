@@ -35,10 +35,11 @@ Cuidance_Admin/
 │   ├── content/               Screen names, wording and seed data, one file per screen
 │   ├── review-loop/           Week 11: review decision rules (no React), shared by every screen
 │   ├── design-tokens/         tokens.css (colors light and dark, type, spacing, radius, stroke)
-│   └── brand/logo/            Approved Logo Version 4 files only
+│   ├── onboarding/            Week 11 and Phase A1: invitation, account setup and sign-in rules
+│   └── brand/                 logo/ (approved Logo Version 4 files only) and illustrations/ (Phase A1 approved flat art)
 ├── supabase/                  Phase 2: config.toml, migrations, local seed, database tests
 ├── package.json               Repo tooling only (Supabase CLI); the app's own package.json is in admin-web/
-├── docs/                      Week 10, Week 11 and Phase 2 notes, maps and evidence
+├── docs/                      Week 10, Week 11, Phase 2 and Phase A1 notes, maps and evidence
 ├── ARCHITECTURE.md            This file
 ├── CLAUDE.md                  Rules for AI agents
 └── .github/                   PR template, GitHub Pages deploy workflow
@@ -67,6 +68,8 @@ Names, paths, parents and scope notes are defined once in `shared/content/admin-
 | `/review-tasks/` | Review Tasks | Built (Week 10) |
 | `/settings/` | Settings / Team Access | Built (Week 10) |
 | `/review-tasks/[taskId]/` | Review Task Detail | **BUILT (Week 11, feature 1).** One static page per seeded task (`seed-1` to `seed-5`), built with `generateStaticParams` and `dynamicParams = false`; other task addresses show Page not found. Layout PROVISIONAL |
+| `/sign-in/` | Sign In (Admin Web landing and sign-in entry) | **BUILT (Phase A1).** Prototype only: nothing is checked; a well-formed email and any password open the Dashboard. Setup shell. `?state=loading` or `submit-error` previews |
+| `/create-account/` | Create Account | **BUILT (Phase A1).** Invitation only (no public sign-ups): looks for an invitation for the email and links to Accept Invitation. Setup shell. `?state=loading`, `found`, `not-found`, `submit-error` previews |
 | `/accept-invitation/` | Accept Invitation | **BUILT (Week 11, feature 2).** Prototype only. Uses the setup shell (no sidebar). `?invite=` picks a sample invitation; `?state=` previews |
 | `/account-setup/` | Account Setup | **BUILT (Week 11, feature 2).** Prototype only. Uses the setup shell (no sidebar). Ends with Go to Review Tasks |
 | `/dev/` | Component preview | Internal, URL only |
@@ -84,7 +87,9 @@ Names, paths, parents and scope notes are defined once in `shared/content/admin-
 5. **Styles** (`app/_<screen>/<screen>.module.css`): CSS Modules using tokens from `shared/design-tokens/tokens.css` only.
 6. **Without JavaScript:** the built HTML already shows the seeded list and the first item's details. Controls that can't work without JavaScript are hidden.
 
-**Shell** (`components/layout/AdminShell.tsx`, used by the root layout): top bar (breadcrumb starting "Admin", Theme menu, profile menu), persistent sidebar, then the page. Under 768 px the sidebar becomes a Menu.
+**Shell** (`components/layout/AdminShell.tsx`, used by the root layout): top bar (breadcrumb starting "Admin", the icon-only Light / Dark / System theme controls, and the Profile button that opens the Notifications panel), persistent sidebar, then the page. Under 768 px the sidebar becomes a Menu.
+
+**Sidebar (Phase A1):** the logo, then four groups: Dashboard; Content (Quiz Content, Guidance Content, Product Information, Knowledge Sources, Partner Highlights); Review Tasks (Guidance Rules Review, Claims & Safety Review); Metrics (Content Metrics). A group opens by default when you're on its page or one of its children; its toggle says "<Group> pages" and shows open or closed. Below the groups: a decorative illustration, the Profile card (sample identity, Account Support, Notifications) and Settings last. The order is defined once in `sidebarNav`, `sidebarProfileLinks` and `sidebarFooter` (`shared/content/admin-web-screens.ts`).
 
 ## 5. State
 
@@ -93,7 +98,8 @@ Names, paths, parents and scope notes are defined once in `shared/content/admin-
 | Seed data | `shared/content/*.ts` | Built into the pages | Same on every load |
 | Preview state (`?state=`) | Each screen's `StateFromUrl` | The address | Review aid only |
 | Screen state (search, filters, selected row, menus) | Each screen | Memory | Lost when you leave the page |
-| Theme (Light, Dark, System) | `components/layout/themeStore.ts` | Local storage `cuidance-admin-theme` | Applied before paint by a small script in the root layout |
+| Theme (Light, Dark, System) | `components/layout/themeStore.ts`; controls in `ThemeSwitch.tsx` | Local storage `cuidance-admin-theme` | Applied before paint by a small script in the root layout |
+| **Notifications read state (Phase A1)** | `components/layout/notificationsStore.ts`; sample items in `shared/content/notifications.ts` | Session storage `cuidance-admin-notifications-read` (one tab) | Which sample notifications were read, and whether the panel is open (memory only). Sample data, nothing is sent |
 | **Review decisions** | **BUILT (Week 11)** `app/_reviewLoop/reviewStore.ts`; rules in `shared/review-loop/review-decisions.ts` | Session storage `cuidance-admin-review-session` (one tab) | Only Review Task Detail records decisions and resets them. Dashboard, Review Tasks and Review Task Detail read them through `useReviewTasks()`. Also holds the one-time Dashboard message |
 | **Invitation and account setup** | **BUILT (Week 11)** `app/_onboarding/onboardingStore.ts`; rules in `shared/onboarding/onboarding-rules.ts`; wording in `shared/content/invitation.ts` and `account-setup.ts` | Session storage `cuidance-admin-onboarding` (one tab) | Holds the invitation answer, the full name and the work email. **Never the password.** Doesn't touch review decisions. Nothing is sent anywhere |
 
@@ -139,13 +145,15 @@ Full detail: `docs/Week-11/close-the-loop-implementation-plan.md`, sections 3 an
 
 | Piece | File | Job |
 | --- | --- | --- |
-| Setup shell | `components/layout/AdminShell.tsx`, `SetupBar.tsx`; `isSetupPath` in `shared/content/admin-web-screens.ts` | On `/accept-invitation/` and `/account-setup/` only: the logo and the Theme menu, no sidebar, Menu, breadcrumb or profile. Every other route renders the full shell as before |
+| Setup shell | `components/layout/AdminShell.tsx`, `SetupBar.tsx`; `isSetupPath` in `shared/content/admin-web-screens.ts` | On `/sign-in/`, `/create-account/` (Phase A1), `/accept-invitation/` and `/account-setup/` only: the logo and the theme controls, no sidebar, Menu, breadcrumb or profile. Every other route renders the full shell as before |
 | Sample invitations and wording | `shared/content/invitation.ts`, `shared/content/account-setup.ts` | Valid and expired sample invitations (Reviewer B, `reviewer.b@example.com`, Reviewer, Cuidance Content Team), `invitationFromParam` |
 | Rules | `shared/onboarding/onboarding-rules.ts` | Password requirements (12+ characters, a letter, a number), email format and match, `validateSetup`, `invitationView`, `setupView`, `parseOnboardingSession` (ignores bad or unexpected saved data) |
 | Store | `admin-web/app/_onboarding/onboardingStore.ts` | `acceptInvitation`, `declineInvitation`, `requestNewInvitation`, `createAccount` (name and email only), `resetOnboarding` |
 | Screens | `admin-web/app/_onboarding/AcceptInvitationView.tsx`, `AccountSetupView.tsx`, `SetupFrame.tsx`, `OnboardingStateFromUrl.tsx` | The two screens, the Grounded Green welcome panel with the three steps, and the `?state=` / `?invite=` readers |
 
 **Flow:** Accept Invitation (valid → Accept or Decline) → Account Setup (missing until accepted) → Create account → Account created → Go to Review Tasks, where the sidebar starts. Invitation states: valid, expired, declined, not found, already accepted, with Request a new invitation (nothing is sent).
+
+**Phase A1 (Admin Web completion):** Sign In and Create Account join the start of the flow: Sign In → Create Account (invitation only) or Accept Invitation → Account Setup → Review Tasks. Both use `SetupFrame variant="entry"` (headline, body and the hand-and-stone illustration beside the card); Accept Invitation and Account Setup keep the steps panel. Wording in `shared/content/sign-in.ts`; rules `validateSignIn` and `findInvitationByEmail` in `shared/onboarding/onboarding-rules.ts`. Neither screen saves anything. Full notes: `docs/Phase-A1/admin-web-completion-implementation.md`.
 
 ## 7. Styling and accessibility
 

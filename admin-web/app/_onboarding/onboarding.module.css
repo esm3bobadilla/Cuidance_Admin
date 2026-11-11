@@ -5,7 +5,115 @@
  * primary buttons (Team 03 decision A9).
  */
 .page {
+  position: relative;
   align-items: stretch;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* Phase A1: restrained brand shapes in the corners, from the Sign-in Entry reference.
+   Decorative, behind the content, and kept away from text. */
+.decor {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.decor span {
+  position: absolute;
+  display: block;
+}
+
+.shapeBrand {
+  bottom: calc(var(--space-48) * -4);
+  left: calc(var(--space-48) * -3);
+  width: calc(var(--space-48) * 7);
+  height: calc(var(--space-48) * 7);
+  background: var(--color-brand);
+  border-radius: var(--radius-pill);
+}
+
+.shapeTerracotta {
+  top: calc(var(--space-48) * -2);
+  right: calc(var(--space-48) * -1.5);
+  width: calc(var(--space-48) * 4);
+  height: calc(var(--space-48) * 4);
+  background: var(--color-highlight);
+  border-radius: var(--radius-pill);
+}
+
+.shapeWarm {
+  right: calc(var(--space-48) * 1.5);
+  bottom: calc(var(--space-48) * -1.5);
+  width: calc(var(--space-48) * 3.5);
+  height: calc(var(--space-48) * 3.5);
+  background: var(--color-surface-warm);
+  border-radius: var(--radius-pill) var(--radius-pill) 0 0;
+}
+
+/* Sign In and Create Account: the Sign-in Entry hero beside the card */
+.frame.entryFrame {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+}
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-24);
+  padding-block: var(--space-24);
+}
+
+.headline {
+  margin: 0;
+  font: var(--type-display-xl);
+  color: var(--color-ink);
+}
+
+.heroBody {
+  margin: 0;
+  font: var(--type-body-large);
+  color: var(--color-ink);
+}
+
+.heroArt {
+  display: block;
+  width: calc(var(--space-48) * 4);
+  height: auto;
+  /* Crops a stray stroke at the top edge of the supplied artwork */
+  aspect-ratio: 356 / 190;
+  object-fit: cover;
+  object-position: bottom;
+}
+
+/* Approved flat illustration in the steps panel, on a light circle (light in both themes) */
+.welcomeArt {
+  display: grid;
+  place-content: center;
+  align-self: flex-start;
+  width: calc(var(--space-48) * 2.5);
+  height: calc(var(--space-48) * 2.5);
+  overflow: hidden;
+  background: var(--color-surface-warm);
+  border-radius: var(--radius-pill);
+}
+
+.welcomeArt img {
+  display: block;
+  width: calc(var(--space-48) * 2);
+  height: auto;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .welcomeArt {
+    background: transparent;
+  }
+}
+
+:root[data-theme='dark'] .welcomeArt {
+  background: transparent;
 }
 
 /* Welcome panel beside the card; one column under 1024 px */
@@ -335,6 +443,38 @@
     max-width: calc(var(--layout-sidebar-width) * 3);
   }
 
+  .frame.entryFrame {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .hero {
+    padding-block: 0;
+  }
+
+  .heroArt {
+    display: none;
+  }
+
+  .welcomeArt {
+    display: none;
+  }
+
+  .shapeBrand {
+    width: calc(var(--space-48) * 4);
+    height: calc(var(--space-48) * 4);
+    bottom: calc(var(--space-48) * -2.5);
+    left: calc(var(--space-48) * -2);
+  }
+
+  .shapeTerracotta {
+    width: calc(var(--space-48) * 2.5);
+    height: calc(var(--space-48) * 2.5);
+  }
+
+  .shapeWarm {
+    display: none;
+  }
+
   .welcome {
     padding: var(--space-24);
   }
@@ -348,5 +488,44 @@
   .detailRow,
   .summaryList {
     grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Phase A1: Sign In and Create Account */
+.forgot {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Full-width primary and secondary actions, as in the Sign-in Entry reference */
+.stackActions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+}
+
+.stackActions > span {
+  display: flex;
+}
+
+.stackActions a,
+.stackActions button {
+  justify-content: center;
+  width: 100%;
+}
+
+/* The search result is announced and takes focus; empty until there's a result */
+.result:empty {
+  display: none;
+}
+
+.result:focus {
+  outline: none;
+}
+
+/* Phones: no corner shapes, so nothing crowds the top bar or the form */
+@media (max-width: 767px) {
+  .decor {
+    display: none;
   }
 }

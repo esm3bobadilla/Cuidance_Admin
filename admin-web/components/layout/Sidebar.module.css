@@ -4,7 +4,7 @@
   top: 0;
   display: flex;
   flex-direction: column;
-  gap: var(--space-32);
+  gap: var(--space-24);
   height: 100vh;
   overflow-y: auto;
   padding: var(--space-32) var(--space-16);
@@ -24,18 +24,12 @@
   padding-inline: var(--space-8);
 }
 
-/* "ADMIN WEB · INTERNAL", plain text under the logo (current prototype) */
-.label {
-  margin: 0;
-  font: var(--type-eyebrow);
-  letter-spacing: var(--type-eyebrow-tracking);
-  text-transform: uppercase;
-  color: var(--color-on-brand);
-}
-
+/* Phase A1: the nav fills the sidebar, so the Profile card and Settings sit at the bottom */
 .nav {
   display: flex;
+  flex: 1;
   flex-direction: column;
+  gap: var(--space-24);
 }
 
 .list,
@@ -122,6 +116,150 @@
   transform: rotate(90deg);
 }
 
+/* Metrics has no page of its own: the whole row is the toggle */
+.groupButton {
+  justify-content: space-between;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+.groupGlyph {
+  display: inline-block;
+  font: var(--type-heading-4);
+}
+
+.groupButton[aria-expanded='true'] .groupGlyph {
+  transform: rotate(90deg);
+}
+
+/* Area 5: a flat 2D Cuidance illustration. In light, it sits on a Warm Care circle against the
+   Grounded Green sidebar; in dark, the sidebar is already light green, so no circle. Decorative only. */
+.art {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+  padding-block: var(--space-8);
+}
+
+.artBackdrop {
+  display: grid;
+  place-content: center;
+  width: calc(var(--space-48) * 3);
+  height: calc(var(--space-48) * 3);
+  overflow: hidden;
+  background: var(--color-surface-warm);
+  border-radius: var(--radius-pill);
+}
+
+.artImage {
+  display: block;
+  width: calc(var(--space-48) * 2.5);
+  height: auto;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .artBackdrop {
+    background: transparent;
+  }
+}
+
+:root[data-theme='dark'] .artBackdrop {
+  background: transparent;
+}
+
+/* Short windows: the illustration gives way so the Profile card and Settings stay visible */
+@media (max-height: 820px) {
+  .art {
+    display: none;
+  }
+}
+
+.bottom {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+  margin-top: auto;
+}
+
+/* Profile card above Settings: placeholder identity, Account Support and Notifications */
+.profile {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  padding: var(--space-12);
+  border: var(--stroke-default) solid var(--color-on-brand);
+  border-radius: var(--radius-medium);
+}
+
+.identity {
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
+  padding-inline: var(--space-4);
+}
+
+.initials {
+  display: inline-grid;
+  flex: none;
+  place-content: center;
+  width: var(--size-touch-target);
+  height: var(--size-touch-target);
+  font: var(--type-label);
+  color: var(--color-brand);
+  background: var(--color-on-brand);
+  border-radius: var(--radius-pill);
+}
+
+.identityText {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.profileName {
+  margin: 0;
+  font: var(--type-label);
+}
+
+.profileRole {
+  margin: 0;
+  font: var(--type-caption);
+}
+
+.profileLinks {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.notificationsButton {
+  justify-content: space-between;
+  gap: var(--space-8);
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+/* "2 new": text, not color alone */
+.count {
+  padding: 0 var(--space-8);
+  font: var(--type-caption);
+  font-weight: 600;
+  color: var(--color-brand);
+  background: var(--color-on-brand);
+  border-radius: var(--radius-pill);
+}
+
 /* Phones: the list opens below the top bar from its Menu button; the logo is in the top bar */
 @media (max-width: 767px) {
   .sidebar {
@@ -136,6 +274,10 @@
   }
 
   .top {
+    display: none;
+  }
+
+  .art {
     display: none;
   }
 }

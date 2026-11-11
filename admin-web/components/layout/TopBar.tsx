@@ -6,8 +6,8 @@ import { adminScreens, screenTrail, shellCopy, type AdminScreen } from '../../..
 import { reviewTaskFromPath } from '../../../shared/content/review-task-detail';
 import { Breadcrumb } from '../ui/Breadcrumb';
 import { Button } from '../ui/Button';
-import { ProfileMenu } from './ProfileMenu';
-import { ThemeMenu } from './ThemeMenu';
+import { ProfilePanel } from './ProfilePanel';
+import { ThemeSwitch } from './ThemeSwitch';
 import styles from './TopBar.module.css';
 
 const base = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
@@ -39,9 +39,10 @@ type TopBarProps = {
   onToggleMenu: () => void;
 };
 
-// Shared top bar (current prototype): breadcrumb on the left, the Theme menu and profile on the right.
+// Shared top bar: breadcrumb on the left; on the right, the icon-only theme controls and the
+// profile button, which opens the Profile / Notifications panel (Phase A1).
 // Under 768 px: Menu, logo, Theme and profile; the breadcrumb is hidden there, as in the prototype.
-// Without JavaScript, Menu, Theme and the profile menu are hidden (they can't work).
+// Without JavaScript, Menu, the theme controls and the profile panel are hidden (they can't work).
 export function TopBar({ logo, menuOpen, onToggleMenu }: TopBarProps) {
   const crumbs = crumbsFor(usePathname() ?? '/');
 
@@ -65,8 +66,8 @@ export function TopBar({ logo, menuOpen, onToggleMenu }: TopBarProps) {
       </div>
 
       <div className={styles.actions}>
-        <ThemeMenu id="admin-theme" />
-        <ProfileMenu id="admin-profile" />
+        <ThemeSwitch />
+        <ProfilePanel />
       </div>
     </header>
   );
