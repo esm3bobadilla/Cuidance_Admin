@@ -138,6 +138,7 @@ Cuidance_Admin/
 │   ├── app/               Routes from the Week 10 route map (see `docs/Week-10/route-map.md`), `/dev` component preview, custom 404
 │   │   └── _screens/      Shared structure for the route-map screens (not a route)
 │   └── components/        Shared components: layout, ui, forms, data, feedback, content
+├── supabase/              Phase 2: Supabase config, migrations, local seed and database tests
 ├── shared/                Shared content and rules for Admin Web
 │   ├── content/           Admin Web screen names, scope notes, role wording and theme labels; later result content, safety lines, labels
 │   ├── review-loop/       Week 11 review decision rules (statuses, Dashboard counts), shared by every screen
@@ -153,10 +154,12 @@ Cuidance_Admin/
 │   ├── wireframes/        Admin Web wireframes (reference only, not app code)
 │   ├── Week-10/           Week 10 demo log, route map and screenshot evidence
 │   ├── Week-11/           Week 11 Close the Loop plan and feature notes
+│   ├── Phase-2/           Supabase integration plan and decisions
 │   └── archived/
 │       └── admin-mobile/  Archived Admin Mobile reference (no active work)
 ├── README.md
 ├── ARCHITECTURE.md        How Admin Web is put together (routes, screens, state)
+├── package.json           Repo tooling only (Supabase CLI: npm run db:start, db:test)
 ├── CLAUDE.md              Rules for AI agents working in this repo
 ├── .gitignore
 └── .github/
