@@ -3,6 +3,8 @@
 import { useSearchParams } from 'next/navigation';
 import { AcceptInvitationView, type InvitationPreview } from './AcceptInvitationView';
 import { AccountSetupView, type SetupPreview } from './AccountSetupView';
+import { CreateAccountView, type CreateAccountPreview } from './CreateAccountView';
+import { SignInView, type SignInPreview } from './SignInView';
 
 const invitationPreviews: InvitationPreview[] = ['loading', 'expired', 'declined', 'not-found', 'accepted'];
 const setupPreviews: SetupPreview[] = ['loading', 'missing', 'submit-error', 'success'];
@@ -18,4 +20,17 @@ export function InvitationFromUrl() {
 export function AccountSetupFromUrl() {
   const state = useSearchParams().get('state') as SetupPreview | null;
   return <AccountSetupView preview={state && setupPreviews.includes(state) ? state : undefined} />;
+}
+
+const signInPreviews: SignInPreview[] = ['loading', 'submit-error'];
+const createAccountPreviews: CreateAccountPreview[] = ['loading', 'found', 'not-found', 'submit-error'];
+
+export function SignInFromUrl() {
+  const state = useSearchParams().get('state') as SignInPreview | null;
+  return <SignInView preview={state && signInPreviews.includes(state) ? state : undefined} />;
+}
+
+export function CreateAccountFromUrl() {
+  const state = useSearchParams().get('state') as CreateAccountPreview | null;
+  return <CreateAccountView preview={state && createAccountPreviews.includes(state) ? state : undefined} />;
 }

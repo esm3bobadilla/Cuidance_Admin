@@ -10,25 +10,16 @@ export type ThemePreference = 'system' | 'light' | 'dark';
 
 export const themeStorageKey = 'cuidance-admin-theme';
 
-export const themeLabel = 'Theme';
-
-// Wording for the Theme menu beside the profile area, in the prototype's order
-export const themeMenuCopy = {
-  heading: 'Theme',
-  savedNote: 'Saved on this device.',
-  // The button reads "Theme: System" and so on
-  buttonLabel: (current: string) => `${themeLabel}: ${current}`,
-};
-
-export const themeOptions: { value: ThemePreference; label: string; description: (deviceIsDark: boolean) => string }[] = [
-  { value: 'light', label: 'Light', description: () => 'Always use the light theme' },
-  { value: 'dark', label: 'Dark', description: () => 'Always use the dark theme' },
-  {
-    value: 'system',
-    label: 'System',
-    description: (deviceIsDark) => `Follows your device (now ${deviceIsDark ? 'dark' : 'light'})`,
+// Phase A1: icon-only header controls (Light, Dark, System). Each has an accessible
+// name and a visible tooltip. System shows the approved Cuidance symbol mark in one color.
+export const themeSwitchCopy = {
+  groupLabel: 'Theme',
+  options: {
+    light: { label: 'Light theme', tooltip: 'Light' },
+    dark: { label: 'Dark theme', tooltip: 'Dark' },
+    system: { label: 'System theme, follows your device', tooltip: 'System' },
   },
-];
+};
 
 // Runs in <head> before the page draws, so a saved choice never flashes the wrong colors.
 // If storage is blocked or empty, nothing happens and the device setting applies.

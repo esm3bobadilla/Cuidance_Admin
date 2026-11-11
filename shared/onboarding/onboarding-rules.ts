@@ -26,6 +26,24 @@ export const isValidEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test
 
 export const sameEmail = (a: string, b: string) => a.trim().toLowerCase() === b.trim().toLowerCase();
 
+// Phase A1 sample Sign In: both fields filled and the email well formed. Nothing is checked
+// against an account: sign-in isn't connected yet.
+export type SignInErrors = Partial<{ email: 'missing' | 'invalid'; password: 'missing' }>;
+
+export function validateSignIn(email: string, password: string): SignInErrors {
+  const errors: SignInErrors = {};
+  if (!email.trim()) errors.email = 'missing';
+  else if (!isValidEmail(email)) errors.email = 'invalid';
+  if (!password) errors.password = 'missing';
+  return errors;
+}
+
+// Phase A1 sample Create Account: an invitation is found only for its exact email.
+// It never creates an account (accounts are invitation only).
+export function findInvitationByEmail(email: string, invitation: Invitation): Invitation | undefined {
+  return !invitation.expired && sameEmail(email, invitation.invitedEmail) ? invitation : undefined;
+}
+
 export type SetupFields = { fullName: string; email: string; password: string; confirm: string };
 
 export type SetupErrors = Partial<{

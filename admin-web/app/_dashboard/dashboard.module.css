@@ -170,3 +170,69 @@
     gap: var(--space-12);
   }
 }
+
+/* Phase A1: top display banner. Text on the left; approved flat illustrations on a Warm Care
+   arch on the right (light in both themes: Warm Care in light, the light-green brand surface in dark). */
+.banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--layout-gutter);
+}
+
+.bannerArt {
+  position: relative;
+  display: flex;
+  flex: none;
+  align-items: flex-end;
+  justify-content: center;
+  width: calc(var(--space-48) * 5);
+  height: calc(var(--space-48) * 3.5);
+  padding-bottom: var(--space-12);
+  background: var(--color-surface-warm);
+  border-radius: var(--radius-pill) var(--radius-pill) var(--radius-medium) var(--radius-medium);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .bannerArt {
+    background: var(--color-brand);
+  }
+}
+
+:root[data-theme='dark'] .bannerArt {
+  background: var(--color-brand);
+}
+
+.bannerJar {
+  position: relative;
+  display: block;
+  width: calc(var(--space-48) * 3.5);
+  height: auto;
+}
+
+.bannerLeaf {
+  position: absolute;
+  top: var(--space-12);
+  left: var(--space-16);
+  display: block;
+  width: var(--space-48);
+  height: auto;
+}
+
+@media (max-width: 1023px) {
+  .bannerArt {
+    width: calc(var(--space-48) * 3.5);
+    height: calc(var(--space-48) * 2.5);
+  }
+
+  .bannerJar {
+    width: calc(var(--space-48) * 2.5);
+  }
+}
+
+/* Phones: the banner is text only */
+@media (max-width: 767px) {
+  .bannerArt {
+    display: none;
+  }
+}

@@ -1,0 +1,204 @@
+/* Phase A1: Profile / Notifications panel. Tokens only; no shadow (the board has no shadow value). */
+.wrap {
+  display: flex;
+}
+
+/* Approved initials treatment: brand circle */
+.button,
+.initials {
+  position: relative;
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: var(--size-touch-target);
+  height: var(--size-touch-target);
+  padding: 0;
+  font: var(--type-label);
+  color: var(--color-on-brand);
+  background: var(--color-brand);
+  border: 0;
+  border-radius: var(--radius-pill);
+}
+
+.button {
+  cursor: pointer;
+}
+
+/* Unread sign on the button: a Care Terracotta dot with a ring in the page color */
+.dot {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: var(--space-12);
+  height: var(--space-12);
+  background: var(--color-highlight);
+  border: var(--stroke-strong) solid var(--color-background);
+  border-radius: var(--radius-pill);
+}
+
+/* Lines up with the top bar's actions (TopBar.module.css) */
+.panel {
+  position: absolute;
+  top: calc(100% + var(--space-8));
+  right: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  width: calc(var(--layout-sidebar-width) + var(--space-48) * 2);
+  max-width: calc(100vw - 2 * var(--layout-outer-margin));
+  color: var(--color-ink);
+  background: var(--color-surface);
+  border: var(--stroke-default) solid var(--color-border-strong);
+  border-radius: var(--radius-medium);
+  overflow: hidden;
+}
+
+.panel[hidden] {
+  display: none;
+}
+
+.identity {
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
+  padding: var(--space-16);
+  border-bottom: var(--stroke-default) solid var(--color-border);
+}
+
+.identityText {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.name {
+  margin: 0;
+  font: var(--type-label);
+}
+
+.muted {
+  margin: 0;
+  font: var(--type-body-small);
+  color: var(--color-ink-muted);
+}
+
+.header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-12);
+  padding: var(--space-16) var(--space-16) var(--space-8);
+}
+
+.heading {
+  margin: 0;
+  font: var(--type-heading-5);
+}
+
+.count {
+  font: var(--type-caption);
+  color: var(--color-ink-muted);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  border-top: var(--stroke-default) solid var(--color-border);
+}
+
+.itemLink {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-4);
+  min-height: var(--size-touch-target);
+  padding: var(--space-12) var(--space-16);
+  color: var(--color-ink);
+  text-decoration: none;
+}
+
+@media (hover: hover) {
+  .itemLink:hover .message {
+    text-decoration: underline;
+  }
+}
+
+/* Unread: Compass Blue selected surface, a dot and the word "New" (not color alone) */
+.unread {
+  background: var(--color-selected-surface);
+}
+
+.unread .message {
+  font-weight: 600;
+}
+
+.itemState {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-4);
+  font: var(--type-eyebrow);
+  letter-spacing: var(--type-eyebrow-tracking);
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+}
+
+.unread .itemState {
+  color: var(--color-ink);
+}
+
+.itemDot {
+  width: var(--space-8);
+  height: var(--space-8);
+  background: var(--color-selected);
+  border-radius: var(--radius-pill);
+}
+
+.message {
+  font: var(--type-body-small);
+}
+
+.when {
+  font: var(--type-caption);
+  color: var(--color-ink-muted);
+}
+
+.note {
+  margin: 0;
+  padding: var(--space-12) var(--space-16);
+  font: var(--type-caption);
+  color: var(--color-ink-muted);
+  border-top: var(--stroke-default) solid var(--color-border);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--space-8);
+  padding: var(--space-4) var(--space-8) var(--space-8);
+  border-top: var(--stroke-default) solid var(--color-border);
+}
+
+.textButton {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--size-touch-target);
+  padding: 0 var(--space-8);
+  font: var(--type-link);
+  color: var(--color-accent);
+  text-decoration: underline;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+.textButton:disabled {
+  color: var(--color-disabled-ink);
+  text-decoration: none;
+  cursor: not-allowed;
+}

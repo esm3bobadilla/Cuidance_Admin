@@ -142,10 +142,11 @@ Cuidance_Admin/
 ├── shared/                Shared content and rules for Admin Web
 │   ├── content/           Admin Web screen names, scope notes, role wording and theme labels; later result content, safety lines, labels
 │   ├── review-loop/       Week 11 review decision rules (statuses, Dashboard counts), shared by every screen
-│   ├── onboarding/        Week 11 invitation and account setup rules (password, email, states)
+│   ├── onboarding/        Week 11 and Phase A1 invitation, account setup and sign-in rules (password, email, states)
 │   ├── quiz-rules/        Answer cards, mixing rules, delivery rules
 │   ├── design-tokens/     Colors (light and dark), type, spacing, radius, stroke
 │   └── brand/
+│       ├── illustrations/ Phase A1 approved flat Cuidance illustrations (decorative)
 │       └── logo/          Approved Logo Version 4 files (package v03)
 │           ├── png/
 │           │   └── derived/   Team 03 derived exports (favicons, 180 / 192 px app icons, raster lockups)
@@ -155,6 +156,7 @@ Cuidance_Admin/
 │   ├── Week-10/           Week 10 demo log, route map and screenshot evidence
 │   ├── Week-11/           Week 11 Close the Loop plan and feature notes
 │   ├── Phase-2/           Supabase integration plan and decisions
+│   ├── Phase-A1/          Phase A1 Admin Web completion notes and evidence
 │   └── archived/
 │       └── admin-mobile/  Archived Admin Mobile reference (no active work)
 ├── README.md
