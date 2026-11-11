@@ -1,6 +1,6 @@
 # Cuidance Admin Web: architecture
 
-_Last updated: Nov 10, 2026 (Week 11 feature 2, Accept Invitation and Account Setup, on `feat/week-11-account-setup`). Built Week 11 parts are marked **BUILT (Week 11)**. Feature 1 (Review Task Detail) is merged into `main` (PR #13)._
+_Last updated: Nov 11, 2026 (Phase 2.1: Supabase schema, RLS, triggers and database tests on `feat/phase-2-1-supabase-schema`; the app itself is unchanged and runs in sample mode). Week 11 features 1 and 2 are merged (PRs #13 and #14)._
 
 How Admin Web is put together, in plain words. Read this with `CLAUDE.md` (the rules) and `docs/Week-11/close-the-loop-implementation-plan.md` (the current plan).
 
@@ -11,7 +11,7 @@ How Admin Web is put together, in plain words. Read this with `CLAUDE.md` (the r
 - An **internal** browser tool for the Cuidance team to review and maintain content. Not public, not a portal for providers, brands or retailers.
 - **Next.js 16 with TypeScript (strict)**, React 19. No other dependencies.
 - **A static website.** `next build` turns every screen into a plain HTML page (`output: 'export'`), and GitHub Pages serves them. There is no server code, no database and no sign-in.
-- **Data is seeded.** Every screen shows typed sample data from `shared/`. Supabase is planned but **not connected** (CLAUDE.md "Not yet").
+- **Data is seeded.** Every screen shows typed sample data from `shared/`. **Phase 2** adds a separate Admin Supabase project; its schema and tests exist (section 10), but the app doesn't connect to it yet. Sample mode stays the default.
 
 ## 2. Folders
 
@@ -36,7 +36,9 @@ Cuidance_Admin/
 │   ├── review-loop/           Week 11: review decision rules (no React), shared by every screen
 │   ├── design-tokens/         tokens.css (colors light and dark, type, spacing, radius, stroke)
 │   └── brand/logo/            Approved Logo Version 4 files only
-├── docs/                      Week 10 and Week 11 notes, maps and evidence
+├── supabase/                  Phase 2: config.toml, migrations, local seed, database tests
+├── package.json               Repo tooling only (Supabase CLI); the app's own package.json is in admin-web/
+├── docs/                      Week 10, Week 11 and Phase 2 notes, maps and evidence
 ├── ARCHITECTURE.md            This file
 ├── CLAUDE.md                  Rules for AI agents
 └── .github/                   PR template, GitHub Pages deploy workflow
@@ -173,3 +175,24 @@ Full detail: `docs/Week-11/close-the-loop-implementation-plan.md`, sections 3 an
 | Data | Seeded files in `shared/content/` | Supabase tables, same project as the main app |
 | Saving changes | Nothing saved, except theme (local storage) and, from Week 11, review decisions and the invitation and account setup (session storage, one tab). Passwords are never saved | Supabase |
 | Pages for data unknown at build time | Not possible on a static site | Decided with the Supabase and hosting step |
+
+## 10. Phase 2: Supabase (in progress)
+
+Approved by Team 03 on Nov 11, 2026 (decisions D1 to D14). Full plan: `docs/Phase-2/supabase-integration-plan.md`.
+
+- **Project:** a separate Admin Supabase project, "Cuidance Admin Web — Development". Never the public app's.
+- **Hosting:** the frontend stays a static export on GitHub Pages. The browser will use only the public URL and anon key; **Row Level Security is the security boundary**. Privileged invitation and membership actions will run in **Supabase Edge Functions** (Phase 2.5).
+- **Built in Phase 2.1** (database only, not yet applied to the hosted project):
+
+| Piece | Where |
+| --- | --- |
+| Local Supabase config (invite-only auth, 12-character passwords with letters and digits, email confirmation, redirect URLs) | `supabase/config.toml` |
+| Tables: `profiles`, `workspaces`, `workspace_members`, `invitations`, `review_tasks`, `review_decisions` | `supabase/migrations/` |
+| Role helpers (`member_role`, `is_member`, `has_role`, `shares_workspace`) and guard triggers (final Owner, assigned-Reviewer decisions, no decisions after Approved, append-only decisions, status set by decisions) | `supabase/migrations/20261111060200_functions_and_triggers.sql` |
+| RLS policies and column-level API privileges | `supabase/migrations/20261111060300_rls_and_grants.sql` |
+| Local seed: the workspace and the five sample tasks (3 / 1 / 1 / 0) | `supabase/seed.sql` |
+| Database tests (pgTAP, 114 tests) | `supabase/tests/`, `npm run db:test` |
+| CI for database changes | `.github/workflows/supabase-db-tests.yml` |
+
+- **Still sample mode:** no Supabase client, sign-in, environment variables or Edge Functions in the app yet (Phases 2.2 to 2.5). The review decision rules in `shared/review-loop/` match the database triggers, so the two stay consistent when the app switches over.
+

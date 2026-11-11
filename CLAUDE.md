@@ -2,7 +2,7 @@
 
 Rules for any Claude agent working in this repo. Follow them on every task. If something here conflicts with a request, ask before going ahead.
 
-_Last updated: Oct 22, 2026 (Week 9 practice build: Next.js with TypeScript shell, design tokens and approved v04 logo lockup in place; content features not started)._
+_Last updated: Nov 11, 2026 (Phase 2.1: Supabase schema, RLS and database tests added; the app still runs in sample mode and isn't connected to Supabase yet)._
 
 ## Project context
 
@@ -44,10 +44,22 @@ Admin Web stays inside the approved Cuidance scope. If a request goes past these
 
 - Admin Web: Next.js (approved)
 - TypeScript (strict)
-- Supabase for the database, same project as the main app. **Not connected yet** (pending team decision).
+- Supabase: a **separate Admin project**, "Cuidance Admin Web — Development". **Never the public app's Supabase project** (Team 03 decision D1, Nov 11, 2026).
 - Shared content and rules ship as local typed data in `shared/`
 
-**Not yet:** Don't connect Supabase, create database tables, or add authentication or backend implementation until the team starts that step. Ask before adding any dependency beyond the approved Next.js and TypeScript setup.
+### Supabase architecture (approved Nov 11, 2026, Phase 2.0)
+
+- **Frontend:** stays a static export on GitHub Pages (D2). The browser may only ever use the project URL and the public **anon/publishable** key. **Row Level Security is the security boundary.**
+- **Privileged actions** (creating, answering and revoking invitations, adding members) run only in **Supabase Edge Functions** (D2), which hold the service-role key.
+- **Secrets:** the service-role (secret) key, the database password and access tokens **never** go in the repo, the GitHub Pages build, any `NEXT_PUBLIC_` variable, chat, or AI tools. Local keys go in `.env.local` (git-ignored).
+- **Sample mode stays the default** (D9). Don't switch the public GitHub Pages site to Supabase mode until staging validation passes.
+- **Test accounts use example.com addresses only** (D13). No real staff names or emails in the database during development.
+- **Production email (SMTP) isn't configured** until the team picks a provider (D6).
+- **Schema changes** are migrations in `supabase/migrations/`, reviewed in their own pull request, with database tests in `supabase/tests/` (`npm run db:test` at the repo root). Never change the hosted database by hand or from an AI session; migrations reach it only through the reviewed GitHub connection or a team member's `supabase db push`.
+- **Roles:** Owner, Admin and Reviewer. Content Editor is reserved but not used yet (D3). Only the assigned Reviewer records a decision (D4). Owners manage Admins and Reviewers, Admins manage Reviewers, and no one may demote or remove the final Owner (D5). Invitations expire after 7 days (D7). A task can be decided again after Needs changes until it's Approved (D12).
+- The plan and the full decision list are in `docs/Phase-2/supabase-integration-plan.md`.
+
+Ask before adding any dependency beyond the approved setup: Next.js, TypeScript, `@supabase/supabase-js` and the Supabase CLI (D10).
 
 ## Project structure
 
@@ -56,6 +68,7 @@ Cuidance_Admin/
 ├── admin-web/             # Admin Web app for the browser
 │   ├── app/               # Pages. /dev is an internal, static component preview
 │   └── components/        # One shared component per pattern, CSS Modules, tokens only
+├── supabase/              # Supabase config, migrations, local seed and database tests (Phase 2)
 ├── shared/                # Shared content and rules. Define things once, here.
 │   ├── content/           # Result content, safety lines, labels
 │   ├── quiz-rules/        # Answer cards, mixing rules, delivery rules
@@ -131,7 +144,8 @@ These match the main app. Admin Web content feeds the app, so the same rules app
 ## Do not
 
 - Do not create Admin Mobile screens, mobile navigation, Expo mobile code, or mobile-specific implementation unless Team 03 explicitly reopens that scope.
-- Do not connect Supabase, create database tables, or add authentication or backend implementation until the team starts that step.
+- Do not use the public app's Supabase project, put the service-role key anywhere in the frontend or repo, or change the hosted database outside a reviewed migration.
+- Do not switch the public GitHub Pages site out of sample mode until staging validation passes.
 - Do not switch away from Next.js with TypeScript without Team 03 approval.
 - Do not copy public app code or public prototype screens from `Cuidance_Prototype`.
 - Do not edit the `Cuidance_Prototype` repo or its `gh-pages` branch from here.

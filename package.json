@@ -1,0 +1,15 @@
+{
+  "name": "cuidance-admin-tools",
+  "private": true,
+  "description": "Repository tooling only (Supabase CLI for local database work and tests). The Admin Web app and its GitHub Pages build live in admin-web/ and don't use this file.",
+  "scripts": {
+    "db:start": "supabase start",
+    "db:stop": "supabase stop",
+    "db:reset": "supabase db reset",
+    "db:lint": "supabase db lint --level warning",
+    "db:test": "supabase test db"
+  },
+  "devDependencies": {
+    "supabase": "3.1.0"
+  }
+}

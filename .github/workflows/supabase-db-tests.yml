@@ -1,0 +1,42 @@
+name: Supabase database tests
+
+# Phase 2.1: checks the migrations, RLS policies and triggers on a local Supabase
+# started inside the runner. No secrets and no connection to the hosted project.
+# The GitHub Pages deploy workflow is separate and unchanged.
+
+on:
+  pull_request:
+    paths:
+      - 'supabase/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/supabase-db-tests.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  db-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - name: Install the Supabase CLI
+        run: npm ci
+      - name: Start a local Supabase (database and auth only)
+        run: npx supabase start -x studio,imgproxy,storage-api,realtime,edge-runtime,logflare,vector,supavisor,mailpit,postgres-meta
+      - name: Apply the migrations and seed from scratch
+        run: npx supabase db reset
+      - name: Lint the database schema
+        run: npx supabase db lint --level warning --fail-on warning
+      - name: Run the database tests
+        run: npx supabase test db
+      - name: Stop Supabase
+        if: always()
+        run: npx supabase stop --no-backup
