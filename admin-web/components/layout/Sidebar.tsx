@@ -152,6 +152,8 @@ export function Sidebar({ logo, menuOpen }: SidebarProps) {
                   type="button"
                   className={`${styles.link} ${styles.childLink} ${styles.notificationsButton}`}
                   aria-controls="profile-panel"
+                  // Phase A4: says whether the panel it opens is open (as the Profile button does)
+                  aria-expanded={notifications.open}
                   onClick={() => {
                     setPanelOpen(true);
                     window.scrollTo({ top: 0 });

@@ -60,3 +60,27 @@ Phase A3 is complete and open for review. **Don't merge, don't start Phase A4, a
 - Test users: the scratchpad `tools/a2-setup.mjs` (example.com only). Emails: the local mail catcher at http://127.0.0.1:54324.
 - The local email rate limit (`email_sent = 2`) only applies with custom SMTP, so no change is needed.
 - **Sandbox quirk (cloud session only):** the local Edge Functions runtime can't verify this sandbox's proxy certificate, so it can't download npm packages. After every `supabase start`, run the scratchpad `a3/seed-deno-cache.sh`. It copies the pre-downloaded packages (supabase-js 2.118.0, its dependencies and @opentelemetry/api) into the runtime cache. This doesn't affect the repository, hosted Supabase or a normal computer.
+
+---
+
+## Phase A3: DONE
+Merged: [esm3bobadilla/Cuidance_Admin#18](https://github.com/esm3bobadilla/Cuidance_Admin/pull/18), merge commit `1b119a7`. GitHub Pages deploy run #14 succeeded (sample mode). Hosted Supabase unchanged (4 migrations, no Edge Functions, 0 rows).
+
+## Current phase: A4 (production hardening and release readiness)
+Started Nov 12, 2026 on the owner's instruction. Branch: `feat/phase-a4-release-readiness` (from `1b119a7`).
+
+**Owner limits for A4:** don't deploy the Edge Function, change hosted Supabase data, switch GitHub Pages out of sample mode, **open or merge a PR**, or delete branches without explicit authorization. Commit and push to the branch, then stop and report.
+
+### Plan
+- [ ] Reachability: every screen in both modes (Dashboard, Content x6, Review Tasks, Metrics, Account Support, Settings, Sign In, Create Account, Accept Invitation, Account Setup, task detail, 404)
+- [ ] Accessibility audit (new script): names on every control, valid aria references, unique IDs, labelled fields, images alt, landmarks, heading order, focus visible; both modes; fix what it finds
+- [ ] Visual polish pass against the A1 reference pack (screenshots of key screens, light and dark); fix clear issues
+- [ ] Loading / empty / error states review (every ?state= preview, Supabase-mode real states)
+- [ ] Hardening review: code and config (Edge Function, client data layer, headers / static hosting limits, dependency audit)
+- [ ] Security Advisor: document the 4 warnings (accept, or a follow-up migration that needs its own reviewed PR)
+- [ ] Full validation: TypeScript, 3 builds, every sample suite, A2 and A3 Supabase suites, function tests, audits, hydration, contrast, db lint and tests, secret scan, npm audit
+- [ ] Docs: release-readiness report, ARCHITECTURE / README final behavior and known limitations, CLAUDE.md status line
+- [ ] Commit and push; NO PR (owner opens or authorizes it)
+
+### A4 environment
+After any restart, run the scratchpad `a4/up.sh`. It brings back dockerd, the local Supabase, the runtime package cache, the test users and the 3 builds, then serves them on 4101 (sample), 4102 (Pages build), 4103 and 3000 (Supabase mode).

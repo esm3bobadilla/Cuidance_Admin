@@ -156,3 +156,45 @@
     align-items: stretch;
   }
 }
+
+/* Phase A4: invitations as a table on wider screens, a stacked list on phones */
+.invitationsList {
+  display: none;
+  flex-direction: column;
+  gap: var(--space-12);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.invitationCard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  padding: var(--space-16);
+  background: var(--color-surface);
+  border: var(--stroke-default) solid var(--color-border);
+  border-radius: var(--radius-medium);
+}
+
+.invitationCard p {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.cardMeta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-8);
+}
+
+@media (max-width: 767px) {
+  .invitationsTable {
+    display: none;
+  }
+
+  .invitationsList {
+    display: flex;
+  }
+}
