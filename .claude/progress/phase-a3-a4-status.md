@@ -41,11 +41,15 @@ Branch: `feat/phase-a3-invitations` (from `618b5bb`).
   - db lint clean; db tests 114 pass;
   - secret scan clean.
 - [x] Docs: `docs/Phase-A3/invitations-implementation.md`, ARCHITECTURE, README, plan phase table
-- [ ] PR "Phase A3: invitations and onboarding completion" (request Alyssa). Then STOP: no merge, no A4, no hosted changes without the owner's authorization  <- NEXT
+- [x] PR opened: [esm3bobadilla/Cuidance_Admin#18](https://github.com/esm3bobadilla/Cuidance_Admin/pull/18) "Phase A3: invitations and onboarding completion", Alyssa requested.
+
+## CHECKPOINT: waiting for the owner
+Phase A3 is complete and open for review. **Don't merge, don't start Phase A4, and don't change the hosted project** until the owner authorizes it. Phase A4 starts only after A3 is merged, or if the owner explicitly authorizes parallel work.
 
 ### Commits on the branch (pushed)
 - `ee115a2` invitations Edge Function, email templates, Auth config
 - `8911646` Supabase-mode onboarding screens and Team Access invitations
+- `64ff9fb` documentation and progress checkpoint
 
 ### Blockers / owner decisions
 - Week 12 email concepts needed for the final email design.
