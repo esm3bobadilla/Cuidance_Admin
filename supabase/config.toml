@@ -254,6 +254,22 @@ otp_expiry = 3600
 # subject = "You have been invited"
 # content_path = "./supabase/templates/invite.html"
 
+# Phase A3: invitation and password emails. Each link goes straight to Admin Web with a
+# single-use token (token_hash) that Admin Web verifies. LOCAL settings: the hosted
+# project's templates are set in the dashboard (see docs/Phase-A3/). PROVISIONAL design.
+[auth.email.template.invite]
+subject = "You're invited to Cuidance Admin Web"
+content_path = "./supabase/templates/invite.html"
+
+# Sent when someone who already has an account is invited to a workspace
+[auth.email.template.magic_link]
+subject = "You're invited to a Cuidance Admin Web workspace"
+content_path = "./supabase/templates/magic_link.html"
+
+[auth.email.template.recovery]
+subject = "Reset your Cuidance Admin Web password"
+content_path = "./supabase/templates/recovery.html"
+
 # Uncomment to customize notification email template
 # [auth.email.notification.password_changed]
 # enabled = true
@@ -424,3 +440,10 @@ enabled = true
 # formatted with uppercase keywords, indent 2, max width 180, trailing commas,
 # and column/key alignment. Set to "null" to emit raw, unformatted SQL.
 # format_options = "{\"keywordCase\":\"upper\",\"indent\":2,\"maxWidth\":180,\"commaStyle\":\"trailing\"}"
+
+# Phase A3: the invitations Edge Function (the only code with the service-role key).
+# The gateway checks the caller's token too; the function checks it again and refuses
+# anyone who isn't allowed (D5).
+[functions.invitations]
+enabled = true
+verify_jwt = true

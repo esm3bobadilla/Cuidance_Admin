@@ -1,0 +1,47 @@
+# Phase A3 / A4 status
+
+Resume from here. Before continuing, re-check the branch, commit, working tree, open PRs, the Supabase project identity and CLAUDE.md. Don't repeat completed work. Don't merge, deploy or change hosted data without the owner's explicit authorization.
+
+## Baseline (verified Nov 12, 2026)
+- `main` = `618b5bb` (Phase A2 merged, [esm3bobadilla/Cuidance_Admin#17](https://github.com/esm3bobadilla/Cuidance_Admin/pull/17)). No open PRs. The working tree was clean.
+- Supabase: the only project is "Cuidance Admin Web — Development". Its hosted history has the 4 Phase 2.1 migrations (`20261111060000` to `20261111060300`).
+- GitHub Pages: sample mode (no Supabase settings in the deploy).
+
+## Current phase: A3 (invitations and onboarding completion)
+Branch: `feat/phase-a3-invitations` (from `618b5bb`).
+
+### Design decisions
+1. **No new migration.** Use the existing `invitations` table (D7: 7-day expiry, pending / accepted / declined / revoked, one pending per email per workspace).
+2. **One Edge Function, `supabase/functions/invitations`.** Actions: create, get, accept, decline, revoke, resend (plan Phase 2.5).
+   - It's the only code that uses the service-role key, which the Supabase runtime provides as `SUPABASE_SERVICE_ROLE_KEY`.
+   - D5: Owners invite Admins and Reviewers; Admins invite Reviewers.
+3. **Links.** The email links go straight to the site with a single-use, expiring Supabase Auth `token_hash`.
+   - Templates are in `supabase/templates/`.
+   - The page verifies the token with `verifyOtp`, then removes it from the address.
+   - New people get an invite link; people who already have an account get a sign-in link.
+4. **Resend.** Sends a fresh link while the invitation is pending and within its 7 days. The expiry is never extended. 60-second cooldown per invitation.
+5. **Password.** Setup and reset share the Account Setup screen: 12+ characters, with a letter and a number (the existing rules plus the Auth config).
+6. **Local only.** All testing uses the local stack (emails go to the local mail catcher). Hosted function deploy, templates and SMTP are owner steps (D6: no production SMTP).
+7. **Email design.** The Week 12 Invite and Welcome email concepts aren't in the repo. The templates are PROVISIONAL until the owner supplies them.
+
+### Progress
+- [x] Baseline verified, branch created
+- [x] Edge Function written (`supabase/functions/invitations/index.ts`, `_shared/invitation-rules.ts`), config.toml (templates + `[functions.invitations]`), templates in `supabase/templates/` (uncommitted; testing next)
+- [~] Client: `admin-web/app/_data/invitationsApi.ts` written; Supabase-mode wording added to `shared/content/supabase-mode.ts`
+- [ ] Accept Invitation, Account Setup (setup password), Forgot password (Supabase mode)
+- [ ] Team Access: invite, resend, revoke (Supabase mode)
+- [ ] Tests: TypeScript, builds, regressions, db tests, function tests, browser flows, bundle secret check, responsive, hydration
+- [ ] Docs, commits, PR (request Alyssa), stop for authorization
+
+### Commits on the branch
+(none yet)
+
+### Blockers / owner decisions
+- Week 12 email concepts needed for the final email design.
+- Hosted rollout (deploy the function, set `ADMIN_SITE_URL`, email templates, SMTP provider) needs authorization.
+
+### Local environment notes
+- Local stack: `SUPABASE_INTERNAL_IMAGE_REGISTRY=docker.io npx supabase start` (start dockerd first). Local function setting: `supabase/functions/.env` (git-ignored): `ADMIN_SITE_URL=http://localhost:3000`.
+- Test users: the scratchpad `tools/a2-setup.mjs` (example.com only). Emails: the local mail catcher at http://127.0.0.1:54324.
+- The local email rate limit (`email_sent = 2`) only applies with custom SMTP, so no change is needed.
+- **Sandbox quirk (cloud session only):** the local Edge Functions runtime can't verify this sandbox's proxy certificate, so it can't download npm packages. After every `supabase start`, run the scratchpad `a3/seed-deno-cache.sh`. It copies the pre-downloaded packages (supabase-js 2.118.0, its dependencies and @opentelemetry/api) into the runtime cache. This doesn't affect the repository, hosted Supabase or a normal computer.
