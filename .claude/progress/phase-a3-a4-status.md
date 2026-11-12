@@ -72,11 +72,11 @@ Started Nov 12, 2026 on the owner's instruction. Branch: `feat/phase-a4-release-
 **Owner limits for A4:** don't deploy the Edge Function, change hosted Supabase data, switch GitHub Pages out of sample mode, **open or merge a PR**, or delete branches without explicit authorization. Commit and push to the branch, then stop and report.
 
 ### Plan
-- [ ] Reachability: every screen in both modes (Dashboard, Content x6, Review Tasks, Metrics, Account Support, Settings, Sign In, Create Account, Accept Invitation, Account Setup, task detail, 404)
-- [ ] Accessibility audit (new script): names on every control, valid aria references, unique IDs, labelled fields, images alt, landmarks, heading order, focus visible; both modes; fix what it finds
-- [ ] Visual polish pass against the A1 reference pack (screenshots of key screens, light and dark); fix clear issues
-- [ ] Loading / empty / error states review (every ?state= preview, Supabase-mode real states)
-- [ ] Hardening review: code and config (Edge Function, client data layer, headers / static hosting limits, dependency audit)
+- [x] Reachability (crawl from the Dashboard): sample 21, Pages 21, Supabase 19 pages; every link opens a real page. Was: every screen in both modes (Dashboard, Content x6, Review Tasks, Metrics, Account Support, Settings, Sign In, Create Account, Accept Invitation, Account Setup, task detail, 404)
+- [x] Accessibility audit (new `a4-a11y.mjs`): one finding (sidebar Notifications aria-expanded), fixed in `f5b2ba2`. Was: accessibility audit (new script): names on every control, valid aria references, unique IDs, labelled fields, images alt, landmarks, heading order, focus visible; both modes; fix what it finds
+- [x] Visual polish (`f5b2ba2`): phone invitations list; no focus box on first load. Was: visual polish pass against the A1 reference pack (screenshots of key screens, light and dark); fix clear issues
+- [x] States: 7 Supabase-mode empty / error checks pass (`a4-states.mjs`). Was: loading / empty / error states review (every ?state= preview, Supabase-mode real states)
+- [x] Hardening: npm audit 0 (app prod, dev, root); deploy workflow pins sample mode and fails on any Supabase address or key (tested locally both ways). Was: hardening review: code and config (Edge Function, client data layer, headers / static hosting limits, dependency audit)
 - [ ] Security Advisor: document the 4 warnings (accept, or a follow-up migration that needs its own reviewed PR)
 - [ ] Full validation: TypeScript, 3 builds, every sample suite, A2 and A3 Supabase suites, function tests, audits, hydration, contrast, db lint and tests, secret scan, npm audit
 - [ ] Docs: release-readiness report, ARCHITECTURE / README final behavior and known limitations, CLAUDE.md status line
