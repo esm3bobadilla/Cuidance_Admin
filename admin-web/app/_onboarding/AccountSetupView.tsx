@@ -17,6 +17,8 @@ import {
 import { TextInput } from '../../components/forms/TextInput';
 import { Button, ButtonLink } from '../../components/ui/Button';
 import { createAccount, resetOnboarding, useOnboardingSession } from './onboardingStore';
+import { isSupabaseMode } from '../_data/config';
+import { InvitationsUnavailable } from './InvitationsUnavailable';
 import { SetupFrame } from './SetupFrame';
 import styles from './onboarding.module.css';
 
@@ -39,6 +41,12 @@ const fieldIds: Record<keyof SetupFields, string> = {
 // Account Setup (Week 11 feature 2). PROTOTYPE ONLY: no account is created, and the
 // password is checked on screen and never saved or sent.
 export function AccountSetupView({ preview }: { preview?: SetupPreview }) {
+  // Phase A2: real invitations arrive in Phase 2.5, so Supabase mode doesn't show the sample flow
+  if (isSupabaseMode) return <InvitationsUnavailable title={copy.title} />;
+  return <SampleAccountSetup preview={preview} />;
+}
+
+function SampleAccountSetup({ preview }: { preview?: SetupPreview }) {
   const session = useOnboardingSession();
   const headingRef = useRef<HTMLHeadingElement>(null);
   const [fields, setFields] = useState<SetupFields>({ fullName: '', email: invitation.invitedEmail, password: '', confirm: '' });

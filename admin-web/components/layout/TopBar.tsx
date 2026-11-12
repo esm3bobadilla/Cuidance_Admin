@@ -3,7 +3,7 @@
 import { usePathname } from 'next/navigation';
 import type { ReactNode } from 'react';
 import { adminScreens, screenTrail, shellCopy, type AdminScreen } from '../../../shared/content/admin-web-screens';
-import { reviewTaskFromPath } from '../../../shared/content/review-task-detail';
+import { liveReviewTaskRoute, reviewTaskDetailCopy, reviewTaskFromPath } from '../../../shared/content/review-task-detail';
 import { Breadcrumb } from '../ui/Breadcrumb';
 import { Button } from '../ui/Button';
 import { ProfilePanel } from './ProfilePanel';
@@ -28,6 +28,11 @@ function crumbsFor(pathname: string) {
   if (task) {
     const reviewTasks = adminScreens['review-tasks'];
     return [root, { label: reviewTasks.name, href: `${base}${reviewTasks.path}` }, { label: task.item }];
+  }
+  // Phase A2: the live task page (Supabase mode). Its title loads with the data, so the crumb is generic
+  if (current === trimSlash(liveReviewTaskRoute)) {
+    const reviewTasks = adminScreens['review-tasks'];
+    return [root, { label: reviewTasks.name, href: `${base}${reviewTasks.path}` }, { label: reviewTaskDetailCopy.fallbackTitle }];
   }
   return [root, { label: current === '/dev' ? shellCopy.devPreviewName : shellCopy.notFoundName }];
 }

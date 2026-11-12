@@ -9,6 +9,8 @@ import { uiSymbols } from '../../../shared/content/ui-symbols';
 import { findInvitationByEmail, isValidEmail } from '../../../shared/onboarding/onboarding-rules';
 import { TextInput } from '../../components/forms/TextInput';
 import { Button, ButtonLink } from '../../components/ui/Button';
+import { isSupabaseMode } from '../_data/config';
+import { InvitationsUnavailable } from './InvitationsUnavailable';
 import { SetupFrame } from './SetupFrame';
 import styles from './onboarding.module.css';
 
@@ -25,6 +27,13 @@ export type CreateAccountPreview = 'loading' | 'found' | 'not-found' | 'submit-e
 // looks for an invitation for the email and sends the person to Accept Invitation. It never
 // creates an account by itself. PROTOTYPE ONLY: the sample invitation is for reviewer.b@example.com.
 export function CreateAccountView({ preview }: { preview?: CreateAccountPreview }) {
+  // Supabase mode (Phase A2): invitations aren't connected until Phase 2.5, so there's
+  // nothing to look up. The page says so; it still never creates an account.
+  if (isSupabaseMode) return <InvitationsUnavailable title={copy.title} intro={copy.intro} />;
+  return <SampleCreateAccount preview={preview} />;
+}
+
+function SampleCreateAccount({ preview }: { preview?: CreateAccountPreview }) {
   const [email, setEmail] = useState('');
   const [error, setError] = useState<'missing' | 'invalid' | undefined>();
   const [result, setResult] = useState<'found' | 'not-found' | undefined>();

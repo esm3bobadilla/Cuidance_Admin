@@ -12,6 +12,7 @@ import {
 } from '../../../shared/content/admin-web-screens';
 import { notificationsCopy } from '../../../shared/content/notifications';
 import { profileCopy } from '../../../shared/content/profile';
+import { useIdentity } from '../../app/_data/identity';
 import leafHand from '../../../shared/brand/illustrations/illus-leaf-hand.png';
 import { setPanelOpen, unreadCount, useNotifications } from './notificationsStore';
 import styles from './Sidebar.module.css';
@@ -33,6 +34,8 @@ const hrefFor = (id: AdminScreenId) => `${process.env.NEXT_PUBLIC_BASE_PATH ?? '
 // and Settings at the bottom. On phones the same list opens below the top bar from its
 // Menu button. Without JavaScript, everything stays visible.
 export function Sidebar({ logo, menuOpen }: SidebarProps) {
+  // Phase A2: the signed-in member in Supabase mode; the sample identity otherwise
+  const me = useIdentity();
   const current = trimSlash(usePathname() ?? '/');
   const isCurrent = (id: AdminScreenId) => trimSlash(adminScreens[id].path) === current;
   const isWithin = (id: AdminScreenId) => id !== 'dashboard' && current.startsWith(`${trimSlash(adminScreens[id].path)}/`);
@@ -129,11 +132,11 @@ export function Sidebar({ logo, menuOpen }: SidebarProps) {
           <section className={styles.profile} aria-label={profileCopy.cardLabel}>
             <div className={styles.identity}>
               <span className={styles.initials} aria-hidden="true">
-                {profileCopy.initials}
+                {me.initials}
               </span>
               <div className={styles.identityText}>
-                <p className={styles.profileName}>{profileCopy.name}</p>
-                <p className={styles.profileRole}>{profileCopy.role}</p>
+                <p className={styles.profileName}>{me.name}</p>
+                {me.role && <p className={styles.profileRole}>{me.role}</p>}
               </div>
             </div>
             <ul className={styles.profileLinks}>

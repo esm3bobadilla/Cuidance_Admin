@@ -1,13 +1,22 @@
 'use client';
 
-import { useEffect, useRef, type KeyboardEvent } from 'react';
+import { useEffect, useRef, useState, type KeyboardEvent } from 'react';
 import { adminScreens } from '../../../shared/content/admin-web-screens';
 import { notificationsCopy as copy, notificationsSeed } from '../../../shared/content/notifications';
 import { profileCopy } from '../../../shared/content/profile';
+import { supabaseModeCopy } from '../../../shared/content/supabase-mode';
+import { signOut } from '../../app/_data/authStore';
+import { isSupabaseMode } from '../../app/_data/config';
+import { useIdentity } from '../../app/_data/identity';
 import { markRead, setPanelOpen, unreadCount, useNotifications } from './notificationsStore';
 import styles from './ProfilePanel.module.css';
 
 const base = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
+
+// Phase A2: notifications are still sample items. In Supabase mode their sample task links
+// go to Review Tasks instead, so they never open a sample task beside real data.
+const notificationHref = (href: string) =>
+  isSupabaseMode && href.startsWith(adminScreens['review-tasks'].path) ? adminScreens['review-tasks'].path : href;
 
 // Phase A1: the profile button opens the Profile / Notifications panel (replaces the
 // Appearance menu). A non-modal dialog: focus moves to its heading when it opens;
@@ -19,6 +28,10 @@ export function ProfilePanel() {
   const headingRef = useRef<HTMLHeadingElement>(null);
   const buttonId = 'profile-button';
   const unread = unreadCount(state);
+  // Phase A2: the signed-in member in Supabase mode; the sample identity otherwise
+  const me = useIdentity();
+  const [signOutState, setSignOutState] = useState<'idle' | 'busy' | 'failed'>('idle');
+  const signInHref = `${base}${adminScreens['sign-in'].path}`;
 
   useEffect(() => {
     if (!state.open) return;
@@ -55,7 +68,7 @@ export function ProfilePanel() {
         aria-controls="profile-panel"
         onClick={() => setPanelOpen(!state.open)}
       >
-        <span aria-hidden="true">{profileCopy.initials}</span>
+        <span aria-hidden="true">{me.initials}</span>
         {/* Unread sign: a ring and a dot, plus the count in the button's name (not color alone) */}
         {unread > 0 && <span className={styles.dot} aria-hidden="true" />}
       </button>
@@ -63,12 +76,12 @@ export function ProfilePanel() {
       <div id="profile-panel" role="dialog" aria-labelledby="profile-panel-heading" className={styles.panel} hidden={!state.open} onKeyDown={onKeyDown}>
         <div className={styles.identity}>
           <span className={styles.initials} aria-hidden="true">
-            {profileCopy.initials}
+            {me.initials}
           </span>
           <div className={styles.identityText}>
-            <p className={styles.name}>{profileCopy.name}</p>
-            <p className={styles.muted}>{profileCopy.role}</p>
-            <p className={styles.muted}>{profileCopy.status}</p>
+            <p className={styles.name}>{me.name}</p>
+            {me.role && <p className={styles.muted}>{me.role}</p>}
+            <p className={styles.muted}>{me.status}</p>
           </div>
         </div>
 
@@ -84,7 +97,7 @@ export function ProfilePanel() {
             const isUnread = !state.read.includes(item.id);
             return (
               <li key={item.id} className={isUnread ? `${styles.item} ${styles.unread}` : styles.item}>
-                <a className={styles.itemLink} href={`${base}${item.href}`} onClick={() => markRead([item.id])}>
+                <a className={styles.itemLink} href={`${base}${notificationHref(item.href)}`} onClick={() => markRead([item.id])}>
                   <span className={styles.itemState}>
                     {isUnread && <span className={styles.itemDot} aria-hidden="true" />}
                     {isUnread ? copy.unreadLabel : copy.readLabel}
@@ -97,14 +110,35 @@ export function ProfilePanel() {
           })}
         </ul>
         <p className={styles.note}>{copy.sampleNote}</p>
+        {signOutState === 'failed' && (
+          <p className={styles.note} role="alert">
+            {supabaseModeCopy.session.signOutError}
+          </p>
+        )}
 
         <div className={styles.actions}>
           <button type="button" className={styles.textButton} disabled={unread === 0} onClick={() => markRead(notificationsSeed.map((item) => item.id))}>
             {copy.markAllRead}
           </button>
-          <a className={styles.textButton} href={`${base}${adminScreens['sign-in'].path}`}>
-            {profileCopy.signOut}
-          </a>
+          {isSupabaseMode ? (
+            // Phase A2: ends the Supabase session, then goes to Sign In
+            <button
+              type="button"
+              className={styles.textButton}
+              disabled={signOutState === 'busy'}
+              onClick={async () => {
+                setSignOutState('busy');
+                if (await signOut()) window.location.assign(signInHref);
+                else setSignOutState('failed');
+              }}
+            >
+              {signOutState === 'busy' ? supabaseModeCopy.session.signingOut : supabaseModeCopy.session.signOut}
+            </button>
+          ) : (
+            <a className={styles.textButton} href={signInHref}>
+              {profileCopy.signOut}
+            </a>
+          )}
           <button type="button" className={styles.textButton} onClick={close}>
             {copy.close}
           </button>

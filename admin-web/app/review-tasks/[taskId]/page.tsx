@@ -5,6 +5,7 @@ import { reviewTaskDetailCopy as copy } from '../../../../shared/content/review-
 import { PageHeader } from '../../../components/layout/PageHeader';
 import { ReviewTaskDetailStateFromUrl } from '../../_reviewLoop/ReviewTaskDetailStateFromUrl';
 import { ReviewTaskDetailView } from '../../_reviewLoop/ReviewTaskDetailView';
+import { isSupabaseMode } from '../../_data/config';
 
 type Props = { params: Promise<{ taskId: string }> };
 
@@ -18,7 +19,8 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { taskId } = await params;
-  const task = reviewTasksSeed.find((item) => item.id === taskId);
+  // Phase A2: Supabase mode never names a sample task
+  const task = isSupabaseMode ? undefined : reviewTasksSeed.find((item) => item.id === taskId);
   return { title: copy.pageTitle(task?.item ?? copy.fallbackTitle) };
 }
 
@@ -26,7 +28,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 // decision and this tab's decision history. Sample data only.
 export default async function Page({ params }: Props) {
   const { taskId } = await params;
-  const task = reviewTasksSeed.find((item) => item.id === taskId);
+  const task = isSupabaseMode ? undefined : reviewTasksSeed.find((item) => item.id === taskId);
 
   return (
     <main className="shell">

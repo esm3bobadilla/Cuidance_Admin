@@ -3,6 +3,7 @@
 import { dashboardCopy as copy, dashboardKeyAreas } from '../../../shared/content/dashboard-review-queue';
 import { dashboardSummary, needsAttention } from '../../../shared/review-loop/review-decisions';
 import { adminScreens, type AdminScreenId } from '../../../shared/content/admin-web-screens';
+import { supabaseModeCopy } from '../../../shared/content/supabase-mode';
 import { uiSymbols } from '../../../shared/content/ui-symbols';
 import { DataTable } from '../../components/data/DataTable';
 import { MetricTile } from '../../components/data/MetricTile';
@@ -10,7 +11,8 @@ import { ButtonLink } from '../../components/ui/Button';
 import { Card } from '../../components/ui/Card';
 import { reviewTableColumns, reviewTableRows, ReviewStatePanel, type ReviewViewState } from '../_review/ReviewShared';
 import { DecisionNotice } from '../_reviewLoop/DecisionNotice';
-import { useReviewTasks } from '../_reviewLoop/reviewStore';
+import { isSupabaseMode } from '../_data/config';
+import { useReviewData } from '../_data/reviewData';
 import styles from './dashboard.module.css';
 
 export type DashboardState = ReviewViewState;
@@ -21,8 +23,12 @@ const hrefFor = (id: AdminScreenId) => `${process.env.NEXT_PUBLIC_BASE_PATH ?? '
 // Dashboard / Review Queue sections. The state comes from data later; today it's seed data.
 // Week 11: counts and Needs attention come from the seed plus this tab's review decisions
 // (shared/review-loop). With no decisions they're the Week 10 values: 3 / 1 / 1 / 0 and five items.
-export function DashboardContent({ state }: { state: DashboardState }) {
-  const tasks = useReviewTasks();
+// Phase A2: in Supabase mode the tasks come from the database (loading and error are real states).
+export function DashboardContent({ state: preview }: { state: DashboardState }) {
+  const data = useReviewData();
+  const tasks = data.tasks;
+  // A ?state= preview wins; otherwise the data's own state
+  const state: DashboardState = preview !== 'ready' ? preview : data.state;
   const summary = dashboardSummary(tasks);
   const hasCounts = state === 'ready' || state === 'empty';
   // While loading or on error the counts show the approved state symbol; the message below explains it
@@ -76,7 +82,7 @@ export function DashboardContent({ state }: { state: DashboardState }) {
 
         {listState === 'ready' ? (
           <DataTable
-            caption={copy.needsAttention.tableCaption}
+            caption={isSupabaseMode ? supabaseModeCopy.needsAttentionCaption : copy.needsAttention.tableCaption}
             columns={reviewTableColumns}
             rows={reviewTableRows(items)}
             flush

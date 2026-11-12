@@ -8,6 +8,8 @@ import { uiSymbols } from '../../../shared/content/ui-symbols';
 import { invitationView, type InvitationView } from '../../../shared/onboarding/onboarding-rules';
 import { Button, ButtonLink } from '../../components/ui/Button';
 import { acceptInvitation, declineInvitation, requestNewInvitation, resetOnboarding, useOnboardingSession } from './onboardingStore';
+import { isSupabaseMode } from '../_data/config';
+import { InvitationsUnavailable } from './InvitationsUnavailable';
 import { SetupFrame } from './SetupFrame';
 import styles from './onboarding.module.css';
 
@@ -23,6 +25,12 @@ const roleName = (invitation: Invitation) => adminRoles.find((role) => role.id =
 // Accept Invitation (Week 11 feature 2). PROTOTYPE ONLY: the invitation is sample data,
 // and the answer is kept in this browser tab only.
 export function AcceptInvitationView({ inviteParam, preview }: { inviteParam: string | null; preview?: InvitationPreview }) {
+  // Phase A2: real invitations arrive in Phase 2.5, so Supabase mode doesn't show the sample flow
+  if (isSupabaseMode) return <InvitationsUnavailable title={adminScreens['accept-invitation'].name} />;
+  return <SampleAcceptInvitation inviteParam={inviteParam} preview={preview} />;
+}
+
+function SampleAcceptInvitation({ inviteParam, preview }: { inviteParam: string | null; preview?: InvitationPreview }) {
   const session = useOnboardingSession();
   const headingRef = useRef<HTMLHeadingElement>(null);
   const [justAccepted, setJustAccepted] = useState(false);

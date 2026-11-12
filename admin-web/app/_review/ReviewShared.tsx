@@ -1,7 +1,8 @@
 import type { ReviewItem, ReviewPriority, ReviewStatus } from '../../../shared/content/dashboard-review-queue';
-import { reviewTaskPath } from '../../../shared/content/review-task-detail';
+import { liveReviewTaskPath, reviewTaskPath } from '../../../shared/content/review-task-detail';
 import { uiSymbols } from '../../../shared/content/ui-symbols';
 import { ButtonLink } from '../../components/ui/Button';
+import { isSupabaseMode } from '../_data/config';
 import styles from './review.module.css';
 
 // Shared by the Dashboard and Review Tasks screens, so review items look the same on both.
@@ -19,7 +20,9 @@ const statusTreatment: Record<ReviewStatus, { className: string; icon?: string }
 };
 
 // Link to a task's detail page (plain links need the GitHub Pages base path added by hand)
-export const reviewTaskHref = (taskId: string) => `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}${reviewTaskPath(taskId)}`;
+// Phase A2: Supabase tasks open the one live detail page (?id=); sample tasks keep their own pages
+export const reviewTaskHref = (taskId: string) =>
+  `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}${isSupabaseMode ? liveReviewTaskPath(taskId) : reviewTaskPath(taskId)}`;
 
 export function ReviewTaskLink({ task }: { task: ReviewItem }) {
   return (

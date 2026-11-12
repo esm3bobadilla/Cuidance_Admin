@@ -1,12 +1,16 @@
 'use client';
 
-import { useState, type FormEvent } from 'react';
+import { useEffect, useState, type FormEvent } from 'react';
 import { adminScreens } from '../../../shared/content/admin-web-screens';
 import { entryCopy, signInCopy as copy } from '../../../shared/content/sign-in';
+import { supabaseModeCopy } from '../../../shared/content/supabase-mode';
 import { uiSymbols } from '../../../shared/content/ui-symbols';
 import { validateSignIn, type SignInErrors } from '../../../shared/onboarding/onboarding-rules';
 import { TextInput } from '../../components/forms/TextInput';
 import { Button, ButtonLink } from '../../components/ui/Button';
+import { signIn } from '../_data/authStore';
+import { safeNext } from '../_data/AuthGate';
+import { isSupabaseMode } from '../_data/config';
 import { SetupFrame } from './SetupFrame';
 import styles from './onboarding.module.css';
 
@@ -18,24 +22,50 @@ const createAccountHref = `${base}${adminScreens['create-account'].path}`;
 export type SignInPreview = 'loading' | 'submit-error';
 
 // Sign In (Phase A1): the Admin Web landing and sign-in entry, from the Sign-in Entry reference.
-// PROTOTYPE ONLY: sign-in isn't connected. A well-formed email and any password open the
-// sample Dashboard; nothing is checked, saved or sent, and the password never leaves the field.
+// Sample mode (default): sign-in isn't connected. A well-formed email and any password open
+// the sample Dashboard; nothing is checked, saved or sent, and the password never leaves the field.
+// Supabase mode (Phase A2): Supabase Auth checks the email and password, then the person goes
+// back to the page they asked for (?next=, this site only) or the Dashboard.
 export function SignInView({ preview }: { preview?: SignInPreview }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState<SignInErrors>({});
   const [forgotOpen, setForgotOpen] = useState(false);
-  const loading = preview === 'loading';
+  const [submitting, setSubmitting] = useState(false);
+  const [failure, setFailure] = useState<'invalid' | 'unavailable' | undefined>();
+  const loading = preview === 'loading' || submitting;
+  const failureMessage =
+    preview === 'submit-error'
+      ? copy.errors.submit
+      : failure === 'invalid'
+        ? supabaseModeCopy.signIn.invalid
+        : failure === 'unavailable'
+          ? supabaseModeCopy.signIn.unavailable
+          : undefined;
 
-  const submit = (event: FormEvent<HTMLFormElement>) => {
+  // After a failed sign-in, focus returns to the password once the field is enabled again
+  useEffect(() => {
+    if (failure && !submitting) document.getElementById('sign-in-password')?.focus();
+  }, [failure, submitting]);
+
+  const submit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (preview) return;
+    if (preview || submitting) return;
     const found = validateSignIn(email, password);
     setErrors(found);
+    setFailure(undefined);
     if (found.email) return document.getElementById('sign-in-email')?.focus();
     if (found.password) return document.getElementById('sign-in-password')?.focus();
+    if (!isSupabaseMode) {
+      setPassword('');
+      return window.location.assign(dashboardHref);
+    }
+    setSubmitting(true);
+    const result = await signIn(email, password);
     setPassword('');
-    window.location.assign(dashboardHref);
+    if (result.ok) return window.location.assign(safeNext(new URLSearchParams(window.location.search).get('next')));
+    setSubmitting(false);
+    setFailure(result.reason);
   };
 
   return (
@@ -82,7 +112,7 @@ export function SignInView({ preview }: { preview?: SignInPreview }) {
             </Button>
           </div>
           <p id="sign-in-forgot" className={styles.muted} hidden={!forgotOpen} role="status">
-            {copy.forgotHelp}
+            {isSupabaseMode ? supabaseModeCopy.signIn.forgotHelp : copy.forgotHelp}
           </p>
         </div>
 
@@ -91,12 +121,12 @@ export function SignInView({ preview }: { preview?: SignInPreview }) {
             <span aria-hidden="true">{uiSymbols.loading}</span> {copy.signingIn}
           </p>
         )}
-        {preview === 'submit-error' && (
+        {failureMessage && (
           <p className={styles.problem} role="alert">
             <span className={styles.problemIcon} aria-hidden="true">
               {uiSymbols.error}
             </span>
-            {copy.errors.submit}
+            {failureMessage}
           </p>
         )}
         <noscript>
@@ -115,7 +145,7 @@ export function SignInView({ preview }: { preview?: SignInPreview }) {
         </div>
       </form>
       <p className={styles.muted}>{copy.help}</p>
-      <p className={styles.notice}>{entryCopy.notice}</p>
+      <p className={styles.notice}>{isSupabaseMode ? supabaseModeCopy.entryNotice : entryCopy.notice}</p>
     </SetupFrame>
   );
 }
