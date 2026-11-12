@@ -114,3 +114,45 @@
   border: var(--stroke-default) dashed var(--color-border-strong);
   border-radius: var(--radius-medium);
 }
+
+/* Phase A3 (Supabase mode): invite form, row actions and feedback. Tokens only. */
+.inviteForm {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) auto;
+  align-items: end;
+  gap: var(--space-16);
+}
+
+.inviteActions {
+  display: flex;
+}
+
+.rowActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-8);
+}
+
+.feedback,
+.feedbackError {
+  margin: 0;
+  font: var(--type-body-small);
+  color: var(--color-ink);
+}
+
+.feedback:empty,
+.feedbackError:empty {
+  display: none;
+}
+
+/* Error: Dark Ruby plus ⚠ and a message */
+.feedbackError .statusIcon {
+  color: var(--color-error);
+}
+
+@media (max-width: 1023px) {
+  .inviteForm {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: stretch;
+  }
+}

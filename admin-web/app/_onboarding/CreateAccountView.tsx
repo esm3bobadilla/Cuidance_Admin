@@ -29,7 +29,7 @@ export type CreateAccountPreview = 'loading' | 'found' | 'not-found' | 'submit-e
 export function CreateAccountView({ preview }: { preview?: CreateAccountPreview }) {
   // Supabase mode (Phase A2): invitations aren't connected until Phase 2.5, so there's
   // nothing to look up. The page says so; it still never creates an account.
-  if (isSupabaseMode) return <InvitationsUnavailable title={copy.title} intro={copy.intro} />;
+  if (isSupabaseMode) return <InvitationsUnavailable title={copy.title} />;
   return <SampleCreateAccount preview={preview} />;
 }
 
