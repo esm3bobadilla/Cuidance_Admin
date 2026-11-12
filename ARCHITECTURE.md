@@ -38,7 +38,7 @@ Cuidance_Admin/
 │   ├── design-tokens/         tokens.css (colors light and dark, type, spacing, radius, stroke)
 │   ├── onboarding/            Week 11 and Phase A1: invitation, account setup and sign-in rules
 │   └── brand/                 logo/ (approved Logo Version 4 files only) and illustrations/ (Phase A1 approved flat art)
-├── supabase/                  Phase 2: config.toml, migrations, local seed, database tests
+├── supabase/                  Phase 2: config.toml, migrations, local seed, database tests; Phase A3: functions/ (invitations Edge Function) and templates/ (emails)
 ├── package.json               Repo tooling only (Supabase CLI); the app's own package.json is in admin-web/
 ├── docs/                      Week 10, Week 11, Phase 2 and Phase A1 notes, maps and evidence
 ├── ARCHITECTURE.md            This file
@@ -180,7 +180,7 @@ Full detail: `docs/Week-11/close-the-loop-implementation-plan.md`, sections 3 an
 
 | Area | Today | Later |
 | --- | --- | --- |
-| Sign-in and accounts | Sample mode: none (placeholder identity). **Supabase mode (Phase A2): Supabase Auth email and password sign-in, sign-out, session and route protection** | Invitations and account creation (Phase 2.5, Edge Functions) |
+| Sign-in and accounts | Sample mode: none (placeholder identity). **Supabase mode: sign-in, sign-out, session and route protection (A2); invitations, account setup and password reset (A3)** | Hosted rollout of the Edge Function and email (owner steps, `docs/Phase-A3/`) |
 | Roles and permissions | Sample mode: policy wording only. **Supabase mode: enforced by Row Level Security and triggers**; the screens only show what a role may do (D4, D12) | Team Access management (later phase) |
 | Data | Sample mode: seeded files in `shared/content/`. **Supabase mode: review tasks and decisions from the separate Admin project** (D1) | Content screens (quiz, guidance, products, sources, partners) |
 | Saving changes | Nothing saved, except theme (local storage) and, from Week 11, review decisions and the invitation and account setup (session storage, one tab). Passwords are never saved | Supabase |
@@ -224,6 +224,17 @@ Approved by Team 03 on Nov 11, 2026 (decisions D1 to D14). Full plan: `docs/Phas
 | Review data | `app/_data/reviewData.ts`; mapping in `shared/review-loop/supabase-mapping.ts` | `useReviewData()` for the Dashboard, Review Tasks and Review Task Detail in either mode; `saveDecision` inserts into `review_decisions` and reloads |
 | Live detail | `app/_reviewLoop/LiveReviewTaskDetail.tsx`, `app/review-tasks/task/page.tsx` | The Week 11 detail screen (`TaskDetail`) with the signed-in Reviewer, D4 (assigned Reviewer only) and D12 (decide again after Needs changes, until Approved) |
 | Wording | `shared/content/supabase-mode.ts` | Every Supabase-mode message |
+
+### Phase A3: invitations and onboarding (BUILT, Supabase mode only)
+
+| Piece | File | Job |
+| --- | --- | --- |
+| Edge Function | `supabase/functions/invitations/index.ts`, rules in `supabase/functions/_shared/invitation-rules.ts` | create, get, accept, decline, revoke, resend. The **only** code with the service-role key (D2). D5 roles, 7 days (D7), single-use accept, 60-second resend cooldown, no leaks |
+| Email templates | `supabase/templates/` (`config.toml` `[auth.email.template.*]`) | Invite, sign-in link (existing accounts) and reset. Links carry a single-use `token_hash` straight to Admin Web. PROVISIONAL design |
+| Browser side | `admin-web/app/_data/invitationsApi.ts` | Calls the function; reads the email-link token once, removes it from the address, verifies it; password reset and saving |
+| Screens | `app/_onboarding/LiveAcceptInvitation.tsx`, `LiveAccountSetup.tsx`; `SignInView.tsx` (Forgot password); `app/_settings/LiveTeamAccess.tsx` | Accept Invitation, Account Setup (setup and reset), Team Access invite / resend / withdraw |
+
+Flow: Team Access → email → Accept Invitation → Account Setup → Review Tasks. Full notes and the hosted rollout steps: `docs/Phase-A3/invitations-implementation.md`.
 
 **Security:** RLS is the boundary. The route guard and the role checks in the screens only decide what is shown; the database refuses anything the rules don't allow. Invitations, Create Account, Accept Invitation and Account Setup stay unavailable in Supabase mode until Phase 2.5.
 

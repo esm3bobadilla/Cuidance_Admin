@@ -148,9 +148,9 @@ No people are seeded. The seed runs only on a local `supabase start` or `supabas
 | Phase | Work | Status |
 | --- | --- | --- |
 | 2.0 | Decisions, project and dashboard verification | **Done** |
-| 2.1 | Schema, RLS, triggers, seed, database tests, CI, CLAUDE.md | **Built, awaiting PR and review** |
-| 2.2 | Data layer and data-mode switch (`sample` default); add `@supabase/supabase-js` | Planned |
-| 2.3 | Sign In (D11), Sign out, session and route guards | Planned |
-| 2.4 | Review Tasks, Review Task Detail (`/review-tasks/task/?id=`, D8) and Dashboard on real data | Planned |
-| 2.5 | Invitation Edge Functions (create, get, respond, revoke, resend link); connect Accept Invitation, Account Setup, Team Access | Planned |
+| 2.1 | Schema, RLS, triggers, seed, database tests, CI, CLAUDE.md | **Done** (merged; applied to the development project) |
+| 2.2 | Data layer and data-mode switch (`sample` default); add `@supabase/supabase-js` | **Done** (Phase A2) |
+| 2.3 | Sign In (D11), Sign out, session and route guards | **Done** (Phase A2) |
+| 2.4 | Review Tasks, Review Task Detail (`/review-tasks/task/?id=`, D8) and Dashboard on real data | **Done** (Phase A2) |
+| 2.5 | Invitation Edge Functions (create, get, respond, revoke, resend link); connect Accept Invitation, Account Setup, Team Access | **Built** (Phase A3, local; hosted rollout needs the owner, see `docs/Phase-A3/`) |
 | 2.6 | End-to-end tests on staging, secret-scan check, docs | Planned |

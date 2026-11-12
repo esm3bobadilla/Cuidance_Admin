@@ -26,15 +26,26 @@ Branch: `feat/phase-a3-invitations` (from `618b5bb`).
 
 ### Progress
 - [x] Baseline verified, branch created
-- [x] Edge Function written (`supabase/functions/invitations/index.ts`, `_shared/invitation-rules.ts`), config.toml (templates + `[functions.invitations]`), templates in `supabase/templates/` (uncommitted; testing next)
-- [~] Client: `admin-web/app/_data/invitationsApi.ts` written; Supabase-mode wording added to `shared/content/supabase-mode.ts`
-- [ ] Accept Invitation, Account Setup (setup password), Forgot password (Supabase mode)
-- [ ] Team Access: invite, resend, revoke (Supabase mode)
-- [ ] Tests: TypeScript, builds, regressions, db tests, function tests, browser flows, bundle secret check, responsive, hydration
-- [ ] Docs, commits, PR (request Alyssa), stop for authorization
+- [x] Edge Function, config, templates: committed `ee115a2`. Function tests: 64 checks, 0 failures
+- [x] Client: `admin-web/app/_data/invitationsApi.ts`
+- [x] Accept Invitation, Account Setup (setup password and reset), Forgot password: committed `8911646`
+- [x] Team Access: invite, resend, withdraw: committed `8911646`. Browser flows: 46 checks, 0 failures
+- [x] Full validation (all passing):
+  - TypeScript and the 3 builds;
+  - sample regressions (shell 352 / 0; screen, landing, W11, F2, A1 suites 0 failures; 6 audits no issues);
+  - A2 Supabase suite 82 / 0;
+  - function tests 64 / 0;
+  - browser flows 46 / 0;
+  - responsive audit of the new screens (126 loads) no issues;
+  - hydration at localhost (400 + 104 + 28, React attached on every page) 0 warnings;
+  - db lint clean; db tests 114 pass;
+  - secret scan clean.
+- [x] Docs: `docs/Phase-A3/invitations-implementation.md`, ARCHITECTURE, README, plan phase table
+- [ ] PR "Phase A3: invitations and onboarding completion" (request Alyssa). Then STOP: no merge, no A4, no hosted changes without the owner's authorization  <- NEXT
 
-### Commits on the branch
-(none yet)
+### Commits on the branch (pushed)
+- `ee115a2` invitations Edge Function, email templates, Auth config
+- `8911646` Supabase-mode onboarding screens and Team Access invitations
 
 ### Blockers / owner decisions
 - Week 12 email concepts needed for the final email design.
