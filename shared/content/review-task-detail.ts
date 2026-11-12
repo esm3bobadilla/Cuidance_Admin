@@ -17,6 +17,11 @@ const trimSlash = (path: string) => path.replace(/\/+$/, '') || '/';
 // Path from the site root, with the trailing slash the static export uses
 export const reviewTaskPath = (taskId: string) => `${adminScreens['review-tasks'].path}${taskId}/`;
 
+// Phase A2, Supabase mode: one static page reads the task ID from the address
+// (/review-tasks/task/?id=…), because a static site can't build a page per database task
+export const liveReviewTaskRoute = `${adminScreens['review-tasks'].path}task/`;
+export const liveReviewTaskPath = (taskId: string) => `${liveReviewTaskRoute}?id=${encodeURIComponent(taskId)}`;
+
 // The seeded task a path points at, if any (used for the breadcrumb)
 export function reviewTaskFromPath(pathname: string) {
   const current = trimSlash(pathname);

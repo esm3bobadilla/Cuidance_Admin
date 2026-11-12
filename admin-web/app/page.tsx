@@ -1,5 +1,7 @@
 import { Suspense } from 'react';
 import { dashboardCopy as copy } from '../../shared/content/dashboard-review-queue';
+import { supabaseModeCopy } from '../../shared/content/supabase-mode';
+import { isSupabaseMode } from './_data/config';
 import { PageHeader } from '../components/layout/PageHeader';
 import { DashboardContent } from './_dashboard/DashboardContent';
 import { DashboardStateFromUrl } from './_dashboard/DashboardStateFromUrl';
@@ -15,7 +17,7 @@ export default function DashboardPage() {
       <div className={styles.banner}>
         <div className="intro">
           <PageHeader eyebrow={copy.eyebrow} title={copy.title} description={copy.description} />
-          <p className="note">{copy.sampleDataNote}</p>
+          <p className="note">{isSupabaseMode ? supabaseModeCopy.dataNote : copy.sampleDataNote}</p>
         </div>
         <div className={styles.bannerArt} aria-hidden="true">
           <img className={styles.bannerLeaf} src={leafShape.src} width={leafShape.width} height={leafShape.height} alt="" />

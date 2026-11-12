@@ -3,6 +3,7 @@
 import { usePathname } from 'next/navigation';
 import { useState, type ReactNode } from 'react';
 import { isSetupPath } from '../../../shared/content/admin-web-screens';
+import { AuthGate } from '../../app/_data/AuthGate';
 import { SetupBar } from './SetupBar';
 import { Sidebar } from './Sidebar';
 import { TopBar } from './TopBar';
@@ -39,7 +40,8 @@ export function AdminShell({ sidebarLogo, barLogo, children }: AdminShellProps) 
       <TopBar logo={barLogo} menuOpen={menuOpen} onToggleMenu={() => setMenuOpen(!menuOpen)} />
       <Sidebar logo={sidebarLogo} menuOpen={menuOpen} />
       <div id="main-content" className="app-main" tabIndex={-1}>
-        {children}
+        {/* Phase A2: in Supabase mode, the page needs a signed-in member. Sample mode: unchanged */}
+        <AuthGate>{children}</AuthGate>
       </div>
     </div>
   );

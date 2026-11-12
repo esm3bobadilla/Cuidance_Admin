@@ -27,6 +27,7 @@ Cuidance_Admin/
 │   │   ├── _review/           Status and priority labels shared by Dashboard and Review Tasks
 │   │   ├── _listDetail/       Shared list-and-details pieces (StatusChip, NoResults)
 │   │   ├── _reviewLoop/       Week 11: review store, Review Task Detail view, Dashboard decision message
+│   │   ├── _data/             Phase A2: data-mode switch, Supabase client, sign-in session, route guard, review data
 │   │   ├── _dashboard/, _reviewTasks/, _quiz/, …   One private folder per built screen
 │   │   ├── dev/               Internal component preview (URL only)
 │   │   └── not-found.tsx      Custom 404
@@ -68,6 +69,7 @@ Names, paths, parents and scope notes are defined once in `shared/content/admin-
 | `/review-tasks/` | Review Tasks | Built (Week 10) |
 | `/settings/` | Settings / Team Access | Built (Week 10) |
 | `/review-tasks/[taskId]/` | Review Task Detail | **BUILT (Week 11, feature 1).** One static page per seeded task (`seed-1` to `seed-5`), built with `generateStaticParams` and `dynamicParams = false`; other task addresses show Page not found. Layout PROVISIONAL |
+| `/review-tasks/task/?id=` | Review Task Detail for a Supabase task | **BUILT (Phase A2).** Supabase mode only: one static page reads the task ID from the address. In sample mode it shows "This task isn't available" |
 | `/sign-in/` | Sign In (Admin Web landing and sign-in entry) | **BUILT (Phase A1).** Prototype only: nothing is checked; a well-formed email and any password open the Dashboard. Setup shell. `?state=loading` or `submit-error` previews |
 | `/create-account/` | Create Account | **BUILT (Phase A1).** Invitation only (no public sign-ups): looks for an invitation for the email and links to Accept Invitation. Setup shell. `?state=loading`, `found`, `not-found`, `submit-error` previews |
 | `/accept-invitation/` | Accept Invitation | **BUILT (Week 11, feature 2).** Prototype only. Uses the setup shell (no sidebar). `?invite=` picks a sample invitation; `?state=` previews |
@@ -178,11 +180,11 @@ Full detail: `docs/Week-11/close-the-loop-implementation-plan.md`, sections 3 an
 
 | Area | Today | Later |
 | --- | --- | --- |
-| Sign-in and accounts | None; the profile shows placeholder initials | Supabase Auth |
-| Roles and permissions | Policy wording only (`shared/content/admin-roles.ts`), nothing enforced | Supabase roles and row-level security |
-| Data | Seeded files in `shared/content/` | Supabase tables, same project as the main app |
+| Sign-in and accounts | Sample mode: none (placeholder identity). **Supabase mode (Phase A2): Supabase Auth email and password sign-in, sign-out, session and route protection** | Invitations and account creation (Phase 2.5, Edge Functions) |
+| Roles and permissions | Sample mode: policy wording only. **Supabase mode: enforced by Row Level Security and triggers**; the screens only show what a role may do (D4, D12) | Team Access management (later phase) |
+| Data | Sample mode: seeded files in `shared/content/`. **Supabase mode: review tasks and decisions from the separate Admin project** (D1) | Content screens (quiz, guidance, products, sources, partners) |
 | Saving changes | Nothing saved, except theme (local storage) and, from Week 11, review decisions and the invitation and account setup (session storage, one tab). Passwords are never saved | Supabase |
-| Pages for data unknown at build time | Not possible on a static site | Decided with the Supabase and hosting step |
+| Pages for data unknown at build time | **Phase A2: one page reads the ID from the address** (`/review-tasks/task/?id=`) | Same pattern for other records |
 
 ## 10. Phase 2: Supabase (in progress)
 
@@ -202,5 +204,26 @@ Approved by Team 03 on Nov 11, 2026 (decisions D1 to D14). Full plan: `docs/Phas
 | Database tests (pgTAP, 114 tests) | `supabase/tests/`, `npm run db:test` |
 | CI for database changes | `.github/workflows/supabase-db-tests.yml` |
 
-- **Still sample mode:** no Supabase client, sign-in, environment variables or Edge Functions in the app yet (Phases 2.2 to 2.5). The review decision rules in `shared/review-loop/` match the database triggers, so the two stay consistent when the app switches over.
+- **Hosted development project:** the four Phase 2.1 migrations were applied on Nov 11, 2026, with the repo versions in the migration history (details in `docs/Phase-A2/admin-web-supabase-implementation.md`).
+
+### Phase A2: Supabase application foundation (BUILT, sample mode stays the default)
+
+**Two data modes, chosen when the site is built** (`admin-web/app/_data/config.ts`):
+
+| Mode | When | What the app uses |
+| --- | --- | --- |
+| Sample (default, D9) | No settings, or anything incomplete. The GitHub Pages build always | The Week 10 / 11 / A1 sample data and the browser-only review loop, unchanged |
+| Supabase | `NEXT_PUBLIC_ADMIN_DATA_MODE=supabase` plus the project URL and the **public** key (`admin-web/.env.example`) | Supabase Auth sign-in, and review tasks and decisions from the development project |
+
+| Piece | File | Job |
+| --- | --- | --- |
+| Switch | `app/_data/config.ts` | `dataMode`, `isSupabaseMode`. Refuses a secret or service-role key |
+| Client | `app/_data/supabaseClient.ts` | One browser client, loaded on demand (sample pages never download it). Session kept by Supabase Auth (`cuidance-admin-auth`) |
+| Session | `app/_data/authStore.ts`, `identity.ts` | Signed in or out, profile name, workspace role; `signIn`, `signOut`. The Profile card and panel show the signed-in member |
+| Route guard | `app/_data/AuthGate.tsx` (in `AdminShell`) | Every page except the four entry and setup screens needs an active member. Signed out goes to Sign In with `?next=` (this site only) |
+| Review data | `app/_data/reviewData.ts`; mapping in `shared/review-loop/supabase-mapping.ts` | `useReviewData()` for the Dashboard, Review Tasks and Review Task Detail in either mode; `saveDecision` inserts into `review_decisions` and reloads |
+| Live detail | `app/_reviewLoop/LiveReviewTaskDetail.tsx`, `app/review-tasks/task/page.tsx` | The Week 11 detail screen (`TaskDetail`) with the signed-in Reviewer, D4 (assigned Reviewer only) and D12 (decide again after Needs changes, until Approved) |
+| Wording | `shared/content/supabase-mode.ts` | Every Supabase-mode message |
+
+**Security:** RLS is the boundary. The route guard and the role checks in the screens only decide what is shown; the database refuses anything the rules don't allow. Invitations, Create Account, Accept Invitation and Account Setup stay unavailable in Supabase mode until Phase 2.5.
 

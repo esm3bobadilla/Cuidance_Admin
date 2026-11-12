@@ -92,7 +92,7 @@ These are the approved limits for Cuidance. Admin Web must stay inside them.
 
 ## Getting started
 
-Admin Web lives in `admin-web/`. Right now it is a minimal shell with a placeholder dashboard. It has no data, sign-in or backend.
+Admin Web lives in `admin-web/`. By default it runs in **sample mode**: every screen uses sample data and nothing is sent anywhere. From Phase A2 it can also run in **Supabase mode** (real sign-in and review data from the development project), turned on only by build settings.
 
 ### Requirements
 
@@ -126,9 +126,20 @@ Admin Web is hosted on GitHub Pages as a static site.
 3. Local development is still `npm run dev` in `admin-web/`, at http://localhost:3000.
 4. One-time setup: in the GitHub repo, go to Settings → Pages → Source and choose "GitHub Actions".
 
-### Environment variables
+### Environment variables (Supabase mode, Phase A2)
 
-When setup starts, keys go in a `.env` file in the project root. Never commit real keys to the repo. `.env` is already in `.gitignore`.
+Sample mode needs no settings, and the GitHub Pages site always builds in sample mode.
+
+To try Supabase mode on your own computer:
+
+1. Copy `admin-web/.env.example` to `admin-web/.env.local`. That file is git-ignored, so it never gets committed.
+2. Fill in the three settings it lists:
+   - `NEXT_PUBLIC_ADMIN_DATA_MODE=supabase`;
+   - the project URL;
+   - the project's **public** (publishable / anon) key.
+3. Run `npm run dev` in `admin-web/` and sign in with a test account your team gave you (`example.com` addresses only, D13).
+
+**Never** use the service-role / secret key, the database password or an access token here. The app refuses to start Supabase mode with a secret key. For the local Supabase stack, see `npm run db:start` at the repo root.
 
 ## Project structure
 
@@ -157,6 +168,7 @@ Cuidance_Admin/
 │   ├── Week-11/           Week 11 Close the Loop plan and feature notes
 │   ├── Phase-2/           Supabase integration plan and decisions
 │   ├── Phase-A1/          Phase A1 Admin Web completion notes and evidence
+│   ├── Phase-A2/          Phase A2 Supabase application foundation notes and evidence
 │   └── archived/
 │       └── admin-mobile/  Archived Admin Mobile reference (no active work)
 ├── README.md

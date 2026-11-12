@@ -1,0 +1,41 @@
+/* Phase A2: Supabase-mode messages (sign-in check, no workspace access). Tokens only. */
+.gate {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+  padding: var(--space-32);
+  color: var(--color-ink);
+  background: var(--color-surface);
+  border: var(--stroke-default) solid var(--color-border);
+  border-radius: var(--radius-medium);
+}
+
+.gateTitle {
+  margin: 0;
+  font: var(--type-heading-1);
+  overflow-wrap: break-word;
+}
+
+.gateBody {
+  margin: 0;
+  font: var(--type-body);
+  color: var(--color-ink-muted);
+}
+
+/* Error: Dark Ruby plus ⚠ and a message */
+.problem {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-12);
+  margin: 0;
+  padding: var(--space-16);
+  font: var(--type-body);
+  color: var(--color-ink);
+  background: var(--color-error-surface);
+  border: var(--stroke-default) solid var(--color-error);
+  border-radius: var(--radius-small);
+}
+
+.problem > span {
+  color: var(--color-error);
+}

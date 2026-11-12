@@ -5,6 +5,7 @@ import { adminScreens } from '../../../shared/content/admin-web-screens';
 import type { ReviewItem } from '../../../shared/content/dashboard-review-queue';
 import { reviewChecklists, reviewTasksCopy as copy } from '../../../shared/content/review-tasks';
 import { reviewTaskDetailCopy } from '../../../shared/content/review-task-detail';
+import { supabaseModeCopy } from '../../../shared/content/supabase-mode';
 import { uiSymbols } from '../../../shared/content/ui-symbols';
 import { DataTable } from '../../components/data/DataTable';
 import { SearchField } from '../../components/forms/SearchField';
@@ -17,7 +18,8 @@ import {
   ReviewStatusLabel,
   type ReviewViewState,
 } from '../_review/ReviewShared';
-import { useReviewTasks } from '../_reviewLoop/reviewStore';
+import { isSupabaseMode } from '../_data/config';
+import { useReviewData } from '../_data/reviewData';
 import styles from './reviewTasks.module.css';
 
 const dashboardHref = `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}${adminScreens.dashboard.path}`;
@@ -30,11 +32,15 @@ const matches = (task: ReviewItem, query: string) => {
 
 // Review Tasks (aligned with the approved Week 9 hi-fi): search, the review table,
 // and the selected task beside it. Sample data only; nothing is assigned or saved.
-export function ReviewTasksContent({ state }: { state: ReviewViewState }) {
+// Phase A2: in Supabase mode the tasks come from the database (loading, empty and error are real states).
+export function ReviewTasksContent({ state: preview }: { state: ReviewViewState }) {
   const [query, setQuery] = useState('');
-  // Week 11: statuses come from the seed plus this tab's review decisions
-  const tasks = useReviewTasks();
-  const [selectedId, setSelectedId] = useState(tasks[0].id);
+  // Week 11: statuses come from the seed plus this tab's review decisions (sample mode)
+  const data = useReviewData();
+  const tasks = data.tasks;
+  const state: ReviewViewState = preview !== 'ready' ? preview : data.state === 'ready' && tasks.length === 0 ? 'empty' : data.state;
+  // Nothing chosen yet: the first task shown is selected
+  const [selectedId, setSelectedId] = useState<string | undefined>(tasks[0]?.id);
   const detailId = useId();
 
   const all = state === 'ready' ? tasks : [];
@@ -66,7 +72,7 @@ export function ReviewTasksContent({ state }: { state: ReviewViewState }) {
 
   return (
     <div className={styles.view}>
-      <p className="note">{copy.sampleDataNote}</p>
+      <p className="note">{isSupabaseMode ? supabaseModeCopy.dataNote : copy.sampleDataNote}</p>
 
       <noscript>
         <style>{`.${styles.toolbar} { display: none !important; }`}</style>
@@ -91,7 +97,7 @@ export function ReviewTasksContent({ state }: { state: ReviewViewState }) {
           <>
             <div className={styles.list}>
               {shown.length > 0 ? (
-                <DataTable caption={copy.tableCaption} columns={reviewTableColumns} rows={rows} selectedRowId={selected?.id} compact />
+                <DataTable caption={isSupabaseMode ? supabaseModeCopy.tableCaption : copy.tableCaption} columns={reviewTableColumns} rows={rows} selectedRowId={selected?.id} compact />
               ) : (
                 <div className={styles.noResults}>
                   <p className={styles.noResultsMessage}>
