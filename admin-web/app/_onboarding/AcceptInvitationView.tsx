@@ -9,7 +9,7 @@ import { invitationView, type InvitationView } from '../../../shared/onboarding/
 import { Button, ButtonLink } from '../../components/ui/Button';
 import { acceptInvitation, declineInvitation, requestNewInvitation, resetOnboarding, useOnboardingSession } from './onboardingStore';
 import { isSupabaseMode } from '../_data/config';
-import { InvitationsUnavailable } from './InvitationsUnavailable';
+import { LiveAcceptInvitation } from './LiveAcceptInvitation';
 import { SetupFrame } from './SetupFrame';
 import styles from './onboarding.module.css';
 
@@ -26,7 +26,8 @@ const roleName = (invitation: Invitation) => adminRoles.find((role) => role.id =
 // and the answer is kept in this browser tab only.
 export function AcceptInvitationView({ inviteParam, preview }: { inviteParam: string | null; preview?: InvitationPreview }) {
   // Phase A2: real invitations arrive in Phase 2.5, so Supabase mode doesn't show the sample flow
-  if (isSupabaseMode) return <InvitationsUnavailable title={adminScreens['accept-invitation'].name} />;
+  // Phase A3: Supabase mode verifies the email link and answers through the invitations Edge Function
+  if (isSupabaseMode) return <LiveAcceptInvitation />;
   return <SampleAcceptInvitation inviteParam={inviteParam} preview={preview} />;
 }
 

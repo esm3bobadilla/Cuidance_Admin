@@ -14,13 +14,122 @@ export const supabaseModeCopy = {
     invalid: "That email and password don't match an account. Check them, then try again.",
     // Network or service problem
     unavailable: "Couldn't reach the sign-in service. Check your connection, then try again.",
-    forgotHelp: 'Password reset isn’t available yet. Ask an Admin on your team to help you get back in.',
   },
 
   createAccount: {
-    // Invitations arrive in Phase 2.5 (Edge Functions). Until then there's nothing to look up.
+    // Accounts are invitation only (no public sign-ups): the invitation email has the link
     unavailable:
-      'Invitations aren’t connected yet. Ask an Admin on your team to set up your account, then sign in.',
+      'Accounts are by invitation only. Ask an Admin on your team to invite you, then use the link in your invitation email.',
+  },
+
+  // Phase A3: links from emails (invitation, sign-in, password reset)
+  link: {
+    checking: 'Checking your link…',
+    // Expired, already used or changed: the same message, so nothing about the account leaks
+    invalid: {
+      title: 'This link has expired or was already used',
+      body: 'Links in invitation emails work once and expire after an hour. Ask the person who invited you to resend the invitation.',
+      resetBody: 'Password links work once and expire after an hour. Ask for a new link from the Sign In page.',
+    },
+    signInNeeded: {
+      title: 'Open the link in your invitation email',
+      body: 'To answer this invitation, use the link in your invitation email, or sign in with the email it was sent to.',
+      action: 'Sign in',
+    },
+  },
+
+  invitation: {
+    expires: (date: string) => `This invitation expires on ${date}.`,
+    accepting: 'Accepting your invitation…',
+    declining: 'Declining your invitation…',
+    revoked: {
+      title: 'This invitation was withdrawn',
+      body: 'It can’t be used any more. If you still need access, ask an Admin on your team to send a new invitation.',
+    },
+    accepted: {
+      // New accounts set a password next; existing accounts go straight in
+      setupBody: 'Next, set up your account.',
+      memberBody: 'You’re now a member of this workspace.',
+    },
+    errors: {
+      answer: "Couldn't save your answer. Check your connection, then try again.",
+      changed: 'This invitation changed since you opened it. Reload the page to see its current status.',
+    },
+  },
+
+  setup: {
+    title: 'Set up your account',
+    intro: 'Choose your name and a password. You’ll use them to sign in.',
+    resetTitle: 'Choose a new password',
+    resetIntro: 'Choose a new password for your account.',
+    emailHelper: 'This is the email your invitation was sent to.',
+    save: 'Save and continue',
+    saveReset: 'Save new password',
+    saving: 'Saving…',
+    done: {
+      title: 'Your account is ready',
+      body: (name: string) => `Welcome, ${name}. You can now sign in with your email and password.`,
+      resetTitle: 'Password changed',
+      resetBody: 'Use your new password the next time you sign in.',
+      action: 'Go to Review Tasks',
+    },
+    errors: {
+      // Supabase Auth refused the password (it checks the same rules)
+      weak: 'Use a password that meets all three requirements.',
+      same: 'Choose a password you haven’t used for this account before.',
+      save: "Couldn't save your password. Check your connection, then try again.",
+    },
+    signedOut: {
+      title: 'Open the link in your email',
+      body: 'Setting up or resetting a password starts from the link in your invitation or password email.',
+    },
+  },
+
+  forgot: {
+    intro: 'Enter your email above, then ask for a link to choose a new password.',
+    send: 'Send reset link',
+    sending: 'Sending…',
+    // Always the same, so it never says whether an account exists
+    sent: 'If an account uses that email, we sent a link to choose a new password. It expires in 1 hour.',
+    errors: {
+      email: 'Enter your email above first.',
+      tooSoon: 'Please wait a minute before asking for another link.',
+      failed: "Couldn't send the link. Check your connection, then try again.",
+    },
+  },
+
+  // Phase A3: Team Access (Settings) invitations
+  team: {
+    membersCaption: 'Team members',
+    invitationsHeading: 'Invitations',
+    invitationsCaption: 'Invitations',
+    noInvitations: 'No invitations yet.',
+    inviteHeading: 'Invite a team member',
+    inviteIntro: 'They get an email with a link to accept. The invitation stays open for 7 days.',
+    email: 'Email',
+    role: 'Role',
+    send: 'Send invitation',
+    sending: 'Sending invitation…',
+    sent: (email: string) => `Invitation sent to ${email}.`,
+    resend: 'Resend invitation link',
+    resent: (email: string) => `A new link was sent to ${email}. The invitation still expires on the same date.`,
+    revoke: 'Withdraw invitation',
+    revoked: (email: string) => `The invitation for ${email} was withdrawn.`,
+    columns: { email: 'Email', role: 'Role', status: 'Status', expires: 'Expires', actions: 'Actions', joined: 'Joined' },
+    states: { pending: 'Pending', expired: 'Expired', accepted: 'Accepted', declined: 'Declined', revoked: 'Withdrawn' } as Record<string, string>,
+    reviewerNote: 'Only Owners and Admins can invite team members.',
+    errors: {
+      email: 'Enter a valid email address, like name@example.com.',
+      role: 'Choose a role.',
+      alreadyMember: 'That person is already a member of this workspace.',
+      alreadyPending: 'That email already has an open invitation. Resend it from the list below.',
+      notAllowed: 'Your role can’t invite or manage this kind of invitation.',
+      expired: 'This invitation has expired. Send a new invitation instead.',
+      notPending: 'This invitation was already answered or withdrawn.',
+      tooSoon: (seconds: number) => `Please wait ${seconds} seconds before resending.`,
+      sendFailed: "The invitation email couldn't be sent. Try again in a few minutes.",
+      generic: "Something went wrong. Check your connection, then try again.",
+    },
   },
 
   session: {

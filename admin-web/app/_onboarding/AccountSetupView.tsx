@@ -18,7 +18,7 @@ import { TextInput } from '../../components/forms/TextInput';
 import { Button, ButtonLink } from '../../components/ui/Button';
 import { createAccount, resetOnboarding, useOnboardingSession } from './onboardingStore';
 import { isSupabaseMode } from '../_data/config';
-import { InvitationsUnavailable } from './InvitationsUnavailable';
+import { LiveAccountSetup } from './LiveAccountSetup';
 import { SetupFrame } from './SetupFrame';
 import styles from './onboarding.module.css';
 
@@ -42,7 +42,8 @@ const fieldIds: Record<keyof SetupFields, string> = {
 // password is checked on screen and never saved or sent.
 export function AccountSetupView({ preview }: { preview?: SetupPreview }) {
   // Phase A2: real invitations arrive in Phase 2.5, so Supabase mode doesn't show the sample flow
-  if (isSupabaseMode) return <InvitationsUnavailable title={copy.title} />;
+  // Phase A3: Supabase mode sets the password (first setup or reset) through Supabase Auth
+  if (isSupabaseMode) return <LiveAccountSetup />;
   return <SampleAccountSetup preview={preview} />;
 }
 

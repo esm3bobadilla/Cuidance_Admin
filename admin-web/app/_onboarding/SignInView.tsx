@@ -5,11 +5,12 @@ import { adminScreens } from '../../../shared/content/admin-web-screens';
 import { entryCopy, signInCopy as copy } from '../../../shared/content/sign-in';
 import { supabaseModeCopy } from '../../../shared/content/supabase-mode';
 import { uiSymbols } from '../../../shared/content/ui-symbols';
-import { validateSignIn, type SignInErrors } from '../../../shared/onboarding/onboarding-rules';
+import { isValidEmail, validateSignIn, type SignInErrors } from '../../../shared/onboarding/onboarding-rules';
 import { TextInput } from '../../components/forms/TextInput';
 import { Button, ButtonLink } from '../../components/ui/Button';
 import { signIn } from '../_data/authStore';
 import { safeNext } from '../_data/AuthGate';
+import { requestPasswordReset, type ResetResult } from '../_data/invitationsApi';
 import { isSupabaseMode } from '../_data/config';
 import { SetupFrame } from './SetupFrame';
 import styles from './onboarding.module.css';
@@ -33,6 +34,30 @@ export function SignInView({ preview }: { preview?: SignInPreview }) {
   const [forgotOpen, setForgotOpen] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [failure, setFailure] = useState<'invalid' | 'unavailable' | undefined>();
+  // Phase A3 (Supabase mode): the password-reset request
+  const [resetState, setResetState] = useState<'idle' | 'sending' | 'email' | ResetResult>('idle');
+
+  const sendReset = async () => {
+    if (resetState === 'sending') return;
+    if (!isValidEmail(email)) {
+      setResetState('email');
+      return document.getElementById('sign-in-email')?.focus();
+    }
+    setResetState('sending');
+    setResetState(await requestPasswordReset(email));
+  };
+  const resetMessage =
+    resetState === 'sending'
+      ? supabaseModeCopy.forgot.sending
+      : resetState === 'sent'
+        ? supabaseModeCopy.forgot.sent
+        : resetState === 'email'
+          ? supabaseModeCopy.forgot.errors.email
+          : resetState === 'too-soon'
+            ? supabaseModeCopy.forgot.errors.tooSoon
+            : resetState === 'failed'
+              ? supabaseModeCopy.forgot.errors.failed
+              : undefined;
   const loading = preview === 'loading' || submitting;
   const failureMessage =
     preview === 'submit-error'
@@ -111,9 +136,29 @@ export function SignInView({ preview }: { preview?: SignInPreview }) {
               {copy.forgot}
             </Button>
           </div>
-          <p id="sign-in-forgot" className={styles.muted} hidden={!forgotOpen} role="status">
-            {isSupabaseMode ? supabaseModeCopy.signIn.forgotHelp : copy.forgotHelp}
-          </p>
+          {isSupabaseMode ? (
+            // Phase A3: reset by email. The answer is the same whether or not the email has an account.
+            <div id="sign-in-forgot" className={styles.form} hidden={!forgotOpen}>
+              <p className={styles.muted}>{supabaseModeCopy.forgot.intro}</p>
+              <div>
+                <Button variant="secondary" disabled={resetState === 'sending'} onClick={() => void sendReset()}>
+                  {supabaseModeCopy.forgot.send}
+                </Button>
+              </div>
+              <p className={resetState === 'sent' || resetState === 'sending' || resetState === 'idle' ? styles.muted : styles.problem} role="status">
+                {resetMessage && resetState !== 'sent' && resetState !== 'sending' && (
+                  <span className={styles.problemIcon} aria-hidden="true">
+                    {uiSymbols.error}{' '}
+                  </span>
+                )}
+                {resetMessage}
+              </p>
+            </div>
+          ) : (
+            <p id="sign-in-forgot" className={styles.muted} hidden={!forgotOpen} role="status">
+              {copy.forgotHelp}
+            </p>
+          )}
         </div>
 
         {loading && (

@@ -8,6 +8,8 @@ import { uiSymbols } from '../../../shared/content/ui-symbols';
 import { RolesPolicy } from '../../components/content/RolesPolicy';
 import { DataTable } from '../../components/data/DataTable';
 import { ReviewStatePanel, type ReviewViewState } from '../_review/ReviewShared';
+import { isSupabaseMode } from '../_data/config';
+import { LiveTeamAccess } from './LiveTeamAccess';
 import styles from './teamAccess.module.css';
 
 const dashboardHref = `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}${adminScreens.dashboard.path}`;
@@ -31,6 +33,12 @@ function MemberStatusLabel({ status }: { status: MemberStatus }) {
 // Settings: static Team Access (prototype F09) and the approved roles policy card.
 // Filters are the only interaction. Nothing is invited, changed, saved or enforced.
 export function TeamAccessView({ state }: { state: ReviewViewState }) {
+  // Phase A3: Supabase mode shows the real members and the invitation tools
+  if (isSupabaseMode) return <LiveTeamAccess />;
+  return <SampleTeamAccess state={state} />;
+}
+
+function SampleTeamAccess({ state }: { state: ReviewViewState }) {
   const [filter, setFilter] = useState<'all' | MemberStatus>('all');
   const all = state === 'ready' ? teamMembersSeed : [];
   const shown = useMemo(() => all.filter((m) => filter === 'all' || m.status === filter), [all, filter]);
