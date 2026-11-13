@@ -171,6 +171,7 @@ Cuidance_Admin/
 │   ├── Phase-A2/          Phase A2 Supabase application foundation notes and evidence
 │   ├── Phase-A3/          Phase A3 invitations and onboarding notes
 │   ├── Phase-A4/          Phase A4 release readiness: checks, security review, known limitations, go-live checklist
+│   ├── Hosted-Rollout/    Record of the hosted Supabase rollout steps, decisions and the remaining checklist
 │   └── archived/
 │       └── admin-mobile/  Archived Admin Mobile reference (no active work)
 ├── README.md
