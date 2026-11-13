@@ -2,7 +2,7 @@
 
 Rules for any Claude agent working in this repo. Follow them on every task. If something here conflicts with a request, ask before going ahead.
 
-_Last updated: Nov 11, 2026 (Phase 2.1: Supabase schema, RLS and database tests added; the app still runs in sample mode and isn't connected to Supabase yet)._
+_Last updated: Nov 12, 2026 (Phase A4: release readiness. Supabase mode, with sign-in, review data, invitations and account setup, is built and switched on only by build settings. The public GitHub Pages site always builds in sample mode, and the deploy workflow enforces it. See `docs/Phase-A4/release-readiness.md`.)_
 
 ## Project context
 

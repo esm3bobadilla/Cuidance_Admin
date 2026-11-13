@@ -58,8 +58,10 @@ export function LiveAccountSetup() {
     })();
   }, []);
 
+  // Focus moves to the heading once the password is saved, so the result is read out.
+  // Not on first load: the page title and heading are already read out on arrival.
   useEffect(() => {
-    if (view !== 'checking') requestAnimationFrame(() => headingRef.current?.focus());
+    if (view === 'done') requestAnimationFrame(() => headingRef.current?.focus());
   }, [view]);
 
   const submit = async (event: FormEvent<HTMLFormElement>) => {

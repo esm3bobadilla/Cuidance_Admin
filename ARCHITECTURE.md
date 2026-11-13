@@ -172,7 +172,7 @@ Full detail: `docs/Week-11/close-the-loop-implementation-plan.md`, sections 3 an
 | Local build | `npm run build` in `admin-web/` (output in `admin-web/out`) |
 | GitHub Pages build | `GITHUB_PAGES=true npm run build` |
 | Browser checks | Playwright scripts run by Claude Code during each feature (not committed): every route at 1440, 834, 390 and 320 px, light and dark, both builds; keyboard, contrast, 44 px targets, no JavaScript, hydration. Results go in each feature's implementation note |
-| Deploy | `.github/workflows/deploy-admin-web.yml` runs on every push to `main` and publishes to https://esm3bobadilla.github.io/Cuidance_Admin/ |
+| Deploy | `.github/workflows/deploy-admin-web.yml` runs on every push to `main` and publishes to https://esm3bobadilla.github.io/Cuidance_Admin/. **Always sample mode** (Phase A4): pinned, and checked after the build |
 
 **Branches:** one feature per short-lived branch, a pull request into `main` using `.github/pull_request_template.md`, a teammate review, then merge. Nothing merges straight to `main`.
 
@@ -186,7 +186,7 @@ Full detail: `docs/Week-11/close-the-loop-implementation-plan.md`, sections 3 an
 | Saving changes | Nothing saved, except theme (local storage) and, from Week 11, review decisions and the invitation and account setup (session storage, one tab). Passwords are never saved | Supabase |
 | Pages for data unknown at build time | **Phase A2: one page reads the ID from the address** (`/review-tasks/task/?id=`) | Same pattern for other records |
 
-## 10. Phase 2: Supabase (in progress)
+## 10. Phase 2: Supabase (built through Phase A3)
 
 Approved by Team 03 on Nov 11, 2026 (decisions D1 to D14). Full plan: `docs/Phase-2/supabase-integration-plan.md`.
 
@@ -236,5 +236,9 @@ Approved by Team 03 on Nov 11, 2026 (decisions D1 to D14). Full plan: `docs/Phas
 
 Flow: Team Access → email → Accept Invitation → Account Setup → Review Tasks. Full notes and the hosted rollout steps: `docs/Phase-A3/invitations-implementation.md`.
 
-**Security:** RLS is the boundary. The route guard and the role checks in the screens only decide what is shown; the database refuses anything the rules don't allow. Invitations, Create Account, Accept Invitation and Account Setup stay unavailable in Supabase mode until Phase 2.5.
+**Security:** RLS is the boundary. The route guard and the role checks in the screens only decide what is shown; the database refuses anything the rules don't allow. Create Account is invitation only (no public sign-ups); accounts start from an invitation (Phase A3).
+
+## 11. Release readiness (Phase A4)
+
+The status, quality checks, security review, Security Advisor decision, known limitations and the owner's go-live checklist are in `docs/Phase-A4/release-readiness.md`. In short: the public GitHub Pages site is ready and **always builds in sample mode** (pinned in `.github/workflows/deploy-admin-web.yml`, which fails the deploy if a Supabase address or key appears in the build). Supabase mode is ready for staging once the owner deploys the invitations Edge Function and sets up Auth email.
 

@@ -167,6 +167,19 @@ export function LiveTeamAccess() {
     }
   };
 
+  // Resend and Withdraw, for pending invitations the signed-in person may manage (D5)
+  const rowActions = (row: Row) =>
+    row.state === 'pending' && roles.includes(row.role) ? (
+      <span className={styles.rowActions}>
+        <Button variant="secondary" disabled={!!busyId} onClick={() => void act(row, 'resend')} aria-label={`${team.resend}, ${row.email}`}>
+          {team.resend}
+        </Button>
+        <Button variant="ghost" disabled={!!busyId} onClick={() => void act(row, 'revoke')} aria-label={`${team.revoke}, ${row.email}`}>
+          {team.revoke}
+        </Button>
+      </span>
+    ) : null;
+
   const statusLabel = (value: string) => {
     const className = value === 'active' || value === 'accepted' ? styles.statusActive : value === 'pending' ? styles.statusPending : styles.statusOff;
     const text = team.states[value] ?? (value === 'active' ? 'Active' : value === 'deactivated' ? 'Deactivated' : value);
@@ -284,36 +297,46 @@ export function LiveTeamAccess() {
           {invitations.length === 0 ? (
             <p className={styles.description}>{team.noInvitations}</p>
           ) : (
-            <DataTable
-              caption={team.invitationsCaption}
-              columns={[
-                { key: 'email', header: team.columns.email },
-                { key: 'role', header: team.columns.role },
-                { key: 'status', header: team.columns.status },
-                { key: 'expires', header: team.columns.expires },
-                { key: 'actions', header: team.columns.actions },
-              ]}
-              rows={invitations.map((row) => ({
-                id: row.id,
-                cells: {
-                  email: <span className={styles.member}>{row.email}</span>,
-                  role: <span className={styles.role}>{roleName(row.role)}</span>,
-                  status: statusLabel(row.state),
-                  expires: formatDecisionDate(new Date(row.expiresAt)),
-                  actions:
-                    row.state === 'pending' && roles.includes(row.role) ? (
-                      <span className={styles.rowActions}>
-                        <Button variant="secondary" disabled={!!busyId} onClick={() => void act(row, 'resend')} aria-label={`${team.resend}, ${row.email}`}>
-                          {team.resend}
-                        </Button>
-                        <Button variant="ghost" disabled={!!busyId} onClick={() => void act(row, 'revoke')} aria-label={`${team.revoke}, ${row.email}`}>
-                          {team.revoke}
-                        </Button>
-                      </span>
-                    ) : null,
-                },
-              }))}
-            />
+            <>
+              {/* Wider screens: a table. Phones: a stacked list, so the actions are never off-screen */}
+              <div className={styles.invitationsTable}>
+                <DataTable
+                  caption={team.invitationsCaption}
+                  columns={[
+                    { key: 'email', header: team.columns.email },
+                    { key: 'role', header: team.columns.role },
+                    { key: 'status', header: team.columns.status },
+                    { key: 'expires', header: team.columns.expires },
+                    { key: 'actions', header: team.columns.actions },
+                  ]}
+                  rows={invitations.map((row) => ({
+                    id: row.id,
+                    cells: {
+                      email: <span className={styles.member}>{row.email}</span>,
+                      role: <span className={styles.role}>{roleName(row.role)}</span>,
+                      status: statusLabel(row.state),
+                      expires: formatDecisionDate(new Date(row.expiresAt)),
+                      actions: rowActions(row),
+                    },
+                  }))}
+                />
+              </div>
+              <ul className={styles.invitationsList} aria-label={team.invitationsCaption}>
+                {invitations.map((row) => (
+                  <li key={row.id} className={styles.invitationCard}>
+                    <p className={styles.member}>{row.email}</p>
+                    <p className={styles.cardMeta}>
+                      <span className={styles.role}>{roleName(row.role)}</span>
+                      {statusLabel(row.state)}
+                    </p>
+                    <p className={styles.description}>
+                      {team.columns.expires}: {formatDecisionDate(new Date(row.expiresAt))}
+                    </p>
+                    {rowActions(row)}
+                  </li>
+                ))}
+              </ul>
+            </>
           )}
         </section>
       )}

@@ -63,9 +63,8 @@ export function LiveAcceptInvitation() {
     })();
   }, []);
 
-  useEffect(() => {
-    if (view.kind !== 'checking') requestAnimationFrame(() => headingRef.current?.focus());
-  }, [view.kind]);
+  // Focus moves to the heading only after the person answers (see answer()), not when the
+  // page first loads: the page title and heading are already read out on arrival.
 
   const answer = async (action: 'accept' | 'decline') => {
     if (view.kind !== 'invitation' || busy) return;

@@ -31,7 +31,20 @@ jobs:
         working-directory: admin-web
         env:
           GITHUB_PAGES: 'true'
+          # Phase A4: the public site always builds in sample mode (D9). Only the owner may
+          # change this, after staging validation (CLAUDE.md).
+          NEXT_PUBLIC_ADMIN_DATA_MODE: 'sample'
         run: npm run build
+      # Phase A4: stop the deploy if the built site contains a Supabase project address or
+      # any Supabase key, so the public site can't switch out of sample mode by accident.
+      - name: Check the site is in sample mode
+        working-directory: admin-web
+        run: |
+          if grep -rqE '[a-z0-9]{20}\.supabase\.co|127\.0\.0\.1:54321|sb_publishable_[A-Za-z0-9_-]{10}|sb_secret_[A-Za-z0-9_-]{10}|eyJhbGciOi[A-Za-z0-9_-]{10}' out; then
+            echo "The built site contains a Supabase address or key. GitHub Pages must stay in sample mode."
+            exit 1
+          fi
+          echo "Sample mode confirmed: no Supabase address or key in the built site."
       - uses: actions/upload-pages-artifact@v3
         with:
           path: admin-web/out
