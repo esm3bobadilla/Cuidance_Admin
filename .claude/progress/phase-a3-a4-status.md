@@ -78,9 +78,17 @@ Started Nov 12, 2026 on the owner's instruction. Branch: `feat/phase-a4-release-
 - [x] States: 7 Supabase-mode empty / error checks pass (`a4-states.mjs`). Was: loading / empty / error states review (every ?state= preview, Supabase-mode real states)
 - [x] Hardening: npm audit 0 (app prod, dev, root); deploy workflow pins sample mode and fails on any Supabase address or key (tested locally both ways). Was: hardening review: code and config (Edge Function, client data layer, headers / static hosting limits, dependency audit)
 - [ ] Security Advisor: document the 4 warnings (accept, or a follow-up migration that needs its own reviewed PR)
-- [ ] Full validation: TypeScript, 3 builds, every sample suite, A2 and A3 Supabase suites, function tests, audits, hydration, contrast, db lint and tests, secret scan, npm audit
-- [ ] Docs: release-readiness report, ARCHITECTURE / README final behavior and known limitations, CLAUDE.md status line
-- [ ] Commit and push; NO PR (owner opens or authorizes it)
+- [x] Full validation, all passing (numbers in `docs/Phase-A4/release-readiness.md`, section 4)
+- [x] Docs: `docs/Phase-A4/release-readiness.md`, ARCHITECTURE (section 11, deploy row, stale A2 sentence fixed), README, CLAUDE.md status line (rules unchanged)
+- [x] Committed and pushed to `feat/phase-a4-release-readiness`. **No PR opened.**
+
+## CHECKPOINT: Phase A4 complete, waiting for the owner
+Next actions need the owner's explicit authorization:
+- open (and later merge) the A4 PR;
+- the hosted rollout (release-readiness section 7);
+- the Security Advisor follow-up migration (its own PR);
+- dependency patch updates;
+- deleting merged branches.
 
 ### A4 environment
 After any restart, run the scratchpad `a4/up.sh`. It brings back dockerd, the local Supabase, the runtime package cache, the test users and the 3 builds, then serves them on 4101 (sample), 4102 (Pages build), 4103 and 3000 (Supabase mode).
