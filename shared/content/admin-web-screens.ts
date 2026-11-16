@@ -119,10 +119,10 @@ export const adminScreens: Record<AdminScreenId, AdminScreen> = {
   },
   'content-metrics': {
     id: 'content-metrics',
-    name: 'Content Metrics',
+    name: 'Metrics',
     path: '/content-metrics/',
     parent: 'dashboard',
-    scopeNote: 'A limited internal view of content activity. No analytics expansion.',
+    scopeNote: 'App, Website and Communication numbers (sample data, not connected) and internal content metrics. Real analytics are deferred.',
   },
   'account-support': {
     id: 'account-support',
