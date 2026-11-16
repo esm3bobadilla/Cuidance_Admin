@@ -6,7 +6,7 @@ not redrawn, recolored or cropped in the files (one CSS crop on screen is noted 
 
 | File | Used on |
 | --- | --- |
-| `illus-leaf-hand.png` | Sidebar (area 5 in the annotated reference); Accept Invitation and Account Setup steps panel |
+| `illus-leaf-hand.png` | Accept Invitation and Account Setup steps panel (removed from the sidebar in the Phase B1 shell) |
 | `illus-hands-jar.png` | Dashboard top display banner |
 | `shape-leaf.png` | Dashboard top display banner (beside the hands and jar) |
 | `illus-hand-stone.png` | Sign In and Create Account hero. On screen, a CSS crop hides a stray stroke at the top edge of the supplied file |

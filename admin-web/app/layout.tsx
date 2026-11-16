@@ -60,19 +60,12 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <a className="skip-link" href="#main-content">
           Skip to main content
         </a>
-        {/* Team 03 approved v04 derived lockups, used as supplied. CSS in globals.css shows the
-            one that matches the chosen theme (System, Light or Dark):
-            - Sidebar (Grounded Green in the light theme, light green in the dark theme):
-              the Quiet Paper reversed lockup in light, the Grounded Green lockup in dark.
-            - Phone top row (on the page background): the Grounded Green lockup in light,
-              the Quiet Paper reversed lockup in dark. */}
+        {/* Team 03 approved v04 derived lockups, used as supplied.
+            - Sidebar: the shell is dark green in both themes, so always the Quiet Paper reversed lockup.
+            - Phone top bar (on the page): the Grounded Green lockup in light, the reversed lockup in dark;
+              CSS in globals.css shows the one that matches the theme (System, Light or Dark). */}
         <AdminShell
-          sidebarLogo={
-            <>
-              <img className="app-logo app-logo-light-theme" src={lockupReversed.src} width={lockupReversed.width} height={lockupReversed.height} alt="Cuidance" />
-              <img className="app-logo app-logo-dark-theme" src={lockupPrimary.src} width={lockupPrimary.width} height={lockupPrimary.height} alt="Cuidance" />
-            </>
-          }
+          sidebarLogo={<img className="app-logo" src={lockupReversed.src} width={lockupReversed.width} height={lockupReversed.height} alt="Cuidance" />}
           barLogo={
             <>
               <img className="app-logo app-logo-light-theme" src={lockupPrimary.src} width={lockupPrimary.width} height={lockupPrimary.height} alt="Cuidance" />

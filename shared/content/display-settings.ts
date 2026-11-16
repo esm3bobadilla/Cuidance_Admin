@@ -30,6 +30,10 @@ export const defaultDisplaySettings: DisplaySettings = {
 
 export const displayStorageKey = 'cuidance-admin-display';
 
+// Desktop sidebar: expanded (default) or collapsed to the icon rail. Saved per device.
+export const sidebarStorageKey = 'cuidance-admin-sidebar';
+export const sidebarAttribute = 'data-sidebar';
+
 // Data attribute on <html> for each setting. A default value removes the attribute.
 export const displayAttributes = {
   textSize: 'data-text-size',
@@ -68,4 +72,4 @@ export const displaySettingsCopy = {
 
 const keys = JSON.stringify(displayAttributes);
 // Runs in <head> before the page draws. Unknown or missing values are ignored.
-export const displayBootScript = `(function(){try{var s=JSON.parse(localStorage.getItem(${JSON.stringify(displayStorageKey)})||'{}');var a=${keys};var ok={textSize:['large','larger'],density:['compact'],contrast:['more','standard'],motion:['reduce','standard']};var r=document.documentElement;for(var k in ok){if(ok[k].indexOf(s[k])>-1)r.setAttribute(a[k],s[k]);}if(s.alwaysShowFocus===true)r.setAttribute(a.alwaysShowFocus,'always');}catch(e){}})();`;
+export const displayBootScript = `(function(){try{var s=JSON.parse(localStorage.getItem(${JSON.stringify(displayStorageKey)})||'{}');var a=${keys};var ok={textSize:['large','larger'],density:['compact'],contrast:['more','standard'],motion:['reduce','standard']};var r=document.documentElement;for(var k in ok){if(ok[k].indexOf(s[k])>-1)r.setAttribute(a[k],s[k]);}if(s.alwaysShowFocus===true)r.setAttribute(a.alwaysShowFocus,'always');if(localStorage.getItem(${JSON.stringify(sidebarStorageKey)})==='collapsed')r.setAttribute(${JSON.stringify(sidebarAttribute)},'collapsed');}catch(e){}})();`;

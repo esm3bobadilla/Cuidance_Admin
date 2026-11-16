@@ -71,8 +71,9 @@ p {
   border: 0;
 }
 
-/* Shared shell: persistent sidebar on the left, the top bar above the page (desktop and tablet).
-   Phones stack the top bar, the sidebar list (when Menu is open) and the page. */
+/* Shared shell (Phase B1): sidebar on the left, the top bar above the page.
+   Desktop: 240 px sidebar, or the 92 px rail when collapsed. Tablet: the rail.
+   Phones: no sidebar column; the top bar's Menu opens the sidebar as a drawer. */
 .app {
   display: grid;
   grid-template-columns: var(--layout-sidebar-width) minmax(0, 1fr);
@@ -81,6 +82,22 @@ p {
     'sidebar bar'
     'sidebar main';
   min-height: 100vh;
+}
+
+:root[data-sidebar='collapsed'] .app:not(.app-setup) {
+  grid-template-columns: var(--layout-rail-width) minmax(0, 1fr);
+}
+
+@media (max-width: 1279px) {
+  .app:not(.app-setup),
+  :root[data-sidebar='collapsed'] .app:not(.app-setup) {
+    grid-template-columns: var(--layout-rail-width) minmax(0, 1fr);
+  }
+}
+
+/* An open drawer or dialog keeps the page behind it from scrolling */
+:root:has(dialog[open]) {
+  overflow: hidden;
 }
 
 .app-bar {
@@ -226,13 +243,14 @@ p {
 
 /* Mobile: below 768px. Card lists use a 12px gap, sections 24-32px. */
 @media (max-width: 767px) {
-  /* The top bar and the open list take only their own height; the page fills the rest, even when it's short */
-  .app {
+  /* The top bar takes its own height; the page fills the rest, even when it's short */
+  .app,
+  .app:not(.app-setup),
+  :root[data-sidebar='collapsed'] .app:not(.app-setup) {
     grid-template-columns: minmax(0, 1fr);
-    grid-template-rows: auto auto 1fr;
+    grid-template-rows: auto 1fr;
     grid-template-areas:
       'bar'
-      'sidebar'
       'main';
   }
 
@@ -253,14 +271,3 @@ p {
   }
 }
 
-/* Phase A1: people who ask for less motion get no animated transitions or smooth scrolling */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    scroll-behavior: auto !important;
-    transition-duration: 0.01ms !important;
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-  }
-}

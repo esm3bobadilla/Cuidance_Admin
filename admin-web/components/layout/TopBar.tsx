@@ -1,13 +1,14 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import type { ReactNode } from 'react';
-import { adminScreens, screenTrail, shellCopy, type AdminScreen } from '../../../shared/content/admin-web-screens';
+import { useState, type ReactNode } from 'react';
+import { adminScreens, navCopy, screenTrail, searchCopy, shellCopy, type AdminScreen } from '../../../shared/content/admin-web-screens';
 import { liveReviewTaskRoute, reviewTaskDetailCopy, reviewTaskFromPath } from '../../../shared/content/review-task-detail';
 import { Breadcrumb } from '../ui/Breadcrumb';
-import { Button } from '../ui/Button';
+import { CuIcon } from '../ui/CuIcon';
 import { ProfilePanel } from './ProfilePanel';
 import { ThemeSwitch } from './ThemeSwitch';
+import { WorkspaceSearch } from './WorkspaceSearch';
 import styles from './TopBar.module.css';
 
 const base = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
@@ -38,39 +39,59 @@ function crumbsFor(pathname: string) {
 }
 
 type TopBarProps = {
-  // Logo for the phone top row (it sits on the page background, unlike the sidebar logo)
+  // Logo for the phone top bar (it sits on the page background, unlike the sidebar logo)
   logo: ReactNode;
   menuOpen: boolean;
-  onToggleMenu: () => void;
+  onOpenMenu: () => void;
 };
 
-// Shared top bar: breadcrumb on the left; on the right, the icon-only theme controls and the
-// profile button, which opens the Profile / Notifications panel (Phase A1).
-// Under 768 px: Menu, logo, Theme and profile; the breadcrumb is hidden there, as in the prototype.
-// Without JavaScript, Menu, the theme controls and the profile panel are hidden (they can't work).
-export function TopBar({ logo, menuOpen, onToggleMenu }: TopBarProps) {
+// Shared top bar (Phase B1, approved prototype): breadcrumb, workspace search, then the
+// theme controls and the profile button (Profile / Notifications panel).
+// Under 768 px: Menu, logo, Search, Theme and profile; Search opens the field on its own row.
+// Without JavaScript, Menu, Search, the theme controls and the profile panel are hidden.
+export function TopBar({ logo, menuOpen, onOpenMenu }: TopBarProps) {
   const crumbs = crumbsFor(usePathname() ?? '/');
+  const [searchOpen, setSearchOpen] = useState(false);
 
   return (
-    <header className={`app-bar ${styles.bar}`}>
+    <header className={`app-bar ${styles.bar}`} data-search-open={searchOpen}>
       <noscript>
-        <style>{`.${styles.menuButton}, .${styles.actions} { display: none !important; }`}</style>
+        <style>{`.${styles.menuButton}, .${styles.searchToggle}, .${styles.search}, .${styles.actions} { display: none !important; }`}</style>
       </noscript>
 
       <div className={styles.start}>
-        <div className={styles.menuButton}>
-          <Button variant="secondary" aria-expanded={menuOpen} aria-controls="admin-sidebar" onClick={onToggleMenu}>
-            {shellCopy.menuButton}
-          </Button>
-        </div>
-        {logo}
+        <button
+          type="button"
+          className={styles.menuButton}
+          aria-label={navCopy.openMenu}
+          aria-expanded={menuOpen}
+          aria-controls="admin-menu"
+          aria-haspopup="dialog"
+          onClick={onOpenMenu}
+        >
+          <CuIcon name="menu" variant="badge" size={40} />
+        </button>
+        <span className={styles.logo}>{logo}</span>
       </div>
 
       <div className={styles.crumbs}>
         <Breadcrumb items={crumbs} />
       </div>
 
+      <div className={styles.search}>
+        <WorkspaceSearch />
+      </div>
+
       <div className={styles.actions}>
+        <button
+          type="button"
+          className={styles.searchToggle}
+          aria-label={searchOpen ? searchCopy.closeSearch : searchCopy.openSearch}
+          aria-expanded={searchOpen}
+          onClick={() => setSearchOpen(!searchOpen)}
+        >
+          <CuIcon name={searchOpen ? 'close' : 'search'} variant="badge" size={40} />
+        </button>
         <ThemeSwitch />
         <ProfilePanel />
       </div>

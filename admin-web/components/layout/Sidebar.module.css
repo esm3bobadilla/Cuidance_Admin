@@ -1,96 +1,94 @@
-/* Grounded Green sidebar from the hi-fi references, using the brand pairing tokens */
+/* Admin Web sidebar, icon rail and menu drawer (Phase B1, approved prototype). Tokens only. */
+
 .sidebar {
   position: sticky;
   top: 0;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-24);
   height: 100vh;
-  overflow-y: auto;
-  padding: var(--space-32) var(--space-16);
-  background: var(--color-brand);
-  color: var(--color-on-brand);
 }
 
-/* The global accent focus ring is hard to see on Grounded Green, so it uses the on-brand color here */
-.sidebar :focus-visible {
-  outline-color: var(--color-on-brand);
+/* Which version shows: full sidebar on desktop, rail when collapsed and on tablet */
+.staticPanel,
+.staticRail {
+  height: 100%;
 }
 
-.top {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-8);
-  padding-inline: var(--space-8);
-}
-
-/* Phase A1: the nav fills the sidebar, so the Profile card and Settings sit at the bottom */
-.nav {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  gap: var(--space-24);
-}
-
-.list,
-.children {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.children {
-  margin-top: var(--space-4);
-  padding-left: var(--space-16);
-}
-
-.children[data-open='false'] {
+.staticRail {
   display: none;
 }
 
-.row {
-  display: flex;
-  align-items: center;
-  gap: var(--space-4);
+:global(:root[data-sidebar='collapsed']) .staticPanel {
+  display: none;
 }
 
-.link {
-  display: flex;
-  flex: 1;
-  align-items: center;
-  min-height: var(--size-touch-target);
-  padding: 0 var(--space-16);
-  border-radius: var(--radius-pill);
-  font: var(--type-body);
-  color: var(--color-on-brand);
-  text-decoration: none;
+:global(:root[data-sidebar='collapsed']) .staticRail {
+  display: block;
 }
 
-.childLink {
-  font: var(--type-body-small);
-}
+@media (max-width: 1279px) {
+  .staticPanel,
+  :global(:root[data-sidebar='collapsed']) .staticPanel {
+    display: none;
+  }
 
-@media (hover: hover) {
-  .link:hover {
-    text-decoration: underline;
+  .staticRail,
+  :global(:root[data-sidebar='collapsed']) .staticRail {
+    display: block;
   }
 }
 
-/* Active page: the approved pill, Compass Blue selected state and a bolder label */
-.link[aria-current='page'] {
-  background: var(--color-selected);
-  color: var(--color-on-accent);
-  font: var(--type-label);
+@media (max-width: 767px) {
+  .sidebar,
+  .staticRail,
+  :global(:root[data-sidebar='collapsed']) .staticRail {
+    display: none;
+  }
 }
 
-/* Content stays bold while one of its pages is open */
-.parentOfCurrent {
-  font: var(--type-label);
+/* The shell stays dark green in both themes, so its focus ring is light */
+.panel :focus-visible,
+.rail :focus-visible {
+  outline-color: var(--color-shell-ink);
 }
 
+/* ---------- Full sidebar ---------- */
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-24);
+  height: 100%;
+  overflow-y: auto;
+  padding: var(--space-24) var(--space-16) var(--space-16);
+  background: var(--color-shell);
+  border-right: var(--stroke-default) solid var(--color-shell-border);
+  color: var(--color-shell-ink);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+}
+
+.logo {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  min-width: 0;
+  min-height: var(--size-control-height);
+  padding: var(--space-8) var(--space-16);
+  border-radius: var(--radius-medium);
+  background: var(--color-shell-raised);
+}
+
+.logo img {
+  display: block;
+  width: 100%;
+  max-width: calc(var(--size-logo-lockup-min) - var(--space-16));
+  height: auto;
+}
+
+/* Collapse, expand and close: 44 px, Warm Care button on the dark green */
 .toggle {
   display: inline-flex;
   flex: none;
@@ -99,139 +97,44 @@
   width: var(--size-touch-target);
   height: var(--size-touch-target);
   padding: 0;
-  font: var(--type-heading-4);
-  color: var(--color-on-brand);
-  background: transparent;
-  border: var(--stroke-default) solid var(--color-on-brand);
-  border-radius: var(--radius-pill);
+  border: var(--stroke-default) solid var(--color-border);
+  border-radius: var(--radius-small);
+  background: var(--color-shell-control-surface);
   cursor: pointer;
 }
 
-.glyph {
-  display: inline-block;
+.toggle:hover {
+  border-color: var(--color-shell-ink);
 }
 
-/* Pointing down when open, right when closed. No animation. */
-.toggle[aria-expanded='true'] .glyph {
-  transform: rotate(90deg);
+.toggle:active {
+  background: var(--color-shell-ink-muted);
 }
 
-/* Metrics has no page of its own: the whole row is the toggle */
-.groupButton {
-  justify-content: space-between;
-  width: 100%;
-  text-align: left;
-  background: transparent;
-  border: 0;
-  cursor: pointer;
-}
-
-.groupGlyph {
-  display: inline-block;
-  font: var(--type-heading-4);
-}
-
-.groupButton[aria-expanded='true'] .groupGlyph {
-  transform: rotate(90deg);
-}
-
-/* Area 5: a flat 2D Cuidance illustration. In light, it sits on a Warm Care circle against the
-   Grounded Green sidebar; in dark, the sidebar is already light green, so no circle. Decorative only. */
-.art {
+.nav {
   display: flex;
   flex: 1;
-  align-items: center;
-  justify-content: center;
-  min-height: 0;
-  padding-block: var(--space-8);
-}
-
-.artBackdrop {
-  display: grid;
-  place-content: center;
-  width: calc(var(--space-48) * 3);
-  height: calc(var(--space-48) * 3);
-  overflow: hidden;
-  background: var(--color-surface-warm);
-  border-radius: var(--radius-pill);
-}
-
-.artImage {
-  display: block;
-  width: calc(var(--space-48) * 2.5);
-  height: auto;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) .artBackdrop {
-    background: transparent;
-  }
-}
-
-:root[data-theme='dark'] .artBackdrop {
-  background: transparent;
-}
-
-/* Short windows: the illustration gives way so the Profile card and Settings stay visible */
-@media (max-height: 820px) {
-  .art {
-    display: none;
-  }
-}
-
-.bottom {
-  display: flex;
   flex-direction: column;
-  gap: var(--space-12);
-  margin-top: auto;
+  gap: var(--space-24);
 }
 
-/* Profile card above Settings: placeholder identity, Account Support and Notifications */
-.profile {
+.section {
   display: flex;
   flex-direction: column;
   gap: var(--space-8);
-  padding: var(--space-12);
-  border: var(--stroke-default) solid var(--color-on-brand);
-  border-radius: var(--radius-medium);
 }
 
-.identity {
-  display: flex;
-  align-items: center;
-  gap: var(--space-12);
-  padding-inline: var(--space-4);
+.sectionLabel {
+  padding: 0 var(--space-8);
+  font: var(--type-eyebrow);
+  letter-spacing: var(--type-eyebrow-tracking);
+  text-transform: uppercase;
+  color: var(--color-shell-ink-muted);
 }
 
-.initials {
-  display: inline-grid;
-  flex: none;
-  place-content: center;
-  width: var(--size-touch-target);
-  height: var(--size-touch-target);
-  font: var(--type-label);
-  color: var(--color-brand);
-  background: var(--color-on-brand);
-  border-radius: var(--radius-pill);
-}
-
-.identityText {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-}
-
-.profileName {
-  margin: 0;
-  font: var(--type-label);
-}
-
-.profileRole {
-  margin: 0;
-  font: var(--type-caption);
-}
-
-.profileLinks {
+.list,
+.children,
+.railList {
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
@@ -240,44 +143,253 @@
   list-style: none;
 }
 
-.notificationsButton {
-  justify-content: space-between;
-  gap: var(--space-8);
-  width: 100%;
-  text-align: left;
-  background: transparent;
+/* Active item: raised green, a Soft Terracotta bar on the left (shape, not only color),
+   the blue icon badge and aria-current on the link */
+.row {
+  display: flex;
+  align-items: center;
+  border-radius: var(--radius-small);
+}
+
+.row:hover {
+  background: var(--color-shell-raised);
+}
+
+.row[data-active='true'] {
+  background: var(--color-shell-raised);
+  box-shadow: inset var(--space-4) 0 0 var(--color-shell-active-indicator);
+}
+
+.item {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: var(--space-12);
+  min-width: 0;
+  min-height: var(--size-control-height);
+  padding: var(--space-4) var(--space-8) var(--space-4) var(--space-12);
+  border-radius: var(--radius-small);
+  color: var(--color-shell-ink);
+  font: var(--type-body);
+  text-decoration: none;
+}
+
+.item[aria-current='page'] .itemLabel,
+.row[data-active='true'] .itemLabel {
+  font-weight: 600;
+}
+
+.badge {
+  display: inline-flex;
+  flex: none;
+}
+
+.itemLabel {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.expand {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: var(--size-touch-target);
+  height: var(--size-touch-target);
+  padding: 0;
   border: 0;
+  border-radius: var(--radius-small);
+  background: transparent;
+  color: var(--color-shell-ink-muted);
   cursor: pointer;
 }
 
-/* "2 new": text, not color alone */
-.count {
-  padding: 0 var(--space-8);
-  font: var(--type-caption);
-  font-weight: 600;
-  color: var(--color-brand);
-  background: var(--color-on-brand);
-  border-radius: var(--radius-pill);
+.expand:hover {
+  color: var(--color-shell-ink);
 }
 
-/* Phones: the list opens below the top bar from its Menu button; the logo is in the top bar */
-@media (max-width: 767px) {
-  .sidebar {
-    position: static;
-    height: auto;
-    gap: var(--space-16);
-    padding: var(--space-16) var(--layout-outer-margin);
-  }
+.chevron {
+  display: inline-flex;
+  transition: transform 150ms ease;
+}
 
-  .sidebar[data-open='false'] {
-    display: none;
-  }
+.chevron[data-open='true'] {
+  transform: rotate(180deg);
+}
 
-  .top {
-    display: none;
-  }
+.children {
+  margin: var(--space-4) 0 var(--space-8) var(--space-24);
+  padding-left: var(--space-12);
+  border-left: var(--stroke-default) solid var(--color-shell-border);
+}
 
-  .art {
-    display: none;
+.children[hidden] {
+  display: none;
+}
+
+.child {
+  display: flex;
+  align-items: center;
+  min-height: var(--size-control-height);
+  padding: 0 var(--space-12);
+  border-radius: var(--radius-small);
+  color: var(--color-shell-ink-muted);
+  font: var(--type-body-small);
+  text-decoration: none;
+}
+
+.child:hover {
+  background: var(--color-shell-raised);
+  color: var(--color-shell-ink);
+}
+
+.child[aria-current='page'] {
+  background: var(--color-shell-raised);
+  box-shadow: inset var(--space-4) 0 0 var(--color-shell-active-indicator);
+  color: var(--color-shell-ink);
+  font-weight: 600;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
+  margin-top: auto;
+  padding-top: var(--space-16);
+  border-top: var(--stroke-default) solid var(--color-shell-border);
+}
+
+.avatar {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: var(--size-touch-target);
+  height: var(--size-touch-target);
+  border-radius: var(--radius-pill);
+  background: var(--color-shell-control-surface);
+  color: var(--color-shell-control-ink);
+  font: var(--type-label);
+}
+
+.userText {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.userName {
+  font: var(--type-label);
+  color: var(--color-shell-ink);
+  overflow-wrap: anywhere;
+}
+
+.userRole {
+  font: var(--type-caption);
+  color: var(--color-shell-ink-muted);
+}
+
+/* ---------- Icon rail (92 px) ---------- */
+
+.rail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  width: var(--layout-rail-width);
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: var(--space-16) var(--space-8);
+  background: var(--color-shell);
+  border-right: var(--stroke-default) solid var(--color-shell-border);
+  color: var(--color-shell-ink);
+}
+
+.railHome {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: calc(var(--size-touch-target) + var(--space-12));
+  height: calc(var(--size-touch-target) + var(--space-12));
+  border-radius: var(--radius-medium);
+  background: var(--color-shell-raised);
+}
+
+.railHome img {
+  display: block;
+  height: auto;
+}
+
+.rail .toggle {
+  margin: var(--space-8) 0 var(--space-12);
+}
+
+.railNav {
+  width: 100%;
+}
+
+.railItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  min-height: var(--size-touch-target);
+  padding: var(--space-8) var(--space-4);
+  border-radius: var(--radius-small);
+  color: var(--color-shell-ink-muted);
+  font: var(--type-data-small);
+  text-align: center;
+  text-decoration: none;
+}
+
+.railItem:hover {
+  background: var(--color-shell-raised);
+  color: var(--color-shell-ink);
+}
+
+.railItem[data-active='true'] {
+  background: var(--color-shell-raised);
+  box-shadow: inset var(--space-4) 0 0 var(--color-shell-active-indicator);
+  color: var(--color-shell-ink);
+  font-weight: 600;
+}
+
+.railLabel {
+  overflow-wrap: anywhere;
+}
+
+.railAvatar {
+  margin-top: auto;
+}
+
+/* ---------- Menu drawer (tablet and phone) ---------- */
+
+.drawer {
+  width: min(300px, 86vw);
+  max-width: none;
+  height: 100dvh;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: var(--color-shell);
+  box-shadow: var(--shadow-nav-drawer);
+}
+
+.drawer::backdrop {
+  background: var(--color-scrim);
+}
+
+.drawer .panel {
+  border-right: 0;
+}
+
+@media (forced-colors: active) {
+  .row[data-active='true'],
+  .child[aria-current='page'],
+  .railItem[data-active='true'] {
+    outline: var(--stroke-strong) solid Highlight;
   }
 }
