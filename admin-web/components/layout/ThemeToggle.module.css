@@ -1,0 +1,39 @@
+.toggle {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: var(--space-8);
+  min-width: var(--size-touch-target);
+  min-height: var(--size-touch-target);
+  padding: 0 var(--space-16) 0 var(--space-12);
+  border: var(--stroke-default) solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-warm);
+  color: var(--color-highlight);
+  cursor: pointer;
+}
+
+.toggle:hover {
+  border-color: var(--color-border-strong);
+}
+
+.toggle:active {
+  background: var(--color-selected-surface);
+}
+
+.label {
+  font: var(--type-body-xsmall);
+  color: var(--color-ink);
+}
+
+/* Phones: icon only (the accessible name stays) */
+@media (max-width: 767px) {
+  .toggle {
+    justify-content: center;
+    padding: 0;
+  }
+
+  .label {
+    display: none;
+  }
+}

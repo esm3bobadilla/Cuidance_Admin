@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { ThemeSwitch } from './ThemeSwitch';
+import { ThemeToggle } from './ThemeToggle';
 import styles from './SetupBar.module.css';
 
 // Week 11 feature 2 (Team 03 decision A8): the top bar for Accept Invitation and
@@ -14,7 +14,7 @@ export function SetupBar({ logo }: { logo: ReactNode }) {
       </noscript>
       {logo}
       <div className={styles.actions}>
-        <ThemeSwitch />
+        <ThemeToggle />
       </div>
     </header>
   );

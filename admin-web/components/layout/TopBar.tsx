@@ -7,7 +7,7 @@ import { liveReviewTaskRoute, reviewTaskDetailCopy, reviewTaskFromPath } from '.
 import { Breadcrumb } from '../ui/Breadcrumb';
 import { CuIcon } from '../ui/CuIcon';
 import { ProfilePanel } from './ProfilePanel';
-import { ThemeSwitch } from './ThemeSwitch';
+import { ThemeToggle } from './ThemeToggle';
 import { WorkspaceSearch } from './WorkspaceSearch';
 import styles from './TopBar.module.css';
 
@@ -92,7 +92,7 @@ export function TopBar({ logo, menuOpen, onOpenMenu }: TopBarProps) {
         >
           <CuIcon name={searchOpen ? 'close' : 'search'} variant="badge" size={40} />
         </button>
-        <ThemeSwitch />
+        <ThemeToggle />
         <ProfilePanel />
       </div>
     </header>

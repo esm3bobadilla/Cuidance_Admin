@@ -143,8 +143,8 @@
   list-style: none;
 }
 
-/* Active item: raised green, a Soft Terracotta bar on the left (shape, not only color),
-   the blue icon badge and aria-current on the link */
+/* Active item (approved prototype): Compass Blue 800 row, the light blue icon badge,
+   semibold label and aria-current on the link (not color alone) */
 .row {
   display: flex;
   align-items: center;
@@ -155,9 +155,9 @@
   background: var(--color-shell-raised);
 }
 
-.row[data-active='true'] {
-  background: var(--color-shell-raised);
-  box-shadow: inset var(--space-4) 0 0 var(--color-shell-active-indicator);
+.row[data-active='true'],
+.row[data-active='true']:hover {
+  background: var(--color-shell-active-surface);
 }
 
 .item {
@@ -244,8 +244,7 @@
 }
 
 .child[aria-current='page'] {
-  background: var(--color-shell-raised);
-  box-shadow: inset var(--space-4) 0 0 var(--color-shell-active-indicator);
+  background: var(--color-shell-child-active-surface);
   color: var(--color-shell-ink);
   font-weight: 600;
 }
@@ -350,8 +349,7 @@
 }
 
 .railItem[data-active='true'] {
-  background: var(--color-shell-raised);
-  box-shadow: inset var(--space-4) 0 0 var(--color-shell-active-indicator);
+  background: var(--color-shell-active-surface);
   color: var(--color-shell-ink);
   font-weight: 600;
 }

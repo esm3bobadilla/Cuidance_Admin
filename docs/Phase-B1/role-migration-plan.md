@@ -75,8 +75,8 @@ Team 03 asked for a **real migration**, not a relabel. That means the database v
 | Remove or deactivate people | Yes | Team Members only | No |
 | Workspace settings | Edit | View | View |
 | Create and edit content | Yes | Yes | Yes (drafts, send for review) |
-| Assign review tasks | Anyone | Anyone | Team Members only |
-| Record a review decision | When assigned | When assigned | When assigned |
+| Assign review tasks | Admins and Team Members | Admins and Team Members | Team Members only (reassign own) |
+| Record a review decision | When assigned, never own content | When assigned, never own content | When assigned, never own content |
 | Email | Draft and (future) send | Draft and (future) send | Drafts only |
 | Live updates | (future) push | (future) push | (future) push approved updates only |
 | Metrics | View | View | View |
@@ -91,7 +91,18 @@ Files that read roles today and will change:
 - Role labels in `admin-web/app/_rules/`, `_claims/`, `_sources/`
 - Navigation visibility in the new Sidebar (Phase 1 builds it role-aware, using sample-mode roles)
 
-## 5. Decisions Team 03 still needs to make
+## 5. Decisions
+
+### Confirmed by Team 03 (Nov 16, 2026)
+
+1. **Assigning reviews:** Super Admins and Admins assign to Admins and Team Members. Team Members assign only to Team Members, and may reassign tasks they originally sent.
+2. **Reviewer separation:** only the assigned reviewer records a decision, and no one approves their own content. Super Admins cannot approve their own content.
+3. **Legacy values stay** (`owner`, `reviewer`, `content_editor`) through the staged migration. They are not removed until the migration, RLS policies, invitation logic, staging accounts and all 114 database tests pass.
+4. **Explicit permission matrix, no blind rename.** The app's matrix is `shared/content/permissions.ts`. Stage 2 RLS and the Edge Function must match it row by row.
+
+Effect on the table in section 4: "Assign review tasks" is Admins and Team Members for Super Admins and Admins, Team Members only for Team Members. Super Admins are not offered as reviewers.
+
+### Original proposals (kept for the record)
 
 1. **Who can be assigned a review?** The prototype lets Admins assign anyone. Today only Reviewers can be assigned (D4). Proposal: any active member can be assigned, and only the assignee records the decision.
 2. **Can a Super Admin approve their own content?** Proposal: no; a different person must be assigned.

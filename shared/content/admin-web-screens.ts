@@ -23,6 +23,8 @@ export type AdminScreenId =
   | 'account-support'
   | 'review-tasks'
   | 'settings'
+  | 'profile'
+  | 'manage-team'
   // Week 11 feature 2 and Phase A1: before the person enters Admin Web (no sidebar)
   | 'sign-in'
   | 'create-account'
@@ -136,6 +138,20 @@ export const adminScreens: Record<AdminScreenId, AdminScreen> = {
     parent: 'dashboard',
     scopeNote: 'Tasks for the Cuidance team to review content before it reaches the public app.',
   },
+  profile: {
+    id: 'profile',
+    name: 'Profile',
+    path: '/profile/',
+    parent: 'dashboard',
+    scopeNote: 'Your profile, notifications and recent account activity.',
+  },
+  'manage-team': {
+    id: 'manage-team',
+    name: 'Manage Team',
+    path: '/manage-team/',
+    parent: 'dashboard',
+    scopeNote: 'Workspace access, roles and invitations for the Cuidance team. Super Admins and Admins only.',
+  },
   settings: {
     id: 'settings',
     name: 'Settings',
@@ -198,6 +214,8 @@ export type NavItem = {
   icon: CuIconName;
   // Pages listed under the item when it's expanded
   children?: AdminScreenId[];
+  // Shown only to roles the permission matrix allows (shared/content/permissions.ts)
+  requires?: 'seeManageTeam';
 };
 
 export type NavSection = { key: string; label: string; items: NavItem[] };
@@ -229,7 +247,10 @@ export const adminNav: NavSection[] = [
     key: 'account',
     label: 'Account',
     items: [
-      { key: 'account-support', id: 'account-support', label: 'Account Support', icon: 'person' },
+      { key: 'profile', id: 'profile', label: 'Profile', icon: 'person' },
+      { key: 'manage-team', id: 'manage-team', label: 'Manage Team', icon: 'team', requires: 'seeManageTeam' },
+      // Not in the prototype; kept so the approved Account Support view stays reachable
+      { key: 'account-support', id: 'account-support', label: 'Account Support', icon: 'clipboard' },
       { key: 'settings', id: 'settings', label: 'Settings', icon: 'gear' },
     ],
   },

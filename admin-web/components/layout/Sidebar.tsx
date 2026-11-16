@@ -3,6 +3,7 @@
 import { usePathname } from 'next/navigation';
 import { useState, type ReactNode, type RefObject } from 'react';
 import { adminNav, adminScreens, navCopy, type AdminScreenId, type NavItem } from '../../../shared/content/admin-web-screens';
+import { can } from '../../../shared/content/permissions';
 import { profileCopy } from '../../../shared/content/profile';
 import { useIdentity } from '../../app/_data/identity';
 import mark from '../../../shared/brand/logo/prototype/cuidance-mark-reversed.webp';
@@ -23,6 +24,13 @@ function useNavState() {
   return { isCurrent, holdsCurrent };
 }
 
+// Hides items the signed-in role may not use (Manage Team for Team Members)
+function useAllowed() {
+  const me = useIdentity();
+  const rights = can(me.adminRole);
+  return (item: NavItem) => !item.requires || !!rights?.[item.requires];
+}
+
 type PanelProps = {
   logo: ReactNode;
   // static: the desktop sidebar. drawer: the tablet and phone menu.
@@ -36,6 +44,7 @@ function NavPanel({ logo, mode, onToggle, toggleRef }: PanelProps) {
   const me = useIdentity();
   const { isCurrent, holdsCurrent } = useNavState();
   const items = adminNav.flatMap((section) => section.items);
+  const allowed = useAllowed();
   const [open, setOpen] = useState<Record<string, boolean>>(() =>
     Object.fromEntries(items.map((item) => [item.key, holdsCurrent(item) && !isCurrent(item.id)])),
   );
@@ -59,7 +68,7 @@ function NavPanel({ logo, mode, onToggle, toggleRef }: PanelProps) {
               {section.label}
             </p>
             <ul className={styles.list} aria-labelledby={`nav-${mode}-${section.key}`}>
-              {section.items.map((item) => {
+              {section.items.filter(allowed).map((item) => {
                 const active = holdsCurrent(item);
                 const listId = `nav-${mode}-${item.key}-pages`;
                 const expanded = open[item.key];
@@ -134,6 +143,7 @@ type RailProps = {
 function Rail({ onExpand, expandRef }: RailProps) {
   const me = useIdentity();
   const { isCurrent, holdsCurrent } = useNavState();
+  const allowed = useAllowed();
   return (
     <div className={styles.rail}>
       <a className={styles.railHome} href={hrefFor('dashboard')} aria-label={navCopy.home}>
@@ -146,6 +156,7 @@ function Rail({ onExpand, expandRef }: RailProps) {
         <ul className={styles.railList}>
           {adminNav
             .flatMap((section) => section.items)
+            .filter(allowed)
             .map((item) => {
               const active = holdsCurrent(item);
               return (

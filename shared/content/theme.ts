@@ -10,15 +10,13 @@ export type ThemePreference = 'system' | 'light' | 'dark';
 
 export const themeStorageKey = 'cuidance-admin-theme';
 
-// Phase A1: icon-only header controls (Light, Dark, System). Each has an accessible
-// name and a visible tooltip. System shows the approved Cuidance symbol mark in one color.
-export const themeSwitchCopy = {
-  groupLabel: 'Theme',
-  options: {
-    light: { label: 'Light theme', tooltip: 'Light' },
-    dark: { label: 'Dark theme', tooltip: 'Dark' },
-    system: { label: 'System theme, follows your device', tooltip: 'System' },
-  },
+// Phase B1 (Team 03 decision, Nov 16, 2026): one Light / Dark button in the top bar, as in
+// the approved prototype. Until someone presses it, the device setting (System) applies.
+export const themeToggleCopy = {
+  lightMode: 'Light mode',
+  darkMode: 'Dark mode',
+  switchToDark: 'Switch to dark mode',
+  switchToLight: 'Switch to light mode',
 };
 
 // Runs in <head> before the page draws, so a saved choice never flashes the wrong colors.

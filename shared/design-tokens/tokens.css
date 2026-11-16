@@ -68,7 +68,9 @@
   --color-shell-border: #42614f;
   --color-shell-ink: #ffffff;
   --color-shell-ink-muted: #cfddd4;
-  --color-shell-active-indicator: #f2a68f;
+  /* Selected nav item (approved prototype): Compass Blue 800 row, Compass Blue 300 icon badge */
+  --color-shell-active-surface: #1e2650;
+  --color-shell-child-active-surface: rgba(243, 230, 211, 0.16);
   --color-shell-active-icon-surface: #9aabff;
   --color-shell-active-icon-ink: #0b1440;
   --color-shell-control-surface: #f3e6d3;
