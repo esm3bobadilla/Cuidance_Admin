@@ -1,8 +1,16 @@
-import { ScreenPage, screenMetadata } from '../_screens/ScreenPage';
+import { profilePageCopy as copy } from '../../../shared/content/account-pages';
+import { PageHeader } from '../../components/layout/PageHeader';
+import { ProfileView } from '../_account/ProfileView';
+import { screenMetadata } from '../_screens/ScreenPage';
 
 export const metadata = screenMetadata('profile');
 
-// Phase B1: route added with the new navigation. The page layout follows in Phase 2.
+// Profile (Phase B1, approved prototype): profile card, notifications and recent activity
 export default function Page() {
-  return <ScreenPage id="profile" />;
+  return (
+    <main className="shell">
+      <PageHeader title={copy.title} description={copy.description} />
+      <ProfileView />
+    </main>
+  );
 }

@@ -21,20 +21,35 @@ switcher, prototype labels) are **not** implemented.
 - [x] Settings: Accessibility & display section
 - [x] `/dev` preview of every new component
 
+### Phase 2: page migration (Nov 16, 2026)
+Team 03 decisions applied first: single Light / Dark button; Compass Blue active nav (checked against the latest prototype code: `#1E2650` row, `#9AABFF` badge, no terracotta bar); explicit permission matrix with legacy values kept.
+
+- [x] A. Shell fixes and `shared/content/permissions.ts` (commit `d08d338`)
+- [x] B. Dashboard: hero, Today at a glance, Quick work, Review Queue (live in Supabase mode), Recent activity
+- [x] C. Consolidated Content workspace: one list, search, Filter drawer, area tiles, New content drawer
+- [x] D. Review Tasks: hero, Assign a review task drawer, reassign rules, existing queue unchanged
+- [x] E. Metrics: App, Website, Communication sample tabs plus the existing Content metrics tab
+- [x] F. Profile, Manage Team (sample roster; live members and invitations in Supabase mode), Settings sections
+
 ## Checks run on this branch
 - [x] `npx tsc --noEmit` (admin-web): clean
 - [x] Sample-mode build with `GITHUB_PAGES=true`, plus the deploy workflow's sample-mode guard: passes
 - [x] Supabase-mode build (local placeholder settings only): passes
+- [x] Permission matrix: 13 scripted checks pass (assign targets per role, author never offered, inactive never offered, Team Members reassign own only, only the assignee decides, Super Admins never approve their own content, legacy map, Manage Team visibility, invite and role-change rights)
+- [x] Phase 2 pages: one h1 each, no console errors, no new target under 44 px; drawers, filters, validation, invite, remove dialog and final-Super-Admin protection work
 - [x] Browser checks (Playwright, local static build): drawer and dialog keep focus inside, Escape and backdrop close, focus returns to the opener; tabs move with arrow keys; switch, popover and upload alt-text error work; display settings survive a reload; no interactive target under 44 px on Dashboard, Quiz Content, Settings and `/dev`; no console errors
 
 ## Decisions and notes for Team 03
 1. **Sidebar width** stays at the board's 240 px (the prototype used 248 to 256 px).
 2. **Navigation** links only to pages that exist. Communication (Email, Live) and the Profile and Manage Team pages join in their own phases.
 3. **Role names** in the app are unchanged until the role migration stages are approved (Supabase mode keeps Owner, Admin, Reviewer).
-4. **Phone top bar**: Menu, logo, Search, then the three-way theme control and profile wrap to a second row on narrow phones. The prototype used a single Light / Dark button; changing the theme control needs Team 03 approval.
+4. **Phone top bar**: resolved. One Light / Dark button (icon only on phones) keeps the bar on one row.
+5. **Account Support** is not in the prototype nav. It stays in the Account section so the approved view is still reachable. Team 03 to confirm.
+6. **Sample identity** now reads "Super Admin (sample)" so designers see every page. Supabase mode reads the stored role through the legacy map.
+7. **Settings > Team access** now links to Manage Team, which holds the member list (and, in Supabase mode, the Phase A3 invitation tools).
+8. **Dashboard glance cards** for Email, App and Website show sample numbers labeled "Sample data", because those integrations are deferred.
 
 ## Next (not started)
-- Phase 2: page layouts from the prototype (Dashboard, consolidated Content workspace, Review Tasks with the Assign drawer, Metrics with sample data, Settings sections, Profile, Manage Team), using the components above
 - Role migration Stage 1 and 2, each in its own reviewed pull request, after Team 03 answers the open decisions in the plan
 - Email (templates, drafts, image upload and preview, no sending) and Live (static preview frames) after Phase 2
 

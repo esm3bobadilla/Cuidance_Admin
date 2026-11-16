@@ -151,7 +151,7 @@ Cuidance_Admin/
 │   └── components/        Shared components: layout, ui, forms, data, feedback, content, overlay (drawer, dialog, popover)
 ├── supabase/              Phase 2: Supabase config, migrations, local seed and database tests; Phase A3: the invitations Edge Function (functions/) and email templates (templates/)
 ├── shared/                Shared content and rules for Admin Web
-│   ├── content/           Admin Web screen names, navigation, scope notes, role wording, theme and display settings; later result content, safety lines, labels
+│   ├── content/           Admin Web screen names, navigation, permission matrix, page wording and sample data, theme and display settings
 │   ├── review-loop/       Week 11 review decision rules (statuses, Dashboard counts), shared by every screen
 │   ├── onboarding/        Week 11 and Phase A1 invitation, account setup and sign-in rules (password, email, states)
 │   ├── quiz-rules/        Answer cards, mixing rules, delivery rules
