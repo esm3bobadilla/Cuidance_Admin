@@ -113,8 +113,9 @@ export function DashboardLiveStatus() {
         <h2 id="live-status-heading" className={styles.title}>
           {copy.liveTitle}
         </h2>
-        <p className={styles.note}>{copy.liveNote}</p>
+        <span className={styles.sample}>{copy.sampleBadge}</span>
       </div>
+      <p className={styles.note}>{copy.liveNote}</p>
       <ul className={styles.live}>
         {liveStatus.map((row) => (
           <li key={row.key} className={styles.liveRow}>
@@ -124,10 +125,15 @@ export function DashboardLiveStatus() {
                 {row.name}
                 <span className={styles.liveState}>
                   <CuIcon name="live" size={14} />
-                  {row.state}
+                  {copy.liveStateLabel(row.state)}
                 </span>
               </span>
               <span className={styles.activityMeta}>{row.detail}</span>
+              {/* Plain text, not a disabled button: nothing here looks clickable */}
+              <span className={styles.livePending}>
+                <CuIcon name="lock" size={14} />
+                {copy.livePreviewPending}
+              </span>
             </span>
           </li>
         ))}

@@ -116,7 +116,7 @@ p {
 
 .app-sidebar {
   grid-area: sidebar;
-  align-self: start;
+  align-self: stretch;
 }
 
 .app-main {

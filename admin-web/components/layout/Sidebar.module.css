@@ -1,15 +1,18 @@
 /* Admin Web sidebar, icon rail and menu drawer (Phase B1, approved prototype). Tokens only. */
 
+/* The column's green runs the full page height; the sidebar inside stays pinned while the page scrolls */
 .sidebar {
-  position: sticky;
-  top: 0;
-  height: 100vh;
+  align-self: stretch;
+  background: var(--color-shell);
+  border-right: var(--stroke-default) solid var(--color-shell-border);
 }
 
 /* Which version shows: full sidebar on desktop, rail when collapsed and on tablet */
 .staticPanel,
 .staticRail {
-  height: 100%;
+  position: sticky;
+  top: 0;
+  height: 100vh;
 }
 
 .staticRail {
@@ -390,4 +393,10 @@
   .railItem[data-active='true'] {
     outline: var(--stroke-strong) solid Highlight;
   }
+}
+
+/* The column already draws the right border */
+.staticPanel .panel,
+.staticRail .rail {
+  border-right: 0;
 }

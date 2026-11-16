@@ -31,6 +31,11 @@ Team 03 decisions applied first: single Light / Dark button; Compass Blue active
 - [x] E. Metrics: App, Website and Communication sample tabs (the earlier Content metrics tab was removed to match the prototype)
 - [x] F. Profile, Manage Team (sample roster; live members and invitations in Supabase mode), Settings sections
 
+### Review evidence (Nov 16, 2026)
+- [x] 21 preview screenshots (7 pages at desktop, tablet and mobile) plus Live status close-ups: `docs/Phase-B1/evidence/README.md`
+- [x] Live status panel states that it is sample and pending: Sample data badge, "Live (sample)", and plain-text "Preview not available yet" in place of links
+- [x] Sidebar column fills the full page height (the sidebar inside stays pinned while scrolling)
+
 ## Checks run on this branch
 - [x] `npx tsc --noEmit` (admin-web): clean
 - [x] Sample-mode build with `GITHUB_PAGES=true`, plus the deploy workflow's sample-mode guard: passes

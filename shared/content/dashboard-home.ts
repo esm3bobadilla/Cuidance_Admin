@@ -19,7 +19,9 @@ export const dashboardHomeCopy = {
   quickWorkTitle: 'Quick work',
   quickWorkNote: (role: string) => `Shortcuts for ${role}`,
   liveTitle: 'Live status',
-  liveNote: 'Sample data. Live previews arrive with the Live phase.',
+  liveNote: 'Sample status for layout review. Not connected to the Cuidance App or Brand Website.',
+  liveStateLabel: (state: string) => `${state} (sample)`,
+  livePreviewPending: 'Preview not available yet. It arrives with the Live phase.',
   activityTitle: 'Recent activity',
   activityNote: 'Sample data. Not connected to live activity.',
 };
