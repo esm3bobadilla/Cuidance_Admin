@@ -30,7 +30,7 @@ It is not the public app, it is not part of participant testing, and it is not a
 | Authentication | Not started |
 | Supabase tables | Not started, pending team decision |
 | GitHub Pages hosting | Live: static export, deployed automatically from `main` by GitHub Actions |
-| Admin Web logo | Done: Team 03 approved v04 derived lockup in the sidebar, with the reversed version in the light theme's green sidebar. It follows the chosen theme (System, Light or Dark). Team 03 approved derived favicons (16, 32 and 48 px) in place (see `shared/brand/logo/README.md`) |
+| Admin Web logo | Done: Team 03 approved v04 derived lockup. The sidebar is dark green in both themes and shows the reversed lockup; the collapsed rail shows the cream mark. The phone top bar follows the chosen theme (System, Light or Dark). Team 03 approved derived favicons (16, 32 and 48 px) in place (see `shared/brand/logo/README.md`) |
 
 **Live link:** https://esm3bobadilla.github.io/Cuidance_Admin/
 
@@ -148,17 +148,19 @@ Cuidance_Admin/
 ├── admin-web/             Admin Web app for the browser
 │   ├── app/               Routes from the Week 10 route map (see `docs/Week-10/route-map.md`), `/dev` component preview, custom 404
 │   │   └── _screens/      Shared structure for the route-map screens (not a route)
-│   └── components/        Shared components: layout, ui, forms, data, feedback, content
+│   └── components/        Shared components: layout, ui, forms, data, feedback, content, overlay (drawer, dialog, popover)
 ├── supabase/              Phase 2: Supabase config, migrations, local seed and database tests; Phase A3: the invitations Edge Function (functions/) and email templates (templates/)
 ├── shared/                Shared content and rules for Admin Web
-│   ├── content/           Admin Web screen names, scope notes, role wording and theme labels; later result content, safety lines, labels
+│   ├── content/           Admin Web screen names, navigation, scope notes, role wording, theme and display settings; later result content, safety lines, labels
 │   ├── review-loop/       Week 11 review decision rules (statuses, Dashboard counts), shared by every screen
 │   ├── onboarding/        Week 11 and Phase A1 invitation, account setup and sign-in rules (password, email, states)
 │   ├── quiz-rules/        Answer cards, mixing rules, delivery rules
 │   ├── design-tokens/     Colors (light and dark), type, spacing, radius, stroke
 │   └── brand/
-│       ├── illustrations/ Phase A1 approved flat Cuidance illustrations (decorative)
-│       └── logo/          Approved Logo Version 4 files (package v03)
+│       ├── heroes/        Phase B1 cut-paper hero banner images (from the approved prototype)
+│       ├── icons/         Phase B1 cu-icons path data (rendered by admin-web/components/ui/CuIcon.tsx)
+│       ├── illustrations/ Approved flat Cuidance illustrations (Phase A1, plus Phase B1 prototype assets)
+│       └── logo/          Approved Logo Version 4 files (package v03); prototype/ holds the cream mark for the icon rail
 │           ├── png/
 │           │   └── derived/   Team 03 derived exports (favicons, 180 / 192 px app icons, raster lockups)
 │           └── svg/       Wrappers that display the matching PNG
@@ -171,6 +173,7 @@ Cuidance_Admin/
 │   ├── Phase-A2/          Phase A2 Supabase application foundation notes and evidence
 │   ├── Phase-A3/          Phase A3 invitations and onboarding notes
 │   ├── Phase-A4/          Phase A4 release readiness: checks, security review, known limitations, go-live checklist
+│   ├── Phase-B1/          Phase B1 prototype implementation: role migration plan, progress and checks
 │   └── archived/
 │       └── admin-mobile/  Archived Admin Mobile reference (no active work)
 ├── README.md

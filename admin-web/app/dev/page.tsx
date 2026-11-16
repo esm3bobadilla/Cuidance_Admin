@@ -15,6 +15,7 @@ import { Card } from '../../components/ui/Card';
 import { DisclosureLabel } from '../../components/ui/DisclosureLabel';
 import { IconButton } from '../../components/ui/IconButton';
 import { ReviewStatePanel } from '../_review/ReviewShared';
+import { FoundationPreview } from './FoundationPreview';
 import styles from './dev.module.css';
 
 export const metadata: Metadata = {
@@ -46,6 +47,8 @@ export default function ComponentPreviewPage() {
           </>
         }
       />
+
+      <FoundationPreview />
 
       <Card title="Buttons">
         <p className={styles.note}>Hover and pressed states respond to the pointer. One primary button per screen.</p>
