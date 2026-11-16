@@ -1,0 +1,176 @@
+/* Dashboard sections from the approved prototype. Tokens only. */
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+}
+
+.title {
+  font: var(--type-heading-2);
+}
+
+.note {
+  font: var(--type-body-small);
+  color: var(--color-ink-muted);
+}
+
+.glance {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--layout-gutter);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.card {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-12);
+  padding: var(--space-24);
+  border: var(--stroke-default) solid var(--color-border);
+  border-radius: var(--radius-medium);
+  background: var(--color-surface);
+}
+
+.cardText {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+.cardLabel {
+  font: var(--type-body-small);
+  color: var(--color-ink);
+}
+
+.cardValue {
+  font: var(--type-display);
+  color: var(--color-brand);
+}
+
+.cardDetail {
+  font: var(--type-caption);
+  color: var(--color-success);
+}
+
+.sample {
+  align-self: flex-start;
+  margin-top: var(--space-4);
+  padding: 0 var(--space-8);
+  border: var(--stroke-default) solid var(--color-border-strong);
+  border-radius: var(--radius-pill);
+  font: var(--type-data-small);
+  color: var(--color-ink-muted);
+}
+
+.cardArt {
+  flex: none;
+  width: var(--size-control-height);
+  height: auto;
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+  padding: var(--space-24);
+  border: var(--stroke-default) solid var(--color-border);
+  border-radius: var(--radius-medium);
+  background: var(--color-surface);
+}
+
+.warm {
+  background: var(--color-surface-warm);
+}
+
+.panelHeader {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-8);
+}
+
+.quick {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--space-12);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.quickLink {
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
+  min-height: calc(var(--size-control-height) + var(--space-8));
+  padding: var(--space-8) var(--space-16) var(--space-8) var(--space-12);
+  border: var(--stroke-default) solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font: var(--type-label);
+  text-decoration: none;
+}
+
+.quickLink:hover {
+  border-color: var(--color-accent);
+  background: var(--color-selected-surface);
+}
+
+.quickLink:active {
+  border-color: var(--color-accent-pressed);
+}
+
+.activity {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.activityRow {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--space-8) var(--space-16);
+  padding: var(--space-12) 0;
+  border-top: var(--stroke-default) solid var(--color-border);
+  font: var(--type-body-small);
+}
+
+.activityText {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4) var(--space-8);
+  align-items: baseline;
+}
+
+.activityMeta,
+.activityWhen {
+  font: var(--type-caption);
+  color: var(--color-ink-muted);
+}
+
+@media (max-width: 1279px) {
+  .glance {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 767px) {
+  .glance {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-12);
+  }
+
+  .card,
+  .panel {
+    padding: var(--space-16);
+  }
+}

@@ -7,8 +7,8 @@ not redrawn, recolored or cropped in the files (one CSS crop on screen is noted 
 | File | Used on |
 | --- | --- |
 | `illus-leaf-hand.png` | Accept Invitation and Account Setup steps panel (removed from the sidebar in the Phase B1 shell) |
-| `illus-hands-jar.png` | Dashboard top display banner |
-| `shape-leaf.png` | Dashboard top display banner (beside the hands and jar) |
+| `illus-hands-jar.png` | Role illustration (Super Admin). Removed from the Dashboard banner in Phase B1 |
+| `shape-leaf.png` | Not in use since the Phase B1 Dashboard hero; kept as an approved asset |
 | `illus-hand-stone.png` | Sign In and Create Account hero. On screen, a CSS crop hides a stray stroke at the top edge of the supplied file |
 
 Rules:
