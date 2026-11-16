@@ -18,6 +18,8 @@ export const dashboardHomeCopy = {
   sampleBadge: 'Sample data',
   quickWorkTitle: 'Quick work',
   quickWorkNote: (role: string) => `Shortcuts for ${role}`,
+  liveTitle: 'Live status',
+  liveNote: 'Sample data. Live previews arrive with the Live phase.',
   activityTitle: 'Recent activity',
   activityNote: 'Sample data. Not connected to live activity.',
 };
@@ -58,4 +60,11 @@ export const recentActivity = [
   { who: 'Team member A', what: 'drafted', item: 'Understanding sensitive skin', area: 'Content', when: '12 min ago' },
   { who: 'Team member B', what: 'requested changes on', item: 'Ingredient benefit wording', area: 'Review task', when: '1 hr ago' },
   { who: 'Team member C', what: 'approved', item: 'Partner disclosure overview', area: 'Review task', when: 'Yesterday' },
+];
+
+// Live status (approved prototype). Sample values only: Live publishing and previews are
+// deferred, so these rows link nowhere.
+export const liveStatus = [
+  { key: 'app', name: 'Cuidance App', state: 'Live', detail: 'iOS and Android · v2.4.0 · 2 updates ready (sample)', icon: 'phone' as CuIconName },
+  { key: 'web', name: 'Brand Website', state: 'Live', detail: 'Homepage and care guides · 2 awaiting publish (sample)', icon: 'web' as CuIconName },
 ];

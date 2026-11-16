@@ -122,7 +122,7 @@ export const adminScreens: Record<AdminScreenId, AdminScreen> = {
     name: 'Metrics',
     path: '/content-metrics/',
     parent: 'dashboard',
-    scopeNote: 'App, Website and Communication numbers (sample data, not connected) and internal content metrics. Real analytics are deferred.',
+    scopeNote: 'App, Website and Communication numbers (sample data, not connected). Real analytics are deferred.',
   },
   'account-support': {
     id: 'account-support',
@@ -204,7 +204,9 @@ export const structureOnlyNote = 'Structure only. Screen content and data are no
 // Admin Web navigation (Phase B1 shell, from the approved Admin Web prototype).
 // Sections and icons follow the prototype. The Communication section (Email, Live App
 // and Brand Website) and the Profile and Manage Team pages join when those phases are
-// approved and built; until then the nav only links to pages that exist.
+// approved and built; until then the nav only links to pages that exist. Account Support
+// is not in the prototype navigation (Team 03, Nov 16, 2026): its page stays reachable by
+// URL and workspace search only.
 export type NavItem = {
   // Unique key, also used for the expand state and element ids
   key: string;
@@ -249,8 +251,6 @@ export const adminNav: NavSection[] = [
     items: [
       { key: 'profile', id: 'profile', label: 'Profile', icon: 'person' },
       { key: 'manage-team', id: 'manage-team', label: 'Manage Team', icon: 'team', requires: 'seeManageTeam' },
-      // Not in the prototype; kept so the approved Account Support view stays reachable
-      { key: 'account-support', id: 'account-support', label: 'Account Support', icon: 'clipboard' },
       { key: 'settings', id: 'settings', label: 'Settings', icon: 'gear' },
     ],
   },

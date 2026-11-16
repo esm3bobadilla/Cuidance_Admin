@@ -157,7 +157,62 @@
   color: var(--color-ink-muted);
 }
 
+/* Quick work beside Live status (approved prototype) */
+.pair {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: var(--layout-gutter);
+  align-items: start;
+}
+
+.live {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.liveRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
+  padding: var(--space-12) var(--space-16);
+  border: var(--stroke-default) solid var(--color-border);
+  border-radius: var(--radius-medium);
+  background: var(--color-success-surface);
+}
+
+.liveText {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+.liveName {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-8);
+  font: var(--type-label);
+}
+
+/* Status: icon plus the word, not color alone */
+.liveState {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-4);
+  font: var(--type-data-small);
+  color: var(--color-success);
+}
+
 @media (max-width: 1279px) {
+  .pair {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
   .glance {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }

@@ -91,7 +91,7 @@ Names, paths, parents and scope notes are defined once in `shared/content/admin-
 
 **Shell** (`components/layout/AdminShell.tsx`, used by the root layout): top bar (breadcrumb starting "Admin", the icon-only Light / Dark / System theme controls, and the Profile button that opens the Notifications panel), persistent sidebar, then the page. Under 768 px the sidebar becomes a Menu.
 
-**Sidebar (Phase A1):** the logo, then four groups: Dashboard; Content (Quiz Content, Guidance Content, Product Information, Knowledge Sources, Partner Highlights); Review Tasks (Guidance Rules Review, Claims & Safety Review); Metrics (Content Metrics). A group opens by default when you're on its page or one of its children; its toggle says "<Group> pages" and shows open or closed. Below the groups: a decorative illustration, the Profile card (sample identity, Account Support, Notifications) and Settings last. The order is defined once in `sidebarNav`, `sidebarProfileLinks` and `sidebarFooter` (`shared/content/admin-web-screens.ts`).
+**Sidebar (Phase B1, approved prototype):** dark green in both themes. Sections: Main (Dashboard, Content with its area pages, Review Tasks with its review pages, Metrics) and Account (Profile, Manage Team, Settings). Manage Team shows only to roles the permission matrix allows (`shared/content/permissions.ts`). Account Support is not in the navigation; its page stays reachable by URL and workspace search. Desktop collapses to a 92 px icon rail (saved per device); tablet shows the rail; phones open the sidebar as a modal drawer from Menu. The active item is a Compass Blue row with a light blue icon badge. Defined once in `adminNav` (`shared/content/admin-web-screens.ts`).
 
 ## 5. State
 
@@ -100,7 +100,7 @@ Names, paths, parents and scope notes are defined once in `shared/content/admin-
 | Seed data | `shared/content/*.ts` | Built into the pages | Same on every load |
 | Preview state (`?state=`) | Each screen's `StateFromUrl` | The address | Review aid only |
 | Screen state (search, filters, selected row, menus) | Each screen | Memory | Lost when you leave the page |
-| Theme (Light, Dark, System) | `components/layout/themeStore.ts`; controls in `ThemeSwitch.tsx` | Local storage `cuidance-admin-theme` | Applied before paint by a small script in the root layout |
+| Theme (Light or Dark; follows the device until chosen) | `components/layout/themeStore.ts`; one button in `ThemeToggle.tsx` | Local storage `cuidance-admin-theme` | Applied before paint by a small script in the root layout |
 | **Notifications read state (Phase A1)** | `components/layout/notificationsStore.ts`; sample items in `shared/content/notifications.ts` | Session storage `cuidance-admin-notifications-read` (one tab) | Which sample notifications were read, and whether the panel is open (memory only). Sample data, nothing is sent |
 | **Review decisions** | **BUILT (Week 11)** `app/_reviewLoop/reviewStore.ts`; rules in `shared/review-loop/review-decisions.ts` | Session storage `cuidance-admin-review-session` (one tab) | Only Review Task Detail records decisions and resets them. Dashboard, Review Tasks and Review Task Detail read them through `useReviewTasks()`. Also holds the one-time Dashboard message |
 | **Invitation and account setup** | **BUILT (Week 11)** `app/_onboarding/onboardingStore.ts`; rules in `shared/onboarding/onboarding-rules.ts`; wording in `shared/content/invitation.ts` and `account-setup.ts` | Session storage `cuidance-admin-onboarding` (one tab) | Holds the invitation answer, the full name and the work email. **Never the password.** Doesn't touch review decisions. Nothing is sent anywhere |
@@ -138,7 +138,7 @@ Full detail: `docs/Week-11/close-the-loop-implementation-plan.md`, sections 3 an
 | Store | `admin-web/app/_reviewLoop/reviewStore.ts` | `recordDecision`, `resetReviewSession`, `clearReviewNotice`, `useReviewTasks()` |
 | Screen | `admin-web/app/_reviewLoop/ReviewTaskDetailView.tsx` (+ `StateFromUrl`) | Summary, decision history, decision form, recorded decision, states (`?state=loading`, `error`, `unavailable`, `saving`, `save-error`, `success`) |
 | Dashboard message | `admin-web/app/_reviewLoop/DecisionNotice.tsx` | "Decision recorded" once after a decision |
-| Readers | `_dashboard/DashboardContent.tsx`, `_reviewTasks/ReviewTasksContent.tsx`, `_review/ReviewShared.tsx` | Counts, rows and statuses from `useReviewTasks()`; title links; the Approved status |
+| Readers | `_dashboard/DashboardHome.tsx` (Items for review count, Decision recorded notice), `_reviewTasks/ReviewTasksContent.tsx`, `_review/ReviewShared.tsx` | Counts, rows and statuses from `useReviewTasks()`; title links; the Approved status |
 | Breadcrumb | `components/layout/TopBar.tsx` | Admin / Review Tasks / *task* on detail pages |
 
 **Status changes:** Approve → Approved (note optional; the task leaves Needs attention and its count drops by 1). Request changes → Needs changes (note required; the task stays and counts don't change). A decided task shows its decision instead of the form until **Reset sample data**.

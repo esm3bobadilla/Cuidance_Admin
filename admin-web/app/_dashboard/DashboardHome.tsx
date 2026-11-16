@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { adminScreens } from '../../../shared/content/admin-web-screens';
-import { dashboardHomeCopy as copy, glanceCards, quickLinks, recentActivity } from '../../../shared/content/dashboard-home';
+import { dashboardHomeCopy as copy, glanceCards, liveStatus, quickLinks, recentActivity } from '../../../shared/content/dashboard-home';
 import { can, roleNames } from '../../../shared/content/permissions';
 import { isOpen } from '../../../shared/review-loop/review-decisions';
 import { uiSymbols } from '../../../shared/content/ui-symbols';
@@ -14,6 +14,7 @@ import glanceApp from '../../../shared/brand/illustrations/glance/glance-app.svg
 import glanceWeb from '../../../shared/brand/illustrations/glance/glance-web.svg';
 import { CuIcon } from '../../components/ui/CuIcon';
 import { HeroBanner } from '../../components/ui/HeroBanner';
+import { DecisionNotice } from '../_reviewLoop/DecisionNotice';
 import { useIdentity } from '../_data/identity';
 import { useReviewData } from '../_data/reviewData';
 import { isSupabaseMode } from '../_data/config';
@@ -92,6 +93,42 @@ export function DashboardQuickWork() {
               <CuIcon name={link.icon} variant="badge" size={32} />
               <span>{link.label}</span>
             </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
+// Week 11 review loop: "Decision recorded" shows once on the Dashboard after a decision
+export function DashboardDecisionNotice() {
+  const data = useReviewData();
+  return data.state === 'ready' ? <DecisionNotice tasks={data.tasks} /> : null;
+}
+
+export function DashboardLiveStatus() {
+  return (
+    <section className={styles.panel} aria-labelledby="live-status-heading">
+      <div className={styles.panelHeader}>
+        <h2 id="live-status-heading" className={styles.title}>
+          {copy.liveTitle}
+        </h2>
+        <p className={styles.note}>{copy.liveNote}</p>
+      </div>
+      <ul className={styles.live}>
+        {liveStatus.map((row) => (
+          <li key={row.key} className={styles.liveRow}>
+            <CuIcon name={row.icon} variant="badge" size={36} />
+            <span className={styles.liveText}>
+              <span className={styles.liveName}>
+                {row.name}
+                <span className={styles.liveState}>
+                  <CuIcon name="live" size={14} />
+                  {row.state}
+                </span>
+              </span>
+              <span className={styles.activityMeta}>{row.detail}</span>
+            </span>
           </li>
         ))}
       </ul>

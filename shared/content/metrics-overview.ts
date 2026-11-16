@@ -2,7 +2,7 @@
  * Metrics overview (Phase B1, approved prototype): App, Website and Communication tabs
  * with KPI cards, an engagement chart and top content. SAMPLE DATA ONLY: real
  * analytics are deferred (Team 03 decision). Internal content metrics, not participant
- * analytics. The existing Content metrics view stays as its own tab.
+ * analytics. Tabs match the approved prototype: App, Website and Communication.
  */
 export type Kpi = { key: string; label: string; value: string; change: string; art: 'visits' | 'guidance' | 'quiz' | 'push'; series: number[] };
 export type MetricsTab = { id: 'app' | 'web' | 'comms'; label: string; source: string; kpis: Kpi[]; top: { label: string; share: number }[] };
@@ -12,7 +12,6 @@ export const metricsOverviewCopy = {
   heroTitle: 'Metrics',
   heroSubtitle: 'View App, Website and Communication performance in one place.',
   tabsLabel: 'Metrics area',
-  contentTab: 'Content',
   kpiLabel: 'Key numbers. Choose a card to see its trend.',
   chartTitle: (kpi: string) => `${kpi} over time`,
   chartNote: (source: string) => `${source} · Last 8 weeks · Sample data`,

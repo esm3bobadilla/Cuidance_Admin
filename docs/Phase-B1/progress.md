@@ -25,10 +25,10 @@ switcher, prototype labels) are **not** implemented.
 Team 03 decisions applied first: single Light / Dark button; Compass Blue active nav (checked against the latest prototype code: `#1E2650` row, `#9AABFF` badge, no terracotta bar); explicit permission matrix with legacy values kept.
 
 - [x] A. Shell fixes and `shared/content/permissions.ts` (commit `d08d338`)
-- [x] B. Dashboard: hero, Today at a glance, Quick work, Review Queue (live in Supabase mode), Recent activity
+- [x] B. Dashboard: hero, Today at a glance, Quick work beside Live status (sample), Recent activity. Legacy Review Queue, Needs attention and Key Areas sections removed (Team 03, Nov 16). Items for review stays live in Supabase mode, and the Week 11 "Decision recorded" notice still shows after a decision
 - [x] C. Consolidated Content workspace: one list, search, Filter drawer, area tiles, New content drawer
 - [x] D. Review Tasks: hero, Assign a review task drawer, reassign rules, existing queue unchanged
-- [x] E. Metrics: App, Website, Communication sample tabs plus the existing Content metrics tab
+- [x] E. Metrics: App, Website and Communication sample tabs (the earlier Content metrics tab was removed to match the prototype)
 - [x] F. Profile, Manage Team (sample roster; live members and invitations in Supabase mode), Settings sections
 
 ## Checks run on this branch
@@ -44,7 +44,7 @@ Team 03 decisions applied first: single Light / Dark button; Compass Blue active
 2. **Navigation** links only to pages that exist. Communication (Email, Live) and the Profile and Manage Team pages join in their own phases.
 3. **Role names** in the app are unchanged until the role migration stages are approved (Supabase mode keeps Owner, Admin, Reviewer).
 4. **Phone top bar**: resolved. One Light / Dark button (icon only on phones) keeps the bar on one row.
-5. **Account Support** is not in the prototype nav. It stays in the Account section so the approved view is still reachable. Team 03 to confirm.
+5. **Account Support** removed from the sidebar (Team 03, Nov 16): not in the prototype navigation. The page stays reachable by URL and workspace search.
 6. **Sample identity** now reads "Super Admin (sample)" so designers see every page. Supabase mode reads the stored role through the legacy map.
 7. **Settings > Team access** now links to Manage Team, which holds the member list (and, in Supabase mode, the Phase A3 invitation tools).
 8. **Dashboard glance cards** for Email, App and Website show sample numbers labeled "Sample data", because those integrations are deferred.

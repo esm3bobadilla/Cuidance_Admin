@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, type ReactNode } from 'react';
+import { useState } from 'react';
 import { metricsOverviewCopy as copy, metricsTabs, type Kpi, type MetricsTab } from '../../../shared/content/metrics-overview';
 import kpiGuidance from '../../../shared/brand/illustrations/metrics/kpi-guidance.webp';
 import kpiPush from '../../../shared/brand/illustrations/metrics/kpi-push.webp';
@@ -134,8 +134,8 @@ function TabPanel({ tab }: { tab: MetricsTab }) {
   );
 }
 
-// App, Website and Communication (sample), then the existing internal Content metrics
-export function MetricsOverview({ contentView }: { contentView: ReactNode }) {
+// App, Website and Communication (approved prototype tabs), sample data only
+export function MetricsOverview() {
   return (
     <>
       <p className={styles.banner} role="note">
@@ -143,10 +143,7 @@ export function MetricsOverview({ contentView }: { contentView: ReactNode }) {
       </p>
       <Tabs
         label={copy.tabsLabel}
-        tabs={[
-          ...metricsTabs.map((tab) => ({ id: tab.id, label: tab.label, content: <TabPanel tab={tab} /> })),
-          { id: 'content', label: copy.contentTab, content: contentView },
-        ]}
+        tabs={metricsTabs.map((tab) => ({ id: tab.id, label: tab.label, content: <TabPanel tab={tab} /> }))}
       />
     </>
   );
