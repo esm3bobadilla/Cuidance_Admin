@@ -61,38 +61,80 @@
   --color-error: #70000e;
   --color-error-surface: #fbe9eb;
 
+  /* ---------- Shell (sidebar, rail, mobile drawer) ---------- */
+  /* Board: Grounded Green 800 / 700 / 600 / 200. The shell stays dark green in both themes. */
+  --color-shell: #21332b;
+  --color-shell-raised: #2e4a3a;
+  --color-shell-border: #42614f;
+  --color-shell-ink: #ffffff;
+  --color-shell-ink-muted: #cfddd4;
+  --color-shell-active-indicator: #f2a68f;
+  --color-shell-active-icon-surface: #9aabff;
+  --color-shell-active-icon-ink: #0b1440;
+  --color-shell-control-surface: #f3e6d3;
+  --color-shell-control-ink: #21332b;
+
+  /* ---------- Icon badges ---------- */
+  /* Solid badges (round icon on a filled circle). Same in both themes, like the shell. */
+  --color-badge-ink: #f4f2ec;
+  --color-badge-neutral: #111111;
+  --color-badge-green: #21332b;
+  --color-badge-green-700: #2e4a3a;
+  --color-badge-terracotta: #a8432a;
+  --color-badge-olive: #5e6b3d;
+  --color-badge-blue: #1f3fd1;
+
+  /* Soft badges (tinted circle, colored icon). Change with the theme. */
+  --color-soft-terracotta-surface: #fbe8e0;
+  --color-soft-terracotta-ink: #a8432a;
+  --color-soft-olive-surface: #f2f4e8;
+  --color-soft-olive-ink: #424d2c;
+  --color-soft-blue-surface: #e6eafb;
+  --color-soft-blue-ink: #1f3fd1;
+  --color-soft-green-surface: #e7f0ea;
+  --color-soft-green-ink: #21332b;
+
+  /* ---------- Roles ---------- */
+  /* Always paired with the role name in text. Never color alone. */
+  --color-role-super-admin: #a8432a;
+  --color-role-admin: #5e6b3d;
+  --color-role-team-member: #1f3fd1;
+
   /* ---------- Typography ---------- */
+
+  /* Text size setting (Settings > Accessibility & display). 1 = Default. */
+  --text-scale: 1;
 
   --font-display: var(--font-newsreader), serif;
   --font-body: var(--font-archivo), sans-serif;
 
   /* Display + heading styles (desktop values; tablet and mobile below) */
-  --type-display-xl: 400 56px / 64px var(--font-display);
-  --type-display: 400 40px / 46px var(--font-display);
-  --type-heading-1: 400 32px / 38px var(--font-display);
-  --type-heading-2: 400 28px / 34px var(--font-display);
-  --type-heading-3: 600 24px / 30px var(--font-body);
-  --type-heading-4: 600 20px / 26px var(--font-body);
-  --type-heading-5: 600 18px / 24px var(--font-body);
-  --type-heading-6: 600 16px / 24px var(--font-body);
+  --type-display-xl: 400 calc(56px * var(--text-scale)) / calc(64px * var(--text-scale)) var(--font-display);
+  --type-display: 400 calc(40px * var(--text-scale)) / calc(46px * var(--text-scale)) var(--font-display);
+  --type-heading-1: 400 calc(32px * var(--text-scale)) / calc(38px * var(--text-scale)) var(--font-display);
+  --type-heading-2: 400 calc(28px * var(--text-scale)) / calc(34px * var(--text-scale)) var(--font-display);
+  --type-heading-3: 600 calc(24px * var(--text-scale)) / calc(30px * var(--text-scale)) var(--font-body);
+  --type-heading-4: 600 calc(20px * var(--text-scale)) / calc(26px * var(--text-scale)) var(--font-body);
+  --type-heading-5: 600 calc(18px * var(--text-scale)) / calc(24px * var(--text-scale)) var(--font-body);
+  --type-heading-6: 600 calc(16px * var(--text-scale)) / calc(24px * var(--text-scale)) var(--font-body);
 
   /* Body styles */
-  --type-intro-body: 400 18px / 28px var(--font-body);
-  --type-body-large: 400 18px / 28px var(--font-body);
-  --type-body: 400 16px / 24px var(--font-body);
-  --type-body-small: 400 14px / 20px var(--font-body);
-  --type-body-xsmall: 400 13px / 18px var(--font-body);
+  --type-intro-body: 400 calc(18px * var(--text-scale)) / calc(28px * var(--text-scale)) var(--font-body);
+  --type-body-large: 400 calc(18px * var(--text-scale)) / calc(28px * var(--text-scale)) var(--font-body);
+  --type-body: 400 calc(16px * var(--text-scale)) / calc(24px * var(--text-scale)) var(--font-body);
+  --type-body-small: 400 calc(14px * var(--text-scale)) / calc(20px * var(--text-scale)) var(--font-body);
+  --type-body-xsmall: 400 calc(13px * var(--text-scale)) / calc(18px * var(--text-scale)) var(--font-body);
 
   /* UI + data styles */
-  --type-label: 600 15px / 20px var(--font-body);
-  --type-button: 600 15px / 20px var(--font-body);
-  --type-link: 600 15px / 20px var(--font-body);
-  --type-caption: 400 13px / 18px var(--font-body);
-  --type-breadcrumb: 400 13px / 18px var(--font-body);
-  --type-eyebrow: 600 12px / 16px var(--font-body);
+  --type-label: 600 calc(15px * var(--text-scale)) / calc(20px * var(--text-scale)) var(--font-body);
+  --type-button: 600 calc(15px * var(--text-scale)) / calc(20px * var(--text-scale)) var(--font-body);
+  --type-link: 600 calc(15px * var(--text-scale)) / calc(20px * var(--text-scale)) var(--font-body);
+  --type-caption: 400 calc(13px * var(--text-scale)) / calc(18px * var(--text-scale)) var(--font-body);
+  --type-breadcrumb: 400 calc(13px * var(--text-scale)) / calc(18px * var(--text-scale)) var(--font-body);
+  --type-eyebrow: 600 calc(12px * var(--text-scale)) / calc(16px * var(--text-scale)) var(--font-body);
   --type-eyebrow-tracking: 0.08em; /* always uppercase */
-  --type-data-large: 600 32px / 38px var(--font-body);
-  --type-data-small: 500 13px / 18px var(--font-body);
+  --type-data-large: 600 calc(32px * var(--text-scale)) / calc(38px * var(--text-scale)) var(--font-body);
+  --type-data-small: 500 calc(13px * var(--text-scale)) / calc(18px * var(--text-scale)) var(--font-body);
 
   /* ---------- Spacing ---------- */
 
@@ -126,6 +168,17 @@
   --layout-gutter: 24px;
   --layout-sidebar-width: 240px;
   --layout-table-row-min-height: 56px;
+  --layout-rail-width: 92px; /* tablet icon rail and collapsed desktop sidebar */
+  --layout-header-height: 76px;
+  --layout-drawer-width: 480px; /* side drawers (filters, editors, assign) */
+
+  /* ---------- Elevation ---------- */
+  /* Board: restrained elevation, sheets, dialogs and overlays only. Values from the
+     approved Admin Web prototype (Team 03 approval, Nov 2026). Never on cards. */
+  --shadow-drawer: -16px 0 40px rgba(22, 32, 27, 0.2);
+  --shadow-dialog: 0 24px 60px rgba(22, 32, 27, 0.22), 0 0 0 1px rgba(22, 32, 27, 0.12);
+  --shadow-nav-drawer: 0 0 40px rgba(0, 0, 0, 0.3);
+  --color-scrim: rgba(17, 17, 17, 0.45);
 }
 
 /* ---------- Color: dark mode ---------- */
@@ -171,6 +224,19 @@
     --color-alert-surface: #3a2918;
     --color-error: #eb9ba6;
     --color-error-surface: #3d0b14;
+
+    --color-soft-terracotta-surface: #321811;
+    --color-soft-terracotta-ink: #f2a68f;
+    --color-soft-olive-surface: #262d1c;
+    --color-soft-olive-ink: #bccb8e;
+    --color-soft-blue-surface: #1e2650;
+    --color-soft-blue-ink: #b0beff;
+    --color-soft-green-surface: #2e4a3a;
+    --color-soft-green-ink: #cfddd4;
+
+    --color-role-super-admin: #f2a68f;
+    --color-role-admin: #bccb8e;
+    --color-role-team-member: #b0beff;
   }
 }
 
@@ -209,6 +275,19 @@
   --color-alert-surface: #3a2918;
   --color-error: #eb9ba6;
   --color-error-surface: #3d0b14;
+
+  --color-soft-terracotta-surface: #321811;
+  --color-soft-terracotta-ink: #f2a68f;
+  --color-soft-olive-surface: #262d1c;
+  --color-soft-olive-ink: #bccb8e;
+  --color-soft-blue-surface: #1e2650;
+  --color-soft-blue-ink: #b0beff;
+  --color-soft-green-surface: #2e4a3a;
+  --color-soft-green-ink: #cfddd4;
+
+  --color-role-super-admin: #f2a68f;
+  --color-role-admin: #bccb8e;
+  --color-role-team-member: #b0beff;
 }
 
 /* Browser-drawn parts (scrollbars, form controls) follow the chosen theme too */
@@ -223,11 +302,11 @@
 /* ---------- Tablet: 768-1279px ---------- */
 @media (max-width: 1279px) {
   :root {
-    --type-display-xl: 400 48px / 56px var(--font-display);
-    --type-display: 400 36px / 42px var(--font-display);
-    --type-heading-1: 400 30px / 36px var(--font-display);
-    --type-heading-2: 400 26px / 32px var(--font-display);
-    --type-heading-3: 600 22px / 28px var(--font-body);
+    --type-display-xl: 400 calc(48px * var(--text-scale)) / calc(56px * var(--text-scale)) var(--font-display);
+    --type-display: 400 calc(36px * var(--text-scale)) / calc(42px * var(--text-scale)) var(--font-display);
+    --type-heading-1: 400 calc(30px * var(--text-scale)) / calc(36px * var(--text-scale)) var(--font-display);
+    --type-heading-2: 400 calc(26px * var(--text-scale)) / calc(32px * var(--text-scale)) var(--font-display);
+    --type-heading-3: 600 calc(22px * var(--text-scale)) / calc(28px * var(--text-scale)) var(--font-body);
 
     --layout-outer-margin: 32px;
   }
@@ -236,18 +315,49 @@
 /* ---------- Mobile: below 768px ---------- */
 @media (max-width: 767px) {
   :root {
-    --type-display-xl: 400 40px / 46px var(--font-display);
-    --type-display: 400 32px / 38px var(--font-display);
-    --type-heading-1: 400 28px / 34px var(--font-display);
-    --type-heading-2: 400 24px / 30px var(--font-display);
-    --type-heading-3: 600 20px / 26px var(--font-body);
-    --type-heading-4: 600 18px / 24px var(--font-body);
-    --type-heading-5: 600 16px / 22px var(--font-body);
-    --type-heading-6: 600 15px / 20px var(--font-body);
-    --type-intro-body: 400 16px / 24px var(--font-body);
-    --type-body-large: 400 16px / 24px var(--font-body);
+    --type-display-xl: 400 calc(40px * var(--text-scale)) / calc(46px * var(--text-scale)) var(--font-display);
+    --type-display: 400 calc(32px * var(--text-scale)) / calc(38px * var(--text-scale)) var(--font-display);
+    --type-heading-1: 400 calc(28px * var(--text-scale)) / calc(34px * var(--text-scale)) var(--font-display);
+    --type-heading-2: 400 calc(24px * var(--text-scale)) / calc(30px * var(--text-scale)) var(--font-display);
+    --type-heading-3: 600 calc(20px * var(--text-scale)) / calc(26px * var(--text-scale)) var(--font-body);
+    --type-heading-4: 600 calc(18px * var(--text-scale)) / calc(24px * var(--text-scale)) var(--font-body);
+    --type-heading-5: 600 calc(16px * var(--text-scale)) / calc(22px * var(--text-scale)) var(--font-body);
+    --type-heading-6: 600 calc(15px * var(--text-scale)) / calc(20px * var(--text-scale)) var(--font-body);
+    --type-intro-body: 400 calc(16px * var(--text-scale)) / calc(24px * var(--text-scale)) var(--font-body);
+    --type-body-large: 400 calc(16px * var(--text-scale)) / calc(24px * var(--text-scale)) var(--font-body);
 
     --layout-outer-margin: 16px;
     --layout-gutter: 16px;
+  }
+}
+
+/* ---------- Display settings (Settings > Accessibility & display) ---------- */
+/* Set on <html> by the display boot script, before the page draws. */
+
+:root[data-text-size='large'] {
+  --text-scale: 1.125;
+}
+
+:root[data-text-size='larger'] {
+  --text-scale: 1.25;
+}
+
+:root[data-density='compact'] {
+  --layout-table-row-min-height: 48px;
+}
+
+/* High contrast: muted text becomes full ink, borders become strong borders.
+   Follows the device ("Increase contrast") unless someone picks Standard. */
+:root[data-contrast='more'] {
+  --color-ink-muted: var(--color-ink);
+  --color-border: var(--color-border-strong);
+  --color-shell-ink-muted: #ffffff;
+}
+
+@media (prefers-contrast: more) {
+  :root:not([data-contrast='standard']) {
+    --color-ink-muted: var(--color-ink);
+    --color-border: var(--color-border-strong);
+    --color-shell-ink-muted: #ffffff;
   }
 }

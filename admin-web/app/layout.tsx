@@ -3,6 +3,7 @@ import { Archivo, Newsreader } from 'next/font/google';
 import type { ReactNode } from 'react';
 import { AdminShell } from '../components/layout/AdminShell';
 import { themeBootScript } from '../../shared/content/theme';
+import { displayBootScript } from '../../shared/content/display-settings';
 import favicon16 from '../../shared/brand/logo/png/derived/cuidance-favicon-16x16.png';
 import favicon32 from '../../shared/brand/logo/png/derived/cuidance-favicon-32x32.png';
 import favicon48 from '../../shared/brand/logo/png/derived/cuidance-favicon-48x48.png';
@@ -52,6 +53,8 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <head>
         {/* Applies a saved Light or Dark choice before the page draws */}
         <script dangerouslySetInnerHTML={{ __html: themeBootScript }} />
+        {/* Applies saved display settings (text size, contrast, motion, focus) the same way */}
+        <script dangerouslySetInnerHTML={{ __html: displayBootScript }} />
       </head>
       <body>
         <a className="skip-link" href="#main-content">

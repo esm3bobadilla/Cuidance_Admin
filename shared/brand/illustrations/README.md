@@ -16,3 +16,20 @@ Rules:
 - The black hands need a light backdrop: Warm Care (`--color-surface-warm`) in light mode, or the light-green brand surface in dark mode.
 - Don't create new illustration artwork here; ask Team 03 for new assets.
 - Logo files stay in `../logo/` and follow that folder's README.
+
+## Added from the approved Admin Web prototype (Nov 16, 2026)
+
+Team 03 approved the standalone Admin Web prototype as a source of production assets.
+These files were extracted from it unchanged (no redrawing, recoloring or cropping).
+
+| File | Planned use |
+| --- | --- |
+| `illus-arch-drop.webp`, `illus-bowl-lid.webp`, `illus-drop-bowl.webp`, `illus-sun-bowl.webp` | Role and section illustrations (Admin role uses arch-drop) |
+| `mark-sprig.webp` | Small decorative sprig mark |
+| `assign-drawer.webp` | "Assign a review task" drawer |
+| `empty/empty-content.webp`, `empty/empty-review-tasks.webp` | Empty states (provisional until Team 03 confirms Empty states) |
+| `content-categories/cat-*.webp` | Content workspace category tiles |
+| `metrics/kpi-*.webp` | Metrics cards |
+| `glance/glance-*.svg` | Dashboard "Today at a glance" cards. Checked: plain shapes, no scripts or links |
+
+Hero photographs for page banners are in `../heroes/`.
