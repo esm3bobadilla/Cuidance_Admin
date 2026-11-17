@@ -1,10 +1,12 @@
-/* Shared top bar, following the current prototype. Tokens only. */
+/* Shared top bar (Phase B1, approved prototype). Tokens only. */
 .bar {
   display: flex;
   align-items: center;
   gap: var(--space-16);
+  min-height: var(--layout-header-height);
   padding: var(--space-12) var(--layout-outer-margin);
   border-bottom: var(--stroke-default) solid var(--color-border);
+  background: var(--color-surface);
 }
 
 /* Phone only: Menu and the logo */
@@ -12,13 +14,43 @@
   display: none;
 }
 
-/* Hidden without JavaScript (TopBar.tsx), where the list is always shown */
-.menuButton {
-  display: flex;
+.menuButton,
+.searchToggle {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: var(--size-touch-target);
+  height: var(--size-touch-target);
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  cursor: pointer;
+}
+
+.searchToggle {
+  display: none;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+}
+
+.logo :global(.app-logo) {
+  width: auto;
+  height: calc(var(--space-24) + var(--space-4));
 }
 
 .crumbs {
   flex: 1;
+  min-width: 0;
+}
+
+.search {
+  display: flex;
+  flex: 0 1 360px;
   min-width: 0;
 }
 
@@ -32,21 +64,45 @@
   margin-left: auto;
 }
 
-/* Phones: Menu, logo, Theme and profile. When the text buttons and the 160 px
-   logo don't fit on one line, Theme and profile move to a second line, on the right. */
+/* Tablet: the breadcrumb gives way to search first */
+@media (max-width: 1279px) {
+  .search {
+    flex-basis: 280px;
+  }
+}
+
+/* Phones: Menu, logo, Search, Theme and profile. Search opens a full-width row below. */
 @media (max-width: 767px) {
   .bar {
     flex-wrap: wrap;
-    gap: var(--space-12);
+    gap: var(--space-8);
   }
 
   .start {
     display: flex;
     align-items: center;
-    gap: var(--space-12);
+    gap: var(--space-8);
   }
 
   .crumbs {
     display: none;
+  }
+
+  .searchToggle {
+    display: inline-flex;
+  }
+
+  .search {
+    display: none;
+    order: 1;
+    flex: 1 0 100%;
+  }
+
+  .search > * {
+    max-width: none;
+  }
+
+  .bar[data-search-open='true'] .search {
+    display: flex;
   }
 }

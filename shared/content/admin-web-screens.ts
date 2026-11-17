@@ -6,6 +6,8 @@
  * open wireframe questions for Team 03.
  */
 
+import type { CuIconName } from '../brand/icons/cu-icons';
+
 export type AdminScreenId =
   | 'dashboard'
   | 'content'
@@ -21,6 +23,8 @@ export type AdminScreenId =
   | 'account-support'
   | 'review-tasks'
   | 'settings'
+  | 'profile'
+  | 'manage-team'
   // Week 11 feature 2 and Phase A1: before the person enters Admin Web (no sidebar)
   | 'sign-in'
   | 'create-account'
@@ -115,10 +119,10 @@ export const adminScreens: Record<AdminScreenId, AdminScreen> = {
   },
   'content-metrics': {
     id: 'content-metrics',
-    name: 'Content Metrics',
+    name: 'Metrics',
     path: '/content-metrics/',
     parent: 'dashboard',
-    scopeNote: 'A limited internal view of content activity. No analytics expansion.',
+    scopeNote: 'App, Website and Communication numbers (sample data, not connected). Real analytics are deferred.',
   },
   'account-support': {
     id: 'account-support',
@@ -133,6 +137,20 @@ export const adminScreens: Record<AdminScreenId, AdminScreen> = {
     path: '/review-tasks/',
     parent: 'dashboard',
     scopeNote: 'Tasks for the Cuidance team to review content before it reaches the public app.',
+  },
+  profile: {
+    id: 'profile',
+    name: 'Profile',
+    path: '/profile/',
+    parent: 'dashboard',
+    scopeNote: 'Your profile, notifications and recent account activity.',
+  },
+  'manage-team': {
+    id: 'manage-team',
+    name: 'Manage Team',
+    path: '/manage-team/',
+    parent: 'dashboard',
+    scopeNote: 'Workspace access, roles and invitations for the Cuidance team. Super Admins and Admins only.',
   },
   settings: {
     id: 'settings',
@@ -183,35 +201,88 @@ export function isSetupPath(pathname: string) {
 // Shown on every screen until its content is built
 export const structureOnlyNote = 'Structure only. Screen content and data are not built yet.';
 
-// Persistent sidebar, in display order (Phase A1, Team 03, Nov 11, 2026): four groups,
-// then the Profile card (Account Support and Notifications) and Settings at the bottom.
-// Routes and breadcrumbs are unchanged: grouping here is navigation only.
-// Commercial Content keeps its route but stays out of the sidebar until Team 03 confirms it.
-export type SidebarGroupId = 'dashboard' | 'content' | 'review-tasks' | 'metrics';
-
-export type SidebarItem = {
-  group: SidebarGroupId;
-  // The screen the group's own link opens. Metrics has no page of its own, so it's a toggle only.
-  id?: AdminScreenId;
+// Admin Web navigation (Phase B1 shell, from the approved Admin Web prototype).
+// Sections and icons follow the prototype. The Communication section (Email, Live App
+// and Brand Website) and the Profile and Manage Team pages join when those phases are
+// approved and built; until then the nav only links to pages that exist. Account Support
+// is not in the prototype navigation (Team 03, Nov 16, 2026): its page stays reachable by
+// URL and workspace search only.
+export type NavItem = {
+  // Unique key, also used for the expand state and element ids
+  key: string;
+  // The page the item opens
+  id: AdminScreenId;
   label: string;
+  icon: CuIconName;
+  // Pages listed under the item when it's expanded
   children?: AdminScreenId[];
+  // Shown only to roles the permission matrix allows (shared/content/permissions.ts)
+  requires?: 'seeManageTeam';
 };
 
-export const sidebarNav: SidebarItem[] = [
-  { group: 'dashboard', id: 'dashboard', label: 'Dashboard' },
+export type NavSection = { key: string; label: string; items: NavItem[] };
+
+export const adminNav: NavSection[] = [
   {
-    group: 'content',
-    id: 'content',
-    label: 'Content',
-    children: ['quiz-content', 'guidance-content', 'product-information', 'knowledge-sources', 'partner-highlights'],
+    key: 'main',
+    label: 'Main',
+    items: [
+      { key: 'dashboard', id: 'dashboard', label: 'Dashboard', icon: 'home' },
+      {
+        key: 'content',
+        id: 'content',
+        label: 'Content',
+        icon: 'doc',
+        children: ['quiz-content', 'guidance-content', 'product-information', 'knowledge-sources', 'partner-highlights'],
+      },
+      {
+        key: 'review-tasks',
+        id: 'review-tasks',
+        label: 'Review Tasks',
+        icon: 'review',
+        children: ['guidance-rules-review', 'claims-safety-review'],
+      },
+      { key: 'metrics', id: 'content-metrics', label: 'Metrics', icon: 'bars' },
+    ],
   },
-  { group: 'review-tasks', id: 'review-tasks', label: 'Review Tasks', children: ['guidance-rules-review', 'claims-safety-review'] },
-  { group: 'metrics', label: 'Metrics', children: ['content-metrics'] },
+  {
+    key: 'account',
+    label: 'Account',
+    items: [
+      { key: 'profile', id: 'profile', label: 'Profile', icon: 'person' },
+      { key: 'manage-team', id: 'manage-team', label: 'Manage Team', icon: 'team', requires: 'seeManageTeam' },
+      { key: 'settings', id: 'settings', label: 'Settings', icon: 'gear' },
+    ],
+  },
 ];
 
-// Under the Profile card, then Settings last
-export const sidebarProfileLinks: AdminScreenId[] = ['account-support'];
-export const sidebarFooter: AdminScreenId = 'settings';
+export const navCopy = {
+  navLabel: 'Admin navigation',
+  collapse: 'Collapse sidebar',
+  expand: 'Expand sidebar',
+  openMenu: 'Open menu',
+  closeMenu: 'Close menu',
+  menuDialogLabel: 'Admin menu',
+  home: 'Cuidance Admin home',
+  expandItem: (label: string) => `Show ${label} pages`,
+  collapseItem: (label: string) => `Hide ${label} pages`,
+  signedInAs: 'Signed in as',
+};
+
+export const searchCopy = {
+  label: 'Search workspace',
+  placeholder: 'Search workspace',
+  openSearch: 'Open search',
+  closeSearch: 'Close search',
+  noResults: (query: string) => `No pages match "${query}".`,
+  resultCount: (count: number) => (count === 1 ? '1 page found.' : `${count} pages found.`),
+  hint: 'Searches page names and descriptions in Admin Web.',
+};
+
+// Pages the workspace search can find: every screen except the setup pages
+export function searchableScreens(): AdminScreen[] {
+  return Object.values(adminScreens).filter((screen) => !setupScreens.includes(screen.id));
+}
 
 export function childScreens(id: AdminScreenId): AdminScreen[] {
   return Object.values(adminScreens).filter((screen) => screen.parent === id);
@@ -231,7 +302,6 @@ export const shellCopy = {
   breadcrumbRoot: 'Admin',
   // Eyebrow on screens aligned with the hi-fi references
   internalToolEyebrow: 'Internal tool',
-  menuButton: 'Menu',
   // Breadcrumb names for the two pages that aren't route-map screens
   devPreviewName: 'Component Preview',
   notFoundName: 'Page not found',

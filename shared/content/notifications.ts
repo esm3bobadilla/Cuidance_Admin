@@ -44,7 +44,7 @@ export const notificationsSeed: SampleNotification[] = [
     id: 'n4',
     message: 'Team member F’s invitation is still pending.',
     when: 'Oct 30, 2026',
-    href: '/settings/',
+    href: '/manage-team/',
     unread: false,
   },
 ];

@@ -1,11 +1,19 @@
-import { shellCopy } from '../../../shared/content/admin-web-screens';
-import { ScreenPage, screenMetadata } from '../_screens/ScreenPage';
+import { contentWorkspaceCopy as copy } from '../../../shared/content/content-workspace';
+import heroContent from '../../../shared/brand/heroes/hero-content.jpg';
+import { HeroBanner } from '../../components/ui/HeroBanner';
+import { ContentWorkspace } from '../_contentWorkspace/ContentWorkspace';
+import { screenMetadata } from '../_screens/ScreenPage';
 
 export const metadata = screenMetadata('content');
 
-// Content landing page (C4 still open): the six content pages as one panel of link tiles,
-// the same pattern as the Dashboard's Key Areas. No hi-fi shows this page (PROVISIONAL).
-// Commercial Content is approved (C7) and keeps its tile.
+// Consolidated Content workspace (Phase B1, Team 03 decision): one list of every content
+// item, with search, filters and a New content editor. Area pages keep the details.
 export default function Page() {
-  return <ScreenPage id="content" eyebrow={shellCopy.internalToolEyebrow} childLayout="panel" showStructureNote={false} />;
+  return (
+    <main className="shell">
+      <HeroBanner title={copy.heroTitle} description={copy.heroSubtitle} image={heroContent} />
+      <p className="note">{copy.sampleNote}</p>
+      <ContentWorkspace />
+    </main>
+  );
 }

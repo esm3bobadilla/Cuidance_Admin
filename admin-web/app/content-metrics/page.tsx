@@ -1,18 +1,17 @@
-import { Suspense } from 'react';
-import { shellCopy } from '../../../shared/content/admin-web-screens';
-import { ContentMetricsView } from '../_metrics/ContentMetricsView';
-import { StateFromUrl } from '../_metrics/StateFromUrl';
-import { ScreenPage, screenMetadata } from '../_screens/ScreenPage';
+import { metricsOverviewCopy as copy } from '../../../shared/content/metrics-overview';
+import heroMetrics from '../../../shared/brand/heroes/hero-metrics.jpg';
+import { HeroBanner } from '../../components/ui/HeroBanner';
+import { MetricsOverview } from '../_metrics/MetricsOverview';
+import { screenMetadata } from '../_screens/ScreenPage';
 
 export const metadata = screenMetadata('content-metrics');
 
-// Aligned with the approved Week 9 hi-fi. Sample data only; the static page works without JavaScript.
+// Metrics (Phase B1, approved prototype): App, Website and Communication tabs, sample numbers only
 export default function Page() {
   return (
-    <ScreenPage id="content-metrics" eyebrow={shellCopy.internalToolEyebrow}>
-      <Suspense fallback={<ContentMetricsView state="ready" />}>
-        <StateFromUrl />
-      </Suspense>
-    </ScreenPage>
+    <main className="shell">
+      <HeroBanner eyebrow={copy.heroEyebrow} title={copy.heroTitle} description={copy.heroSubtitle} image={heroMetrics} />
+      <MetricsOverview />
+    </main>
   );
 }

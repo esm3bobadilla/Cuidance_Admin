@@ -12,7 +12,7 @@ export const profileCopy = {
   initials: 'TM',
   buttonLabel: 'Profile and notifications',
   name: 'Team member',
-  role: 'Reviewer (sample)',
+  role: 'Super Admin (sample)',
   status: "Sample account. Sign-in isn't connected yet.",
   cardLabel: 'Profile',
   signOut: 'Sign out',

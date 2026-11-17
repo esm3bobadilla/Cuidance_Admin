@@ -1,0 +1,114 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-24);
+  padding: var(--space-24);
+  border: var(--stroke-default) solid var(--color-border);
+  border-radius: var(--radius-medium);
+  background: var(--color-surface);
+}
+
+.intro {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+.title {
+  font: var(--type-heading-2);
+}
+
+.note,
+.status {
+  font: var(--type-body-small);
+  color: var(--color-ink-muted);
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.legend {
+  padding: 0;
+  margin-bottom: var(--space-8);
+  font: var(--type-label);
+}
+
+.options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-8);
+}
+
+/* Selected: Compass Blue border and surface plus the filled radio dot (not color alone) */
+.option {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-8);
+  min-height: var(--size-touch-target);
+  padding: 0 var(--space-16);
+  border: var(--stroke-default) solid var(--color-border-strong);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  font: var(--type-label);
+  cursor: pointer;
+}
+
+.option:hover {
+  background: var(--color-surface-warm);
+}
+
+.option:has(.radio:checked) {
+  border-color: var(--color-selected);
+  background: var(--color-selected-surface);
+  color: var(--color-selected);
+}
+
+.option:has(.radio:focus-visible) {
+  outline: var(--stroke-strong) solid var(--color-accent);
+  outline-offset: var(--stroke-strong);
+}
+
+.radio {
+  width: var(--space-16);
+  height: var(--space-16);
+  margin: 0;
+  accent-color: var(--color-selected);
+}
+
+.radio:focus-visible {
+  outline: none;
+}
+
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-16);
+}
+
+.reset {
+  min-height: var(--size-control-height);
+  padding: var(--space-12) var(--space-24);
+  border: var(--stroke-default) solid var(--color-border-strong);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font: var(--type-button);
+  cursor: pointer;
+}
+
+.reset:hover {
+  background: var(--color-surface-warm);
+}
+
+@media (max-width: 767px) {
+  .section {
+    padding: var(--space-16);
+  }
+}

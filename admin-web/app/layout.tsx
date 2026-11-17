@@ -3,6 +3,7 @@ import { Archivo, Newsreader } from 'next/font/google';
 import type { ReactNode } from 'react';
 import { AdminShell } from '../components/layout/AdminShell';
 import { themeBootScript } from '../../shared/content/theme';
+import { displayBootScript } from '../../shared/content/display-settings';
 import favicon16 from '../../shared/brand/logo/png/derived/cuidance-favicon-16x16.png';
 import favicon32 from '../../shared/brand/logo/png/derived/cuidance-favicon-32x32.png';
 import favicon48 from '../../shared/brand/logo/png/derived/cuidance-favicon-48x48.png';
@@ -52,24 +53,19 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <head>
         {/* Applies a saved Light or Dark choice before the page draws */}
         <script dangerouslySetInnerHTML={{ __html: themeBootScript }} />
+        {/* Applies saved display settings (text size, contrast, motion, focus) the same way */}
+        <script dangerouslySetInnerHTML={{ __html: displayBootScript }} />
       </head>
       <body>
         <a className="skip-link" href="#main-content">
           Skip to main content
         </a>
-        {/* Team 03 approved v04 derived lockups, used as supplied. CSS in globals.css shows the
-            one that matches the chosen theme (System, Light or Dark):
-            - Sidebar (Grounded Green in the light theme, light green in the dark theme):
-              the Quiet Paper reversed lockup in light, the Grounded Green lockup in dark.
-            - Phone top row (on the page background): the Grounded Green lockup in light,
-              the Quiet Paper reversed lockup in dark. */}
+        {/* Team 03 approved v04 derived lockups, used as supplied.
+            - Sidebar: the shell is dark green in both themes, so always the Quiet Paper reversed lockup.
+            - Phone top bar (on the page): the Grounded Green lockup in light, the reversed lockup in dark;
+              CSS in globals.css shows the one that matches the theme (System, Light or Dark). */}
         <AdminShell
-          sidebarLogo={
-            <>
-              <img className="app-logo app-logo-light-theme" src={lockupReversed.src} width={lockupReversed.width} height={lockupReversed.height} alt="Cuidance" />
-              <img className="app-logo app-logo-dark-theme" src={lockupPrimary.src} width={lockupPrimary.width} height={lockupPrimary.height} alt="Cuidance" />
-            </>
-          }
+          sidebarLogo={<img className="app-logo" src={lockupReversed.src} width={lockupReversed.width} height={lockupReversed.height} alt="Cuidance" />}
           barLogo={
             <>
               <img className="app-logo app-logo-light-theme" src={lockupPrimary.src} width={lockupPrimary.width} height={lockupPrimary.height} alt="Cuidance" />

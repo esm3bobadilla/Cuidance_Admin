@@ -1,20 +1,21 @@
-import { Suspense } from 'react';
-import { teamAccessCopy } from '../../../shared/content/team-access';
-import { TeamAccessStateFromUrl } from '../_settings/TeamAccessStateFromUrl';
-import { TeamAccessView } from '../_settings/TeamAccessView';
-import { ScreenPage, screenMetadata } from '../_screens/ScreenPage';
+import { settingsPageCopy as copy } from '../../../shared/content/account-pages';
+import { PageHeader } from '../../components/layout/PageHeader';
+import { NotificationAndTeamSettings, WorkspaceAndReviewSettings } from '../_account/SettingsSections';
+import { DisplaySettingsSection } from '../_settings/DisplaySettingsSection';
+import { screenMetadata } from '../_screens/ScreenPage';
 
 export const metadata = screenMetadata('settings');
 
-// Settings: static Team Access (prototype F09) and the approved roles policy card.
-// No new route: Team Access sits on Settings until Team 03 approves its own route (D10).
+// Settings (Phase B1, approved prototype): Workspace, Review settings, Accessibility &
+// display, Notifications & security, and Team access (which now opens Manage Team).
 export default function Page() {
   return (
-    <ScreenPage id="settings" eyebrow={teamAccessCopy.eyebrow}>
-      {/* The static page shows every member, so it works without JavaScript */}
-      <Suspense fallback={<TeamAccessView state="ready" />}>
-        <TeamAccessStateFromUrl />
-      </Suspense>
-    </ScreenPage>
+    <main className="shell">
+      <PageHeader title={copy.title} description={copy.description} />
+      <p className="note">{copy.sampleNote}</p>
+      <WorkspaceAndReviewSettings />
+      <DisplaySettingsSection />
+      <NotificationAndTeamSettings />
+    </main>
   );
 }

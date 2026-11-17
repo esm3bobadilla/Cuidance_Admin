@@ -1,0 +1,125 @@
+/*
+ * Profile, Manage Team and Settings (Phase B1, approved prototype). Wording only.
+ * Sample mode: nothing here is saved, sent or enforced. Invitations in sample mode are
+ * never sent. In Supabase mode, Manage Team uses the existing live members and
+ * invitation tools (Phase A3), and Row Level Security stays the real boundary.
+ */
+import type { AdminRoleId } from './permissions';
+
+export const profilePageCopy = {
+  title: 'Profile',
+  description: 'Manage your profile and review recent account activity.',
+  cardEyebrow: 'Profile',
+  uploadPhoto: 'Profile photo (optional)',
+  editProfile: 'Edit profile',
+  editTitle: 'Edit profile',
+  editDescription: 'Sample mode: changes stay on this page and are not saved.',
+  displayName: 'Display name',
+  displayNameError: 'Add a display name.',
+  save: 'Save changes',
+  cancel: 'Cancel',
+  saved: 'Profile updated on this page. Sample mode, not saved.',
+  notificationsEyebrow: 'Notifications',
+  unread: (n: number) => (n === 0 ? 'No unread updates' : n === 1 ? '1 unread update' : `${n} unread updates`),
+  markAllRead: 'Mark all read',
+  notificationSettings: 'Notification settings',
+  activityTitle: 'Recent activity',
+  activityNote: 'Sample data.',
+  activity: [
+    { what: 'Updated ingredient guidance', area: 'Content', when: '12 min ago' },
+    { what: 'Approved partner disclosure', area: 'Review task', when: 'Yesterday' },
+    { what: 'Drafted a welcome email', area: 'Communication (draft only)', when: 'Oct 26, 2026' },
+  ],
+};
+
+export const manageTeamCopy = {
+  title: 'Manage Team',
+  description: 'Control workspace access, roles and invitations.',
+  barEyebrow: 'Team access',
+  barText: 'Invite and manage the people who work in Cuidance Admin.',
+  invite: 'Invite member',
+  noAccessTitle: 'Manage Team is for Super Admins and Admins',
+  noAccessBody: 'Ask a Super Admin or Admin if you need someone added or their access changed.',
+  summary: (members: number, pending: number) => `${members} members · ${pending} pending invite${pending === 1 ? '' : 's'}`,
+  searchLabel: 'Search team',
+  roleFilter: 'Filter by role',
+  allRoles: 'All roles',
+  caption: 'Team members (sample data)',
+  columns: { member: 'Member', role: 'Role', status: 'Status', lastActive: 'Last active', actions: 'Actions' },
+  you: '(you)',
+  changeRole: (name: string) => `Change role for ${name}`,
+  remove: 'Remove',
+  removeLabel: (name: string) => `Remove ${name}`,
+  noActions: 'No changes available',
+  finalSuperAdmin: 'The final Super Admin can’t be changed or removed.',
+  roleChanged: (name: string, role: string) => `${name} is now ${role}. Sample mode, not saved.`,
+  removeTitle: (name: string) => `Remove ${name}?`,
+  removeBody: 'They lose access to Cuidance Admin. Sample mode: nothing is removed.',
+  removeConfirm: 'Remove member',
+  removeCancel: 'Keep member',
+  removed: (name: string) => `${name} removed on this page. Sample mode, not saved.`,
+  noResults: 'No team members match your search.',
+  rolesTitle: 'What each role can do',
+  inviteDrawer: {
+    eyebrow: 'Team access',
+    title: 'Invite member',
+    description: 'Sample mode: no invitation is sent. Use example.com addresses for testing.',
+    email: 'Email address',
+    emailHelper: 'Invitations expire after 7 days.',
+    emailError: 'Enter an email address like name@example.com.',
+    role: 'Role',
+    roleHelper: (roles: string) => `You can invite ${roles}.`,
+    send: 'Add invitation',
+    cancel: 'Cancel',
+    added: (email: string) => `Invitation added for ${email}. Sample mode, nothing was sent.`,
+  },
+};
+
+export const roleIllustration: Record<AdminRoleId, 'hands-jar' | 'arch-drop' | 'leaf-hand'> = {
+  super_admin: 'hands-jar',
+  admin: 'arch-drop',
+  team_member: 'leaf-hand',
+};
+
+export const settingsPageCopy = {
+  title: 'Settings',
+  description: 'Workspace, review, display, notification and access settings for Admin Web.',
+  sampleNote: 'Sample mode: workspace, review and notification settings stay on this page and are not saved. Display settings are saved in this browser.',
+  workspace: {
+    title: 'Workspace',
+    name: 'Workspace name',
+    siteUrl: 'Admin site URL',
+    siteUrlHelper: 'Set by the team in the hosting settings. Shown for reference.',
+    lockedNote: 'Only Super Admins can change workspace settings.',
+  },
+  review: {
+    title: 'Review settings',
+    window: 'Default review window',
+    windows: ['3 days', '7 days', '14 days'],
+    checklist: 'Require every checklist item before approval',
+    checklistHint: 'Reviewers confirm each item before they can approve.',
+    notes: 'Require reviewer notes when requesting changes',
+    notesHint: 'Authors see why changes were requested.',
+    reassign: 'Let Team Members reassign tasks they sent',
+    reassignHint: 'Approved by Team 03. Super Admins and Admins can always reassign.',
+    separation: 'Nobody reviews or approves their own content. This rule is always on.',
+  },
+  notifications: {
+    title: 'Notifications & security',
+    reminders: 'Review task reminders',
+    remindersHint: 'Daily reminder for tasks due soon',
+    approvals: 'Content approval alerts',
+    approvalsHint: 'When your content is approved or returned',
+    weekly: 'Weekly metrics summary',
+    weeklyHint: 'Monday digest (sample data)',
+    deliveryNote: 'Email delivery is not connected yet, so nothing is sent.',
+    timeout: 'Session timeout',
+    timeouts: ['15 minutes', '30 minutes', '1 hour'],
+  },
+  team: {
+    title: 'Team access',
+    text: 'Invite people, change roles and review access on Manage Team.',
+    open: 'Open Manage Team',
+    teamMemberText: 'Ask a Super Admin or Admin to change who has access.',
+  },
+};

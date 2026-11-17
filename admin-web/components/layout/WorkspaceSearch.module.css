@@ -1,0 +1,108 @@
+/* Workspace search pill (approved prototype). Tokens only. */
+.search {
+  position: relative;
+  width: 100%;
+  max-width: 360px;
+}
+
+.field {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  min-height: var(--size-control-height);
+  padding: 0 var(--space-16) 0 var(--space-8);
+  border: var(--stroke-default) solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-warm);
+  color: var(--color-ink-muted);
+}
+
+.field:hover {
+  border-color: var(--color-border-strong);
+}
+
+.field:focus-within {
+  outline: var(--stroke-strong) solid var(--color-accent);
+  outline-offset: var(--stroke-strong);
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  min-height: var(--size-touch-target);
+  border: 0;
+  background: transparent;
+  color: var(--color-ink);
+  font: var(--type-body-small);
+}
+
+.input::placeholder {
+  color: var(--color-ink-muted);
+}
+
+/* The pill shows the focus ring, so the input itself needs none */
+.input:focus,
+.input:focus-visible {
+  outline: none;
+}
+
+.results {
+  position: absolute;
+  top: calc(100% + var(--space-8));
+  left: 0;
+  right: 0;
+  z-index: 20;
+  margin: 0;
+  padding: var(--space-8);
+  list-style: none;
+  border: var(--stroke-default) solid var(--color-border);
+  border-radius: var(--radius-medium);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-dialog);
+}
+
+.results[hidden] {
+  display: none;
+}
+
+.option {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  min-height: var(--size-touch-target);
+  padding: var(--space-8) var(--space-12);
+  border-radius: var(--radius-small);
+  cursor: pointer;
+}
+
+.option:hover {
+  background: var(--color-surface-warm);
+}
+
+/* Highlighted result: blue surface plus a left bar, not color alone */
+.option[aria-selected='true'] {
+  background: var(--color-selected-surface);
+  box-shadow: inset var(--space-4) 0 0 var(--color-selected);
+}
+
+.optionName {
+  font: var(--type-label);
+  color: var(--color-ink);
+}
+
+.optionNote {
+  font: var(--type-caption);
+  color: var(--color-ink-muted);
+}
+
+.empty {
+  padding: var(--space-8) var(--space-12);
+  font: var(--type-body-small);
+  color: var(--color-ink-muted);
+}
+
+@media (forced-colors: active) {
+  .option[aria-selected='true'] {
+    outline: var(--stroke-strong) solid Highlight;
+  }
+}
