@@ -149,7 +149,7 @@ Cuidance_Admin/
 │   ├── app/               Routes from the Week 10 route map (see `docs/Week-10/route-map.md`), `/dev` component preview, custom 404
 │   │   └── _screens/      Shared structure for the route-map screens (not a route)
 │   └── components/        Shared components: layout, ui, forms, data, feedback, content, overlay (drawer, dialog, popover)
-├── supabase/              Phase 2: Supabase config, migrations, local seed and database tests; Phase A3: the invitations Edge Function (functions/) and email templates (templates/)
+├── supabase/              Phase 2: Supabase config, migrations, local seed and database tests; Phase A3: the invitations Edge Function (functions/) and email templates (templates/); role migration Stage 1: rollback/ (reviewed rollback scripts, never run automatically)
 ├── shared/                Shared content and rules for Admin Web
 │   ├── content/           Admin Web screen names, navigation, permission matrix, page wording and sample data, theme and display settings
 │   ├── review-loop/       Week 11 review decision rules (statuses, Dashboard counts), shared by every screen

@@ -1,6 +1,6 @@
 # Role migration plan: Super Admin, Admin, Team Member
 
-_Status: **design plan only.** Nothing in this document has been applied. No migration file, Edge Function change, test change or hosted change is part of this commit._
+_Status: **Stage 1 implemented** on `feat/role-migration-stage-1` (stages 1 and 2 of this plan together, as Team 03 asked: new values, mapping layer, rules, invitation logic, app checks and tests). See `role-migration-stage-1.md`. Not applied to the hosted project._
 
 _Written Nov 16, 2026 for Team 03 review._
 

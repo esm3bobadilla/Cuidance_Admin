@@ -117,7 +117,7 @@ export const supabaseModeCopy = {
     revoked: (email: string) => `The invitation for ${email} was withdrawn.`,
     columns: { email: 'Email', role: 'Role', status: 'Status', expires: 'Expires', actions: 'Actions', joined: 'Joined' },
     states: { pending: 'Pending', expired: 'Expired', accepted: 'Accepted', declined: 'Declined', revoked: 'Withdrawn' } as Record<string, string>,
-    reviewerNote: 'Only Owners and Admins can invite team members.',
+    reviewerNote: 'Only Super Admins and Admins can invite team members.',
     errors: {
       email: 'Enter a valid email address, like name@example.com.',
       role: 'Choose a role.',
@@ -145,7 +145,15 @@ export const supabaseModeCopy = {
   },
 
   profile: {
-    roleLabels: { owner: 'Owner', admin: 'Admin', reviewer: 'Reviewer', content_editor: 'Content Editor' } as Record<string, string>,
+    // Role migration Stage 1: legacy and new stored values show the new role names
+    roleLabels: {
+      owner: 'Super Admin',
+      super_admin: 'Super Admin',
+      admin: 'Admin',
+      reviewer: 'Team Member',
+      content_editor: 'Team Member',
+      team_member: 'Team Member',
+    } as Record<string, string>,
     status: (workspace: string) => `Signed in to ${workspace}.`,
   },
 
@@ -156,8 +164,8 @@ export const supabaseModeCopy = {
 
   detail: {
     reviewingAs: (name: string) => `Reviewing as ${name}.`,
-    // D4: only the assigned Reviewer records a decision
-    notAssigned: 'Only the Reviewer assigned to this task can record a decision.',
+    // Only the assigned reviewer records a decision, never on a task they created
+    notAssigned: 'Only the person assigned to review this task can record a decision, and never on a task they sent.',
     approved: 'This task is approved. Approved tasks can’t be decided again.',
     // D12: a task can be decided again after Needs changes, until it's Approved
     decideAgain: 'Record another decision',

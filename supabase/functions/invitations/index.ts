@@ -6,7 +6,7 @@
  * bundle or any response, and it is never logged.
  *
  * POST with the signed-in user's access token (Authorization: Bearer …) and JSON:
- *   { action: 'create',  workspaceId, email, role }   Owner / Admin (D5)
+ *   { action: 'create',  workspaceId, email, role }   Super Admin / Admin (role migration Stage 1)
  *   { action: 'resend',  invitationId }                Owner / Admin; fresh link, same 7 days (D7)
  *   { action: 'revoke',  invitationId }                Owner / Admin
  *   { action: 'get',     invitationId }                The invited person (email must match)
@@ -32,6 +32,7 @@ import {
   resendWaitSeconds,
   type ErrorCode,
   type InvitationStatus,
+  isInvitationRoleValue,
   type WorkspaceRole,
 } from '../_shared/invitation-rules.ts';
 
@@ -176,7 +177,7 @@ async function create(db: SupabaseClient, user: { id: string }, body: Record<str
   const callerRole = await roleIn(db, workspaceId as string, user.id);
   if (!callerRole) refuse('not-allowed');
   if (!isValidEmail(email)) refuse('invalid-email');
-  if (!mayInvite(callerRole, role)) refuse(role === 'admin' || role === 'reviewer' ? 'not-allowed' : 'invalid-role');
+  if (!mayInvite(callerRole, role)) refuse(isInvitationRoleValue(role) ? 'not-allowed' : 'invalid-role');
 
   // Already in the workspace (active or deactivated): no invitation
   const existing = await findUserByEmail(db, email);
