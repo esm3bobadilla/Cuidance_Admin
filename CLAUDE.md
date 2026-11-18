@@ -2,7 +2,7 @@
 
 Rules for any Claude agent working in this repo. Follow them on every task. If something here conflicts with a request, ask before going ahead.
 
-_Last updated: Nov 12, 2026 (Phase A4: release readiness. Supabase mode, with sign-in, review data, invitations and account setup, is built and switched on only by build settings. The public GitHub Pages site always builds in sample mode, and the deploy workflow enforces it. See `docs/Phase-A4/release-readiness.md`.)_
+_Last updated: Nov 18, 2026 (role migration Stage 1: three roles through an explicit mapping, legacy values kept). Previously Nov 12, 2026 (Phase A4: release readiness. Supabase mode, with sign-in, review data, invitations and account setup, is built and switched on only by build settings. The public GitHub Pages site always builds in sample mode, and the deploy workflow enforces it. See `docs/Phase-A4/release-readiness.md`.)_
 
 ## Project context
 
@@ -56,7 +56,7 @@ Admin Web stays inside the approved Cuidance scope. If a request goes past these
 - **Test accounts use example.com addresses only** (D13). No real staff names or emails in the database during development.
 - **Production email (SMTP) isn't configured** until the team picks a provider (D6).
 - **Schema changes** are migrations in `supabase/migrations/`, reviewed in their own pull request, with database tests in `supabase/tests/` (`npm run db:test` at the repo root). Never change the hosted database by hand or from an AI session; migrations reach it only through the reviewed GitHub connection or a team member's `supabase db push`.
-- **Roles:** Owner, Admin and Reviewer. Content Editor is reserved but not used yet (D3). Only the assigned Reviewer records a decision (D4). Owners manage Admins and Reviewers, Admins manage Reviewers, and no one may demote or remove the final Owner (D5). Invitations expire after 7 days (D7). A task can be decided again after Needs changes until it's Approved (D12).
+- **Roles (role migration Stage 1, Nov 16, 2026):** Super Admin, Admin and Team Member. The database still stores the legacy values (`owner`, `admin`, `reviewer`, reserved `content_editor`) beside the new ones (`super_admin`, `team_member`), and every rule reads them through one explicit mapping (`public.role_group`, `shared/content/permissions.ts`). Never remove a legacy value or rename roles by search-and-replace; follow `docs/Phase-B1/role-migration-plan.md`. Super Admins and Admins assign reviews to Admins and Team Members; Team Members assign only to Team Members and reassign only tasks they sent. Only the assigned reviewer records a decision, and no one decides on a task they created (Super Admins included). Super Admins manage Admins and Team Members, Admins manage Team Members, and no one may demote or remove the final Super Admin. Content Editor stays reserved (D3). Invitations expire after 7 days (D7). A task can be decided again after Needs changes until it's Approved (D12).
 - The plan and the full decision list are in `docs/Phase-2/supabase-integration-plan.md`.
 
 Ask before adding any dependency beyond the approved setup: Next.js, TypeScript, `@supabase/supabase-js` and the Supabase CLI (D10).
