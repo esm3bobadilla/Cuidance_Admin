@@ -51,8 +51,10 @@ export const unassignedLabel = 'Unassigned';
 export const unnamedLabel = 'Team member';
 
 // The columns read from Supabase (kept here so the query and the mapping can't drift)
+import { toAdminRole } from '../content/permissions';
+
 export const reviewTaskSelect =
-  'id, workspace_id, title, type, status, priority, open_question, assigned_to, updated_at, created_at, ' +
+  'id, workspace_id, title, type, status, priority, open_question, assigned_to, created_by, updated_at, created_at, ' +
   'assignee:profiles!review_tasks_assigned_to_fkey(full_name), ' +
   'review_decisions(id, decision, note, decided_by, decided_at, decider:profiles!review_decisions_decided_by_fkey(full_name))';
 
@@ -76,6 +78,7 @@ export type ReviewTaskRow = {
   priority: string;
   open_question: boolean;
   assigned_to: string | null;
+  created_by: string | null;
   updated_at: string;
   created_at: string;
   assignee: NameRow;
@@ -86,6 +89,8 @@ export type ReviewTaskRow = {
 export type LiveReviewTask = ReviewTask & {
   workspaceId: string;
   assignedToId: string | null;
+  // Who sent the task for review (reviewer separation: they never decide on it)
+  createdById: string | null;
 };
 
 const nameOf = (row: NameRow, fallback: string) => row?.full_name?.trim() || fallback;
@@ -120,6 +125,7 @@ export function rowToTask(row: ReviewTaskRow): LiveReviewTask | null {
     history,
     workspaceId: row.workspace_id,
     assignedToId: row.assigned_to,
+    createdById: row.created_by ?? null,
   };
 }
 
@@ -132,9 +138,18 @@ export function rowsToTasks(rows: ReviewTaskRow[]): LiveReviewTask[] {
 }
 
 // D12: a task can be decided again after Needs changes, until it's Approved.
-// D4: only the assigned Reviewer records a decision (the database checks this too).
+// Role migration Stage 1 (the database checks all of this too): only the assigned
+// reviewer decides; reviewers are Admins or Team Members (legacy or new values, read
+// through the explicit mapping); no one decides on a task they created.
 export function canDecide(task: LiveReviewTask, userId: string | null, role: string | null) {
-  return task.status !== 'Approved' && !!userId && task.assignedToId === userId && role === 'reviewer';
+  const group = toAdminRole(role);
+  return (
+    task.status !== 'Approved' &&
+    !!userId &&
+    task.assignedToId === userId &&
+    task.createdById !== userId &&
+    (group === 'admin' || group === 'team_member')
+  );
 }
 
 // Task IDs in Supabase mode are UUIDs

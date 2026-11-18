@@ -1,7 +1,8 @@
 'use client';
 
 import { useCallback, useEffect, useState, type FormEvent } from 'react';
-import { adminRoles, rolesCopy } from '../../../shared/content/admin-roles';
+import { rolesCopy } from '../../../shared/content/admin-roles';
+import { can, roleNames, toAdminRole } from '../../../shared/content/permissions';
 import { supabaseModeCopy } from '../../../shared/content/supabase-mode';
 import { teamAccessCopy as copy } from '../../../shared/content/team-access';
 import { uiSymbols } from '../../../shared/content/ui-symbols';
@@ -20,10 +21,19 @@ import { getSupabase } from '../_data/supabaseClient';
 import styles from './teamAccess.module.css';
 
 const team = supabaseModeCopy.team;
-// Database role codes use "_", the shared role list uses "-"
-const roleName = (id: string) => adminRoles.find((role) => role.id === id.replace('_', '-'))?.name ?? id;
-// D5: Owners invite Admins and Reviewers; Admins invite Reviewers
-const invitableRoles = (myRole: string | null): string[] => (myRole === 'owner' ? ['reviewer', 'admin'] : myRole === 'admin' ? ['reviewer'] : []);
+// Role migration Stage 1: stored values (legacy or new) show the new role names
+const roleName = (id: string) => {
+  const group = toAdminRole(id);
+  return group ? roleNames[group] : id;
+};
+// The permission matrix: Super Admins invite Admins and Team Members, Admins invite
+// Team Members. New invitations use the new values ('admin', 'team_member').
+const invitableRoles = (myRole: string | null): string[] => can(toAdminRole(myRole))?.inviteAs ?? [];
+// You manage (resend, withdraw) invitations for the roles you could invite, legacy values included
+const mayManageInvitation = (myRole: string | null, invitationRole: string) => {
+  const group = toAdminRole(invitationRole);
+  return !!group && invitableRoles(myRole).includes(group);
+};
 
 type Member = { userId: string; name: string; role: string; status: string; joinedAt: string };
 type Row = InvitationSummary & { createdAt: string };
@@ -74,7 +84,7 @@ export function LiveTeamAccess() {
   const [members, setMembers] = useState<Member[]>([]);
   const [invitations, setInvitations] = useState<Row[]>([]);
   const [email, setEmail] = useState('');
-  const [role, setRole] = useState('reviewer');
+  const [role, setRole] = useState('team_member');
   const [fieldError, setFieldError] = useState<string | undefined>();
   const [sending, setSending] = useState(false);
   const [busyId, setBusyId] = useState<string | null>(null);
@@ -167,9 +177,9 @@ export function LiveTeamAccess() {
     }
   };
 
-  // Resend and Withdraw, for pending invitations the signed-in person may manage (D5)
+  // Resend and Withdraw, for pending invitations the signed-in person may manage
   const rowActions = (row: Row) =>
-    row.state === 'pending' && roles.includes(row.role) ? (
+    row.state === 'pending' && mayManageInvitation(myRole, row.role) ? (
       <span className={styles.rowActions}>
         <Button variant="secondary" disabled={!!busyId} onClick={() => void act(row, 'resend')} aria-label={`${team.resend}, ${row.email}`}>
           {team.resend}
