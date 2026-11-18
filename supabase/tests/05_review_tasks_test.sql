@@ -48,11 +48,12 @@ begin
   perform set_config('role', 'postgres', true);
 end $$;
 
--- Review tasks: members read; Owners and Admins create and assign; status only via decisions
+-- Review tasks: members read; members create (Stage 1); Super Admins and Admins edit and assign any task; status only via decisions
 select pg_temp.act_as('33333333-3333-4333-8333-333333333333');
 select is((select count(*)::int from public.review_tasks), 5, 'A Reviewer sees their workspace''s five tasks only');
-select throws_ok($$insert into public.review_tasks (workspace_id, title, type, created_by) values ('00000000-0000-4000-8000-000000000001', 'Reviewer task', 'sources', '33333333-3333-4333-8333-333333333333')$$,
-  '42501', null, 'A Reviewer can''t create tasks');
+-- Role migration Stage 1: a Team Member (legacy Reviewer) may send a task to another Team Member
+select lives_ok($$insert into public.review_tasks (workspace_id, title, type, created_by, assigned_to) values ('00000000-0000-4000-8000-000000000001', 'Reviewer task', 'sources', '33333333-3333-4333-8333-333333333333', '44444444-4444-4444-8444-444444444444')$$,
+  'A Team Member (legacy Reviewer) creates a task for another Team Member');
 update public.review_tasks set title = 'Changed' where id = '00000000-0000-4000-8000-000000000101';
 select is((select title from public.review_tasks where id = '00000000-0000-4000-8000-000000000101'), 'Understanding sensitive skin', 'A Reviewer can''t edit tasks');
 select throws_ok($$update public.review_tasks set status = 'approved' where id = '00000000-0000-4000-8000-000000000101'$$, '42501', null,
@@ -72,7 +73,7 @@ select throws_ok($$insert into public.review_tasks (workspace_id, title, type, s
   'P0001', null, 'A task can''t start as Approved');
 select lives_ok($$update public.review_tasks set assigned_to = '44444444-4444-4444-8444-444444444444', priority = 'low' where id = '00000000-0000-4000-8000-000000000101'$$, 'An Admin reassigns a task');
 select throws_ok($$update public.review_tasks set assigned_to = '11111111-1111-4111-8111-111111111111' where id = '00000000-0000-4000-8000-000000000101'$$, 'P0001',
-  'Tasks can only be assigned to an active Reviewer in the same workspace.', 'Tasks can''t be assigned to a non-Reviewer');
+  'Tasks can only be assigned to an active Admin or Team Member in the same workspace. Team Members assign to Team Members only.', 'Tasks can''t be assigned to a Super Admin (legacy Owner)');
 select throws_ok($$update public.review_tasks set status = 'approved' where id = '00000000-0000-4000-8000-000000000102'$$, '42501', null,
   'An Admin can''t set a task''s status directly');
 select throws_ok($$delete from public.review_tasks where id = '00000000-0000-4000-8000-000000000103'$$, '42501', null, 'Tasks can''t be deleted');

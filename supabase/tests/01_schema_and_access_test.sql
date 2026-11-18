@@ -90,8 +90,9 @@ select is(
      and not coalesce(p.proconfig @> array['search_path=""'], false)),
   0, 'Every security definer function pins an empty search_path');
 
-select enum_has_labels('public', 'workspace_role', array['owner', 'admin', 'reviewer', 'content_editor'],
-  'Roles include the reserved content_editor (D3)');
+-- Role migration Stage 1 adds super_admin and team_member; every legacy value stays
+select enum_has_labels('public', 'workspace_role', array['owner', 'admin', 'reviewer', 'content_editor', 'super_admin', 'team_member'],
+  'Roles keep the legacy values (including the reserved content_editor, D3) and add super_admin and team_member');
 select enum_has_labels('public', 'task_status', array['in_review', 'needs_review', 'pending_disclosure', 'needs_changes', 'approved'],
   'Task statuses match the Week 10 and Week 11 screens');
 
