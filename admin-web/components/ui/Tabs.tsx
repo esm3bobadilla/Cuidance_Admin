@@ -10,14 +10,17 @@ type TabsProps = {
   label: string;
   tabs: TabItem[];
   defaultTab?: string;
+  // Optional: the screen controls which tab is open (for example after "Duplicate" opens Drafts)
+  selectedTab?: string;
   onChange?: (id: string) => void;
 };
 
 // ARIA tabs. Left and Right move between tabs, Home and End jump to the ends.
 // Selected tab: Compass Blue text plus a 2 px underline (not color alone).
-export function Tabs({ label, tabs, defaultTab, onChange }: TabsProps) {
+export function Tabs({ label, tabs, defaultTab, selectedTab, onChange }: TabsProps) {
   const id = useId();
-  const [selected, setSelected] = useState(defaultTab ?? tabs[0]?.id);
+  const [internal, setSelected] = useState(defaultTab ?? tabs[0]?.id);
+  const selected = selectedTab ?? internal;
   const refs = useRef<Record<string, HTMLButtonElement | null>>({});
 
   const select = (tabId: string) => {

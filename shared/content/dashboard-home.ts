@@ -21,7 +21,8 @@ export const dashboardHomeCopy = {
   liveTitle: 'Live status',
   liveNote: 'Sample status for layout review. Not connected to the Cuidance App or Brand Website.',
   liveStateLabel: (state: string) => `${state} (sample)`,
-  livePreviewPending: 'Preview not available yet. It arrives with the Live phase.',
+  // Phase 2 PR 1: the static Live previews exist, so the rows link to them
+  livePreviewLink: (name: string) => `Open the ${name} preview`,
   activityTitle: 'Recent activity',
   activityNote: 'Sample data. Not connected to live activity.',
 };
@@ -54,6 +55,9 @@ export type QuickLink = {
 export const quickLinks: QuickLink[] = [
   { label: 'New content', icon: 'doc', screen: 'content', query: '?new=1' },
   { label: 'Open review queue', icon: 'review', screen: 'review-tasks' },
+  { label: 'Create an email', icon: 'mail', screen: 'email', query: '?new=1' },
+  { label: 'Preview Cuidance App', icon: 'phone', screen: 'live-app' },
+  { label: 'Preview Brand Website', icon: 'web', screen: 'live-website' },
   { label: 'View metrics', icon: 'bars', screen: 'content-metrics' },
   { label: 'Manage team', icon: 'team', screen: 'manage-team', requires: 'seeManageTeam' },
 ];
@@ -67,6 +71,6 @@ export const recentActivity = [
 // Live status (approved prototype). Sample values only: Live publishing and previews are
 // deferred, so these rows link nowhere.
 export const liveStatus = [
-  { key: 'app', name: 'Cuidance App', state: 'Live', detail: 'iOS and Android · v2.4.0 · 2 updates ready (sample)', icon: 'phone' as CuIconName },
-  { key: 'web', name: 'Brand Website', state: 'Live', detail: 'Homepage and care guides · 2 awaiting publish (sample)', icon: 'web' as CuIconName },
+  { key: 'app', screen: 'live-app' as AdminScreenId, name: 'Cuidance App', state: 'Live', detail: 'iOS and Android · v2.4.0 · 2 updates ready (sample)', icon: 'phone' as CuIconName },
+  { key: 'web', screen: 'live-website' as AdminScreenId, name: 'Brand Website', state: 'Live', detail: 'Homepage and care guides · 2 awaiting publish (sample)', icon: 'web' as CuIconName },
 ];

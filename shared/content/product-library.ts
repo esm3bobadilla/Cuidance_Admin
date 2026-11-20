@@ -299,7 +299,7 @@ export const productLibraryCopy = {
     changeNote: 'Requested changes',
   },
   form: {
-    errorSummary: (n: number) => (n === 1 ? 'Fix 1 field before saving.' : `Fix ${n} fields before saving.`),
+    errorSummary: (n: number) => (n === 1 ? 'Check 1 field before saving.' : `Check ${n} fields before saving.`),
     overview: 'Product overview',
     name: 'Product name (required)',
     brand: 'Brand (required)',

@@ -114,6 +114,9 @@
 }
 
 .rowLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--size-touch-target);
   color: var(--color-ink);
   font: var(--type-label);
 }
