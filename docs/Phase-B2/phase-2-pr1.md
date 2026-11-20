@@ -34,8 +34,8 @@ These checks only shape the screens. When the data moves to Supabase (PR 2), the
 - **Placeholders:** brands are "Brand A" to "Brand D"; people are "Team member A" to "F"; links use example.com.
 - **Reviewer separation:** no one approves a product or Live update they own.
 - **Publish** appears for Super Admins and Admins on Ready to publish updates, turned off with a note, because publishing is not connected.
-- **Brand Website prototype link:** the address is not known yet. `brandWebsitePrototypeUrl` in `shared/content/live.ts` is empty, so the screen says the link is not set (VERIFY with Team 03).
-- **Product Information** (Barcode / Label Lookup types) stays as its own area page beside Product Library. Team 03 to decide whether Product Library replaces it.
+- **Brand Website prototype link:** kept as "link not set yet" (Team 03, Nov 20, 2026). `brandWebsitePrototypeUrl` in `shared/content/live.ts` is empty until the address is confirmed (VERIFY).
+- **Product Library is the approved product-management screen** (Team 03, Nov 20, 2026). Product Information (Barcode / Label Lookup types) stays as its own area page in this pull request; it is not removed.
 - **App preview image** is the prototype's welcome-screen fallback, not the PR22 build (open dependency in the prototype handoff notes).
 
 ## Sample states for review
