@@ -27,6 +27,11 @@ jobs:
       - name: Install dependencies
         working-directory: admin-web
         run: npm ci
+      # next-env.d.ts (image and route types) is git-ignored and written by Next, so a fresh
+      # checkout needs it generated before the type check. No build, no network.
+      - name: Generate Next.js types
+        working-directory: admin-web
+        run: npx next typegen
       - name: Type check
         working-directory: admin-web
         run: npx tsc --noEmit
