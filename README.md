@@ -180,6 +180,7 @@ Cuidance_Admin/
 ├── ARCHITECTURE.md        How Admin Web is put together (routes, screens, state)
 ├── package.json           Repo tooling only (Supabase CLI: npm run db:start, db:test)
 ├── CLAUDE.md              Rules for AI agents working in this repo
+├── .gitattributes         Keeps .sql and .ts files with Unix line endings, so what reaches Supabase matches review
 ├── .gitignore
 └── .github/
     ├── pull_request_template.md

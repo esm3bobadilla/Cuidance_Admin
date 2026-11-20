@@ -1,0 +1,10 @@
+# Line endings (role migration Stage 1 hosted rollout, Nov 19, 2026).
+#
+# The rollout was run from a Windows checkout, which converted line endings. The seven
+# database functions created by the Stage 1 migrations were stored on the hosted project
+# with Windows line endings. That is harmless (SQL treats them as spaces) but it means
+# the hosted code wasn't byte-identical to what was reviewed. These rules keep database
+# migrations, rollback scripts and Edge Function / app code byte-identical on every
+# computer, so what reaches Supabase is exactly what was reviewed.
+*.sql text eol=lf
+*.ts text eol=lf

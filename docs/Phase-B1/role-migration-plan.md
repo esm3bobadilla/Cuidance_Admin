@@ -1,6 +1,6 @@
 # Role migration plan: Super Admin, Admin, Team Member
 
-_Status: **Stage 1 implemented** on `feat/role-migration-stage-1` (stages 1 and 2 of this plan together, as Team 03 asked: new values, mapping layer, rules, invitation logic, app checks and tests). See `role-migration-stage-1.md`. Not applied to the hosted project._
+_Status: **Stage 1 implemented** on `feat/role-migration-stage-1` (stages 1 and 2 of this plan together, as Team 03 asked: new values, mapping layer, rules, invitation logic, app checks and tests). See `role-migration-stage-1.md`. **Applied to the hosted project on Nov 19, 2026** and verified; the staging sign-in check is pending. Stage 3 not started._
 
 _Written Nov 16, 2026 for Team 03 review._
 
