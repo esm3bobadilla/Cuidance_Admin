@@ -9,6 +9,7 @@ import {
   DashboardLiveStatus,
   DashboardQuickWork,
 } from './_dashboard/DashboardHome';
+import { DemoBanner } from '../components/feedback/DemoBanner';
 import styles from './_dashboard/dashboardHome.module.css';
 
 // Dashboard (Phase B1, latest approved prototype): hero, Today at a glance, Quick work
@@ -19,6 +20,7 @@ export default function DashboardPage() {
       <DashboardHero />
       <DashboardDecisionNotice />
       <p className="note">{isSupabaseMode ? supabaseModeCopy.dataNote : copy.sampleDataNote}</p>
+      <DemoBanner />
       <DashboardGlance />
       <div className={styles.pair}>
         <DashboardQuickWork />

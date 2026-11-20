@@ -27,21 +27,27 @@ export const dashboardHomeCopy = {
   activityNote: 'Sample data. Not connected to live activity.',
 };
 
+// Phase 2 PR 2: the Email, App and Website numbers come from the demo (this browser
+// session), so Email and Live actions change them. Items for review stays the review queue,
+// and its detail adds the product records awaiting approval in the demo.
 export type GlanceCard = {
   key: 'review' | 'email' | 'app' | 'web';
   label: string;
-  // null = filled in from live review data (Items for review)
-  value: string | null;
   detail: string;
-  sample: boolean;
+  demo: boolean;
 };
 
 export const glanceCards: GlanceCard[] = [
-  { key: 'review', label: 'Items for review', value: null, detail: 'Open tasks in the review queue', sample: false },
-  { key: 'email', label: 'Scheduled communication', value: '4', detail: 'Email sending is not connected yet', sample: true },
-  { key: 'app', label: 'App updates live', value: '3', detail: 'Cuidance App (sample)', sample: true },
-  { key: 'web', label: 'Website updates', value: '5', detail: '2 awaiting publish (sample)', sample: true },
+  { key: 'review', label: 'Items for review', detail: 'Open tasks in the review queue', demo: false },
+  { key: 'email', label: 'Scheduled communication', detail: 'Demo mode: not sent for real', demo: true },
+  { key: 'app', label: 'App updates ready', detail: 'Publishing unavailable in demo mode', demo: true },
+  { key: 'web', label: 'Website updates ready', detail: 'Publishing unavailable in demo mode', demo: true },
 ];
+
+export const glanceDemoCopy = {
+  badge: 'Demo data',
+  productsAwaiting: (n: number) => (n === 1 ? 'Plus 1 product record awaiting approval (demo)' : `Plus ${n} product records awaiting approval (demo)`),
+};
 
 export type QuickLink = {
   label: string;
@@ -71,6 +77,6 @@ export const recentActivity = [
 // Live status (approved prototype). Sample values only: Live publishing and previews are
 // deferred, so these rows link nowhere.
 export const liveStatus = [
-  { key: 'app', screen: 'live-app' as AdminScreenId, name: 'Cuidance App', state: 'Live', detail: 'iOS and Android · v2.4.0 · 2 updates ready (sample)', icon: 'phone' as CuIconName },
-  { key: 'web', screen: 'live-website' as AdminScreenId, name: 'Brand Website', state: 'Live', detail: 'Homepage and care guides · 2 awaiting publish (sample)', icon: 'web' as CuIconName },
+  { key: 'app', screen: 'live-app' as AdminScreenId, name: 'Cuidance App', state: 'Live', detail: (ready: number) => `iOS and Android · v2.4.0 · ${ready} ${ready === 1 ? 'update' : 'updates'} ready (demo)`, icon: 'phone' as CuIconName },
+  { key: 'web', screen: 'live-website' as AdminScreenId, name: 'Brand Website', state: 'Live', detail: (ready: number) => `Homepage and care guides · ${ready} awaiting publish (demo)`, icon: 'web' as CuIconName },
 ];

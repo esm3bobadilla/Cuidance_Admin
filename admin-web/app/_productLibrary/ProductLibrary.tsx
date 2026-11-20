@@ -1,13 +1,11 @@
 'use client';
 
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { can } from '../../../shared/content/permissions';
 import {
   productCategories,
   productGuidanceGroups,
   productGuidanceOptions,
   productLibraryCopy as copy,
-  productSeed,
   productStatusMeta,
   type ProductRecord,
   type ProductStatus,
@@ -15,6 +13,7 @@ import {
 import { memberName } from '../../../shared/content/team-roster';
 import catProduct from '../../../shared/brand/illustrations/content-categories/cat-product.webp';
 import emptyContent from '../../../shared/brand/illustrations/empty/empty-content.webp';
+import { DemoBanner } from '../../components/feedback/DemoBanner';
 import { StateMessage } from '../../components/feedback/StateMessage';
 import { Select } from '../../components/forms/Select';
 import { SearchField } from '../../components/forms/SearchField';
@@ -27,6 +26,18 @@ import { Drawer } from '../../components/overlay/Drawer';
 import { Button } from '../../components/ui/Button';
 import { CuIcon } from '../../components/ui/CuIcon';
 import { StatusBadge, type StatusTone } from '../../components/ui/StatusBadge';
+import { demoModeCopy } from '../../../shared/content/demo-mode';
+import {
+  applyProductAction,
+  canEditProduct,
+  filterProducts,
+  productActions,
+  productAltMissing,
+  saveProduct,
+  validateProduct,
+  type ProductFilters,
+} from '../../../shared/workflows/product-workflow';
+import { updateDemo, useDemo } from '../_data/demoStore';
 import { useIdentity } from '../_data/identity';
 import styles from './productLibrary.module.css';
 
@@ -46,8 +57,6 @@ const tones: Record<ProductStatus, StatusTone> = {
 
 const MAX_EXTRA = 4;
 const DELAY = 450;
-
-const seedRecords = (): LibraryRecord[] => productSeed.map((p) => ({ ...p, image: null, extraImages: [] }));
 
 const blankRecord = (ownerId: string): LibraryRecord => ({
   id: `new-${Date.now()}`,
@@ -69,26 +78,9 @@ const blankRecord = (ownerId: string): LibraryRecord => ({
   extraImages: [],
 });
 
-const urlOk = (value: string) => /^https?:\/\/[^\s/.]+\.[^\s]+$/i.test(value.trim());
-
-// Alt text is required for every image: spaces alone don't count
-const altMissing = (r: LibraryRecord) => (!!r.image && !r.image.alt.trim()) || r.extraImages.some((im) => !im.alt.trim());
-
-function validate(r: LibraryRecord): Errors {
-  const e: Errors = {};
-  if (!r.name.trim()) e['pl-name'] = copy.errors.name;
-  if (!r.brand.trim()) e['pl-brand'] = copy.errors.brand;
-  if (!r.category) e['pl-category'] = copy.errors.category;
-  if (!r.description.trim()) e['pl-description'] = copy.errors.description;
-  else if (r.description.length > 200) e['pl-description'] = copy.errors.descriptionLong;
-  if (!r.url.trim()) e['pl-url'] = copy.errors.url;
-  else if (!urlOk(r.url)) e['pl-url'] = copy.errors.urlFormat;
-  if (r.image && !r.image.alt.trim()) e['pl-image-alt'] = copy.errors.alt;
-  r.extraImages.forEach((im, i) => {
-    if (!im.alt.trim()) e[`pl-extra-${i}-alt`] = copy.errors.altExtra(i + 1);
-  });
-  return e;
-}
+// Alt text and field rules live in shared/workflows/product-workflow.ts (tested)
+const altMissing = (r: LibraryRecord) => productAltMissing(r);
+const validate = (r: LibraryRecord): Errors => validateProduct(r, copy.errors);
 
 const fieldNames: Record<string, string> = {
   'pl-name': 'Product name',
@@ -121,11 +113,25 @@ function linkSummary(links: string[]) {
 
 export function ProductLibrary({ state = 'ready' }: { state?: LibraryState }) {
   const me = useIdentity();
-  const rights = can(me.adminRole);
-  const canReview = !!rights?.productReview;
-  const canArchive = !!rights?.productArchive;
+  const actor = { id: me.id, role: me.adminRole };
+  const canReview = !!me.adminRole && me.adminRole !== 'team_member';
 
-  const [records, setRecords] = useState<LibraryRecord[]>(() => (state === 'empty' ? [] : seedRecords()));
+  // Phase 2 PR 2: records come from the demo store (this browser session). Uploaded images
+  // stay on this page only. The ?state=empty preview shows an empty library and saves nothing.
+  const demo = useDemo();
+  const persist = state !== 'empty';
+  const [emptyPreview, setEmptyPreview] = useState<ProductRecord[]>([]);
+  const [images, setImages] = useState<Record<string, { image: UploadValue; extraImages: ProductImage[] }>>({});
+  const [saveNote, setSaveNote] = useState('');
+  const base = persist ? demo.products : emptyPreview;
+  const records: LibraryRecord[] = useMemo(() => base.map((p) => ({ ...p, ...(images[p.id] ?? { image: null, extraImages: [] }) })), [base, images]);
+  const setRecords = (change: (all: LibraryRecord[]) => LibraryRecord[]) => {
+    const next = change(records);
+    setImages(Object.fromEntries(next.map((r) => [r.id, { image: r.image, extraImages: r.extraImages }])));
+    const plain: ProductRecord[] = next.map(({ image: _image, extraImages: _extra, ...r }) => r);
+    if (!persist) return setEmptyPreview(plain);
+    setSaveNote(updateDemo((d) => ({ ...d, products: plain })) ? '' : demoModeCopy.saveFailed);
+  };
   const [loadState, setLoadState] = useState<LibraryState>(state);
   useEffect(() => setLoadState(state), [state]);
 
@@ -135,7 +141,7 @@ export function ProductLibrary({ state = 'ready' }: { state?: LibraryState }) {
   const [category, setCategory] = useState('all');
   const [status, setStatus] = useState('active');
   const [link, setLink] = useState('all');
-  const [sort, setSort] = useState('new');
+  const [sort, setSort] = useState<ProductFilters['sort']>('new');
 
   // The open record
   const [openId, setOpenId] = useState<string | null>(null);
@@ -153,16 +159,7 @@ export function ProductLibrary({ state = 'ready' }: { state?: LibraryState }) {
   const brands = useMemo(() => Array.from(new Set(records.map((r) => r.brand))).sort(), [records]);
   const filtersOn = [brand, category, link].filter((v) => v !== 'all').length + (status !== 'active' ? 1 : 0) + (query.trim() ? 1 : 0);
 
-  const shown = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    const list = records
-      .filter((r) => brand === 'all' || r.brand === brand)
-      .filter((r) => category === 'all' || r.category === category)
-      .filter((r) => (status === 'all' ? true : status === 'active' ? r.status !== 'archived' : r.status === status))
-      .filter((r) => (link === 'all' ? true : link === 'any' ? r.links.length > 0 : link === 'none' ? r.links.length === 0 : r.links.includes(link)))
-      .filter((r) => !q || `${r.name} ${r.brand} ${r.ingredients.map((i) => i.name).join(' ')}`.toLowerCase().includes(q));
-    return list.sort((a, b) => (sort === 'new' ? a.updatedDaysAgo - b.updatedDaysAgo : sort === 'old' ? b.updatedDaysAgo - a.updatedDaysAgo : a.name.localeCompare(b.name)));
-  }, [records, query, brand, category, status, link, sort]);
+  const shown = useMemo(() => filterProducts(records, { query, brand, category, status, link, sort }), [records, query, brand, category, status, link, sort]);
 
   const resetFilters = () => {
     setQuery('');
@@ -177,7 +174,8 @@ export function ProductLibrary({ state = 'ready' }: { state?: LibraryState }) {
   const current = openId && !isNew ? records.find((r) => r.id === openId) ?? null : null;
   const editing = mode === 'edit' && !!draft;
   const mine = (r: LibraryRecord) => r.ownerId === me.id;
-  const canEdit = (r: LibraryRecord) => r.status !== 'archived' && (!!rights?.productEditAny || mine(r));
+  const canEdit = (r: LibraryRecord) => canEditProduct(actor, r);
+  const allowed = (r: LibraryRecord) => productActions(actor, r);
 
   const resetDrawer = () => {
     setErrors({});
@@ -218,8 +216,9 @@ export function ProductLibrary({ state = 'ready' }: { state?: LibraryState }) {
       focusLater('pl-message');
     }, DELAY);
   };
-  const update = (id: string, patch: Partial<LibraryRecord>) =>
-    setRecords((all) => all.map((r) => (r.id === id ? { ...r, ...patch, updatedDaysAgo: 0 } : r)));
+  // One status change through the shared workflow rules (which refuse anything not allowed)
+  const act = (r: LibraryRecord, action: 'submit' | 'approve' | 'requestChanges' | 'archive' | 'restore', note = '') =>
+    setRecords((all) => all.map((x) => (x.id === r.id ? applyProductAction(actor, x, action, note) : x)));
 
   const commit = (to: 'draft' | 'review') => {
     if (!draft || busy || altMissing(draft)) return;
@@ -231,7 +230,7 @@ export function ProductLibrary({ state = 'ready' }: { state?: LibraryState }) {
     }
     const wasNew = isNew;
     const previous = records.find((r) => r.id === draft.id);
-    const saved: LibraryRecord = { ...draft, status: to, updatedDaysAgo: 0, changeNote: to === 'review' ? '' : draft.changeNote };
+    const saved: LibraryRecord = saveProduct(actor, draft, to, wasNew);
     later(to === 'review' ? copy.busy.submitting : copy.busy.saving, () => {
       setRecords((all) => (wasNew ? [saved, ...all] : all.map((r) => (r.id === saved.id ? saved : r))));
       setOpenId(saved.id);
@@ -262,7 +261,7 @@ export function ProductLibrary({ state = 'ready' }: { state?: LibraryState }) {
       return;
     }
     later(copy.busy.submitting, () => {
-      update(current.id, { status: 'review', changeNote: '' });
+      act(current, 'submit');
       setMessage(copy.done.submitted);
     });
   };
@@ -270,7 +269,7 @@ export function ProductLibrary({ state = 'ready' }: { state?: LibraryState }) {
   const approve = () => {
     if (!current) return;
     later(copy.busy.approving, () => {
-      update(current.id, { status: 'approved', reviewerId: me.id, changeNote: '' });
+      act(current, 'approve');
       setMessage(copy.done.approved(current.name));
     });
   };
@@ -280,7 +279,7 @@ export function ProductLibrary({ state = 'ready' }: { state?: LibraryState }) {
     const r = current;
     setConfirm(null);
     later(copy.busy.archiving, () => {
-      update(r.id, { status: 'archived' });
+      act(r, 'archive');
       setMessage(copy.done.archived(r.name));
     });
   };
@@ -296,7 +295,7 @@ export function ProductLibrary({ state = 'ready' }: { state?: LibraryState }) {
     const r = current;
     setConfirm(null);
     later(copy.busy.requesting, () => {
-      update(r.id, { status: 'changes', reviewerId: me.id, changeNote: text });
+      act(r, 'requestChanges', text);
       setNote('');
       setNoteError('');
       setMessage(copy.done.changes(memberName(r.ownerId)));
@@ -306,7 +305,7 @@ export function ProductLibrary({ state = 'ready' }: { state?: LibraryState }) {
   const restore = () => {
     if (!current) return;
     later(copy.busy.restoring, () => {
-      update(current.id, { status: 'draft' });
+      act(current, 'restore');
       setMessage(copy.done.restored(current.name));
     });
   };
@@ -352,15 +351,16 @@ export function ProductLibrary({ state = 'ready' }: { state?: LibraryState }) {
     }
     if (!current) return null;
     const editable = canEdit(current);
-    const reviewable = current.status === 'review' && canReview && !mine(current);
+    const can = allowed(current);
+    const reviewable = can.includes('approve');
     return (
       <>
-        {canArchive && current.status !== 'archived' && (
+        {can.includes('archive') && (
           <Button id="pl-act-archive" variant="ghost" onClick={() => setConfirm('archive')} disabled={!!busy} aria-haspopup="dialog">
             {copy.actions.archive}
           </Button>
         )}
-        {canArchive && current.status === 'archived' && (
+        {can.includes('restore') && (
           <Button onClick={restore} disabled={!!busy}>
             {copy.actions.restore}
           </Button>
@@ -380,7 +380,7 @@ export function ProductLibrary({ state = 'ready' }: { state?: LibraryState }) {
             {copy.actions.approve}
           </Button>
         )}
-        {(current.status === 'draft' || current.status === 'changes') && editable && (
+        {can.includes('submit') && (
           <Button variant="primary" onClick={submitCurrent} disabled={!!busy}>
             {copy.actions.submit}
           </Button>
@@ -406,6 +406,12 @@ export function ProductLibrary({ state = 'ready' }: { state?: LibraryState }) {
 
   return (
     <>
+      <DemoBanner imagesNote />
+      {saveNote && (
+        <p className={styles.blockNote} role="alert">
+          <CuIcon name="alert" size={16} /> {saveNote}
+        </p>
+      )}
       <section className={styles.intro} aria-label={copy.accessLabel}>
         <p id="pl-intro" className={styles.introText}>
           {copy.roleNote[roleId]}
@@ -470,7 +476,7 @@ export function ProductLibrary({ state = 'ready' }: { state?: LibraryState }) {
             id="pl-f-sort"
             label={copy.filters.sort}
             value={sort}
-            onChange={(e) => setSort(e.target.value)}
+            onChange={(e) => setSort(e.target.value as ProductFilters['sort'])}
             options={[
               { value: 'new', label: copy.filters.newest },
               { value: 'old', label: copy.filters.oldest },

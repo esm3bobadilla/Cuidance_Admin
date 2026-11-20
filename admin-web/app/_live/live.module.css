@@ -395,7 +395,12 @@
 }
 
 .empty:empty {
-  display: none;
+  /* Empty live region: kept in the accessibility tree (so its first message is announced) but takes no space */
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
 }
 
 .success {
@@ -469,6 +474,72 @@
 @media (forced-colors: active) {
   .switcher a[aria-current='page'],
   .update[data-selected='true'] {
+    outline: var(--stroke-strong) solid Highlight;
+  }
+}
+
+/* ---------- Full-size preview (Phase 2 PR 2), inside a wide dialog ---------- */
+
+.devices {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  margin: var(--space-12) 0;
+  padding: var(--space-4);
+  border: var(--stroke-default) solid var(--color-border);
+  border-radius: var(--radius-pill);
+}
+
+.deviceButton {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-8);
+  min-height: var(--size-touch-target);
+  padding: 0 var(--space-16);
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--color-ink);
+  font: var(--type-label);
+  cursor: pointer;
+}
+
+.deviceButton:hover {
+  background: var(--color-surface-warm);
+}
+
+.deviceButton[aria-pressed='true'] {
+  background: var(--color-selected-surface);
+  box-shadow: inset 0 0 0 var(--stroke-strong) var(--color-selected);
+}
+
+.fullStage {
+  display: flex;
+  justify-content: center;
+  padding: var(--space-24) var(--space-16);
+  border-radius: var(--radius-medium);
+  background: var(--color-surface-warm);
+}
+
+/* Website widths: the frame narrows, the page never scrolls sideways */
+.fullSite {
+  width: 100%;
+}
+
+.fullSite[data-device='tablet'] {
+  max-width: calc(var(--layout-drawer-width) * 1.6);
+}
+
+.fullSite[data-device='mobile'] {
+  max-width: calc(var(--layout-drawer-width) * 0.8);
+}
+
+.phoneLarge {
+  width: min(100%, calc(var(--layout-drawer-width) * 0.8));
+}
+
+@media (forced-colors: active) {
+  .deviceButton[aria-pressed='true'] {
     outline: var(--stroke-strong) solid Highlight;
   }
 }

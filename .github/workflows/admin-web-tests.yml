@@ -1,0 +1,35 @@
+name: Admin Web tests
+
+# Phase 2 PR 2: runs the type check and the demo workflow tests (Node's built-in test
+# runner, no extra packages) on every pull request that touches Admin Web or shared/.
+# Read-only: no secrets, no deploy, no Supabase.
+on:
+  pull_request:
+    paths:
+      - 'admin-web/**'
+      - 'shared/**'
+      - '.github/workflows/admin-web-tests.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: admin-web/package-lock.json
+      - name: Install dependencies
+        working-directory: admin-web
+        run: npm ci
+      - name: Type check
+        working-directory: admin-web
+        run: npx tsc --noEmit
+      - name: Demo workflow and role tests
+        working-directory: admin-web
+        run: npm test

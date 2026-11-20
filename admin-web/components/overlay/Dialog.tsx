@@ -13,17 +13,19 @@ type DialogProps = {
   actions: ReactNode;
   // alert: asks someone to confirm something that can't be undone easily
   tone?: 'default' | 'alert';
+  // wide: a large view such as the full-size Live preview (Phase 2 PR 2)
+  size?: 'default' | 'wide';
 };
 
 // Centered modal dialog. Same behavior as Drawer: focus is kept inside, Escape and the
 // backdrop close it, and focus returns to the control that opened it.
-export function Dialog({ open, onClose, title, children, actions, tone = 'default' }: DialogProps) {
+export function Dialog({ open, onClose, title, children, actions, tone = 'default', size = 'default' }: DialogProps) {
   const ref = useNativeDialog(open, onClose);
   const id = useId();
   return (
     <dialog
       ref={ref}
-      className={styles.dialog}
+      className={size === 'wide' ? `${styles.dialog} ${styles.dialogWide}` : styles.dialog}
       role={tone === 'alert' ? 'alertdialog' : undefined}
       aria-labelledby={`${id}-title`}
       aria-describedby={`${id}-body`}

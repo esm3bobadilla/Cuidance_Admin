@@ -133,13 +133,12 @@ export const emailSeed: EmailDoc[] = [
 export const emailStatusMeta: Record<EmailStatus, { label: string; icon: 'doc' | 'calendar' | 'check' }> = {
   draft: { label: 'Draft', icon: 'doc' },
   scheduled: { label: 'Scheduled', icon: 'calendar' },
-  sent: { label: 'Sent (sample)', icon: 'check' },
+  sent: { label: 'Sent (demo)', icon: 'check' },
 };
 
 export const emailCopy = {
   heroTitle: 'Email',
   heroDescription: 'Prepare invitations, reminders and helpful guidance for your team, with a preview of every message.',
-  sampleNote: 'Sample data. No email provider is connected, so nothing is sent or scheduled for real.',
   newEmail: 'New email',
   accessLabel: 'Your access to email',
   roleNote: {
@@ -251,20 +250,20 @@ export const emailCopy = {
     teamLock: 'Team Members can save email drafts. An Admin or Super Admin schedules and sends.',
     notOwner: 'You can preview this draft. Its owner or an Admin edits it. Duplicate it to make your own copy.',
     sent: 'Already sent. Duplicate it to reuse it.',
-    noProvider: 'Sending and scheduling ask for confirmation first. No email provider is connected.',
+    noProvider: 'Demo mode: sending and scheduling ask for confirmation first, and nothing is delivered. No email provider is connected.',
     altBlocked: 'Add alt text before saving this email image.',
   },
   busy: { saving: 'Saving draft…', sending: 'Marking as sent…', scheduling: 'Scheduling…' },
   done: {
     saved: (name: string) => `"${name}" saved to Drafts.`,
-    sent: (name: string) => `"${name}" marked as sent. No email was delivered.`,
-    scheduled: (name: string, when: string) => `"${name}" scheduled for ${when} (sample only).`,
+    sent: (name: string) => `"${name}" marked as sent. Demo mode: not delivered.`,
+    scheduled: (name: string, when: string) => `"${name}" scheduled for ${when}. Demo mode: not scheduled for real.`,
     duplicated: (name: string) => `Duplicated as "${name}" in Drafts.`,
     templateDuplicated: (name: string) => `${name} template duplicated to Drafts.`,
     deleted: (name: string) => `"${name}" deleted.`,
     archived: (name: string) => `${name} template archived. It no longer appears in Templates.`,
     restored: (name: string) => `${name} template restored.`,
-    cancelled: (name: string) => `"${name}" is no longer scheduled. It is back in Drafts.`,
+    cancelled: (name: string) => `"${name}" is no longer scheduled. It is back in Drafts. Demo mode: nothing was queued.`,
   },
   copySuffix: ' (copy)',
   dialogs: {
