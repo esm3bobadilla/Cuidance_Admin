@@ -187,6 +187,7 @@
 .textButton {
   display: inline-flex;
   align-items: center;
+  gap: var(--space-4);
   min-height: var(--size-touch-target);
   padding: 0 var(--space-8);
   font: var(--type-link);

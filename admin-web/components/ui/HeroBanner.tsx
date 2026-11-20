@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 import styles from './HeroBanner.module.css';
 
 type StaticImage = { src: string; width: number; height: number };
@@ -18,10 +18,17 @@ type HeroBannerProps = {
 
 // Page hero banner (approved prototype). The image fills the banner; the text sits on a
 // solid Warm Care panel on the left so it never depends on the photo for contrast.
+// The artwork is unchanged; only its cropping, position and responsive behavior are set here.
 export function HeroBanner({ title, description, eyebrow, image, wideImage, actions, headingLevel = 1 }: HeroBannerProps) {
   const Heading = headingLevel === 1 ? 'h1' : 'h2';
+  // Phase 3: the banner keeps the artwork's own proportions, so it is never squashed and
+  // the illustration is not cropped at the sides (the text sits over the plain paper area).
+  const ratio = {
+    '--hero-ratio': `${image.width} / ${image.height}`,
+    '--hero-ratio-wide': wideImage ? `${wideImage.width} / ${wideImage.height}` : `${image.width} / ${image.height}`,
+  } as CSSProperties;
   return (
-    <section className={styles.hero}>
+    <section className={styles.hero} style={ratio}>
       <picture className={styles.art} aria-hidden="true">
         {wideImage && <source media="(min-width: 1280px)" srcSet={wideImage.src} width={wideImage.width} height={wideImage.height} />}
         <img src={image.src} width={image.width} height={image.height} alt="" className={styles.image} />

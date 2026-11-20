@@ -2,13 +2,14 @@
 
 import { useId, useMemo, useState } from 'react';
 import { adminScreens } from '../../../shared/content/admin-web-screens';
-import type { ReviewItem } from '../../../shared/content/dashboard-review-queue';
+import type { ReviewItem, ReviewPriority, ReviewStatus } from '../../../shared/content/dashboard-review-queue';
 import { reviewChecklists, reviewTasksCopy as copy } from '../../../shared/content/review-tasks';
 import { reviewTaskDetailCopy } from '../../../shared/content/review-task-detail';
 import { supabaseModeCopy } from '../../../shared/content/supabase-mode';
 import { uiSymbols } from '../../../shared/content/ui-symbols';
 import { DataTable } from '../../components/data/DataTable';
 import { SearchField } from '../../components/forms/SearchField';
+import { Select } from '../../components/forms/Select';
 import { Button, ButtonLink } from '../../components/ui/Button';
 import {
   reviewTableColumns,
@@ -35,6 +36,8 @@ const matches = (task: ReviewItem, query: string) => {
 // Phase A2: in Supabase mode the tasks come from the database (loading, empty and error are real states).
 export function ReviewTasksContent({ state: preview }: { state: ReviewViewState }) {
   const [query, setQuery] = useState('');
+  const [status, setStatus] = useState<'all' | ReviewStatus>('all');
+  const [priority, setPriority] = useState<'all' | ReviewPriority>('all');
   // Week 11: statuses come from the seed plus this tab's review decisions (sample mode)
   const data = useReviewData();
   const tasks = data.tasks;
@@ -44,7 +47,11 @@ export function ReviewTasksContent({ state: preview }: { state: ReviewViewState 
   const detailId = useId();
 
   const all = state === 'ready' ? tasks : [];
-  const shown = useMemo(() => all.filter((task) => matches(task, query)), [all, query]);
+  const shown = useMemo(
+    () => all.filter((task) => matches(task, query) && (status === 'all' || task.status === status) && (priority === 'all' || task.priority === priority)),
+    [all, query, status, priority],
+  );
+  const statusOptions = Array.from(new Set(all.map((t) => t.status)));
   const selected = shown.find((task) => task.id === selectedId) ?? shown[0];
   const checklist = selected ? reviewChecklists[selected.item] : undefined;
 
@@ -86,6 +93,25 @@ export function ReviewTasksContent({ state: preview }: { state: ReviewViewState 
           onChange={(event) => setQuery(event.target.value)}
           disabled={state !== 'ready'}
         />
+        {/* Phase 3: status and priority filters, directly above the queue */}
+        <div role="group" aria-label={copy.filtersLabel} className={styles.filters}>
+          <Select
+            id="review-tasks-status"
+            label={copy.statusFilter}
+            value={status}
+            disabled={state !== 'ready'}
+            onChange={(e) => setStatus(e.target.value as 'all' | ReviewStatus)}
+            options={[{ value: 'all', label: copy.allStatuses }, ...statusOptions.map((s) => ({ value: s, label: s }))]}
+          />
+          <Select
+            id="review-tasks-priority"
+            label={copy.priorityFilter}
+            value={priority}
+            disabled={state !== 'ready'}
+            onChange={(e) => setPriority(e.target.value as 'all' | ReviewPriority)}
+            options={[{ value: 'all', label: copy.allPriorities }, ...(['High', 'Medium', 'Low'] as const).map((p) => ({ value: p, label: p }))]}
+          />
+        </div>
       </div>
 
       <section className={styles.body} aria-label="Review tasks" aria-busy={state === 'loading'}>
@@ -111,6 +137,8 @@ export function ReviewTasksContent({ state: preview }: { state: ReviewViewState 
                       variant="secondary"
                       onClick={() => {
                         setQuery('');
+                        setStatus('all');
+                        setPriority('all');
                         // This button goes away, so focus returns to the search field
                         document.getElementById('review-tasks-search')?.focus();
                       }}

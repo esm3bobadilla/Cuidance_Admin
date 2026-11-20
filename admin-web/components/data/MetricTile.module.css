@@ -4,7 +4,7 @@
   gap: var(--space-4);
   padding: var(--space-16);
   background: var(--color-surface);
-  border: var(--stroke-default) solid var(--color-border);
+  border: var(--stroke-default) solid var(--frame-border);
   border-radius: var(--radius-medium);
 }
 

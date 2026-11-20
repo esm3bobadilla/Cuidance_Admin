@@ -254,8 +254,9 @@
 
 .user {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: var(--space-12);
+  gap: var(--space-8) var(--space-12);
   margin-top: auto;
   padding-top: var(--space-16);
   border-top: var(--stroke-default) solid var(--color-shell-border);
@@ -276,8 +277,52 @@
 
 .userText {
   display: flex;
+  flex: 1 1 0;
   flex-direction: column;
   min-width: 0;
+}
+
+/* Phase 3: Sign out in the account area. Light text on the dark green shell, underlined so
+   it reads as an action, with a 44 px target. */
+.signOut {
+  display: inline-flex;
+  flex: none;
+  align-self: flex-start;
+  align-items: center;
+  justify-content: center;
+  margin-left: calc(var(--space-8) * -1);
+  gap: var(--space-4);
+  min-width: var(--size-touch-target);
+  min-height: var(--size-touch-target);
+  padding: 0 var(--space-8);
+  border: 0;
+  border-radius: var(--radius-small);
+  background: transparent;
+  color: var(--color-shell-ink);
+  font: var(--type-label);
+  text-decoration: underline;
+  text-underline-offset: var(--space-4);
+  cursor: pointer;
+}
+
+.signOut:hover {
+  background: var(--color-shell-raised);
+}
+
+.signOut:disabled {
+  color: var(--color-shell-ink-muted);
+  cursor: default;
+}
+
+.signOutError {
+  flex-basis: 100%;
+  font: var(--type-caption);
+  color: var(--color-shell-ink);
+}
+
+.railSignOut {
+  align-self: center;
+  margin: var(--space-4) 0 0;
 }
 
 .userName {
@@ -363,6 +408,7 @@
 
 .railAvatar {
   margin-top: auto;
+  flex: none;
 }
 
 /* ---------- Menu drawer (tablet and phone) ---------- */

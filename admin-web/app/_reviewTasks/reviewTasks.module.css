@@ -9,7 +9,17 @@
 }
 
 .toolbar {
-  max-width: calc(var(--layout-sidebar-width) * 3);
+  /* Phase 3: search and the status and priority filters in one row above the queue */
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 2fr);
+  align-items: end;
+  gap: var(--space-16);
+}
+
+.filters {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, calc(var(--layout-sidebar-width) * 0.6)), 1fr));
+  gap: var(--space-16);
 }
 
 .body {
@@ -81,8 +91,9 @@
   gap: var(--space-16);
   padding: var(--space-24);
   color: var(--color-ink);
+  /* Phase 3: a background field; the outline only shows in high contrast */
   background: var(--color-surface);
-  border: var(--stroke-default) solid var(--color-border);
+  border: var(--stroke-default) solid var(--frame-border);
   border-radius: var(--radius-medium);
 }
 
@@ -180,7 +191,7 @@
   }
 
   .toolbar {
-    max-width: none;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 

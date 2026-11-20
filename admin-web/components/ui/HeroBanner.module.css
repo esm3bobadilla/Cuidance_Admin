@@ -2,16 +2,28 @@
   position: relative;
   display: flex;
   align-items: center;
+  /* Phase 3: height follows the artwork (3:1), with room for the text when space is short.
+     No outline: the warm background field already sets the banner apart. */
+  aspect-ratio: var(--hero-ratio);
   min-height: 240px;
-  overflow: hidden;
-  border: var(--stroke-default) solid var(--color-border);
+  border: var(--stroke-default) solid var(--frame-border);
   border-radius: var(--radius-medium);
   background: var(--color-surface-warm);
+}
+
+@media (min-width: 1280px) {
+  .hero {
+    aspect-ratio: var(--hero-ratio-wide);
+  }
 }
 
 .art {
   position: absolute;
   inset: 0;
+  /* The artwork is clipped to the banner's corners; the text never is, so large text
+     makes the banner taller instead of being cut off */
+  overflow: hidden;
+  border-radius: inherit;
 }
 
 .image {
@@ -19,7 +31,8 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: right center;
+  /* Keep the illustration (right) and its ground line (bottom) in view when space is short */
+  object-position: right bottom;
 }
 
 /* Solid panel behind the text: contrast never depends on the image */
@@ -28,7 +41,8 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-12);
-  max-width: min(520px, 60%);
+  /* Over the plain paper half of the artwork, never over the illustration */
+  max-width: min(520px, 50%);
   margin: var(--space-24);
   padding: var(--space-24) var(--space-32);
   border-radius: var(--radius-medium);
@@ -67,12 +81,14 @@
   .hero {
     flex-direction: column;
     align-items: stretch;
+    aspect-ratio: auto;
     min-height: 0;
   }
 
+  /* The whole artwork, at its own proportions, as a strip above the text */
   .art {
     position: static;
-    height: 140px;
+    aspect-ratio: var(--hero-ratio);
   }
 
   .text {
@@ -84,7 +100,18 @@
 }
 
 @media (forced-colors: active) {
+  .hero {
+    aspect-ratio: auto;
+    border: var(--stroke-default) solid CanvasText;
+  }
+
   .art {
     display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .art {
+    border-radius: var(--radius-medium) var(--radius-medium) 0 0;
   }
 }

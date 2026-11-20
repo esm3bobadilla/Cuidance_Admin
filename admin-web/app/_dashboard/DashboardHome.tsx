@@ -66,7 +66,7 @@ export function DashboardGlance() {
   };
   return (
     <section className={styles.section} aria-labelledby="glance-heading">
-      <h2 id="glance-heading" className={styles.title}>
+      <h2 id="glance-heading" className={`${styles.title} editorial-accent`}>
         {copy.glanceTitle}
       </h2>
       <ul className={styles.glance}>

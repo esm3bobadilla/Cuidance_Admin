@@ -29,7 +29,7 @@
   justify-content: space-between;
   gap: var(--space-12);
   padding: var(--space-24);
-  border: var(--stroke-default) solid var(--color-border);
+  border: var(--stroke-default) solid var(--frame-border);
   border-radius: var(--radius-medium);
   background: var(--color-surface);
 }
@@ -77,7 +77,7 @@
   flex-direction: column;
   gap: var(--space-16);
   padding: var(--space-24);
-  border: var(--stroke-default) solid var(--color-border);
+  border: var(--stroke-default) solid var(--frame-border);
   border-radius: var(--radius-medium);
   background: var(--color-surface);
 }
@@ -179,7 +179,7 @@
   align-items: center;
   gap: var(--space-12);
   padding: var(--space-12) var(--space-16);
-  border: var(--stroke-default) solid var(--color-border);
+  border: var(--stroke-default) solid var(--frame-border);
   border-radius: var(--radius-medium);
   background: var(--color-success-surface);
 }

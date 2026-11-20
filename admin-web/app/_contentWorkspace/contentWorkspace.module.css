@@ -6,7 +6,8 @@
   justify-content: space-between;
   gap: var(--space-16);
   padding: var(--space-24);
-  border: var(--stroke-default) solid var(--color-border);
+  /* Phase 3: a background field; the outline only shows in high contrast */
+  border: var(--stroke-default) solid var(--frame-border);
   border-radius: var(--radius-medium);
   background: var(--color-surface);
   font: var(--type-body-small);
@@ -31,7 +32,8 @@
   flex-direction: column;
   gap: var(--space-16);
   padding: var(--space-24);
-  border: var(--stroke-default) solid var(--color-border);
+  /* Phase 3: a background field; the outline only shows in high contrast */
+  border: var(--stroke-default) solid var(--frame-border);
   border-radius: var(--radius-medium);
   background: var(--color-surface);
 }
@@ -163,13 +165,18 @@
 .areasSection {
   display: flex;
   flex-direction: column;
-  gap: var(--space-16);
+  gap: var(--space-12);
+}
+
+/* Phase 3: compact area links near the top, as many across as fit */
+.areasTitle {
+  font: var(--type-heading-4);
 }
 
 .areas {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--layout-gutter);
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, calc(var(--layout-sidebar-width) - var(--space-16))), 1fr));
+  gap: var(--space-8);
   margin: 0;
   padding: 0;
   list-style: none;
@@ -178,23 +185,28 @@
 .area {
   display: flex;
   align-items: center;
-  gap: var(--space-16);
-  min-height: 88px;
-  padding: var(--space-16);
-  border: var(--stroke-default) solid var(--color-border);
-  border-radius: var(--radius-medium);
+  gap: var(--space-12);
+  min-height: calc(var(--size-touch-target) + var(--space-16));
+  padding: var(--space-8) var(--space-12);
+  border-radius: var(--radius-small);
   background: var(--color-surface);
   color: var(--color-ink);
   text-decoration: none;
 }
 
 .area:hover {
-  border-color: var(--color-accent);
+  background: var(--color-selected-surface);
+}
+
+.area:hover .areaName {
+  text-decoration: underline;
 }
 
 .areaArt {
   flex: none;
-  height: auto;
+  width: calc(var(--space-32) + var(--space-8));
+  height: calc(var(--space-32) + var(--space-8));
+  object-fit: contain;
 }
 
 .areaText {
@@ -240,19 +252,12 @@
   gap: var(--space-16);
 }
 
-@media (max-width: 1279px) {
-  .areas {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
 @media (max-width: 767px) {
   .library,
   .panel {
     padding: var(--space-16);
   }
 
-  .areas,
   .pair {
     grid-template-columns: minmax(0, 1fr);
   }

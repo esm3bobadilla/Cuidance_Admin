@@ -7,7 +7,7 @@
   flex-direction: column;
   color: var(--color-ink);
   background: var(--color-surface);
-  border: var(--stroke-default) solid var(--color-border);
+  border: var(--stroke-default) solid var(--frame-border);
   border-radius: var(--radius-medium);
 }
 
@@ -40,7 +40,7 @@
   gap: var(--space-12);
   min-height: var(--layout-table-row-min-height);
   padding: var(--space-12) var(--space-16);
-  border: var(--stroke-default) solid var(--color-border);
+  border: var(--stroke-default) solid var(--frame-border);
   border-radius: var(--radius-medium);
 }
 
