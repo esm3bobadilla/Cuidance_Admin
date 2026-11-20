@@ -54,12 +54,21 @@ Team 03 decisions applied first: single Light / Dark button; Compass Blue active
 7. **Settings > Team access** now links to Manage Team, which holds the member list (and, in Supabase mode, the Phase A3 invitation tools).
 8. **Dashboard glance cards** for Email, App and Website show sample numbers labeled "Sample data", because those integrations are deferred.
 
+### Merged and applied (Nov 17 to 19, 2026)
+- [x] PR #20 merged (`740daf3`): prototype foundation and Phase 2 pages
+- [x] PR #21 merged (`1897ea5`): Next.js 16.4.2 → 16.4.6 (GHSA-mfr8-8qww-v76h, GHSA-vc7v-qv4w-wrv8)
+- [x] PR #22 merged (`61bdd5e`): role migration Stage 1 (additive, reversible)
+- [x] Stage 1 applied to the hosted project by a Team 03 member on Nov 19, 2026: 2 migrations and `invitations` Edge Function version 2. Verified read-only. Record: `role-migration-stage-1.md`; procedure: `stage-1-hosted-rollout-runbook.md`
+- [x] `.gitattributes`: `*.sql` and `*.ts` keep Unix line endings (rollout finding)
+- [ ] Staging sign-in check (Team 03)
+
 ## Next (not started)
-- Role migration Stage 1 and 2, each in its own reviewed pull request, after Team 03 answers the open decisions in the plan
-- Email (templates, drafts, image upload and preview, no sending) and Live (static preview frames) after Phase 2
+- Role migration Stage 3 (move stored roles to the new values), then Stage 4 (remove legacy values): each needs its own plan, PR and Team 03 approval
+- Email (templates, drafts, image upload and preview, no sending) and Live (static preview frames)
+- Branch cleanup (deferred by Team 03)
 
 ## To resume
 ```
-git fetch origin feat/admin-web-foundation && git checkout feat/admin-web-foundation
+git checkout main && git pull --ff-only
 cd admin-web && npm ci && npx tsc --noEmit -p . && npm run build
 ```
