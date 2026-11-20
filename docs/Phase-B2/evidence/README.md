@@ -18,3 +18,14 @@ reverted and is not in the repository.
 | `lv-drawer.png` | Update detail drawer |
 | `dark-em.png` | Email in dark mode |
 | `contrast-lv.png` | Brand Website preview with high contrast, larger text and reduced motion |
+
+## Phase 2 PR 2 (functional demo)
+
+| File | Shows |
+| --- | --- |
+| `pr2-dashboard.png` | Dashboard after demo actions: Demo mode banner, 4 scheduled emails, product awaiting approval, Demo data badges |
+| `pr2-reset.png` | Reset demo data confirmation |
+| `pr2-product-library.png`, `pr2-product-library-mobile.png` | Product Library with the Demo mode banner (card layout unchanged) |
+| `pr2-email-scheduled.png` | Email scheduled: "Demo mode: not scheduled for real" |
+| `pr2-live-publish.png` | Live update ready to publish: "Publish (unavailable in demo mode)", turned off |
+| `pr2-full-preview.png`, `pr2-full-app.png` | Full-size Brand Website (Mobile width) and App previews inside Admin Web |

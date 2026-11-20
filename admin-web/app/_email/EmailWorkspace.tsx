@@ -5,7 +5,6 @@ import {
   emailAudiences,
   emailCategories,
   emailCopy as copy,
-  emailSeed,
   emailStatusMeta,
   emailTemplates,
   type EmailDoc,
@@ -19,6 +18,7 @@ import cardNudge from '../../../shared/brand/illustrations/email/card-nudge.webp
 import cardReset from '../../../shared/brand/illustrations/email/card-reset.webp';
 import cardWelcome from '../../../shared/brand/illustrations/email/card-welcome.webp';
 import emptyContent from '../../../shared/brand/illustrations/empty/empty-content.webp';
+import { DemoBanner } from '../../components/feedback/DemoBanner';
 import { StateMessage } from '../../components/feedback/StateMessage';
 import { Toast } from '../../components/feedback/Toast';
 import { SearchField } from '../../components/forms/SearchField';
@@ -34,6 +34,23 @@ import { CuIcon } from '../../components/ui/CuIcon';
 import { HeroBanner } from '../../components/ui/HeroBanner';
 import { StatusBadge, type StatusTone } from '../../components/ui/StatusBadge';
 import { Tabs } from '../../components/ui/Tabs';
+import { demoModeCopy } from '../../../shared/content/demo-mode';
+import {
+  cancelScheduledEmail,
+  deleteEmail,
+  duplicateEmail,
+  emailActions,
+  emailAltMissing,
+  formatScheduleTime,
+  saveEmailDraft,
+  scheduleEmail,
+  scheduleTimeOk,
+  sendEmail,
+  templateActions,
+  validateEmail,
+} from '../../../shared/workflows/email-workflow';
+import { WorkflowError } from '../../../shared/workflows/product-workflow';
+import { updateDemo, useDemo, type DemoEmail } from '../_data/demoStore';
 import { useIdentity } from '../_data/identity';
 import styles from './email.module.css';
 
@@ -55,7 +72,6 @@ const tones: Record<EmailStatus, StatusTone> = { draft: 'neutral', scheduled: 'i
 const DELAY = 450;
 
 const template = (id: EmailTemplateId) => emailTemplates.find((t) => t.id === id)!;
-const seedDocs = (): WorkDoc[] => emailSeed.map((d) => ({ ...d, image: null, templateAlt: template(d.template).imageAlt }));
 const fromTemplate = (id: EmailTemplateId, ownerId: string): WorkDoc => {
   const t = template(id);
   return {
@@ -77,26 +93,10 @@ const fromTemplate = (id: EmailTemplateId, ownerId: string): WorkDoc => {
 };
 const newId = () => `e-${Date.now()}`;
 const focusLater = (id: string) => window.setTimeout(() => document.getElementById(id)?.focus(), 40);
-const urlOk = (v: string) => !v.trim() || /^https:\/\/[^\s/.]+\.[^\s]+$/i.test(v.trim());
-const altMissing = (w: WorkDoc) => (w.image ? !w.image.alt.trim() : !w.templateAlt.trim());
+// Alt text, validation and schedule rules live in shared/workflows/email-workflow.ts (tested)
+const altMissing = (w: WorkDoc) => emailAltMissing(w);
+const validate = (w: WorkDoc): Errors => validateEmail(w, copy.errors);
 
-const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-function formatWhen(value: string) {
-  const [d, t] = value.split('T');
-  const [, mo, da] = d.split('-').map(Number);
-  const [h24, mi] = t.split(':').map(Number);
-  return `${MONTHS[mo - 1]} ${da}, ${h24 % 12 || 12}:${String(mi).padStart(2, '0')} ${h24 >= 12 ? 'PM' : 'AM'}`;
-}
-
-function validate(w: WorkDoc): Errors {
-  const e: Errors = {};
-  if (!w.name.trim()) e['em-name'] = copy.errors.name;
-  if (!w.subject.trim()) e['em-subject'] = copy.errors.subject;
-  if (!urlOk(w.link)) e['em-link'] = copy.errors.link;
-  if (w.image && !w.image.alt.trim()) e['em-image-alt'] = copy.errors.alt;
-  if (!w.image && !w.templateAlt.trim()) e['em-template-alt'] = copy.errors.templateAlt;
-  return e;
-}
 const fieldNames: Record<string, string> = {
   'em-name': 'Email name',
   'em-subject': 'Subject',
@@ -108,14 +108,33 @@ const fieldNames: Record<string, string> = {
 export function EmailWorkspace({ state = 'ready' }: { state?: EmailViewState }) {
   const me = useIdentity();
   const rights = can(me.adminRole);
+  const actor = { id: me.id, role: me.adminRole };
   const canSend = !!rights?.emailSend;
   const canSchedule = !!rights?.emailSchedule;
-  const canManage = !!rights?.emailManageTemplates;
 
   const [loadState, setLoadState] = useState<EmailViewState>(state);
   useEffect(() => setLoadState(state), [state]);
-  const [docs, setDocs] = useState<WorkDoc[]>(() => (state === 'empty' ? [] : seedDocs()));
-  const [archivedTemplates, setArchivedTemplates] = useState<string[]>([]);
+  // Phase 2 PR 2: emails and archived templates come from the demo store (this browser
+  // session). Uploaded images stay on this page only. ?state=empty previews an empty
+  // workspace and saves nothing.
+  const demo = useDemo();
+  const persist = state !== 'empty';
+  const [emptyPreview, setEmptyPreview] = useState<DemoEmail[]>([]);
+  const [images, setImages] = useState<Record<string, UploadValue>>({});
+  const [failed, setFailed] = useState('');
+  const base = persist ? demo.emails : emptyPreview;
+  const docs: WorkDoc[] = useMemo(() => base.map((d) => ({ ...d, image: images[d.id] ?? null })), [base, images]);
+  const setDocs = (change: (all: WorkDoc[]) => WorkDoc[]) => {
+    const next = change(docs);
+    setImages(Object.fromEntries(next.filter((d) => d.image).map((d) => [d.id, d.image])));
+    const plain: DemoEmail[] = next.map(({ image: _image, ...d }) => d);
+    if (!persist) return setEmptyPreview(plain);
+    setFailed(updateDemo((current) => ({ ...current, emails: plain })) ? '' : demoModeCopy.saveFailed);
+  };
+  const archivedTemplates = persist ? demo.archivedTemplates : [];
+  const setArchivedTemplates = (change: (all: string[]) => string[]) => {
+    if (persist) setFailed(updateDemo((current) => ({ ...current, archivedTemplates: change(current.archivedTemplates) })) ? '' : demoModeCopy.saveFailed);
+  };
   const [showArchived, setShowArchived] = useState(false);
   const [tab, setTab] = useState<Tab>('templates');
   const [query, setQuery] = useState('');
@@ -138,8 +157,18 @@ export function EmailWorkspace({ state = 'ready' }: { state?: EmailViewState }) 
     if (new URLSearchParams(window.location.search).get('new') === '1') openEditor(fromTemplate('welcome', me.id), 'edit');
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const ownsOrManages = (d: WorkDoc) => canManage || d.ownerId === me.id;
-  const editable = (d: WorkDoc) => d.status === 'draft' && (d.id === '' || ownsOrManages(d));
+  // Who may do what comes from the shared workflow rules
+  const editable = (d: WorkDoc) => emailActions(actor, d).includes('edit');
+  const tplAllowed = (archived: boolean) => templateActions(actor, archived);
+  // A refused action (a role or state the rules don't allow) shows a plain message instead
+  const attempt = (fn: () => void) => {
+    try {
+      fn();
+    } catch (e) {
+      if (e instanceof WorkflowError) setFailed(e.message);
+      else throw e;
+    }
+  };
 
   const q = query.trim().toLowerCase();
   const matches = (name: string, tpl: EmailTemplateId) => {
@@ -197,8 +226,10 @@ export function EmailWorkspace({ state = 'ready' }: { state?: EmailViewState }) 
   const saveDraft = () => {
     if (!work || busy || altMissing(work) || !check(work)) return;
     later(copy.busy.saving, () => {
-      const saved = upsert({ ...work, status: 'draft', when: '' });
-      setNotice(copy.done.saved(saved.name));
+      attempt(() => {
+        const saved = upsert(saveEmailDraft(actor, work));
+        setNotice(copy.done.saved(saved.name));
+      });
     });
   };
   const askSend = () => {
@@ -215,33 +246,38 @@ export function EmailWorkspace({ state = 'ready' }: { state?: EmailViewState }) 
     if (!work) return;
     setConfirm(null);
     later(copy.busy.sending, () => {
-      const saved = upsert({ ...work, status: 'sent', when: 'Sent just now' });
-      setMode('preview');
-      setNotice(copy.done.sent(saved.name));
+      attempt(() => {
+        const saved = upsert(sendEmail(actor, work));
+        setMode('preview');
+        setNotice(copy.done.sent(saved.name));
+      });
     });
   };
   const confirmSchedule = () => {
     if (!work) return;
-    if (!when || new Date(when).getTime() <= Date.now()) {
+    if (!scheduleTimeOk(when, Date.now())) {
       setWhenError(copy.errors.when);
       focusLater('em-when');
       return;
     }
-    const label = formatWhen(when);
+    const label = formatScheduleTime(when);
     setConfirm(null);
     later(copy.busy.scheduling, () => {
-      const saved = upsert({ ...work, status: 'scheduled', when: label });
-      setMode('preview');
-      setNotice(copy.done.scheduled(saved.name, label));
+      attempt(() => {
+        const saved = upsert(scheduleEmail(actor, work, label));
+        setMode('preview');
+        setNotice(copy.done.scheduled(saved.name, label));
+      });
     });
   };
-  const duplicate = (d: WorkDoc) => {
-    const copyDoc: WorkDoc = { ...d, id: newId(), name: `${d.name}${copy.copySuffix}`, status: 'draft', when: '', ownerId: me.id };
-    setDocs((all) => [copyDoc, ...all]);
-    setNotice(copy.done.duplicated(copyDoc.name));
-    if (work) openEditor(copyDoc, 'edit');
-    else setTab('drafts');
-  };
+  const duplicate = (d: WorkDoc) =>
+    attempt(() => {
+      const copyDoc = duplicateEmail(actor, d, newId(), copy.copySuffix);
+      setDocs((all) => [copyDoc, ...all]);
+      setNotice(copy.done.duplicated(copyDoc.name));
+      if (work) openEditor(copyDoc, 'edit');
+      else setTab('drafts');
+    });
 
   // ---------- list-level confirmations
   const confirmOk = () => {
@@ -250,19 +286,22 @@ export function EmailWorkspace({ state = 'ready' }: { state?: EmailViewState }) 
     if (kind === 'send') return confirmSend();
     if (kind === 'schedule') return confirmSchedule();
     setConfirm(null);
-    if (kind === 'delete') {
-      setDocs((all) => all.filter((d) => d.id !== id));
-      if (work) setWork(null);
-      setTab('drafts');
-      setNotice(copy.done.deleted(name));
-      focusLater('em-tabs-anchor');
-    } else if (kind === 'archive') {
-      setArchivedTemplates((all) => [...all, id]);
-      setNotice(copy.done.archived(name));
-    } else if (kind === 'cancelScheduled') {
-      setDocs((all) => all.map((d) => (d.id === id ? { ...d, status: 'draft', when: '' } : d)));
-      setNotice(copy.done.cancelled(name));
-    }
+    attempt(() => {
+      if (kind === 'delete') {
+        setDocs((all) => deleteEmail(actor, all, id));
+        if (work) setWork(null);
+        setTab('drafts');
+        setNotice(copy.done.deleted(name));
+        focusLater('em-tabs-anchor');
+      } else if (kind === 'archive') {
+        if (!tplAllowed(false).includes('archive')) throw new WorkflowError('Archiving templates is for Admins and Super Admins.');
+        setArchivedTemplates((all) => [...all, id]);
+        setNotice(copy.done.archived(name));
+      } else if (kind === 'cancelScheduled') {
+        setDocs((all) => all.map((d) => (d.id === id ? cancelScheduledEmail(actor, d) : d)));
+        setNotice(copy.done.cancelled(name));
+      }
+    });
   };
   const dialogCopy = confirm ? copy.dialogs[confirm.kind] : null;
 
@@ -270,6 +309,7 @@ export function EmailWorkspace({ state = 'ready' }: { state?: EmailViewState }) 
   const noticeRegion = (
     <div aria-live="polite" className={styles.notice}>
       {notice && <Toast tone="success" message={notice} />}
+      {failed && <Toast tone="error" message={failed} />}
     </div>
   );
 
@@ -307,7 +347,7 @@ export function EmailWorkspace({ state = 'ready' }: { state?: EmailViewState }) 
         <span id="em-editor-title" tabIndex={-1} className="visually-hidden">
           {title}
         </span>
-        <p className="note">{copy.sampleNote}</p>
+        <DemoBanner imagesNote />
         {noticeRegion}
         <p role="status" className={styles.busy}>
           {busy}
@@ -422,12 +462,12 @@ export function EmailWorkspace({ state = 'ready' }: { state?: EmailViewState }) 
                 {copy.actions.saveDraft}
               </Button>
             )}
-            {!readOnly && canSchedule && (
+            {emailActions(actor, work).includes('schedule') && (
               <Button onClick={askSchedule} disabled={blocked || !!busy} aria-describedby={blocked ? 'em-action-note' : undefined} aria-haspopup="dialog">
                 {copy.actions.schedule}
               </Button>
             )}
-            {!readOnly && canSend && (
+            {emailActions(actor, work).includes('send') && (
               <Button variant="primary" onClick={askSend} disabled={blocked || !!busy} aria-describedby={blocked ? 'em-action-note' : undefined} aria-haspopup="dialog">
                 {copy.actions.send}
               </Button>
@@ -507,7 +547,7 @@ export function EmailWorkspace({ state = 'ready' }: { state?: EmailViewState }) 
                       {copy.rowActions.deleteShort}
                     </Button>
                   )}
-                  {status === 'scheduled' && canManage && (
+                  {emailActions(actor, d).includes('cancelScheduled') && (
                     <Button variant="ghost" onClick={() => setConfirm({ kind: 'cancelScheduled', id: d.id, name: d.name })} aria-label={copy.rowActions.cancel(d.name)} aria-haspopup="dialog">
                       {copy.rowActions.cancelShort}
                     </Button>
@@ -574,12 +614,12 @@ export function EmailWorkspace({ state = 'ready' }: { state?: EmailViewState }) 
                         </Button>
                       </>
                     )}
-                    {canManage && !archived && (
+                    {tplAllowed(false).includes('archive') && !archived && (
                       <Button variant="ghost" onClick={() => setConfirm({ kind: 'archive', id: t.id, name: t.name })} aria-label={copy.templateActions.archive(t.name)} aria-haspopup="dialog">
                         {copy.templateActions.archiveShort}
                       </Button>
                     )}
-                    {canManage && archived && (
+                    {tplAllowed(true).includes('restore') && archived && (
                       <Button
                         onClick={() => {
                           setArchivedTemplates((all) => all.filter((x) => x !== t.id));
@@ -612,7 +652,7 @@ export function EmailWorkspace({ state = 'ready' }: { state?: EmailViewState }) 
           </Button>
         }
       />
-      <p className="note">{copy.sampleNote}</p>
+      <DemoBanner imagesNote />
       <p className={styles.roleNote} aria-label={copy.accessLabel}>
         {copy.roleNote[roleId]}
       </p>

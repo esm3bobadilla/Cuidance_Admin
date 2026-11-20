@@ -8,7 +8,6 @@ import {
   liveCopy as copy,
   liveCurrent,
   liveStatusMeta,
-  liveUpdatesSeed,
   type LiveStatus,
   type LiveSurface,
   type LiveUpdate,
@@ -17,6 +16,7 @@ import { can } from '../../../shared/content/permissions';
 import { memberName } from '../../../shared/content/team-roster';
 import appWelcome from '../../../shared/brand/live/app-welcome.jpg';
 import webHero from '../../../shared/brand/live/web-home-hero.jpg';
+import { DemoBanner } from '../../components/feedback/DemoBanner';
 import { StateMessage } from '../../components/feedback/StateMessage';
 import { Select } from '../../components/forms/Select';
 import { TextInput } from '../../components/forms/TextInput';
@@ -27,6 +27,10 @@ import { Drawer } from '../../components/overlay/Drawer';
 import { Button } from '../../components/ui/Button';
 import { CuIcon } from '../../components/ui/CuIcon';
 import { StatusBadge, type StatusTone } from '../../components/ui/StatusBadge';
+import { demoModeCopy } from '../../../shared/content/demo-mode';
+import { WorkflowError } from '../../../shared/workflows/product-workflow';
+import { applyLiveAction, canEditLive, liveActions, publishingAvailable, saveLiveUpdate, validateLiveUpdate } from '../../../shared/workflows/live-workflow';
+import { updateDemo, useDemo } from '../_data/demoStore';
 import { useIdentity } from '../_data/identity';
 import styles from './live.module.css';
 
@@ -54,12 +58,23 @@ export function LiveScreen({ surface, state = 'ready' }: { surface: LiveSurface;
   const me = useIdentity();
   const rights = can(me.adminRole);
   const canApprove = !!rights?.liveApprove;
-  const canPublish = !!rights?.livePublish;
-  const canArchive = !!rights?.liveArchive;
+  const actor = { id: me.id, role: me.adminRole };
 
   const [loadState, setLoadState] = useState<LiveViewState>(state);
   useEffect(() => setLoadState(state), [state]);
-  const [updates, setUpdates] = useState<LiveUpdate[]>(() => (state === 'empty' ? [] : liveUpdatesSeed.filter((u) => u.surface === surface)));
+  // Phase 2 PR 2: updates come from the demo store (this browser session), shared by both
+  // Live pages and the Dashboard. ?state=empty previews an empty history and saves nothing.
+  const demo = useDemo();
+  const persist = state !== 'empty';
+  const [emptyPreview, setEmptyPreview] = useState<LiveUpdate[]>([]);
+  const [failed, setFailed] = useState('');
+  const updates = useMemo(() => (persist ? demo.live : emptyPreview).filter((u) => u.surface === surface), [persist, demo.live, emptyPreview, surface]);
+  const setUpdates = (change: (all: LiveUpdate[]) => LiveUpdate[]) => {
+    if (!persist) return setEmptyPreview(change(emptyPreview));
+    setFailed(updateDemo((d) => ({ ...d, live: change(d.live) })) ? '' : demoModeCopy.saveFailed);
+  };
+  const [fullPreview, setFullPreview] = useState(false);
+  const [device, setDevice] = useState<'desktop' | 'tablet' | 'mobile'>('desktop');
   const [filter, setFilter] = useState('active');
   const [preview, setPreview] = useState<PreviewMode>(state === 'unavailable' ? { kind: 'unavailable' } : { kind: 'current' });
 
@@ -80,7 +95,8 @@ export function LiveScreen({ surface, state = 'ready' }: { surface: LiveSurface;
   );
   const current = openId && openId !== 'new' ? updates.find((u) => u.id === openId) ?? null : null;
   const mine = (u: LiveUpdate) => u.ownerId === me.id;
-  const canEdit = (u: LiveUpdate) => (u.status === 'draft' || u.status === 'changes') && (canApprove || mine(u));
+  const canEdit = (u: LiveUpdate) => canEditLive(actor, u);
+  const allowed = (u: LiveUpdate) => liveActions(actor, u);
   const roleId = me.adminRole ?? 'team_member';
 
   const resetDrawer = () => {
@@ -128,21 +144,27 @@ export function LiveScreen({ surface, state = 'ready' }: { surface: LiveSurface;
       focusLater('lv-message');
     }, DELAY);
   };
-  const log = (u: LiveUpdate, what: string): LiveUpdate => ({ ...u, updated: 'Just now', history: [{ what, whoId: me.id, when: 'Just now' }, ...u.history] });
   const replace = (u: LiveUpdate) => setUpdates((all) => (all.some((x) => x.id === u.id) ? all.map((x) => (x.id === u.id ? u : x)) : [u, ...all]));
+  // Status changes go through the shared workflow rules, which refuse anything not allowed
+  const attempt = (fn: () => void) => {
+    try {
+      fn();
+    } catch (e) {
+      if (e instanceof WorkflowError) setMessage(e.message);
+      else throw e;
+    }
+  };
 
   const save = (to: 'draft' | 'review') => {
     if (!editing || busy) return;
-    const e: Record<string, string> = {};
-    if (!editing.title.trim()) e['lv-title'] = copy.errors.title;
-    if (!editing.summary.trim()) e['lv-summary'] = copy.errors.summary;
+    const e = validateLiveUpdate(editing, copy.errors);
     setErrors(e);
     if (Object.keys(e).length) {
       focusLater(Object.keys(e)[0]);
       return;
     }
     const isNew = !updates.some((u) => u.id === editing.id);
-    const next = log({ ...editing, status: to, changeNote: to === 'review' ? '' : editing.changeNote }, to === 'review' ? 'Submitted for review' : isNew ? 'Draft created' : 'Draft saved');
+    const next = saveLiveUpdate(actor, editing, to, isNew);
     later(to === 'review' ? copy.busy.submitting : copy.busy.saving, () => {
       replace(next);
       setEditing(null);
@@ -154,16 +176,20 @@ export function LiveScreen({ surface, state = 'ready' }: { surface: LiveSurface;
     if (!current) return;
     const u = current;
     later(copy.busy.submitting, () => {
-      replace(log({ ...u, status: 'review', changeNote: '' }, 'Submitted for review'));
-      setMessage(copy.done.submitted(u.title));
+      attempt(() => {
+        replace(applyLiveAction(actor, u, 'submit'));
+        setMessage(copy.done.submitted(u.title));
+      });
     });
   };
   const approve = () => {
     if (!current) return;
     const u = current;
     later(copy.busy.approving, () => {
-      replace(log({ ...u, status: 'ready', changeNote: '' }, 'Approved'));
-      setMessage(copy.done.approved(u.title));
+      attempt(() => {
+        replace(applyLiveAction(actor, u, 'approve'));
+        setMessage(copy.done.approved(u.title));
+      });
     });
   };
   const confirmChanges = () => {
@@ -177,9 +203,11 @@ export function LiveScreen({ surface, state = 'ready' }: { surface: LiveSurface;
     const text = note.trim();
     setConfirm(null);
     later(copy.busy.requesting, () => {
-      replace(log({ ...u, status: 'changes', changeNote: text }, 'Changes requested'));
-      setNote('');
-      setMessage(copy.done.changes(memberName(u.ownerId)));
+      attempt(() => {
+        replace(applyLiveAction(actor, u, 'requestChanges', text));
+        setNote('');
+        setMessage(copy.done.changes(memberName(u.ownerId)));
+      });
     });
   };
   const confirmArchive = () => {
@@ -187,8 +215,10 @@ export function LiveScreen({ surface, state = 'ready' }: { surface: LiveSurface;
     const u = current;
     setConfirm(null);
     later(copy.busy.archiving, () => {
-      replace(log({ ...u, status: 'archived' }, 'Archived'));
-      setMessage(copy.done.archived(u.title));
+      attempt(() => {
+        replace(applyLiveAction(actor, u, 'archive'));
+        setMessage(copy.done.archived(u.title));
+      });
     });
   };
   const viewPreview = (u: LiveUpdate) => {
@@ -226,10 +256,11 @@ export function LiveScreen({ surface, state = 'ready' }: { surface: LiveSurface;
       );
     }
     if (!current) return null;
-    const reviewable = current.status === 'review' && canApprove && !mine(current);
+    const can = allowed(current);
+    const reviewable = can.includes('approve');
     return (
       <>
-        {canArchive && current.status !== 'archived' && current.status !== 'published' && (
+        {can.includes('archive') && (
           <Button variant="ghost" onClick={() => setConfirm('archive')} disabled={!!busy} aria-haspopup="dialog">
             {copy.actions.archive}
           </Button>
@@ -252,14 +283,15 @@ export function LiveScreen({ surface, state = 'ready' }: { surface: LiveSurface;
             {copy.actions.approve}
           </Button>
         )}
-        {canEdit(current) && (
+        {can.includes('submit') && (
           <Button variant="primary" onClick={submit} disabled={!!busy}>
             {copy.actions.submit}
           </Button>
         )}
-        {canPublish && current.status === 'ready' && (
-          <Button variant="primary" disabled aria-describedby="lv-action-note">
-            {copy.actions.publish}
+        {can.includes('publish') && (
+          // Publishing is unavailable in demo mode: shown, labeled and turned off
+          <Button variant="primary" disabled={!publishingAvailable} aria-describedby="lv-action-note">
+            {copy.actions.publishUnavailable}
           </Button>
         )}
       </>
@@ -297,7 +329,12 @@ export function LiveScreen({ surface, state = 'ready' }: { surface: LiveSurface;
           ))}
         </ul>
       </nav>
-      <p className="note">{copy.sampleNote}</p>
+      <DemoBanner />
+      {failed && (
+        <p className={styles.actionNote} role="alert">
+          {failed}
+        </p>
+      )}
       <div className={styles.intro} aria-label={copy.accessLabel} role="group">
         <p>{copy.roleNote[roleId]}</p>
         <Button variant="primary" onClick={prepare} aria-haspopup="dialog" disabled={loadState === 'loading' || loadState === 'error'}>
@@ -355,6 +392,13 @@ export function LiveScreen({ surface, state = 'ready' }: { surface: LiveSurface;
                 <BrowserFrame headline={headline} />
               )}
             </div>
+            {preview.kind !== 'unavailable' && (
+              <div>
+                <Button onClick={() => setFullPreview(true)} aria-haspopup="dialog">
+                  <CuIcon name={surface === 'app' ? 'phone' : 'web'} size={16} /> {copy.preview.openFull}
+                </Button>
+              </div>
+            )}
             {surface === 'website' && (
               <p className={styles.prototypeLink}>
                 {brandWebsitePrototypeUrl ? (
@@ -537,6 +581,39 @@ export function LiveScreen({ surface, state = 'ready' }: { surface: LiveSurface;
       </Drawer>
 
       <Dialog
+        open={fullPreview}
+        onClose={() => setFullPreview(false)}
+        size="wide"
+        title={copy.preview.fullTitle[surface]}
+        actions={
+          <Button variant="primary" onClick={() => setFullPreview(false)}>
+            {copy.preview.close}
+          </Button>
+        }
+      >
+        <p>{copy.preview.fullNote}</p>
+        {surface === 'website' && (
+          <div role="group" aria-label={copy.preview.deviceLabel} className={styles.devices}>
+            {(['desktop', 'tablet', 'mobile'] as const).map((d) => (
+              <button key={d} type="button" className={styles.deviceButton} aria-pressed={device === d} onClick={() => setDevice(d)}>
+                {device === d && <span aria-hidden="true">✓ </span>}
+                <CuIcon name={d === 'mobile' ? 'phone' : d} size={16} /> {copy.preview.devices[d]}
+              </button>
+            ))}
+          </div>
+        )}
+        <div className={styles.fullStage}>
+          {surface === 'app' ? (
+            <PhoneFrame headline={headline} changed={headline !== liveCurrent.app.headline} large />
+          ) : (
+            <div className={styles.fullSite} data-device={device}>
+              <BrowserFrame headline={headline} />
+            </div>
+          )}
+        </div>
+      </Dialog>
+
+      <Dialog
         open={confirm === 'archive' && !!current}
         onClose={() => setConfirm(null)}
         tone="alert"
@@ -597,9 +674,9 @@ export function LiveScreen({ surface, state = 'ready' }: { surface: LiveSurface;
 
 // The approved phone frame: the App screen image inside a device outline (420 x 968 ratio).
 // When an update changes the headline, it shows as a labeled overlay on the screen.
-function PhoneFrame({ headline, changed }: { headline: string; changed: boolean }) {
+function PhoneFrame({ headline, changed, large = false }: { headline: string; changed: boolean; large?: boolean }) {
   return (
-    <figure className={styles.phone} aria-label={copy.preview.phoneLabel}>
+    <figure className={large ? `${styles.phone} ${styles.phoneLarge}` : styles.phone} aria-label={copy.preview.phoneLabel}>
       <div className={styles.phoneScreen}>
         <img src={appWelcome.src} width={appWelcome.width} height={appWelcome.height} alt={copy.preview.phoneAlt} />
         {changed && <p className={styles.phoneOverlay}>{headline}</p>}

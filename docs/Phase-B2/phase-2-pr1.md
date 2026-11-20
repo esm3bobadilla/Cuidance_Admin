@@ -1,6 +1,6 @@
 # Phase 2 PR 1: Content, Product Library, Email, Live and role wording
 
-_Branch `claude/clever-goldberg-vgmhex`, from `main` at `9ef8516`. Frontend only, sample data only._
+_Branch `claude/clever-goldberg-vgmhex`, from `main` at `9ef8516`. Frontend only, sample data only. Merged as PR #24 (`3478a3f`). PR 2 (`phase-2-pr2.md`) makes these screens a working demo that lasts the browser session._
 
 ## What this pull request does
 

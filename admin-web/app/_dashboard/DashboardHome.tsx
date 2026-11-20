@@ -2,7 +2,11 @@
 
 import { useEffect, useState } from 'react';
 import { adminScreens } from '../../../shared/content/admin-web-screens';
-import { dashboardHomeCopy as copy, glanceCards, liveStatus, quickLinks, recentActivity } from '../../../shared/content/dashboard-home';
+import { dashboardHomeCopy as copy, glanceCards, glanceDemoCopy, liveStatus, quickLinks, recentActivity } from '../../../shared/content/dashboard-home';
+import { scheduledEmailCount } from '../../../shared/workflows/email-workflow';
+import { liveReadyCount } from '../../../shared/workflows/live-workflow';
+import { productsAwaitingApproval } from '../../../shared/workflows/product-workflow';
+import { useDemo } from '../_data/demoStore';
 import { can, roleNames } from '../../../shared/content/permissions';
 import { isOpen } from '../../../shared/review-loop/review-decisions';
 import { uiSymbols } from '../../../shared/content/ui-symbols';
@@ -52,6 +56,14 @@ export function DashboardHero() {
 export function DashboardGlance() {
   const data = useReviewData();
   const open = data.state === 'ready' ? data.tasks.filter(isOpen).length : null;
+  const demo = useDemo();
+  const products = productsAwaitingApproval(demo.products);
+  const values: Record<string, string> = {
+    review: open === null ? uiSymbols.loading : String(open),
+    email: String(scheduledEmailCount(demo.emails)),
+    app: String(liveReadyCount(demo.live, 'app')),
+    web: String(liveReadyCount(demo.live, 'website')),
+  };
   return (
     <section className={styles.section} aria-labelledby="glance-heading">
       <h2 id="glance-heading" className={styles.title}>
@@ -62,9 +74,10 @@ export function DashboardGlance() {
           <li key={card.key} className={styles.card}>
             <div className={styles.cardText}>
               <p className={styles.cardLabel}>{card.label}</p>
-              <p className={styles.cardValue}>{card.value ?? (open === null ? uiSymbols.loading : String(open))}</p>
+              <p className={styles.cardValue}>{values[card.key]}</p>
               <p className={styles.cardDetail}>{card.detail}</p>
-              {card.sample && <span className={styles.sample}>{copy.sampleBadge}</span>}
+              {card.key === 'review' && products > 0 && <p className={styles.cardDetail}>{glanceDemoCopy.productsAwaiting(products)}</p>}
+              {card.demo && <span className={styles.sample}>{glanceDemoCopy.badge}</span>}
             </div>
             <img className={styles.cardArt} src={art[card.key].src} width={56} height={56} alt="" />
           </li>
@@ -107,6 +120,7 @@ export function DashboardDecisionNotice() {
 }
 
 export function DashboardLiveStatus() {
+  const demo = useDemo();
   return (
     <section className={styles.panel} aria-labelledby="live-status-heading">
       <div className={styles.panelHeader}>
@@ -128,7 +142,7 @@ export function DashboardLiveStatus() {
                   {copy.liveStateLabel(row.state)}
                 </span>
               </span>
-              <span className={styles.activityMeta}>{row.detail}</span>
+              <span className={styles.activityMeta}>{row.detail(liveReadyCount(demo.live, row.key === 'app' ? 'app' : 'website'))}</span>
               {/* Phase 2 PR 1: the static preview (sample data, nothing is published) */}
               <a className={styles.livePending} href={`${base}${adminScreens[row.screen].path}`}>
                 <CuIcon name="arrowR" size={14} />

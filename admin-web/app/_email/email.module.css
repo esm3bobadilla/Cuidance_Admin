@@ -9,7 +9,12 @@
 }
 
 .notice:empty {
-  display: none;
+  /* Empty live region: kept in the accessibility tree (so its first message is announced) but takes no space */
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
 }
 
 .panel {
@@ -200,7 +205,12 @@
 }
 
 .busy:empty {
-  display: none;
+  /* Empty live region: kept in the accessibility tree (so its first message is announced) but takes no space */
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
 }
 
 .busy {

@@ -16,7 +16,6 @@ export default function Page() {
     <main className="shell">
       <PageHeader eyebrow={copy.eyebrow} title={copy.title} description={copy.description} />
       <ContentNav current="product-library" />
-      <p className="note">{copy.sampleNote}</p>
       <Suspense fallback={<ProductLibrary state="ready" />}>
         <ProductLibraryFromUrl />
       </Suspense>

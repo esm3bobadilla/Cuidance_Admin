@@ -115,7 +115,12 @@ npm run dev
 
 # 4. Check the production build
 npm run build
+
+# 5. Run the demo workflow and role tests (Node's built-in test runner, no extra packages)
+npm test
 ```
+
+**Demo mode (Phase 2 PR 2).** Product Library, Email and Live work as a demo: changes stay in this browser session, and nothing is sent, scheduled or published. Use **Reset demo data** in the Demo mode banner to go back to the sample data. See `docs/Phase-B2/phase-2-pr2.md`.
 
 ## Deployment
 
@@ -153,6 +158,7 @@ Cuidance_Admin/
 ├── shared/                Shared content and rules for Admin Web
 │   ├── content/           Admin Web screen names, navigation, permission matrix, page wording and sample data, theme and display settings
 │   ├── review-loop/       Week 11 review decision rules (statuses, Dashboard counts), shared by every screen
+│   ├── workflows/         Phase 2 PR 2 demo workflow rules for Product Library, Email and Live (roles, status changes, validation), with unit tests in __tests__/ (`npm test` in admin-web)
 │   ├── onboarding/        Week 11 and Phase A1 invitation, account setup and sign-in rules (password, email, states)
 │   ├── quiz-rules/        Answer cards, mixing rules, delivery rules
 │   ├── design-tokens/     Colors (light and dark), type, spacing, radius, stroke
@@ -175,7 +181,7 @@ Cuidance_Admin/
 │   ├── Phase-A3/          Phase A3 invitations and onboarding notes
 │   ├── Phase-A4/          Phase A4 release readiness: checks, security review, known limitations, go-live checklist
 │   ├── Phase-B1/          Phase B1 prototype implementation: role migration plan, progress and checks
-│   ├── Phase-B2/          Phase 2 PR 1: Content, Product Library, Email, Live and role wording (notes and checks)
+│   ├── Phase-B2/          Phase 2 PR 1 (Content, Product Library, Email, Live, role wording) and PR 2 (functional demo workflows): notes and checks
 │   └── archived/
 │       └── admin-mobile/  Archived Admin Mobile reference (no active work)
 ├── README.md
@@ -187,7 +193,9 @@ Cuidance_Admin/
 └── .github/
     ├── pull_request_template.md
     └── workflows/
-        └── deploy-admin-web.yml   GitHub Pages deploy
+        ├── deploy-admin-web.yml   GitHub Pages deploy
+        ├── admin-web-tests.yml    Type check and demo workflow tests on pull requests
+        └── supabase-db-tests.yml  Database tests
 ```
 
 Folders are added to the repo when their first file lands. Git doesn't track empty folders.

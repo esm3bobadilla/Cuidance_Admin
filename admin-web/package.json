@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "test": "rm -rf .test-build && tsc -p tsconfig.test.json && node --test \".test-build/shared/workflows/__tests__/*.test.js\""
   },
   "dependencies": {
     "@supabase/supabase-js": "2.118.0",
