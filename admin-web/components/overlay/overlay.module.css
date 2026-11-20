@@ -142,3 +142,8 @@
     border: var(--stroke-default) solid CanvasText;
   }
 }
+
+/* The scrolling body can take focus (keyboard scrolling); keep its ring inside the drawer */
+.body:focus-visible {
+  outline-offset: calc(var(--stroke-strong) * -1);
+}

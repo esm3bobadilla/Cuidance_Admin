@@ -1,0 +1,487 @@
+/* Product Library (Content / Product Library, Phase 2 PR 1). Tokens only.
+   Product records are cards (Team 03 visual correction): a responsive grid that never
+   scrolls sideways. Borders and surfaces separate cards; no shadows on cards. */
+
+.intro {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-16);
+  padding: var(--space-24);
+  border: var(--stroke-default) solid var(--color-border);
+  border-radius: var(--radius-medium);
+  background: var(--color-surface);
+  font: var(--type-body-small);
+}
+
+.introText {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  gap: var(--space-4);
+  min-width: min(100%, calc(var(--layout-sidebar-width) + var(--space-48)));
+}
+
+.introTitle {
+  font: var(--type-heading-3);
+}
+
+.buttonIcon {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-8);
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+  min-width: 0;
+  padding: var(--space-24);
+  border: var(--stroke-default) solid var(--color-border);
+  border-radius: var(--radius-medium);
+  background: var(--color-surface);
+}
+
+.panelHeader,
+.summaryRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-8);
+}
+
+.summaryRow {
+  align-items: center;
+}
+
+.title {
+  font: var(--type-heading-2);
+}
+
+.count {
+  font: var(--type-caption);
+  color: var(--color-ink-muted);
+}
+
+/* Filters reflow: five across on wide screens, fewer as space shrinks, one at 200% zoom */
+.filters {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, calc(var(--layout-sidebar-width) - var(--space-48) - var(--space-32))), 1fr));
+  gap: var(--space-16);
+}
+
+/* ---------- Cards ---------- */
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, calc(var(--layout-sidebar-width) + var(--space-48))), 1fr));
+  gap: var(--space-16);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cards > li {
+  display: flex;
+  min-width: 0;
+}
+
+.card {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+  border: var(--stroke-default) solid var(--color-border);
+  border-radius: var(--radius-medium);
+  background: var(--color-background);
+}
+
+/* The record open in the drawer: Compass Blue border plus a hidden "(open)" label */
+.card[data-selected='true'] {
+  border-color: var(--color-selected);
+  outline: var(--stroke-default) solid var(--color-selected);
+}
+
+.cardMedia {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-8);
+  aspect-ratio: 16 / 9;
+  border-bottom: var(--stroke-default) solid var(--color-border);
+  background: var(--color-surface-warm);
+}
+
+.cardImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cardPlaceholder {
+  width: calc(var(--size-touch-target) + var(--space-24));
+  height: auto;
+}
+
+.cardNoImage {
+  font: var(--type-caption);
+  color: var(--color-ink-muted);
+}
+
+.cardBody {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-8);
+  padding: var(--space-16);
+}
+
+.cardStatus {
+  display: flex;
+}
+
+.cardTitle {
+  font: var(--type-heading-5);
+  overflow-wrap: anywhere;
+}
+
+.cardMeta {
+  font: var(--type-body-small);
+  color: var(--color-ink-muted);
+}
+
+.cardDescription {
+  font: var(--type-body-small);
+  color: var(--color-ink);
+}
+
+.cardFacts {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--space-12);
+  margin: auto 0 0;
+  padding-top: var(--space-8);
+  border-top: var(--stroke-default) solid var(--color-border);
+}
+
+.cardFacts dt {
+  font: var(--type-caption);
+  color: var(--color-ink-muted);
+}
+
+.cardFacts dd {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  font: var(--type-body-small);
+}
+
+.cardLinkTitle {
+  font: var(--type-caption);
+  color: var(--color-ink-muted);
+  overflow-wrap: anywhere;
+}
+
+.cardActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-8);
+  padding: 0 var(--space-16) var(--space-16);
+}
+
+.muted {
+  color: var(--color-ink-muted);
+}
+
+/* ---------- Drawer ---------- */
+
+.drawerBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+}
+
+.drawerStatus {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-12);
+}
+
+.statusLine:empty {
+  display: none;
+}
+
+.busy {
+  font: var(--type-body-small);
+  color: var(--color-ink-muted);
+}
+
+.success {
+  padding: var(--space-8) var(--space-12);
+  border: var(--stroke-default) solid var(--color-success);
+  border-radius: var(--radius-small);
+  background: var(--color-success-surface);
+  font: var(--type-body-small);
+}
+
+.actionNote {
+  padding: var(--space-12);
+  border-radius: var(--radius-small);
+  background: var(--color-info-surface);
+  font: var(--type-body-small);
+}
+
+.sections {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-24);
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  padding-bottom: var(--space-24);
+  border-bottom: var(--stroke-default) solid var(--color-border);
+  font: var(--type-body-small);
+}
+
+.section:last-child {
+  border-bottom: 0;
+}
+
+.sectionTitle {
+  font: var(--type-heading-5);
+}
+
+.facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, calc(var(--layout-sidebar-width) - var(--space-48))), 1fr));
+  gap: var(--space-12);
+  margin: 0;
+}
+
+.facts dt {
+  font: var(--type-caption);
+  color: var(--color-ink-muted);
+}
+
+.facts dd {
+  margin: 0;
+}
+
+.wrap {
+  overflow-wrap: anywhere;
+}
+
+.plainList,
+.sourceList,
+.thumbs {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.listItem {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-12);
+  border: var(--stroke-default) solid var(--color-border);
+  border-radius: var(--radius-small);
+}
+
+.itemName {
+  font: var(--type-label);
+}
+
+.caption {
+  font: var(--type-caption);
+  color: var(--color-ink-muted);
+}
+
+/* Missing source: Dark Ruby text plus the alert icon */
+.flag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-4);
+  font: var(--type-caption);
+  color: var(--color-error);
+}
+
+.bullets {
+  margin: 0;
+  padding-left: var(--space-24);
+}
+
+.figure {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin: 0;
+}
+
+.figureImage {
+  width: 100%;
+  max-height: calc(var(--layout-drawer-width) / 2);
+  border-radius: var(--radius-small);
+  object-fit: contain;
+  background: var(--color-surface-warm);
+}
+
+.thumb {
+  width: calc(var(--space-48) * 2);
+  height: auto;
+  border-radius: var(--radius-small);
+}
+
+.changeNote {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-12);
+  border: var(--stroke-default) solid var(--color-error);
+  border-radius: var(--radius-small);
+  background: var(--color-error-surface);
+  font: var(--type-body-small);
+}
+
+.changeNoteTitle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-8);
+  font: var(--type-label);
+}
+
+/* ---------- Form ---------- */
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-24);
+}
+
+.fieldset {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+  min-width: 0;
+  margin: 0;
+  padding: 0 0 var(--space-24);
+  border: 0;
+  border-bottom: var(--stroke-default) solid var(--color-border);
+}
+
+.legend {
+  padding: 0;
+  margin-bottom: var(--space-16);
+  font: var(--type-heading-5);
+}
+
+.pair {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, calc(var(--layout-sidebar-width) - var(--space-48))), 1fr));
+  gap: var(--space-16);
+}
+
+.repeat {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+  padding: var(--space-16);
+  border: var(--stroke-default) solid var(--color-border);
+  border-radius: var(--radius-small);
+}
+
+.repeatHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-8);
+}
+
+.extraImages {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+}
+
+.checkGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.check {
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
+  min-height: var(--size-touch-target);
+  font: var(--type-body-small);
+  cursor: pointer;
+}
+
+.check input {
+  flex: none;
+  width: var(--space-24);
+  height: var(--space-24);
+  accent-color: var(--color-selected);
+}
+
+/* Error summary: Dark Ruby plus an icon and the list of fields to fix */
+.errorSummary {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  padding: var(--space-16);
+  border: var(--stroke-strong) solid var(--color-error);
+  border-radius: var(--radius-small);
+  background: var(--color-error-surface);
+  font: var(--type-body-small);
+}
+
+.errorHeading {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-8);
+  font: var(--type-label);
+  color: var(--color-error);
+}
+
+.errorSummary ul {
+  margin: 0;
+  padding-left: var(--space-24);
+}
+
+.errorSummary a {
+  color: var(--color-ink);
+}
+
+.blockNote {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-8);
+  padding: var(--space-12);
+  border: var(--stroke-default) solid var(--color-error);
+  border-radius: var(--radius-small);
+  background: var(--color-error-surface);
+  font: var(--type-body-small);
+}
+
+@media (forced-colors: active) {
+  .card[data-selected='true'] {
+    outline: var(--stroke-strong) solid Highlight;
+  }
+}

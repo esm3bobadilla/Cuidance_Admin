@@ -11,6 +11,7 @@ import type { CuIconName } from '../brand/icons/cu-icons';
 export type AdminScreenId =
   | 'dashboard'
   | 'content'
+  | 'product-library'
   | 'quiz-content'
   | 'guidance-content'
   | 'product-information'
@@ -25,6 +26,10 @@ export type AdminScreenId =
   | 'settings'
   | 'profile'
   | 'manage-team'
+  // Phase 2 PR 1: Communication (Email, Live App and Brand Website)
+  | 'email'
+  | 'live-app'
+  | 'live-website'
   // Week 11 feature 2 and Phase A1: before the person enters Admin Web (no sidebar)
   | 'sign-in'
   | 'create-account'
@@ -41,6 +46,8 @@ export type AdminScreen = {
   scopeNote: string;
   // Screens linked from this one, for the connected review path
   related?: AdminScreenId[];
+  // Shorter or clearer label where the sidebar lists the screen under its parent
+  navName?: string;
 };
 
 export const adminScreens: Record<AdminScreenId, AdminScreen> = {
@@ -56,6 +63,16 @@ export const adminScreens: Record<AdminScreenId, AdminScreen> = {
     path: '/content/',
     parent: 'dashboard',
     scopeNote: 'Parent section for the content the Cuidance team reviews and maintains. Choose a content area below.',
+    navName: 'Content Workspace',
+  },
+  // Phase 2 PR 1: product records inside Content (no separate sidebar item)
+  'product-library': {
+    id: 'product-library',
+    name: 'Product Library',
+    path: '/content/product-library/',
+    parent: 'content',
+    scopeNote:
+      'Product records with ingredients, claims, sources, images and linked guidance. Product information only: no pricing, orders or availability.',
   },
   'quiz-content': {
     id: 'quiz-content',
@@ -152,6 +169,27 @@ export const adminScreens: Record<AdminScreenId, AdminScreen> = {
     parent: 'dashboard',
     scopeNote: 'Workspace access, roles and invitations for the Cuidance team. Super Admins and Admins only.',
   },
+  email: {
+    id: 'email',
+    name: 'Email',
+    path: '/email/',
+    parent: 'dashboard',
+    scopeNote: 'Email templates, drafts and previews. Sample only: no email is sent or scheduled until an email provider is approved.',
+  },
+  'live-app': {
+    id: 'live-app',
+    name: 'Cuidance App',
+    path: '/live/app/',
+    parent: 'dashboard',
+    scopeNote: 'A static preview of the Cuidance App and its update history. Sample only: nothing is pushed to the app.',
+  },
+  'live-website': {
+    id: 'live-website',
+    name: 'Brand Website',
+    path: '/live/website/',
+    parent: 'dashboard',
+    scopeNote: 'A static preview of the Brand Website and its update history. Sample only: nothing is published.',
+  },
   settings: {
     id: 'settings',
     name: 'Settings',
@@ -202,11 +240,11 @@ export function isSetupPath(pathname: string) {
 export const structureOnlyNote = 'Structure only. Screen content and data are not built yet.';
 
 // Admin Web navigation (Phase B1 shell, from the approved Admin Web prototype).
-// Sections and icons follow the prototype. The Communication section (Email, Live App
-// and Brand Website) and the Profile and Manage Team pages join when those phases are
-// approved and built; until then the nav only links to pages that exist. Account Support
-// is not in the prototype navigation (Team 03, Nov 16, 2026): its page stays reachable by
-// URL and workspace search only.
+// Sections and icons follow the prototype. Phase 2 PR 1: Content lists only Content
+// Workspace and Product Library (content areas are types and filters inside the
+// workspace), and the Communication section adds Email and Live (Cuidance App, Brand
+// Website). Account Support and the area pages stay reachable from the Content
+// Workspace, by URL and by workspace search.
 export type NavItem = {
   // Unique key, also used for the expand state and element ids
   key: string;
@@ -233,16 +271,18 @@ export const adminNav: NavSection[] = [
         id: 'content',
         label: 'Content',
         icon: 'doc',
-        children: ['quiz-content', 'guidance-content', 'product-information', 'knowledge-sources', 'partner-highlights'],
+        children: ['content', 'product-library'],
       },
-      {
-        key: 'review-tasks',
-        id: 'review-tasks',
-        label: 'Review Tasks',
-        icon: 'review',
-        children: ['guidance-rules-review', 'claims-safety-review'],
-      },
+      { key: 'review-tasks', id: 'review-tasks', label: 'Review Tasks', icon: 'review' },
       { key: 'metrics', id: 'content-metrics', label: 'Metrics', icon: 'bars' },
+    ],
+  },
+  {
+    key: 'communication',
+    label: 'Communication',
+    items: [
+      { key: 'email', id: 'email', label: 'Email', icon: 'mail' },
+      { key: 'live', id: 'live-app', label: 'Live', icon: 'live', children: ['live-app', 'live-website'] },
     ],
   },
   {

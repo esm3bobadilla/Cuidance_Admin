@@ -208,12 +208,14 @@
   color: var(--color-success);
 }
 
+/* Link to the static Live preview: Compass Blue link text, 44 px tall target */
 .livePending {
   display: inline-flex;
   align-items: center;
   gap: var(--space-4);
-  font: var(--type-caption);
-  color: var(--color-ink-muted);
+  min-height: var(--size-touch-target);
+  color: var(--color-accent);
+  font: var(--type-link);
 }
 
 @media (max-width: 1279px) {

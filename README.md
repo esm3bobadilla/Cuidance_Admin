@@ -146,7 +146,7 @@ To try Supabase mode on your own computer:
 ```
 Cuidance_Admin/
 ├── admin-web/             Admin Web app for the browser
-│   ├── app/               Routes from the Week 10 route map (see `docs/Week-10/route-map.md`), `/dev` component preview, custom 404
+│   ├── app/               Routes from the Week 10 route map (see `docs/Week-10/route-map.md`), `/dev` component preview, custom 404; Phase 2 PR 1 adds `content/product-library`, `email` and `live/app`, `live/website`
 │   │   └── _screens/      Shared structure for the route-map screens (not a route)
 │   └── components/        Shared components: layout, ui, forms, data, feedback, content, overlay (drawer, dialog, popover)
 ├── supabase/              Phase 2: Supabase config, migrations, local seed and database tests; Phase A3: the invitations Edge Function (functions/) and email templates (templates/); role migration Stage 1: rollback/ (reviewed rollback scripts, never run automatically)
@@ -159,7 +159,8 @@ Cuidance_Admin/
 │   └── brand/
 │       ├── heroes/        Phase B1 cut-paper hero banner images (from the approved prototype)
 │       ├── icons/         Phase B1 cu-icons path data (rendered by admin-web/components/ui/CuIcon.tsx)
-│       ├── illustrations/ Approved flat Cuidance illustrations (Phase A1, plus Phase B1 prototype assets)
+│       ├── illustrations/ Approved flat Cuidance illustrations (Phase A1, plus Phase B1 prototype assets; email/ for the Phase 2 email cards)
+│       ├── live/          Phase 2 static Live preview images (App screen, website hero) from the approved prototype
 │       └── logo/          Approved Logo Version 4 files (package v03); prototype/ holds the cream mark for the icon rail
 │           ├── png/
 │           │   └── derived/   Team 03 derived exports (favicons, 180 / 192 px app icons, raster lockups)
@@ -174,6 +175,7 @@ Cuidance_Admin/
 │   ├── Phase-A3/          Phase A3 invitations and onboarding notes
 │   ├── Phase-A4/          Phase A4 release readiness: checks, security review, known limitations, go-live checklist
 │   ├── Phase-B1/          Phase B1 prototype implementation: role migration plan, progress and checks
+│   ├── Phase-B2/          Phase 2 PR 1: Content, Product Library, Email, Live and role wording (notes and checks)
 │   └── archived/
 │       └── admin-mobile/  Archived Admin Mobile reference (no active work)
 ├── README.md

@@ -46,10 +46,20 @@ type Matrix = {
   createContent: boolean;
   assignTo: AdminRoleId[];
   reassign: 'any' | 'own'; // own = only tasks they originally sent
+  // Product Library (Phase 2 PR 1). Team Members edit only records assigned to them.
+  productEditAny: boolean;
+  productReview: boolean; // approve and request changes
+  productArchive: boolean; // archive and restore as draft
   // Communication (sending and pushing are not built: provider and integrations not approved)
   emailDrafts: boolean;
   emailSend: boolean;
+  emailSchedule: boolean;
+  emailManageTemplates: boolean; // archive templates, cancel scheduled email
   livePush: 'all' | 'approved-only';
+  // Live App and Brand Website updates (Phase 2 PR 1). Everyone prepares and submits.
+  liveApprove: boolean; // approve and request changes
+  livePublish: boolean;
+  liveArchive: boolean;
 };
 
 export const permissionMatrix: Record<AdminRoleId, Matrix> = {
@@ -63,9 +73,17 @@ export const permissionMatrix: Record<AdminRoleId, Matrix> = {
     createContent: true,
     assignTo: ['admin', 'team_member'],
     reassign: 'any',
+    productEditAny: true,
+    productReview: true,
+    productArchive: true,
     emailDrafts: true,
     emailSend: true,
+    emailSchedule: true,
+    emailManageTemplates: true,
     livePush: 'all',
+    liveApprove: true,
+    livePublish: true,
+    liveArchive: true,
   },
   admin: {
     seeManageTeam: true,
@@ -77,9 +95,17 @@ export const permissionMatrix: Record<AdminRoleId, Matrix> = {
     createContent: true,
     assignTo: ['admin', 'team_member'],
     reassign: 'any',
+    productEditAny: true,
+    productReview: true,
+    productArchive: true,
     emailDrafts: true,
     emailSend: true,
+    emailSchedule: true,
+    emailManageTemplates: true,
     livePush: 'all',
+    liveApprove: true,
+    livePublish: true,
+    liveArchive: true,
   },
   team_member: {
     seeManageTeam: false,
@@ -91,9 +117,17 @@ export const permissionMatrix: Record<AdminRoleId, Matrix> = {
     createContent: true,
     assignTo: ['team_member'],
     reassign: 'own',
+    productEditAny: false,
+    productReview: false,
+    productArchive: false,
     emailDrafts: true,
     emailSend: false,
+    emailSchedule: false,
+    emailManageTemplates: false,
     livePush: 'approved-only',
+    liveApprove: false,
+    livePublish: false,
+    liveArchive: false,
   },
 };
 
@@ -134,6 +168,9 @@ export const permissionSummary: Record<AdminRoleId, string[]> = {
     'Create and edit content',
     'Assign reviews to Admins and Team Members',
     'Review assigned content (never their own)',
+    'Approve and archive product records',
+    'Send and schedule email (sample only until an email provider is approved)',
+    'Approve, publish and archive App and Website updates (sample only)',
     'View metrics',
   ],
   admin: [
@@ -141,13 +178,18 @@ export const permissionSummary: Record<AdminRoleId, string[]> = {
     'Create and edit content',
     'Assign reviews to Admins and Team Members',
     'Review assigned content (never their own)',
+    'Approve and archive product records',
+    'Send and schedule email (sample only until an email provider is approved)',
+    'Approve, publish and archive App and Website updates (sample only)',
     'View metrics',
   ],
   team_member: [
     'Create and edit content, and send it for review',
     'Assign reviews to Team Members, and reassign tasks they sent',
     'Review assigned content (never their own)',
-    'Draft email (sending is for Admins)',
+    'Create product records, and edit the ones assigned to them',
+    'Draft and preview email (sending and scheduling are for Admins)',
+    'Prepare App and Website updates and submit them for review',
     'View metrics',
   ],
 };

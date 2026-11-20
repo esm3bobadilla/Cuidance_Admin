@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef, useState } from 'react';
-import { adminRoles } from '../../../shared/content/admin-roles';
+import { roleFor } from '../../../shared/content/admin-roles';
 import { adminScreens } from '../../../shared/content/admin-web-screens';
 import { invitationCopy as copy, invitationFromParam, invitationsSeed, prototypeNotice, type Invitation } from '../../../shared/content/invitation';
 import { uiSymbols } from '../../../shared/content/ui-symbols';
@@ -20,7 +20,7 @@ const reviewTasksHref = `${base}${adminScreens['review-tasks'].path}`;
 // Review aid only (?state=): shows a state without saving anything
 export type InvitationPreview = 'loading' | 'expired' | 'declined' | 'not-found' | 'accepted';
 
-const roleName = (invitation: Invitation) => adminRoles.find((role) => role.id === invitation.role)?.name ?? invitation.role;
+const roleName = (invitation: Invitation) => roleFor(invitation.role)?.name ?? invitation.role;
 
 // Accept Invitation (Week 11 feature 2). PROTOTYPE ONLY: the invitation is sample data,
 // and the answer is kept in this browser tab only.
@@ -169,7 +169,7 @@ function SampleAcceptInvitation({ inviteParam, preview }: { inviteParam: string 
 }
 
 function InvitationDetails({ invitation }: { invitation: Invitation }) {
-  const role = adminRoles.find((item) => item.id === invitation.role);
+  const role = roleFor(invitation.role);
   const rows: [string, string][] = [
     [copy.fields.workspace, invitation.workspace],
     [copy.fields.invitedPerson, invitation.invitedName],

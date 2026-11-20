@@ -129,11 +129,11 @@ export function DashboardLiveStatus() {
                 </span>
               </span>
               <span className={styles.activityMeta}>{row.detail}</span>
-              {/* Plain text, not a disabled button: nothing here looks clickable */}
-              <span className={styles.livePending}>
-                <CuIcon name="lock" size={14} />
-                {copy.livePreviewPending}
-              </span>
+              {/* Phase 2 PR 1: the static preview (sample data, nothing is published) */}
+              <a className={styles.livePending} href={`${base}${adminScreens[row.screen].path}`}>
+                <CuIcon name="arrowR" size={14} />
+                {copy.livePreviewLink(row.name)}
+              </a>
             </span>
           </li>
         ))}

@@ -52,7 +52,7 @@ export function WorkspaceSearch() {
   };
 
   return (
-    <div className={styles.search} role="search">
+    <div className={styles.search} role="search" aria-label={searchCopy.label}>
       <label className={styles.field}>
         <span className="visually-hidden">{searchCopy.label}</span>
         <CuIcon name="search" variant="badge" size={26} />

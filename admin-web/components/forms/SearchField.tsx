@@ -11,7 +11,8 @@ type SearchFieldProps = {
 
 export function SearchField({ id, label, helper, disabled, ...rest }: SearchFieldProps) {
   return (
-    <div role="search">
+    // Named after its label, so it is told apart from the workspace search in the top bar
+    <div role="search" aria-label={label}>
       <Field id={id} label={label} helper={helper} disabled={disabled}>
         <input
           id={id}

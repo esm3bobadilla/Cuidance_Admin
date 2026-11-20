@@ -70,8 +70,8 @@ const stateOf = (status: string, expiresAt: string): InvitationState =>
 /*
  * Phase A3, Supabase mode: Settings / Team Access.
  * - Everyone in the workspace sees its members (RLS).
- * - Owners and Admins invite (D5), resend links and withdraw invitations through the
- *   invitations Edge Function. Admins only see and manage Reviewer invitations (RLS).
+ * - Super Admins and Admins invite (D5), resend links and withdraw invitations through the
+ *   invitations Edge Function. Admins only see and manage Team Member invitations (RLS).
  * The function and the database check every rule again.
  */
 export function LiveTeamAccess() {

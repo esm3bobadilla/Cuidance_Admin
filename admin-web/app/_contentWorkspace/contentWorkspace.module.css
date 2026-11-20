@@ -114,6 +114,9 @@
 }
 
 .rowLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--size-touch-target);
   color: var(--color-ink);
   font: var(--type-label);
 }
@@ -253,4 +256,14 @@
   .pair {
     grid-template-columns: minmax(0, 1fr);
   }
+}
+
+/* Phase 2 PR 1: content types as quick filters inside the workspace */
+.typeChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-8);
+  margin: 0;
+  padding: 0;
+  border: 0;
 }

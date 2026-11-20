@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { adminRoles } from '../../../shared/content/admin-roles';
+import { roleFor } from '../../../shared/content/admin-roles';
 import { adminScreens } from '../../../shared/content/admin-web-screens';
 import { invitationCopy as copy } from '../../../shared/content/invitation';
 import { supabaseModeCopy } from '../../../shared/content/supabase-mode';
@@ -238,7 +238,7 @@ export function LiveAcceptInvitation() {
 }
 
 function LiveDetails({ invitation }: { invitation: InvitationSummary }) {
-  const role = adminRoles.find((item) => item.id === invitation.role.replace('_', '-'));
+  const role = roleFor(invitation.role);
   const rows: [string, string][] = [
     [copy.fields.workspace, invitation.workspaceName ?? ''],
     [copy.fields.invitedEmail, invitation.email],

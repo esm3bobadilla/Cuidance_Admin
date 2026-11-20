@@ -44,7 +44,11 @@ export function Drawer({ open, onClose, title, eyebrow, description, children, f
               <CuIcon name="close" size={18} />
             </button>
           </header>
-          <div className={styles.body}>{children}</div>
+          {/* Scrolls on its own, so it can take keyboard focus: arrow keys scroll even when the
+              drawer holds only text (read-only details) */}
+          <div className={styles.body} tabIndex={0} role="region" aria-labelledby={`${id}-title`}>
+            {children}
+          </div>
           {footer && <footer className={styles.footer}>{footer}</footer>}
         </div>
       )}

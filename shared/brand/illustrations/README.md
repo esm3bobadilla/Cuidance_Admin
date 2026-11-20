@@ -30,6 +30,7 @@ These files were extracted from it unchanged (no redrawing, recoloring or croppi
 | `empty/empty-content.webp`, `empty/empty-review-tasks.webp` | Empty states (provisional until Team 03 confirms Empty states) |
 | `content-categories/cat-*.webp` | Content workspace category tiles |
 | `metrics/kpi-*.webp` | Metrics cards |
+| `email/card-*.webp` | Email template cards and default email images (Phase 2 PR 1) |
 | `glance/glance-*.svg` | Dashboard "Today at a glance" cards. Checked: plain shapes, no scripts or links |
 
 Hero photographs for page banners are in `../heroes/`.

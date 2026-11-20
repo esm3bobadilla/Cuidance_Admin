@@ -1,0 +1,474 @@
+/* Live: Cuidance App and Brand Website previews (Phase 2 PR 1). Tokens only.
+   No shadows on cards, rows or the website preview frame (prototype handoff notes). */
+
+.switcher ul {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  margin: 0;
+  padding: var(--space-4);
+  border: var(--stroke-default) solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  list-style: none;
+}
+
+.switcher a {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-8);
+  min-height: var(--size-touch-target);
+  padding: 0 var(--space-16);
+  border-radius: var(--radius-pill);
+  color: var(--color-ink);
+  font: var(--type-label);
+  text-decoration: none;
+}
+
+.switcher a:hover {
+  background: var(--color-surface-warm);
+}
+
+.switcher a[aria-current='page'] {
+  background: var(--color-selected-surface);
+  box-shadow: inset 0 0 0 var(--stroke-strong) var(--color-selected);
+}
+
+.intro {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-16);
+  padding: var(--space-16) var(--space-24);
+  border: var(--stroke-default) solid var(--color-border);
+  border-radius: var(--radius-medium);
+  background: var(--color-surface);
+  font: var(--type-body-small);
+}
+
+.intro p {
+  flex: 1 1 0;
+  min-width: min(100%, calc(var(--layout-sidebar-width) + var(--space-48)));
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: var(--space-24);
+  align-items: start;
+}
+
+@media (max-width: 1279px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+  min-width: 0;
+  padding: var(--space-24);
+  border: var(--stroke-default) solid var(--color-border);
+  border-radius: var(--radius-medium);
+  background: var(--color-surface);
+}
+
+.panelHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-8);
+}
+
+.sectionTitle {
+  font: var(--type-heading-3);
+}
+
+.meta {
+  font: var(--type-caption);
+  color: var(--color-ink-muted);
+}
+
+.facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, calc(var(--space-48) * 3)), 1fr));
+  gap: var(--space-12);
+  margin: 0;
+}
+
+.facts dt {
+  font: var(--type-caption);
+  color: var(--color-ink-muted);
+}
+
+.facts dd {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-8);
+  margin: 0;
+  font: var(--type-body-small);
+}
+
+.previewArea {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-12);
+  padding: var(--space-24) var(--space-16);
+  border-radius: var(--radius-medium);
+  background: var(--color-surface-warm);
+}
+
+.previewArea:focus-visible {
+  outline: var(--stroke-strong) solid var(--color-accent);
+  outline-offset: var(--stroke-strong);
+}
+
+.previewArea > * {
+  align-self: stretch;
+}
+
+.previewArea > .phone {
+  align-self: center;
+}
+
+.previewing {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-8);
+  padding: var(--space-8) var(--space-12);
+  border: var(--stroke-default) solid var(--color-selected);
+  border-radius: var(--radius-small);
+  background: var(--color-selected-surface);
+  font: var(--type-body-small);
+}
+
+/* ---------- Phone frame (approved prototype: 420 x 968 screen) ---------- */
+
+.phone {
+  width: min(100%, calc(var(--layout-sidebar-width) + var(--space-48)));
+  margin: 0;
+  padding: var(--space-12);
+  border: var(--stroke-strong) solid var(--color-ink);
+  border-radius: calc(var(--radius-medium) * 3);
+  background: var(--color-ink);
+}
+
+.phoneScreen {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 420 / 968;
+  border-radius: calc(var(--radius-medium) * 2);
+  background: var(--color-surface);
+}
+
+.phoneScreen img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* An update's new headline, shown on a solid panel so it never depends on the image */
+.phoneOverlay {
+  position: absolute;
+  top: 34%;
+  right: var(--space-12);
+  left: var(--space-12);
+  padding: var(--space-12);
+  border: var(--stroke-strong) solid var(--color-selected);
+  border-radius: var(--radius-small);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font: var(--type-heading-5);
+  font-family: var(--font-display);
+  font-weight: 400;
+}
+
+/* ---------- Website frame ---------- */
+
+.browser {
+  margin: 0;
+  overflow: hidden;
+  border: var(--stroke-default) solid var(--color-border-strong);
+  border-radius: var(--radius-medium);
+  background: var(--color-surface);
+}
+
+.browserBar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
+  padding: var(--space-8) var(--space-12);
+  border-bottom: var(--stroke-default) solid var(--color-border);
+  background: var(--color-background);
+}
+
+.dots {
+  display: inline-flex;
+  gap: var(--space-4);
+}
+
+.dots span {
+  width: var(--space-8);
+  height: var(--space-8);
+  border-radius: var(--radius-pill);
+  background: var(--color-border-strong);
+}
+
+.address {
+  flex: 1;
+  min-width: 0;
+  padding: var(--space-4) var(--space-12);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  font: var(--type-caption);
+  color: var(--color-ink-muted);
+  overflow-wrap: anywhere;
+}
+
+.site {
+  display: flex;
+  flex-direction: column;
+}
+
+.siteNav {
+  padding: var(--space-12) var(--space-16);
+  border-bottom: var(--stroke-default) solid var(--color-border);
+  font: var(--type-caption);
+}
+
+.siteHero {
+  position: relative;
+  display: flex;
+  min-height: calc(var(--space-48) * 5);
+  background: var(--color-surface-warm);
+}
+
+.siteHeroArt {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: right bottom;
+}
+
+.siteHeroText {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  max-width: min(100%, calc(var(--layout-drawer-width) * 0.8));
+  margin: var(--space-16);
+  padding: var(--space-16);
+  border-radius: var(--radius-small);
+  background: var(--color-surface);
+}
+
+.siteEyebrow {
+  font: var(--type-eyebrow);
+  letter-spacing: var(--type-eyebrow-tracking);
+  text-transform: uppercase;
+  color: var(--color-success);
+}
+
+.siteHeadline {
+  font: var(--type-heading-3);
+  font-family: var(--font-display);
+  font-weight: 400;
+}
+
+.siteBody {
+  font: var(--type-body-small);
+}
+
+.siteHelps {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  padding: var(--space-16);
+  font: var(--type-body-small);
+}
+
+.siteHelpsTitle {
+  font: var(--type-label);
+}
+
+.siteHelps ul {
+  margin: 0;
+  padding-left: var(--space-24);
+}
+
+.prototypeLink {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-8);
+  font: var(--type-body-small);
+}
+
+.prototypeLink a {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-8);
+  min-height: var(--size-touch-target);
+  color: var(--color-accent);
+  font: var(--type-link);
+}
+
+/* ---------- Update history ---------- */
+
+.updates {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.update {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  padding: var(--space-16);
+  border: var(--stroke-default) solid var(--color-border);
+  border-radius: var(--radius-medium);
+  background: var(--color-background);
+}
+
+.update[data-selected='true'] {
+  border-color: var(--color-selected);
+  outline: var(--stroke-default) solid var(--color-selected);
+}
+
+.updateTop {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-8);
+}
+
+.updateTitle {
+  font: var(--type-heading-6);
+  overflow-wrap: anywhere;
+}
+
+.updateActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-8);
+}
+
+/* Partner: Byzantium Plum plus a clear text label */
+.partner {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-4) var(--space-8);
+  border: var(--stroke-default) solid var(--color-partner);
+  border-radius: var(--radius-small);
+  background: var(--color-partner-surface);
+  font: var(--type-data-small);
+}
+
+/* ---------- Drawer ---------- */
+
+.drawerBody,
+.details,
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+  font: var(--type-body-small);
+}
+
+.drawerStatus {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-12);
+}
+
+.empty:empty {
+  display: none;
+}
+
+.success {
+  padding: var(--space-8) var(--space-12);
+  border: var(--stroke-default) solid var(--color-success);
+  border-radius: var(--radius-small);
+  background: var(--color-success-surface);
+  font: var(--type-body-small);
+}
+
+.actionNote {
+  padding: var(--space-12);
+  border-radius: var(--radius-small);
+  background: var(--color-info-surface);
+  font: var(--type-body-small);
+}
+
+.detailTitle {
+  margin-bottom: var(--space-8);
+  font: var(--type-heading-6);
+}
+
+.changeNote {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-12);
+  border: var(--stroke-default) solid var(--color-error);
+  border-radius: var(--radius-small);
+  background: var(--color-error-surface);
+}
+
+.changeTitle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-8);
+  font: var(--type-label);
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  margin: 0;
+  padding-left: var(--space-24);
+}
+
+.timeline li {
+  display: flex;
+  flex-direction: column;
+}
+
+.timelineWhat {
+  font: var(--type-label);
+}
+
+.check {
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
+  min-height: var(--size-touch-target);
+  cursor: pointer;
+}
+
+.check input {
+  width: var(--space-24);
+  height: var(--space-24);
+  accent-color: var(--color-selected);
+}
+
+@media (forced-colors: active) {
+  .switcher a[aria-current='page'],
+  .update[data-selected='true'] {
+    outline: var(--stroke-strong) solid Highlight;
+  }
+}

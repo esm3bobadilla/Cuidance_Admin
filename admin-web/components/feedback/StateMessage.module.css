@@ -1,0 +1,58 @@
+/* State panels. Tokens only. Same treatment as the review state panels. */
+.panel {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-16);
+  padding: var(--space-24);
+  border: var(--stroke-default) solid var(--color-border);
+  border-radius: var(--radius-medium);
+  background: var(--color-surface);
+  color: var(--color-ink);
+}
+
+.empty,
+.unavailable {
+  border-style: dashed;
+  border-color: var(--color-border-strong);
+}
+
+.error {
+  background: var(--color-error-surface);
+  border-color: var(--color-error);
+}
+
+.symbol {
+  font: var(--type-heading-4);
+  color: var(--color-ink-muted);
+}
+
+.error .symbol {
+  color: var(--color-error);
+}
+
+.image {
+  flex: none;
+  height: auto;
+}
+
+.text {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+.title {
+  font: var(--type-label);
+}
+
+.body {
+  font: var(--type-body-small);
+  color: var(--color-ink-muted);
+}
+
+.action {
+  margin-top: var(--space-8);
+}

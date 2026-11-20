@@ -14,16 +14,22 @@ type UploadFieldProps = {
   value: UploadValue;
   onChange: (value: UploadValue) => void;
   maxMb?: number;
-  // Shows the alt-text error once someone tries to save
+  // Shows the alt-text error once someone tries to save (or at once, for editors that
+  // block saving until every image has alt text)
   showErrors?: boolean;
+  // Stable id for the field, so an error summary can move focus to "<id>-alt"
+  id?: string;
+  // Wording for the missing alt text message, when the screen needs its own
+  altMissing?: string;
 };
 
 const accepted = ['image/jpeg', 'image/png', 'image/webp'];
 
 // Image upload with required alt text (approved prototype, Email and Content editors).
 // Local only: the file is previewed in the browser and never sent anywhere by this component.
-export function UploadField({ label, value, onChange, maxMb = 5, showErrors = false }: UploadFieldProps) {
-  const id = useId();
+export function UploadField({ label, value, onChange, maxMb = 5, showErrors = false, id: fixedId, altMissing }: UploadFieldProps) {
+  const autoId = useId();
+  const id = fixedId ?? autoId;
   const input = useRef<HTMLInputElement>(null);
   const [error, setError] = useState('');
   const [preview, setPreview] = useState('');
@@ -46,7 +52,7 @@ export function UploadField({ label, value, onChange, maxMb = 5, showErrors = fa
     onChange({ file, alt: value?.alt ?? '' });
   };
 
-  const altError = showErrors && value && !value.alt.trim() ? uploadFieldCopy.altMissing : undefined;
+  const altError = showErrors && value && !value.alt.trim() ? (altMissing ?? uploadFieldCopy.altMissing) : undefined;
 
   return (
     <fieldset className={styles.field}>

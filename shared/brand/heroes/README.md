@@ -9,6 +9,7 @@ extracted unchanged. Used by `admin-web/components/ui/HeroBanner.tsx`.
 | `hero-content.jpg` | Content |
 | `hero-review.jpg` | Review Tasks |
 | `hero-metrics.jpg` | Metrics |
+| `hero-email.jpg` | Email (Phase 2 PR 1) |
 
 Decorative only: always `alt=""`. Text never sits on the image without a solid backing.
-Email and Live (App, Website) images are added with those phases, not before.
+Email was added with Phase 2 PR 1. Live screen images are in `../live/`.

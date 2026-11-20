@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef, useState, type FormEvent } from 'react';
-import { adminRoles } from '../../../shared/content/admin-roles';
+import { roleFor } from '../../../shared/content/admin-roles';
 import { adminScreens } from '../../../shared/content/admin-web-screens';
 import { defaultInvitationId, invitationsSeed } from '../../../shared/content/invitation';
 import { createAccountCopy as copy, entryCopy } from '../../../shared/content/sign-in';
@@ -18,7 +18,7 @@ const base = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
 const signInHref = `${base}${adminScreens['sign-in'].path}`;
 const invitationHref = `${base}${adminScreens['accept-invitation'].path}`;
 const invitation = invitationsSeed[defaultInvitationId];
-const roleName = adminRoles.find((role) => role.id === invitation.role)?.name ?? invitation.role;
+const roleName = roleFor(invitation.role)?.name ?? invitation.role;
 
 // Review aid only (?state=): shows a state without doing anything
 export type CreateAccountPreview = 'loading' | 'found' | 'not-found' | 'submit-error';

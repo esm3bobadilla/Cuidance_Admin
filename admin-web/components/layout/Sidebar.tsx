@@ -46,7 +46,7 @@ function NavPanel({ logo, mode, onToggle, toggleRef }: PanelProps) {
   const items = adminNav.flatMap((section) => section.items);
   const allowed = useAllowed();
   const [open, setOpen] = useState<Record<string, boolean>>(() =>
-    Object.fromEntries(items.map((item) => [item.key, holdsCurrent(item) && !isCurrent(item.id)])),
+    Object.fromEntries(items.map((item) => [item.key, !!item.children && holdsCurrent(item)])),
   );
   const toggleLabel = mode === 'drawer' ? navCopy.closeMenu : navCopy.collapse;
 
@@ -75,7 +75,12 @@ function NavPanel({ logo, mode, onToggle, toggleRef }: PanelProps) {
                 return (
                   <li key={item.key}>
                     <div className={styles.row} data-active={active}>
-                      <a className={styles.item} href={hrefFor(item.id)} aria-current={isCurrent(item.id) ? 'page' : undefined}>
+                      <a
+                        className={styles.item}
+                        href={hrefFor(item.id)}
+                        // When the item's page is also listed as one of its pages, that entry carries the marker
+                        aria-current={isCurrent(item.id) && !item.children?.includes(item.id) ? 'page' : undefined}
+                      >
                         <span className={styles.badge}>
                           <CuIcon
                             name={item.icon}
@@ -107,7 +112,7 @@ function NavPanel({ logo, mode, onToggle, toggleRef }: PanelProps) {
                         {item.children.map((childId) => (
                           <li key={childId}>
                             <a className={styles.child} href={hrefFor(childId)} aria-current={isCurrent(childId) ? 'page' : undefined}>
-                              {adminScreens[childId].name}
+                              {adminScreens[childId].navName ?? adminScreens[childId].name}
                             </a>
                           </li>
                         ))}

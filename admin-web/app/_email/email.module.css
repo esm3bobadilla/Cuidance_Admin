@@ -1,0 +1,438 @@
+/* Email workspace (Phase 2 PR 1, approved prototype and Week 12 email visuals). Tokens only.
+   Cards and rows separate with borders and surfaces; no shadows on cards. */
+
+.roleNote {
+  padding: var(--space-12) var(--space-16);
+  border-radius: var(--radius-small);
+  background: var(--color-info-surface);
+  font: var(--type-body-small);
+}
+
+.notice:empty {
+  display: none;
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+  min-width: 0;
+  padding: var(--space-24);
+  border: var(--stroke-default) solid var(--color-border);
+  border-radius: var(--radius-medium);
+  background: var(--color-surface);
+}
+
+.tools {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(min(100%, calc(var(--layout-sidebar-width) - var(--space-48))), 1fr);
+  gap: var(--space-16);
+  align-items: end;
+}
+
+@media (max-width: 767px) {
+  .tools {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.tabBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+  padding-top: var(--space-16);
+}
+
+.meta {
+  font: var(--type-caption);
+  color: var(--color-ink-muted);
+}
+
+.templateTools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-12);
+}
+
+.check {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-12);
+  min-height: var(--size-touch-target);
+  font: var(--type-body-small);
+  cursor: pointer;
+}
+
+.check input {
+  width: var(--space-24);
+  height: var(--space-24);
+  accent-color: var(--color-selected);
+}
+
+/* ---------- Template cards: two across on wide screens, stacked on narrow ---------- */
+
+.templates {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, calc(var(--layout-drawer-width) - var(--space-48) * 2)), 1fr));
+  gap: var(--space-16);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.templates > li {
+  display: flex;
+  min-width: 0;
+}
+
+.templateCard {
+  display: grid;
+  flex: 1;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--space-16);
+  align-content: start;
+  min-width: 0;
+  padding: var(--space-16);
+  border: var(--stroke-default) solid var(--color-border);
+  border-radius: var(--radius-medium);
+  background: var(--color-background);
+}
+
+.templateArt {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(var(--space-48) * 2);
+  aspect-ratio: 1;
+  border-radius: var(--radius-small);
+  background: var(--color-surface-warm);
+}
+
+.templateArt img {
+  width: 90%;
+  height: auto;
+}
+
+.templateText {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+.templateCard .rowActions {
+  grid-column: 1 / -1;
+}
+
+.category {
+  font: var(--type-eyebrow);
+  letter-spacing: var(--type-eyebrow-tracking);
+  text-transform: uppercase;
+  color: var(--color-success);
+}
+
+/* ---------- Drafts, Scheduled and Sent rows (no table, so nothing scrolls sideways) ---------- */
+
+.rows {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr) auto;
+  gap: var(--space-16);
+  align-items: center;
+  padding: var(--space-16);
+  border: var(--stroke-default) solid var(--color-border);
+  border-radius: var(--radius-medium);
+  background: var(--color-background);
+}
+
+@media (max-width: 1023px) {
+  .row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.rowMain,
+.rowWhen {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+.rowTitle {
+  font: var(--type-heading-6);
+  overflow-wrap: anywhere;
+}
+
+.rowActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-8);
+}
+
+/* ---------- Editor ---------- */
+
+.editorHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-16);
+}
+
+.editorStatus {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-8);
+}
+
+.busy:empty {
+  display: none;
+}
+
+.busy {
+  font: var(--type-body-small);
+  color: var(--color-ink-muted);
+}
+
+/* Edit and Preview: the selected view shows the selected surface, a border and a check mark */
+.modeSwitch {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  align-self: flex-start;
+  padding: var(--space-4);
+  border: var(--stroke-default) solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+}
+
+.modeButton {
+  min-height: var(--size-touch-target);
+  padding: 0 var(--space-16);
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--color-ink);
+  font: var(--type-label);
+  cursor: pointer;
+}
+
+.modeButton:hover {
+  background: var(--color-surface-warm);
+}
+
+.modeButton[aria-pressed='true'] {
+  background: var(--color-selected-surface);
+  box-shadow: inset 0 0 0 var(--stroke-strong) var(--color-selected);
+}
+
+.editorGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  gap: var(--space-24);
+  align-items: start;
+}
+
+@media (max-width: 1279px) {
+  .editorGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.previewOnly {
+  display: flex;
+  justify-content: center;
+}
+
+.previewOnly > * {
+  flex: 1;
+  max-width: calc(var(--layout-drawer-width) + var(--space-48) * 3);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+  min-width: 0;
+  padding: var(--space-24);
+  border: var(--stroke-default) solid var(--color-border);
+  border-radius: var(--radius-medium);
+  background: var(--color-surface);
+}
+
+.sectionTitle {
+  font: var(--type-heading-4);
+}
+
+.pair {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, calc(var(--layout-sidebar-width) - var(--space-48))), 1fr));
+  gap: var(--space-16);
+}
+
+.imageBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+}
+
+.errorSummary {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  padding: var(--space-16);
+  border: var(--stroke-strong) solid var(--color-error);
+  border-radius: var(--radius-small);
+  background: var(--color-error-surface);
+  font: var(--type-body-small);
+}
+
+.errorHeading {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-8);
+  font: var(--type-label);
+  color: var(--color-error);
+}
+
+.errorSummary ul {
+  margin: 0;
+  padding-left: var(--space-24);
+}
+
+.errorSummary a {
+  color: var(--color-ink);
+}
+
+/* ---------- Preview: the message on a warm page, like the email itself ---------- */
+
+.preview {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+  min-width: 0;
+  padding: var(--space-24);
+  border: var(--stroke-default) solid var(--color-border);
+  border-radius: var(--radius-medium);
+  background: var(--color-surface-warm);
+}
+
+.envelope {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding-bottom: var(--space-12);
+  border-bottom: var(--stroke-default) solid var(--color-border-strong);
+}
+
+.previewSubject {
+  font: var(--type-label);
+  overflow-wrap: anywhere;
+}
+
+.message {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-16);
+  padding: var(--space-24);
+  border: var(--stroke-default) solid var(--color-border);
+  border-radius: var(--radius-medium);
+  background: var(--color-surface);
+}
+
+.messageArt {
+  align-self: center;
+  width: min(100%, calc(var(--space-48) * 4));
+  height: auto;
+}
+
+.messagePhoto {
+  width: 100%;
+  max-height: calc(var(--layout-drawer-width) / 2);
+  border-radius: var(--radius-small);
+  object-fit: cover;
+}
+
+.messageHeading {
+  font: var(--type-heading-3);
+  font-family: var(--font-display);
+  font-weight: 400;
+  overflow-wrap: anywhere;
+}
+
+.messageBody {
+  font: var(--type-body);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+/* A picture of the email's button, not a working control */
+.messageButton {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--size-control-height);
+  padding: var(--space-12) var(--space-24);
+  border-radius: var(--radius-pill);
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+  font: var(--type-button);
+}
+
+.messageFooter {
+  padding-top: var(--space-12);
+  border-top: var(--stroke-default) solid var(--color-border);
+  font: var(--type-caption);
+  color: var(--color-ink-muted);
+}
+
+/* ---------- Actions ---------- */
+
+.actionBar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-16);
+  padding: var(--space-16) var(--space-24);
+  border: var(--stroke-default) solid var(--color-border);
+  border-radius: var(--radius-medium);
+  background: var(--color-surface);
+}
+
+.actionNote {
+  display: inline-flex;
+  flex: 1 1 0;
+  align-items: center;
+  gap: var(--space-8);
+  min-width: min(100%, calc(var(--layout-sidebar-width) + var(--space-48)));
+  font: var(--type-body-small);
+  color: var(--color-ink-muted);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--space-8);
+}
+
+@media (forced-colors: active) {
+  .modeButton[aria-pressed='true'] {
+    outline: var(--stroke-strong) solid Highlight;
+  }
+}
