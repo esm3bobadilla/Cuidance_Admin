@@ -6,19 +6,20 @@
  * changes:
  * - The prototype's people names are replaced by "Team member A" to "G", and
  *   their email addresses are left out. No real people.
- * - Role names use the approved four-role model (admin-roles.ts).
+ * - Role names use the approved three roles: Super Admin, Admin, Team Member
+ *   (Phase 2 PR 1; permissions.ts and admin-roles.ts).
  * - Not built: Invite team member, Invitations, Edit role, Deactivate, the
  *   Team Access history and the role switcher. Invitations, account changes
  *   and permissions are deferred. Nothing here is enforced or saved.
  */
-import type { AdminRole } from './admin-roles';
+import type { AdminRoleId } from './permissions';
 
 export type MemberStatus = 'Active' | 'Invitation pending' | 'Deactivated';
 
 export type TeamMember = {
   id: string;
   name: string;
-  role: AdminRole['id'];
+  role: AdminRoleId;
   status: MemberStatus;
   lastActive: string;
 };
@@ -47,11 +48,11 @@ export const teamAccessCopy = {
 export const memberStatuses: MemberStatus[] = ['Active', 'Invitation pending', 'Deactivated'];
 
 export const teamMembersSeed: TeamMember[] = [
-  { id: 'm1', name: 'Team member A', role: 'owner', status: 'Active', lastActive: 'Now' },
+  { id: 'm1', name: 'Team member A', role: 'super_admin', status: 'Active', lastActive: 'Now' },
   { id: 'm2', name: 'Team member B', role: 'admin', status: 'Active', lastActive: '1h ago' },
   { id: 'm3', name: 'Team member C', role: 'admin', status: 'Active', lastActive: 'Today' },
-  { id: 'm4', name: 'Team member D', role: 'reviewer', status: 'Active', lastActive: 'Yesterday' },
-  { id: 'm5', name: 'Team member E', role: 'content-editor', status: 'Active', lastActive: 'Just joined' },
-  { id: 'm6', name: 'Team member F', role: 'content-editor', status: 'Invitation pending', lastActive: 'Invited Oct 30' },
-  { id: 'm7', name: 'Team member G', role: 'reviewer', status: 'Deactivated', lastActive: 'Sep 14' },
+  { id: 'm4', name: 'Team member D', role: 'team_member', status: 'Active', lastActive: 'Yesterday' },
+  { id: 'm5', name: 'Team member E', role: 'team_member', status: 'Active', lastActive: 'Just joined' },
+  { id: 'm6', name: 'Team member F', role: 'team_member', status: 'Invitation pending', lastActive: 'Invited Oct 30' },
+  { id: 'm7', name: 'Team member G', role: 'team_member', status: 'Deactivated', lastActive: 'Sep 14' },
 ];

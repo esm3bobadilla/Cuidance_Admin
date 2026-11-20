@@ -144,6 +144,13 @@ export function ContentWorkspace() {
             {copy.count(shown.length, items.length)}
           </p>
         </div>
+        <fieldset className={styles.typeChips}>
+          <legend className="visually-hidden">{copy.typeFilterLabel}</legend>
+          <Chip label={copy.allTypes} selected={types.length === 0} onClick={() => setTypes([])} />
+          {workspaceTypes.map((t) => (
+            <Chip key={t} label={t} selected={types.length === 1 && types[0] === t} onClick={() => setTypes(types.length === 1 && types[0] === t ? [] : [t])} />
+          ))}
+        </fieldset>
         <div className={styles.tools}>
           <label className={styles.search}>
             <span className="visually-hidden">{copy.searchLabel}</span>

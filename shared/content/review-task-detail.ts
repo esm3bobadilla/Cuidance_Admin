@@ -60,7 +60,7 @@ export const reviewTaskDetailCopy = {
     heading: 'Review decision',
     reviewingAs: (reviewer: string) => `Reviewing as ${reviewer}. This is a placeholder until sign-in is connected.`,
     // From the approved roles policy (admin-roles.ts)
-    policy: 'Reviewers approve items or request changes. Only an Admin or Main Admin / Owner publishes approved content.',
+    policy: 'The assigned reviewer approves the item or requests changes, and never decides on their own content. Only a Super Admin or Admin publishes approved content.',
     legend: 'Decision',
     approve: 'Approve',
     requestChanges: 'Request changes',

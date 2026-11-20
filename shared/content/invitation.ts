@@ -6,15 +6,15 @@
  * kept in this browser tab only.
  *
  * Approved by Team 03 (Nov 10, 2026, decisions A1 to A5, A11, A13):
- * - The invited person is the placeholder "Reviewer B", role Reviewer, so the person
- *   lines up with the Review Task Decision Loop.
+ * - The invited person is the placeholder "Reviewer B", so the person lines up with the
+ *   Review Task Decision Loop. Role: Team Member (Phase 2 PR 1, three-role wording).
  * - The email is on example.com, which is reserved for samples: it's no one's real address.
  * - Workspace "Cuidance Content Team" (Team Access prototype wording).
- * - Invited by "Team member A (Main Admin / Owner)".
+ * - Invited by "Team member A (Super Admin)".
  * - Fixed sample expiry dates.
  * All other wording here is PROVISIONAL until Team 03 reviews it.
  */
-import type { AdminRole } from './admin-roles';
+import type { AdminRoleId } from './permissions';
 
 export type InvitationId = 'sample' | 'expired';
 
@@ -23,7 +23,7 @@ export type Invitation = {
   workspace: string;
   invitedName: string;
   invitedEmail: string;
-  role: AdminRole['id'];
+  role: AdminRoleId;
   invitedBy: string;
   // Shown as written, in the seed's date style
   expires: string;
@@ -34,8 +34,8 @@ const shared = {
   workspace: 'Cuidance Content Team',
   invitedName: 'Reviewer B',
   invitedEmail: 'reviewer.b@example.com',
-  role: 'reviewer' as const,
-  invitedBy: 'Team member A (Main Admin / Owner)',
+  role: 'team_member' as const,
+  invitedBy: 'Team member A (Super Admin)',
 };
 
 export const invitationsSeed: Record<InvitationId, Invitation> = {

@@ -5,15 +5,20 @@
  * and a New content editor. Sample mode only: nothing is saved or published. Each row
  * links to the existing content page that holds its details.
  * Partner items keep their "Partner" label and stay separate from guidance.
+ *
+ * Phase 2 PR 1: Quiz, Guidance, Product, Claims and safety, Sources, Partners and Media
+ * are content types and filters here, not separate sidebar pages. Product records live
+ * in the Product Library, switched to with the contextual Content navigation.
  */
 import type { AdminScreenId } from './admin-web-screens';
+import { claimsSeed } from './claims-safety-review';
 import { guidanceSeed } from './guidance-content';
 import { knowledgeSourceSeed } from './knowledge-sources';
 import { partnerHighlightSeed } from './partner-highlights';
 import { productSeed } from './product-information';
 import { quizQuestionSeed } from './quiz-content';
 
-export type WorkspaceType = 'Guidance' | 'Quiz' | 'Product information' | 'Source' | 'Partner';
+export type WorkspaceType = 'Guidance' | 'Quiz' | 'Product' | 'Claims and safety' | 'Source' | 'Partner' | 'Media';
 
 export type WorkspaceItem = {
   id: string;
@@ -25,14 +30,23 @@ export type WorkspaceItem = {
   partner: boolean;
 };
 
-export const workspaceTypes: WorkspaceType[] = ['Guidance', 'Quiz', 'Product information', 'Source', 'Partner'];
+export const workspaceTypes: WorkspaceType[] = ['Guidance', 'Quiz', 'Product', 'Claims and safety', 'Source', 'Partner', 'Media'];
+
+// Sample media items: approved illustrations already used in Admin Web (sample data, not a media library)
+const mediaSeed = [
+  { id: 'm1', title: 'Content hero illustration', status: 'Approved', updated: 'Nov 12, 2026' },
+  { id: 'm2', title: 'Content category tiles', status: 'Approved', updated: 'Nov 10, 2026' },
+  { id: 'm3', title: 'Empty state illustration', status: 'In review', updated: 'Nov 9, 2026' },
+];
 
 export const workspaceItems: WorkspaceItem[] = [
   ...guidanceSeed.map((g) => ({ id: g.id, title: g.title, type: 'Guidance' as const, screen: 'guidance-content' as const, status: g.status, updated: g.updated, partner: false })),
   ...quizQuestionSeed.map((q) => ({ id: q.id, title: q.question, type: 'Quiz' as const, screen: 'quiz-content' as const, status: q.status, updated: q.updated, partner: false })),
-  ...productSeed.map((p) => ({ id: p.id, title: p.name, type: 'Product information' as const, screen: 'product-information' as const, status: p.informationStatus, updated: p.updated, partner: false })),
+  ...productSeed.map((p) => ({ id: p.id, title: p.name, type: 'Product' as const, screen: 'product-library' as const, status: p.informationStatus, updated: p.updated, partner: false })),
   ...knowledgeSourceSeed.map((s) => ({ id: s.id, title: s.title, type: 'Source' as const, screen: 'knowledge-sources' as const, status: s.status, updated: s.lastReviewed, partner: false })),
   ...partnerHighlightSeed.map((p) => ({ id: p.id, title: p.title, type: 'Partner' as const, screen: 'partner-highlights' as const, status: p.status, updated: p.updated, partner: true })),
+  ...claimsSeed.map((c) => ({ id: `claims-${c.id}`, title: c.item, type: 'Claims and safety' as const, screen: 'claims-safety-review' as const, status: c.status, updated: c.updated, partner: false })),
+  ...mediaSeed.map((m) => ({ id: `media-${m.id}`, title: m.title, type: 'Media' as const, screen: 'content' as const, status: m.status, updated: m.updated, partner: false })),
 ];
 
 export const workspaceStatuses = Array.from(new Set(workspaceItems.map((i) => i.status)));
@@ -41,11 +55,23 @@ export const workspaceStatuses = Array.from(new Set(workspaceItems.map((i) => i.
 export const workspaceAreas: { screen: AdminScreenId; image: 'quiz' | 'articles' | 'product' | 'review' | 'saved' | 'media'; note: string }[] = [
   { screen: 'quiz-content', image: 'quiz', note: 'Questions, answer cards and mixing rules' },
   { screen: 'guidance-content', image: 'articles', note: 'Articles, care guidance and explanations' },
-  { screen: 'product-information', image: 'product', note: 'Product lookup only' },
+  { screen: 'product-library', image: 'product', note: 'Product records, ingredients, claims and images' },
+  { screen: 'product-information', image: 'product', note: 'Product types for Barcode / Label Lookup' },
   { screen: 'knowledge-sources', image: 'saved', note: 'Sources and evidence labels' },
   { screen: 'partner-highlights', image: 'media', note: 'Labeled "Partner", kept separate' },
   { screen: 'commercial-content', image: 'review', note: 'Commercial labels and disclosures' },
+  { screen: 'claims-safety-review', image: 'review', note: 'Claims, evidence labels and safety notes' },
+  { screen: 'guidance-rules-review', image: 'articles', note: 'Rules that build a guidance result' },
 ];
+
+// Contextual Content navigation (approved prototype): switches between the two Content views
+export const contentNavCopy = {
+  label: 'Content views',
+  items: [
+    { screen: 'content' as const, label: 'Content Workspace' },
+    { screen: 'product-library' as const, label: 'Product Library' },
+  ],
+};
 
 export const contentWorkspaceCopy = {
   heroTitle: 'Create and manage guidance',
@@ -65,6 +91,8 @@ export const contentWorkspaceCopy = {
   noResults: 'No content matches your search and filters.',
   clearAll: 'Clear search and filters',
   areasTitle: 'Browse by area',
+  typeFilterLabel: 'Show content type',
+  allTypes: 'All types',
   sampleNote: 'Sample data. Nothing here is saved or published, and these screens are not part of participant testing.',
   filterDrawer: {
     title: 'Filter content',

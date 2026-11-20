@@ -2,7 +2,7 @@
 
 import { useRef, useState, type FormEvent } from 'react';
 import { accountSetupCopy as copy } from '../../../shared/content/account-setup';
-import { adminRoles } from '../../../shared/content/admin-roles';
+import { roleFor } from '../../../shared/content/admin-roles';
 import { adminScreens } from '../../../shared/content/admin-web-screens';
 import { defaultInvitationId, invitationsSeed, prototypeNotice } from '../../../shared/content/invitation';
 import { uiSymbols } from '../../../shared/content/ui-symbols';
@@ -30,7 +30,7 @@ const reviewTasksHref = `${base}${adminScreens['review-tasks'].path}`;
 export type SetupPreview = 'loading' | 'missing' | 'submit-error' | 'success';
 
 const invitation = invitationsSeed[defaultInvitationId];
-const role = adminRoles.find((item) => item.id === invitation.role)!;
+const role = roleFor(invitation.role)!;
 const fieldIds: Record<keyof SetupFields, string> = {
   fullName: 'setup-full-name',
   email: 'setup-email',
