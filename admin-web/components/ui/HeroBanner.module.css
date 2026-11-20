@@ -2,18 +2,25 @@
   position: relative;
   display: flex;
   align-items: center;
-  /* Phase 3: height follows the artwork (3:1), with room for the text when space is short.
-     No outline: the warm background field already sets the banner apart. */
-  aspect-ratio: var(--hero-ratio);
+  /* Phase 3: at least as tall as the artwork's proportions (see ::before) and 240 px, and
+     taller whenever the text needs it. No outline: the warm field sets the banner apart. */
   min-height: 240px;
   border: var(--stroke-default) solid var(--frame-border);
   border-radius: var(--radius-medium);
   background: var(--color-surface-warm);
 }
 
+/* A zero-width spacer whose height follows the artwork (padding % follows the banner width) */
+.hero::before {
+  content: '';
+  flex: none;
+  width: 0;
+  padding-top: calc(100% * var(--hero-h) / var(--hero-w));
+}
+
 @media (min-width: 1280px) {
-  .hero {
-    aspect-ratio: var(--hero-ratio-wide);
+  .hero::before {
+    padding-top: calc(100% * var(--hero-h-wide) / var(--hero-w-wide));
   }
 }
 
@@ -76,13 +83,16 @@
   margin-top: var(--space-8);
 }
 
-/* Phones: the image becomes a strip above the text */
-@media (max-width: 767px) {
+/* Phones and tablets (under 1024 px): the whole artwork as a strip above the text, so it is never covered or cut off */
+@media (max-width: 1023px) {
   .hero {
     flex-direction: column;
     align-items: stretch;
-    aspect-ratio: auto;
     min-height: 0;
+  }
+
+  .hero::before {
+    display: none;
   }
 
   /* The whole artwork, at its own proportions, as a strip above the text */
@@ -100,9 +110,8 @@
 }
 
 @media (forced-colors: active) {
-  .hero {
-    aspect-ratio: auto;
-    border: var(--stroke-default) solid CanvasText;
+  .hero::before {
+    display: none;
   }
 
   .art {
@@ -110,7 +119,7 @@
   }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 1023px) {
   .art {
     border-radius: var(--radius-medium) var(--radius-medium) 0 0;
   }

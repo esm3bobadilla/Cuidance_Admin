@@ -1,0 +1,46 @@
+# Phase 3: QA results
+
+_Static build, sample mode, Chromium (Playwright). Run on Nov 20, 2026 on `claude/clever-goldberg-vgmhex`. Team Member results come from a temporary local build with the sample role set to Team Member; that change was reverted and is not committed._
+
+## Builds and unit tests
+
+| Check | Result |
+| --- | --- |
+| Type check (`npx tsc --noEmit`) | Pass |
+| Production build | Pass |
+| GitHub Pages build (`GITHUB_PAGES=true`, sample mode) | Pass; the deploy workflow's sample-mode check passes (no Supabase address or key) |
+| `npm test` (demo workflow and role rules) | 38 of 38 |
+
+## Phase 3 checks: 20 of 20
+
+- Authentication: the illustration is decorative (`alt=""` inside an `aria-hidden` layer) and uses cover (never stretched); headings in Newsreader, labels in Archivo; Forgot password opens its own screen; empty and invalid emails are rejected with focus on the field; sample mode says nothing is sent; Back to sign in works; Create account stays invitation-aware.
+- Account area: Sign out visible in the lower-left with the role label, at least 44 px tall.
+- No image stretched or squashed on 17 pages at 1440, 834 and 390 px.
+- Banners: 5 banners at 320, 390, 600, 768, 834, 1024, 1279, 1280, 1440 and 1920 px: artwork cropped at most 25% at the sides (plain paper only) and the text never clipped.
+- Forced colors (with reduced motion): no overflow and decorative backgrounds hidden on Sign in, Content and Metrics; panel outlines come back. High contrast setting: panel outlines come back.
+
+## Full page pass: 312 page loads, 0 failures
+
+26 pages (every route, including Forgot password) at 1440, 834, 390, 720 (1440 at 200% zoom), 640 (1280 at 200% zoom) and 320 px, in light, dark, and high contrast with larger text and reduced motion. On every load: no horizontal scrolling, exactly one main heading, no console or page errors, no em dashes in app text.
+
+## Interaction suites (existing, re-run)
+
+| Suite | Result |
+| --- | --- |
+| Product Library (alt text, archive, restore, request changes, filters, states) | 17 of 17 |
+| Email (filters, editor, alt text, validation, schedule, send, cancel, delete, archive) | 20 of 20 |
+| Live (previews, approve, request changes, Publish off, archive, prepare) | 15 of 15 |
+| PR 2 demo walkthrough (persistence, Dashboard counts, reset, full-size preview) | 18 of 18 |
+| Keyboard and focus (drawers and dialogs keep focus, Escape returns it, visible outlines, arrow-key tabs, 44 px targets) | 21 of 21 |
+
+## Roles: 36 of 36
+
+Team Member: no Approve, Request changes, Archive or Restore on products; no Send, Schedule, Archive template or Cancel scheduled; no Approve, Request changes, Publish or Archive on Live updates; Manage Team hidden; the account area shows Team Member with Sign out; Review Tasks filters available. Super Admin: Sign out with "Super Admin (sample)".
+
+## Automated accessibility (axe-core, WCAG 2.0 / 2.1 / 2.2 AA plus best practice)
+
+No new findings on 16 key pages (including Sign in, Create account and Forgot password), the Product drawer and form, and the Email editor, in light and dark. Remaining findings are pre-existing and listed in `phase-3-visual-polish.md`.
+
+## Not run
+
+Database tests (`npm run db:test`): nothing under `supabase/` changed.

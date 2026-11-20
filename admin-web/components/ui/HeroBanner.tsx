@@ -23,9 +23,13 @@ export function HeroBanner({ title, description, eyebrow, image, wideImage, acti
   const Heading = headingLevel === 1 ? 'h1' : 'h2';
   // Phase 3: the banner keeps the artwork's own proportions, so it is never squashed and
   // the illustration is not cropped at the sides (the text sits over the plain paper area).
+  const wide = wideImage ?? image;
   const ratio = {
     '--hero-ratio': `${image.width} / ${image.height}`,
-    '--hero-ratio-wide': wideImage ? `${wideImage.width} / ${wideImage.height}` : `${image.width} / ${image.height}`,
+    '--hero-w': image.width,
+    '--hero-h': image.height,
+    '--hero-w-wide': wide.width,
+    '--hero-h-wide': wide.height,
   } as CSSProperties;
   return (
     <section className={styles.hero} style={ratio}>

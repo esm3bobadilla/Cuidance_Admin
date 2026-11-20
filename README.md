@@ -167,6 +167,7 @@ Cuidance_Admin/
 │       ├── icons/         Phase B1 cu-icons path data (rendered by admin-web/components/ui/CuIcon.tsx)
 │       ├── illustrations/ Approved flat Cuidance illustrations (Phase A1, plus Phase B1 prototype assets; email/ for the Phase 2 email cards)
 │       ├── live/          Phase 2 static Live preview images (App screen, website hero) from the approved prototype
+│       ├── auth/          Phase 3 approved paper-cut background for Sign in, Create account and Forgot password
 │       └── logo/          Approved Logo Version 4 files (package v03); prototype/ holds the cream mark for the icon rail
 │           ├── png/
 │           │   └── derived/   Team 03 derived exports (favicons, 180 / 192 px app icons, raster lockups)
@@ -182,6 +183,7 @@ Cuidance_Admin/
 │   ├── Phase-A4/          Phase A4 release readiness: checks, security review, known limitations, go-live checklist
 │   ├── Phase-B1/          Phase B1 prototype implementation: role migration plan, progress and checks
 │   ├── Phase-B2/          Phase 2 PR 1 (Content, Product Library, Email, Live, role wording) and PR 2 (functional demo workflows): notes and checks
+│   ├── Phase-3/           Phase 3 visual polish and QA: changes against the baseline, QA results, branch inventory, before-and-after images
 │   └── archived/
 │       └── admin-mobile/  Archived Admin Mobile reference (no active work)
 ├── README.md
