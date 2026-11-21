@@ -31,7 +31,7 @@ These checks only shape the screens. When the data moves to Supabase (PR 2), the
 ## Decisions made in this pull request (please confirm)
 
 - **No region or availability field** in Product Library: CLAUDE.md keeps product availability and retailer information as future scope (VERIFY).
-- **Placeholders:** brands are "Brand A" to "Brand D"; people are "Team member A" to "F"; links use example.com.
+- **Placeholders:** brands are "Brand A" to "Brand D"; people are "Team member A" to "F"; links use example.com. _Update (Team 03, Nov 20, 2026): Product Library now uses a small reference set of real products with official brand page links (CLAUDE.md, Product boundaries). People stay placeholders._
 - **Reviewer separation:** no one approves a product or Live update they own.
 - **Publish** appears for Super Admins and Admins on Ready to publish updates, turned off with a note, because publishing is not connected.
 - **Brand Website prototype link:** kept as "link not set yet" (Team 03, Nov 20, 2026). `brandWebsitePrototypeUrl` in `shared/content/live.ts` is empty until the address is confirmed (VERIFY).

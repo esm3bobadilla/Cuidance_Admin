@@ -7,7 +7,10 @@
  * and must be enforced by the database, not only by these screens.
  *
  * Changes from the prototype for this repository:
- * - Brand names are "Brand A" to "Brand D" (CLAUDE.md: no real brand names).
+ * - Real products are allowed here (Team 03, Nov 20, 2026; CLAUDE.md, Product boundaries):
+ *   real brand and product names, categories, ingredients and the official brand page as
+ *   the source. Descriptions are rewritten in Cuidance's voice. The seed records below are
+ *   still the original placeholders ("Brand A" to "Brand D") until the reference set is added.
  * - People are placeholders from the sample roster ("Team member A" and so on).
  * - The prototype's region / availability field is left out: product availability and
  *   retailer information are future scope (CLAUDE.md, VERIFY).
@@ -45,7 +48,8 @@ export type ProductRecord = {
   changeNote: string;
 };
 
-export const productCategories = ['Cleanser', 'Toner', 'Serum', 'Moisturizer', 'Sunscreen', 'Hair care', 'Body care'];
+// Makeup, Eye care and Treatment mist added for the real reference products (Team 03, Nov 20, 2026)
+export const productCategories = ['Cleanser', 'Toner', 'Serum', 'Moisturizer', 'Sunscreen', 'Treatment mist', 'Eye care', 'Hair care', 'Makeup', 'Body care'];
 
 // Status label and icon: every status shows text and an icon, never color alone
 export const productStatusMeta: Record<ProductStatus, { label: string; icon: 'doc' | 'review' | 'alert' | 'check' | 'lock' }> = {
