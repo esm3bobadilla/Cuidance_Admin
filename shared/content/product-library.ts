@@ -269,7 +269,7 @@ export const productSeed: ProductRecord[] = [
       { text: 'Talc-free and fragrance-free', source: 'https://www.morphe.com/products/cheek-thrills-multi-finish-face-trio' },
       { text: 'Leaping Bunny certified cruelty-free', source: 'https://www.morphe.com/products/cheek-thrills-multi-finish-face-trio' },
     ],
-    safety: 'May contain carmine, a red color made from insects. Shades vary.',
+    safety: 'Some shades contain carmine, a red color made from insects. The powder contains hydrolyzed silk. Ingredients vary by shade.',
     status: 'draft',
     ownerId: 'm-e',
     reviewerId: '',
@@ -335,9 +335,8 @@ export const productSeed: ProductRecord[] = [
     description: 'An oil-free gel-cream moisturizer with aloe bio-ferment and hyaluronic acid. It sinks in fast and keeps adding hydration through the day, per the brand.',
     url: 'https://www.clinique.com/products/moisture-surge-100h-auto-replenishing-hydrator',
     ingredients: [
-      { name: 'Aloe bio-ferment and aloe leaf water', role: 'Hydrating', notes: '', source: 'https://www.clinique.com/products/moisture-surge-100h-auto-replenishing-hydrator' },
-      { name: 'Sodium hyaluronate', role: 'Humectant', notes: 'Hyaluronic acid.', source: 'https://www.clinique.com/products/moisture-surge-100h-auto-replenishing-hydrator' },
-      { name: 'Caffeine', role: 'Skin conditioning', notes: '', source: 'https://www.clinique.com/products/moisture-surge-100h-auto-replenishing-hydrator' },
+      { name: 'Aloe bioferment', role: 'Humectant', notes: 'Fermented aloe that helps skin hold moisture, per the brand.', source: 'https://www.clinique.com/products/moisture-surge-100h-auto-replenishing-hydrator' },
+      { name: 'Sodium hyaluronate', role: 'Humectant', notes: 'Hyaluronic acid in two molecular weights.', source: 'https://www.clinique.com/products/moisture-surge-100h-auto-replenishing-hydrator' },
       { name: 'Vitamins C and E', role: 'Antioxidants', notes: 'Magnesium ascorbyl phosphate and tocopheryl acetate.', source: 'https://www.clinique.com/products/moisture-surge-100h-auto-replenishing-hydrator' },
     ],
     claims: [
@@ -664,10 +663,10 @@ export const productSeed: ProductRecord[] = [
     description: 'A moisturizing shampoo for dry, brittle hair. It lathers on wet hair and rinses out, and the brand pairs it with its All Soft conditioner.',
     url: 'https://www.redken.com/hair-care/all-soft-argan-oil-softening-shampoo.html',
     ingredients: [
-      { name: 'Argan oil', role: 'Emollient', notes: 'Named by the brand, but not on the Ulta ingredient list.', source: 'https://www.redken.com/hair-care/all-soft-argan-oil-softening-shampoo.html' },
-      { name: 'Hydrolyzed soy protein', role: 'Strengthening', notes: '', source: 'https://www.redken.com/hair-care/all-soft-argan-oil-softening-shampoo.html' },
+      { name: 'Argan oil', role: 'Emollient', notes: '', source: 'https://www.redken.com/hair-care/all-soft-argan-oil-softening-shampoo.html' },
+      { name: 'Soy protein', role: 'Strengthening', notes: '', source: 'https://www.redken.com/hair-care/all-soft-argan-oil-softening-shampoo.html' },
       { name: 'Arginine', role: 'Conditioning', notes: 'An amino acid.', source: 'https://www.redken.com/hair-care/all-soft-argan-oil-softening-shampoo.html' },
-      { name: 'Plukenetia volubilis (sacha inchi) seed oil', role: 'Emollient', notes: '', source: 'https://www.redken.com/hair-care/all-soft-argan-oil-softening-shampoo.html' },
+      { name: 'Sepicap', role: 'Conditioning', notes: 'A conditioning blend named by the brand.', source: 'https://www.redken.com/hair-care/all-soft-argan-oil-softening-shampoo.html' },
     ],
     claims: [
       { text: 'Moisturizes dry, brittle hair as it cleanses', source: 'https://www.redken.com/hair-care/all-soft-argan-oil-softening-shampoo.html' },
