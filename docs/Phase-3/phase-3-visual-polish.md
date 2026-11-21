@@ -33,10 +33,10 @@ _Branch `claude/clever-goldberg-vgmhex`, from `main` at `f525d6e` (merge of PR #
 - **Product Library and Product Information files** (shared product-data protection rule): a teammate is updating product images and information in a separate pull request. Phase 3 does not touch product records, images, alt text, descriptions, brands, categories, ownership, statuses or their files.
 - Accept invitation and Account setup keep their existing design (not in the Phase 3 scope).
 
-## Pre-existing issues (not part of this phase)
+## Pre-existing issues
 
-1. Duplicate landmark labels (moderate, best practice): the list-and-detail panels on the content area pages, and the Profile page with the sidebar profile card.
-2. Top bar: the spoken names of the Theme button and the profile button don't match their visible text (`label-content-name-mismatch`, serious).
+1. **Fixed in this phase:** repeated region names (list-and-detail pages, Profile) and the Theme and profile buttons whose spoken names didn't match their visible text (also the Email "Use template" buttons). See `qa-results.md`.
+2. **Still open (product files protected):** the Product Library "View" buttons are spoken as "Open [product name]", which doesn't start with the visible "View". The fix is one line in `shared/content/product-library.ts` (for example "View [product name]"), to be made after the teammate's product pull request.
 3. Product Library and Product Information keep their outlines (product files are protected in this phase).
 
 ## Open items before the pull request

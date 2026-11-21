@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { dataTableCopy } from '../../../shared/content/component-copy';
 import styles from './DataTable.module.css';
 
 type Column = {
@@ -29,7 +30,7 @@ type DataTableProps = {
 export function DataTable({ caption, columns, rows, selectedRowId, flush = false, compact = false }: DataTableProps) {
   return (
     // Controlled horizontal scroll on narrow screens (board responsive rule)
-    <div className={flush ? `${styles.scroll} ${styles.flush}` : styles.scroll} role="region" aria-label={caption} tabIndex={0}>
+    <div className={flush ? `${styles.scroll} ${styles.flush}` : styles.scroll} role="region" aria-label={dataTableCopy.scrollRegion(caption)} tabIndex={0}>
       <table className={compact ? `${styles.table} ${styles.compact}` : styles.table}>
         <caption className={styles.caption}>{caption}</caption>
         <thead>

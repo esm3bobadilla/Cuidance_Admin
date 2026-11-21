@@ -14,3 +14,10 @@ export const uploadFieldCopy = {
   wrongType: 'This file type isn’t supported. Choose a JPG, PNG or WebP image.',
   preview: 'Image preview',
 };
+
+// The table's keyboard-scrollable area. Named apart from the page section that holds the
+// table (often titled with the same caption), so screen readers never announce two
+// regions with the same name (Phase 3 accessibility fix).
+export const dataTableCopy = {
+  scrollRegion: (caption: string) => `${caption}, scrollable table`,
+};

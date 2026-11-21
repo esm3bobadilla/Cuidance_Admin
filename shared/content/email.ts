@@ -161,7 +161,8 @@ export const emailCopy = {
   archivedLabel: 'Archived',
   templateActions: {
     preview: (name: string) => `Preview the ${name} template`,
-    use: (name: string) => `Write an email from the ${name} template`,
+    // Starts with the visible "Use template" (WCAG 2.5.3 Label in Name)
+    use: (name: string) => `Use template: write an email from the ${name} template`,
     duplicate: (name: string) => `Duplicate the ${name} template to Drafts`,
     archive: (name: string) => `Archive the ${name} template`,
     restore: (name: string) => `Restore the ${name} template`,

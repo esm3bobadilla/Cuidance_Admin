@@ -17,6 +17,8 @@ export const themeToggleCopy = {
   darkMode: 'Dark mode',
   switchToDark: 'Switch to dark mode',
   switchToLight: 'Switch to light mode',
+  // Spoken name starts with the visible label (WCAG 2.5.3 Label in Name), then says what pressing does
+  buttonName: (modeLabel: string, action: string) => `${modeLabel}. ${action}`,
 };
 
 // Runs in <head> before the page draws, so a saved choice never flashes the wrong colors.

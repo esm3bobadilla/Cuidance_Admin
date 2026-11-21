@@ -15,7 +15,7 @@ export function ThemeToggle() {
     <button
       type="button"
       className={styles.toggle}
-      aria-label={dark ? copy.switchToLight : copy.switchToDark}
+      aria-label={dark ? copy.buttonName(copy.darkMode, copy.switchToLight) : copy.buttonName(copy.lightMode, copy.switchToDark)}
       title={dark ? copy.switchToLight : copy.switchToDark}
       onClick={() => setThemePreference(dark ? 'light' : 'dark')}
     >

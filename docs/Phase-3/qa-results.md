@@ -39,7 +39,16 @@ Team Member: no Approve, Request changes, Archive or Restore on products; no Sen
 
 ## Automated accessibility (axe-core, WCAG 2.0 / 2.1 / 2.2 AA plus best practice)
 
-No new findings on 16 key pages (including Sign in, Create account and Forgot password), the Product drawer and form, and the Email editor, in light and dark. Remaining findings are pre-existing and listed in `phase-3-visual-polish.md`.
+No new findings on 16 key pages (including Sign in, Create account and Forgot password), the Product drawer and form, and the Email editor, in light and dark.
+
+**Accessibility fixes (Nov 21, 2026):** every page (33 routes) re-scanned for `landmark-unique` and `label-content-name-mismatch`.
+
+| Finding | Before | After |
+| --- | --- | --- |
+| Repeated region names (`landmark-unique`) | 9 pages: the eight list-and-detail pages (the page section and the table's scroll area shared one name) and Profile (the sidebar card and the page were both "Profile") | 0. The table's scroll area is now "[table name], scrollable table" (one change in the shared `DataTable`); the sidebar card is "Your account" |
+| Spoken name differs from visible text (`label-content-name-mismatch`) | Theme button, profile button on every page; Email "Use template" buttons; Product Library "View" buttons | Theme: "Light mode. Switch to dark mode" (or the dark version). Profile: "TM, Profile and notifications" plus the unread count. Email: "Use template: write an email from the [name] template". **Product Library "View" buttons not changed:** their wording is in `shared/content/product-library.ts`, a protected product file |
+
+After the fixes: type check, `npm test` 38/38, production build, interaction suites (Product Library 17, Email 20, Live 15, Demo 18, Keyboard and touch 21, Phase 3 20) and roles 36/36 all pass.
 
 ## Not run
 

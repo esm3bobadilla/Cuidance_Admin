@@ -61,7 +61,7 @@ export function ProfilePanel() {
         id={buttonId}
         type="button"
         className={styles.button}
-        aria-label={unread > 0 ? `${profileCopy.buttonLabel}, ${copy.unreadCount(unread)}` : profileCopy.buttonLabel}
+        aria-label={profileCopy.buttonName(me.initials, unread > 0 ? copy.unreadCount(unread) : undefined)}
         aria-haspopup="dialog"
         aria-expanded={state.open}
         aria-controls="profile-panel"
