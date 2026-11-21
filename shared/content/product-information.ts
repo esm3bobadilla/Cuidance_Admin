@@ -4,8 +4,9 @@
  * Source: the approved Week 9 hi-fi screenshot of Product Information (A4).
  * Product names, categories, statuses, disclosures, dates and the selected
  * product's notes are taken from it as shown, with these PROVISIONAL changes:
- * - A4's brand names are replaced by "Brand A" to "Brand D". CLAUDE.md allows
- *   no real brand names, and these can't be confirmed as invented.
+ * - A4's brand names are replaced by "Brand A" to "Brand D", because they can't be
+ *   confirmed as real products with a source. Real reference products live in
+ *   Product Library (product-library.ts), each with its brand page as the source.
  * - A4's editor names are replaced by "Team member A/B", as on the Dashboard.
  * - A4's second sentence of the educational description ("A good option for
  *   those looking for…") is left out: it reads as a recommendation, which the

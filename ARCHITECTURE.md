@@ -11,7 +11,7 @@ How Admin Web is put together, in plain words. Read this with `CLAUDE.md` (the r
 - An **internal** browser tool for the Cuidance team to review and maintain content. Not public, not a portal for providers, brands or retailers.
 - **Next.js 16 with TypeScript (strict)**, React 19. No other dependencies.
 - **A static website.** `next build` turns every screen into a plain HTML page (`output: 'export'`), and GitHub Pages serves them. There is no server code, no database and no sign-in.
-- **Data is seeded.** Every screen shows typed sample data from `shared/`. **Phase 2** adds a separate Admin Supabase project; its schema and tests exist (section 10), but the app doesn't connect to it yet. Sample mode stays the default.
+- **Data is seeded.** Every screen shows typed sample data from `shared/`. Product Library holds 33 real reference products, with the same ids and the same department > category > subcategory tree as the Cuidance app (`shared/content/product-categories.ts`). **Phase 2** adds a separate Admin Supabase project; its schema and tests exist (section 10), but the app doesn't connect to it yet. Sample mode stays the default.
 
 ## 2. Folders
 

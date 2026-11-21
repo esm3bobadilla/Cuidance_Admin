@@ -65,6 +65,7 @@ These are the approved limits for Cuidance. Admin Web must stay inside them.
 - **Product Barcode / Label Lookup:** product lookup only
 - **Saved Routine Notes:** organizing saved notes, not a routine builder
 - Commercial content, always clearly labeled as "Partner"
+- **Product Library:** a small reference set of real products (brand, product name, category, ingredients, product facts), each with its official brand page as the source and a description rewritten in Cuidance's voice
 
 **Future scope or VERIFY**
 
