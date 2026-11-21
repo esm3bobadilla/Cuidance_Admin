@@ -20,8 +20,9 @@ const admin: Actor = { id: 'm-b', role: 'admin' };
 const teamMember: Actor = { id: 'm-d', role: 'team_member' };
 const noAccess: Actor = { id: 'x', role: null };
 const record = (id: string) => productSeed.find((p) => p.id === id)!;
-const inReview = record('pl2'); // owned by m-d
-const archived = record('pl6'); // owned by m-e
+const inReview = record('pl2'); // owned by m-d, the only record in review
+// The reference products have no archived record, so the tests archive one themselves
+const archived: ProductRecord = { ...record('pl4'), id: 'archived-sample', status: 'archived' }; // owned by m-e
 const restricted = ['approve', 'requestChanges', 'archive', 'restore'] as const;
 
 describe('Product Library: roles', () => {
@@ -44,8 +45,8 @@ describe('Product Library: roles', () => {
   });
 
   it('lets Team Members edit only records assigned to them', () => {
-    assert.ok(canEditProduct(teamMember, record('pl5'))); // m-d
-    assert.ok(!canEditProduct(teamMember, record('pl4'))); // m-e
+    assert.ok(canEditProduct(teamMember, record('pl5'))); // m-d, draft
+    assert.ok(!canEditProduct(teamMember, record('pl4'))); // m-e, draft
     assert.ok(canEditProduct(admin, record('pl4')));
   });
 
@@ -125,11 +126,12 @@ describe('Product Library: validation', () => {
 describe('Product Library: filters', () => {
   const f = { query: '', brand: 'all', category: 'all', status: 'active', link: 'all', sort: 'name' as const };
   it('hides archived records by default and shows them on request', () => {
-    assert.ok(!filterProducts(productSeed, f).some((r) => r.status === 'archived'));
-    assert.deepEqual(filterProducts(productSeed, { ...f, status: 'archived' }).map((r) => r.id), ['pl6']);
+    const all = [...productSeed, archived];
+    assert.ok(!filterProducts(all, f).some((r) => r.status === 'archived'));
+    assert.deepEqual(filterProducts(all, { ...f, status: 'archived' }).map((r) => r.id), ['archived-sample']);
   });
   it('searches ingredients and filters by linked guidance', () => {
-    assert.deepEqual(filterProducts(productSeed, { ...f, query: 'zinc' }).map((r) => r.id), ['pl3']);
+    assert.deepEqual(filterProducts(productSeed, { ...f, query: 'zinc' }).map((r) => r.id), ['pl18']);
     assert.ok(filterProducts(productSeed, { ...f, link: 'none' }).every((r) => r.links.length === 0));
   });
 });
