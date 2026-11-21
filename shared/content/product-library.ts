@@ -636,11 +636,11 @@ export const productSeed: ProductRecord[] = [
     brand: 'Pureology',
     category: 'hair/wash/shampoo',
     description: 'A creamy, sulfate-free shampoo for dry, color-treated hair that\'s normal to thick. It cleans gently while adding moisture.',
-    url: 'https://www.ulta.com/p/hydrate-shampoo-dry-hair-nourishment-moisture-pimprod2017791',
+    url: 'https://www.pureology.com/hair-care/hydrate-shampoo-sulfate-free-hair-moisturizing.html',
     ingredients: [
-      { name: 'Sodium cocoyl isethionate', role: 'Mild cleanser', notes: '', source: 'https://www.ulta.com/p/hydrate-shampoo-dry-hair-nourishment-moisture-pimprod2017791' },
-      { name: 'Sunflower seed extract', role: 'Color protection', notes: 'Part of the brand\'s Antifade Complex.', source: 'https://www.ulta.com/p/hydrate-shampoo-dry-hair-nourishment-moisture-pimprod2017791' },
-      { name: 'Tocopherol', role: 'Antioxidant', notes: 'Vitamin E.', source: 'https://www.ulta.com/p/hydrate-shampoo-dry-hair-nourishment-moisture-pimprod2017791' },
+      { name: 'Sodium cocoyl isethionate', role: 'Mild cleanser', notes: '', source: 'https://www.pureology.com/hair-care/hydrate-shampoo-sulfate-free-hair-moisturizing.html' },
+      { name: 'Sunflower seed extract', role: 'Color protection', notes: 'Part of the brand\'s Antifade Complex.', source: 'https://www.pureology.com/hair-care/hydrate-shampoo-sulfate-free-hair-moisturizing.html' },
+      { name: 'Tocopherol', role: 'Antioxidant', notes: 'Vitamin E.', source: 'https://www.pureology.com/hair-care/hydrate-shampoo-sulfate-free-hair-moisturizing.html' },
     ],
     claims: [
       { text: 'Sulfate-free', source: 'https://www.ulta.com/p/hydrate-shampoo-dry-hair-nourishment-moisture-pimprod2017791' },
