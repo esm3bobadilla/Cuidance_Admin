@@ -2,6 +2,23 @@
 
 _Static build, sample mode, Chromium (Playwright). Run on Nov 20, 2026 on `claude/clever-goldberg-vgmhex`. Team Member results come from a temporary local build with the sample role set to Team Member; that change was reverted and is not committed._
 
+## Re-run after merging `main` (Nov 23, 2026)
+
+`main` gained PR #26 (Product Library reference products), so it was merged into this branch (merge commit, no rebase; only `README.md` overlapped and merged on its own). Every PR #26 file is identical to `main`. Every check below was run again on the merged branch:
+
+| Check | Result |
+| --- | --- |
+| Type check | Pass |
+| `npm test` | 42 of 42 (PR #26 added 4) |
+| Production build; GitHub Pages build with the sample-mode check | Pass; Pass |
+| Phase 3 checks | 20 of 20 |
+| Full page pass (26 pages, widths, modes) | 312 page loads, 0 failures |
+| Product Library 17, Email 20, Live 15, Demo 18, Keyboard and touch 21 | All pass |
+| Roles (Team Member) | 37 of 37 |
+| Accessibility scan, 33 routes | Only the known Product Library "View" wording (protected product file) |
+
+Test-script note: the browser scripts named the old sample products ("Barrier support serum" and others). They now use PR #26 records. The "archived filter" step archives a record first, because the new data starts with none archived. The Team Member steps open their own draft instead of a fixed name and check that the Dashboard count goes up by one. No app code changed for this.
+
 ## Builds and unit tests
 
 | Check | Result |

@@ -1,6 +1,6 @@
 # Phase 3: remote branch inventory
 
-_Checked Nov 20, 2026 against `main` at `f525d6e`. No branch has been deleted._
+_Checked Nov 20, 2026 against `main` at `f525d6e`, and again Nov 23, 2026 against `main` at `7d7f3e4` (after PR #26). No branch has been deleted._
 
 **Status:** waiting for Team 03 to confirm that GitHub Pages builds from **GitHub Actions** (Settings, Pages, Source), as asked, before any deletion. This session also cannot delete remote branches: a test deletion of one merged branch was refused (HTTP 403 from the proxy), so a team member deletes them on GitHub or with the commands below.
 
@@ -39,7 +39,7 @@ How "merged" was checked: `git merge-base --is-ancestor <branch> origin/main` is
 | `main` | Default branch |
 | `claude/clever-goldberg-vgmhex` | Active Phase 3 work |
 | `docs/hosted-rollout-record` | 2 commits not in `main` (Rollout 1 to 3 records, `db2af05`, `4d87c73`). Team 03 decides whether to merge or keep them |
-| Any teammate branch for product images and information | Active shared work: not inventoried for deletion, never touched |
+| `feat/product-library-reference-products` | The teammate's product branch (PR #26, merged Nov 20, 2026). Fully merged, but it's her branch: she decides when to delete it. Not in the commands below |
 
 ## When approved
 

@@ -1,6 +1,6 @@
 # Phase 3: visual polish and QA
 
-_Branch `claude/clever-goldberg-vgmhex`, from `main` at `f525d6e` (merge of PR #25). Frontend only. No product files, product data, Supabase data, migrations, RLS, roles, credentials or external services changed._
+_Branch `claude/clever-goldberg-vgmhex`, from `main` at `f525d6e` (merge of PR #25), updated Nov 23, 2026 with `main` at `7d7f3e4` (PR #26, Product Library reference products) through a merge commit. Every PR #26 file is kept exactly as merged. Frontend only. No product files, product data, Supabase data, migrations, RLS, roles, credentials or external services changed._
 
 ## Baseline
 
@@ -36,15 +36,14 @@ _Branch `claude/clever-goldberg-vgmhex`, from `main` at `f525d6e` (merge of PR #
 ## Pre-existing issues
 
 1. **Fixed in this phase:** repeated region names (list-and-detail pages, Profile) and the Theme and profile buttons whose spoken names didn't match their visible text (also the Email "Use template" buttons). See `qa-results.md`.
-2. **Still open (product files protected):** the Product Library "View" buttons are spoken as "Open [product name]", which doesn't start with the visible "View". The fix is one line in `shared/content/product-library.ts` (for example "View [product name]"), to be made after the teammate's product pull request.
+2. **Still open (product files protected):** the Product Library "View" buttons. See Known follow-up items.
 3. Product Library and Product Information keep their outlines (product files are protected in this phase).
 
-## Open items before the pull request
+## Known follow-up items
 
-- **Authentication illustration (VERIFY):** `shared/brand/auth/auth-background.webp` is an interim copy taken from the chat preview of the approved image, because the original PNG has not reached the build session as a file. Replace it with the original `Cuidance_Auth_Background_Illustration_Phase3_v03.png` (as WebP, same size) before the pull request.
-- **Teammate's product pull request:** confirm its status before the Monday handoff. If it merges first, update this branch from `main`, keep every product change, and re-run all checks. If it is still in review, pause the handoff.
+- **Authentication illustration file (VERIFY):** `shared/brand/auth/auth-background.webp` is the copy of `Cuidance_Auth_Background_Illustration_Phase3_v03.png` that reached the build session through the chat preview (1672 x 941, WebP). The original PNG could not be transferred as a file: each attempt arrived as the same preview image (identical bytes). The artwork is visually identical and unchanged. Team 03 approved using it (Nov 23, 2026). Swap in the original export later if wanted: same file name, same size, no code change.
+- **Product Library "View" buttons:** spoken as "Open [product name]", which doesn't start with the visible "View" (`label-content-name-mismatch`). The wording is in `shared/content/product-library.ts`, a protected product file. Follow-up after the teammate's product work: change `open` to start with "View" (for example "View [product name]").
 - **Branch cleanup:** see `branch-inventory.md`. Nothing deleted; waiting for the GitHub Pages source confirmation.
-- **Pull request:** one consolidated pull request, opened no earlier than Monday, November 23, 2026 at 2:00 PM Pacific.
 
 ## Checks
 
