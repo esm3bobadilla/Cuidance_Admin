@@ -2,7 +2,6 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import {
-  productCategories,
   productGuidanceGroups,
   productGuidanceOptions,
   productLibraryCopy as copy,
@@ -11,6 +10,12 @@ import {
   type ProductStatus,
 } from '../../../shared/content/product-library';
 import { memberName } from '../../../shared/content/team-roster';
+import {
+  categoryLabel,
+  categoryShortLabel,
+  productCategoryFilterOptions,
+  productCategoryOptions,
+} from '../../../shared/content/product-categories';
 import catProduct from '../../../shared/brand/illustrations/content-categories/cat-product.webp';
 import emptyContent from '../../../shared/brand/illustrations/empty/empty-content.webp';
 import { DemoBanner } from '../../components/feedback/DemoBanner';
@@ -317,7 +322,7 @@ export function ProductLibrary({ state = 'ready' }: { state?: LibraryState }) {
   // ---------- drawer content
   const head = editing ? draft : current;
   const drawerTitle = editing ? (isNew ? copy.drawer.newTitle : copy.drawer.editTitle) : current?.name ?? '';
-  const drawerEyebrow = head && head.brand && head.category ? `${head.brand} · ${head.category}` : copy.drawer.fallbackEyebrow;
+  const drawerEyebrow = head && head.brand && head.category ? `${head.brand} · ${categoryShortLabel(head.category)}` : copy.drawer.fallbackEyebrow;
   const blocked = editing && altMissing(draft);
 
   const footer = (() => {
@@ -447,7 +452,7 @@ export function ProductLibrary({ state = 'ready' }: { state?: LibraryState }) {
             label={copy.filters.category}
             value={category}
             onChange={(e) => setCategory(e.target.value)}
-            options={[{ value: 'all', label: copy.filters.allCategories }, ...productCategories.map((c) => ({ value: c, label: c }))]}
+            options={[{ value: 'all', label: copy.filters.allCategories }, ...productCategoryFilterOptions]}
           />
           <Select
             id="pl-f-status"
@@ -655,7 +660,7 @@ function ProductCard({
           {r.name}
         </h3>
         <p className={styles.cardMeta}>
-          {r.brand} · {r.category}
+          {r.brand} · {categoryShortLabel(r.category)}
         </p>
         <p className={styles.cardDescription}>{r.description}</p>
         <dl className={styles.cardFacts}>
@@ -719,7 +724,7 @@ function ProductDetails({ record: r }: { record: LibraryRecord }) {
           </div>
           <div>
             <dt>{v.category}</dt>
-            <dd>{r.category}</dd>
+            <dd>{categoryLabel(r.category)}</dd>
           </div>
           <div>
             <dt>{v.url}</dt>
@@ -925,7 +930,7 @@ function ProductForm({ draft: d, setDraft, errors, setErrors, errorList, blocked
             value={d.category}
             error={err('pl-category')}
             onChange={(e) => set({ category: e.target.value }, 'pl-category')}
-            options={[{ value: '', label: f.chooseCategory }, ...productCategories.map((c) => ({ value: c, label: c }))]}
+            options={[{ value: '', label: f.chooseCategory }, ...productCategoryOptions]}
           />
         </div>
         <Textarea

@@ -2,7 +2,7 @@
 
 Rules for any Claude agent working in this repo. Follow them on every task. If something here conflicts with a request, ask before going ahead.
 
-_Last updated: Nov 18, 2026 (role migration Stage 1: three roles through an explicit mapping, legacy values kept). Previously Nov 12, 2026 (Phase A4: release readiness. Supabase mode, with sign-in, review data, invitations and account setup, is built and switched on only by build settings. The public GitHub Pages site always builds in sample mode, and the deploy workflow enforces it. See `docs/Phase-A4/release-readiness.md`.)_
+_Last updated: Nov 20, 2026 (Product Library uses a small reference set of real products with source links). Previously Nov 18, 2026 (role migration Stage 1: three roles through an explicit mapping, legacy values kept). Before that Nov 12, 2026 (Phase A4: release readiness. Supabase mode, with sign-in, review data, invitations and account setup, is built and switched on only by build settings. The public GitHub Pages site always builds in sample mode, and the deploy workflow enforces it. See `docs/Phase-A4/release-readiness.md`.)_
 
 ## Project context
 
@@ -37,6 +37,7 @@ Admin Web stays inside the approved Cuidance scope. If a request goes past these
 - **Product Barcode / Label Lookup** stays **product lookup only.**
 - **Saved Routine Notes** stays **saved-note organization**, not a routine builder.
 - **Product availability and retailer information** are **future scope or VERIFY.** Don't build them, and mark any mention as VERIFY.
+- **Product Library uses real products** (Team 03, Nov 20, 2026). A small reference set of real products: real brand names, product names, categories, ingredient lists, publicly available product facts and the official brand product page as the source link. Descriptions are rewritten in Cuidance's neutral voice, never copied from a brand or retailer. Every record keeps its source URL. Records are researched by hand from the brand's page (no automated scraping). The brand's website wins: when it and a retailer differ, use the brand. A retailer page fills in only what the brand page doesn't show, and the record says so. Product photos stay out until the team decides how to handle image rights. Product categories are the Cuidance app's department > category > subcategory tree, kept identical in `shared/content/product-categories.ts` (a shared data list, not copied app code), and product ids match the app's. Change a category in both repos in the same round of pull requests.
 - **Commercial content must be clearly labeled** ("Partner") and kept separate from guidance.
 - No public user-account management or analytics expansion. Limited internal Account Support and Content Metrics views may be implemented only where already approved in the Admin Web architecture.
 
@@ -106,7 +107,7 @@ Cuidance_Admin/
 These match the main app. Admin Web content feeds the app, so the same rules apply.
 
 - Say "may fit" and "based on what you selected." Never "you have," "fix," "perfect," "flawless," "anti-," "problem," "best," "guaranteed" or "slimming."
-- No real brand names in guidance. Partner or paid content is always labeled "Partner."
+- No real brand names in guidance. Product Library records are the exception (see Product boundaries). Partner or paid content is always labeled "Partner."
 - Every guidance claim keeps its evidence label (Strong, Moderate, Limited or Assumption) and its source link.
 - The emergency line stays on every result and is never edited away by an admin tool.
 - Never infer skin tone, undertone or race from anything.

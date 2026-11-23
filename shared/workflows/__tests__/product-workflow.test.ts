@@ -2,6 +2,7 @@
 import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
 import { productLibraryCopy, productSeed, type ProductRecord } from '../../content/product-library';
+import { categoryLabel, isKnownCategory } from '../../content/product-categories';
 import {
   applyProductAction,
   canEditProduct,
@@ -20,8 +21,9 @@ const admin: Actor = { id: 'm-b', role: 'admin' };
 const teamMember: Actor = { id: 'm-d', role: 'team_member' };
 const noAccess: Actor = { id: 'x', role: null };
 const record = (id: string) => productSeed.find((p) => p.id === id)!;
-const inReview = record('pl2'); // owned by m-d
-const archived = record('pl6'); // owned by m-e
+const inReview = record('k18-leave-in-repair-mask'); // owned by m-d, the only record in review
+// The reference products have no archived record, so the tests archive one themselves
+const archived: ProductRecord = { ...record('madison-reed-radiant-color-kit'), id: 'archived-sample', status: 'archived' }; // owned by m-e
 const restricted = ['approve', 'requestChanges', 'archive', 'restore'] as const;
 
 describe('Product Library: roles', () => {
@@ -44,9 +46,9 @@ describe('Product Library: roles', () => {
   });
 
   it('lets Team Members edit only records assigned to them', () => {
-    assert.ok(canEditProduct(teamMember, record('pl5'))); // m-d
-    assert.ok(!canEditProduct(teamMember, record('pl4'))); // m-e
-    assert.ok(canEditProduct(admin, record('pl4')));
+    assert.ok(canEditProduct(teamMember, record('living-proof-full-dry-volume-spray'))); // m-d, draft
+    assert.ok(!canEditProduct(teamMember, record('madison-reed-radiant-color-kit'))); // m-e, draft
+    assert.ok(canEditProduct(admin, record('madison-reed-radiant-color-kit')));
   });
 
   it('gives no actions to someone without workspace access', () => {
@@ -55,14 +57,14 @@ describe('Product Library: roles', () => {
 
   it('refuses a restricted action even if a screen asks for it', () => {
     assert.throws(() => applyProductAction(teamMember, inReview, 'approve'), WorkflowError);
-    assert.throws(() => applyProductAction(teamMember, record('pl5'), 'archive'), WorkflowError);
+    assert.throws(() => applyProductAction(teamMember, record('living-proof-full-dry-volume-spray'), 'archive'), WorkflowError);
     assert.throws(() => applyProductAction(teamMember, archived, 'restore'), WorkflowError);
   });
 });
 
 describe('Product Library: status changes', () => {
   it('moves draft -> in review -> approved', () => {
-    const submitted = applyProductAction(teamMember, record('pl5'), 'submit');
+    const submitted = applyProductAction(teamMember, record('living-proof-full-dry-volume-spray'), 'submit');
     assert.equal(submitted.status, 'review');
     const approved = applyProductAction(admin, submitted, 'approve');
     assert.equal(approved.status, 'approved');
@@ -77,26 +79,26 @@ describe('Product Library: status changes', () => {
   });
 
   it('archives and restores as a draft (Admins and Super Admins)', () => {
-    const a = applyProductAction(superAdmin, record('pl1'), 'archive');
+    const a = applyProductAction(superAdmin, record('kerastase-8h-magic-night-serum'), 'archive');
     assert.equal(a.status, 'archived');
     assert.ok(!canEditProduct(superAdmin, a), 'archived records are read-only');
     assert.equal(applyProductAction(admin, a, 'restore').status, 'draft');
   });
 
   it('saves a new record owned by its creator, and blocks editing others', () => {
-    const created = saveProduct(teamMember, { ...record('pl4'), id: 'new', ownerId: '' }, 'draft', true);
+    const created = saveProduct(teamMember, { ...record('madison-reed-radiant-color-kit'), id: 'new', ownerId: '' }, 'draft', true);
     assert.equal(created.ownerId, teamMember.id);
-    assert.throws(() => saveProduct(teamMember, record('pl4'), 'draft', false), WorkflowError);
+    assert.throws(() => saveProduct(teamMember, record('madison-reed-radiant-color-kit'), 'draft', false), WorkflowError);
   });
 
   it('counts records awaiting approval for the Dashboard', () => {
     assert.equal(productsAwaitingApproval(productSeed), 1);
-    assert.equal(productsAwaitingApproval([...productSeed, { ...record('pl5'), status: 'review' } as ProductRecord]), 2);
+    assert.equal(productsAwaitingApproval([...productSeed, { ...record('living-proof-full-dry-volume-spray'), status: 'review' } as ProductRecord]), 2);
   });
 });
 
 describe('Product Library: validation', () => {
-  const base = { name: 'A', brand: 'Brand A', category: 'Serum', description: 'Short.', url: 'https://example.com/a', image: null, extraImages: [] };
+  const base = { name: 'A', brand: 'Brand A', category: 'skin/treatments/serums', description: 'Short.', url: 'https://example.com/a', image: null, extraImages: [] };
   const m = productLibraryCopy.errors;
 
   it('accepts a complete record with no images', () => {
@@ -125,11 +127,34 @@ describe('Product Library: validation', () => {
 describe('Product Library: filters', () => {
   const f = { query: '', brand: 'all', category: 'all', status: 'active', link: 'all', sort: 'name' as const };
   it('hides archived records by default and shows them on request', () => {
-    assert.ok(!filterProducts(productSeed, f).some((r) => r.status === 'archived'));
-    assert.deepEqual(filterProducts(productSeed, { ...f, status: 'archived' }).map((r) => r.id), ['pl6']);
+    const all = [...productSeed, archived];
+    assert.ok(!filterProducts(all, f).some((r) => r.status === 'archived'));
+    assert.deepEqual(filterProducts(all, { ...f, status: 'archived' }).map((r) => r.id), ['archived-sample']);
   });
   it('searches ingredients and filters by linked guidance', () => {
-    assert.deepEqual(filterProducts(productSeed, { ...f, query: 'zinc' }).map((r) => r.id), ['pl3']);
+    assert.deepEqual(filterProducts(productSeed, { ...f, query: 'zinc' }).map((r) => r.id), ['la-roche-posay-cicaplast-balm-b5']);
     assert.ok(filterProducts(productSeed, { ...f, link: 'none' }).every((r) => r.links.length === 0));
+  });
+});
+
+describe('Product Library: categories shared with the app', () => {
+  const f = { query: '', brand: 'all', category: 'all', status: 'active', link: 'all', sort: 'name' as const };
+  it('puts every record in a department > category > subcategory that exists', () => {
+    for (const r of productSeed) assert.ok(isKnownCategory(r.category), `${r.id}: ${r.category}`);
+  });
+  it('uses unique ids', () => {
+    assert.equal(new Set(productSeed.map((r) => r.id)).size, productSeed.length);
+  });
+  it('filters by a whole department or one category', () => {
+    const hair = filterProducts(productSeed, { ...f, category: 'hair' });
+    assert.ok(hair.length > 0 && hair.every((r) => r.category.startsWith('hair/')));
+    const shampoo = filterProducts(productSeed, { ...f, category: 'hair/wash' }).map((r) => r.id);
+    assert.deepEqual(shampoo.sort(), ['pureology-hydrate-shampoo', 'redken-all-soft-shampoo']);
+    assert.ok(!filterProducts(productSeed, { ...f, category: 'hair/wa' }).length, 'a partial id matches nothing');
+  });
+  it('labels a path with the app menu names', () => {
+    assert.equal(categoryLabel('skin/moisturizers/mists-essences'), 'Skin care › Moisturizers › Face mists and essences');
+    assert.equal(categoryLabel('fragrance/mists'), 'Fragrance › Body and hair mist');
+    assert.equal(categoryLabel('not/a/path'), 'not/a/path');
   });
 });

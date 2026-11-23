@@ -11,6 +11,7 @@
  */
 
 import { can, type AdminRoleId } from '../content/permissions';
+import { categoryMatches } from '../content/product-categories';
 import type { ProductRecord, ProductStatus } from '../content/product-library';
 
 export type Actor = { id: string; role: AdminRoleId | null };
@@ -136,7 +137,8 @@ export function filterProducts<T extends ProductRecord>(records: T[], f: Product
   const q = f.query.trim().toLowerCase();
   return records
     .filter((r) => f.brand === 'all' || r.brand === f.brand)
-    .filter((r) => f.category === 'all' || r.category === f.category)
+    // A department or category filter also matches everything under it
+    .filter((r) => f.category === 'all' || categoryMatches(r.category, f.category))
     .filter((r) => (f.status === 'all' ? true : f.status === 'active' ? r.status !== 'archived' : r.status === f.status))
     .filter((r) => (f.link === 'all' ? true : f.link === 'any' ? r.links.length > 0 : f.link === 'none' ? r.links.length === 0 : r.links.includes(f.link)))
     .filter((r) => !q || `${r.name} ${r.brand} ${r.ingredients.map((i) => i.name).join(' ')}`.toLowerCase().includes(q))
