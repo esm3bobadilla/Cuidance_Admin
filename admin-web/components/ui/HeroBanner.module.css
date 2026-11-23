@@ -2,16 +2,35 @@
   position: relative;
   display: flex;
   align-items: center;
+  /* Phase 3: at least as tall as the artwork's proportions (see ::before) and 240 px, and
+     taller whenever the text needs it. No outline: the warm field sets the banner apart. */
   min-height: 240px;
-  overflow: hidden;
-  border: var(--stroke-default) solid var(--color-border);
+  border: var(--stroke-default) solid var(--frame-border);
   border-radius: var(--radius-medium);
   background: var(--color-surface-warm);
+}
+
+/* A zero-width spacer whose height follows the artwork (padding % follows the banner width) */
+.hero::before {
+  content: '';
+  flex: none;
+  width: 0;
+  padding-top: calc(100% * var(--hero-h) / var(--hero-w));
+}
+
+@media (min-width: 1280px) {
+  .hero::before {
+    padding-top: calc(100% * var(--hero-h-wide) / var(--hero-w-wide));
+  }
 }
 
 .art {
   position: absolute;
   inset: 0;
+  /* The artwork is clipped to the banner's corners; the text never is, so large text
+     makes the banner taller instead of being cut off */
+  overflow: hidden;
+  border-radius: inherit;
 }
 
 .image {
@@ -19,7 +38,8 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: right center;
+  /* Keep the illustration (right) and its ground line (bottom) in view when space is short */
+  object-position: right bottom;
 }
 
 /* Solid panel behind the text: contrast never depends on the image */
@@ -28,7 +48,8 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-12);
-  max-width: min(520px, 60%);
+  /* Over the plain paper half of the artwork, never over the illustration */
+  max-width: min(520px, 50%);
   margin: var(--space-24);
   padding: var(--space-24) var(--space-32);
   border-radius: var(--radius-medium);
@@ -62,17 +83,22 @@
   margin-top: var(--space-8);
 }
 
-/* Phones: the image becomes a strip above the text */
-@media (max-width: 767px) {
+/* Phones and tablets (under 1024 px): the whole artwork as a strip above the text, so it is never covered or cut off */
+@media (max-width: 1023px) {
   .hero {
     flex-direction: column;
     align-items: stretch;
     min-height: 0;
   }
 
+  .hero::before {
+    display: none;
+  }
+
+  /* The whole artwork, at its own proportions, as a strip above the text */
   .art {
     position: static;
-    height: 140px;
+    aspect-ratio: var(--hero-ratio);
   }
 
   .text {
@@ -84,7 +110,17 @@
 }
 
 @media (forced-colors: active) {
+  .hero::before {
+    display: none;
+  }
+
   .art {
     display: none;
+  }
+}
+
+@media (max-width: 1023px) {
+  .art {
+    border-radius: var(--radius-medium) var(--radius-medium) 0 0;
   }
 }

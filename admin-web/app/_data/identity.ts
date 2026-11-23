@@ -3,7 +3,7 @@
 import { profileCopy } from '../../../shared/content/profile';
 import { supabaseModeCopy as copy } from '../../../shared/content/supabase-mode';
 import { initialsOf, unnamedLabel } from '../../../shared/review-loop/supabase-mapping';
-import { toAdminRole, type AdminRoleId } from '../../../shared/content/permissions';
+import { roleNames, toAdminRole, type AdminRoleId } from '../../../shared/content/permissions';
 import { useAuth } from './authStore';
 
 export type Identity = {
@@ -18,12 +18,14 @@ export type Identity = {
   id: string;
 };
 
+// Phase 3: the sample role label is read from the sample role, so the two always match
+const sampleRole: AdminRoleId = 'super_admin';
 const sampleIdentity: Identity = {
   initials: profileCopy.initials,
   name: profileCopy.name,
-  role: profileCopy.role,
+  role: `${roleNames[sampleRole]} (sample)`,
   status: profileCopy.status,
-  adminRole: 'super_admin',
+  adminRole: sampleRole,
   id: 'sample-me',
 };
 

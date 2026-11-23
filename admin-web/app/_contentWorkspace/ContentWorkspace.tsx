@@ -135,6 +135,26 @@ export function ContentWorkspace() {
         </Button>
       </section>
 
+      {/* Phase 3: Browse by area sits near the top; search and filters stay directly above the results */}
+      <section className={styles.areasSection} aria-labelledby="areas-heading">
+        <h2 id="areas-heading" className={`${styles.areasTitle} editorial-accent`}>
+          {copy.areasTitle}
+        </h2>
+        <ul className={styles.areas}>
+          {workspaceAreas.map((area) => (
+            <li key={area.screen}>
+              <a className={styles.area} href={`${base}${adminScreens[area.screen].path}`}>
+                <img src={tiles[area.image].src} width={40} height={40} alt="" className={styles.areaArt} />
+                <span className={styles.areaText}>
+                  <span className={styles.areaName}>{adminScreens[area.screen].name}</span>
+                  <span className={styles.areaNote}>{area.note}</span>
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+
       <section className={styles.panel} aria-labelledby="workspace-heading">
         <div className={styles.panelHeader}>
           <h2 id="workspace-heading" className={styles.title}>
@@ -206,24 +226,6 @@ export function ContentWorkspace() {
         )}
       </section>
 
-      <section className={styles.areasSection} aria-labelledby="areas-heading">
-        <h2 id="areas-heading" className={styles.title}>
-          {copy.areasTitle}
-        </h2>
-        <ul className={styles.areas}>
-          {workspaceAreas.map((area) => (
-            <li key={area.screen}>
-              <a className={styles.area} href={`${base}${adminScreens[area.screen].path}`}>
-                <img src={tiles[area.image].src} width={56} height={56} alt="" className={styles.areaArt} />
-                <span className={styles.areaText}>
-                  <span className={styles.areaName}>{adminScreens[area.screen].name}</span>
-                  <span className={styles.areaNote}>{area.note}</span>
-                </span>
-              </a>
-            </li>
-          ))}
-        </ul>
-      </section>
 
       <Drawer
         open={filterOpen}

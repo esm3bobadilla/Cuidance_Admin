@@ -78,15 +78,6 @@
   color: var(--color-ink);
 }
 
-.heroArt {
-  display: block;
-  width: calc(var(--space-48) * 4);
-  height: auto;
-  /* Crops a stray stroke at the top edge of the supplied artwork */
-  aspect-ratio: 356 / 190;
-  object-fit: cover;
-  object-position: bottom;
-}
 
 /* Approved flat illustration in the steps panel, on a light circle (light in both themes) */
 .welcomeArt {
@@ -451,9 +442,6 @@
     padding-block: 0;
   }
 
-  .heroArt {
-    display: none;
-  }
 
   .welcomeArt {
     display: none;
@@ -497,6 +485,16 @@
   justify-content: flex-end;
 }
 
+/* Phase 3: a link to the Forgot Password screen, 44 px tall */
+.forgotLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--size-touch-target);
+  padding: 0 var(--space-8);
+  color: var(--color-accent);
+  font: var(--type-link);
+}
+
 /* Full-width primary and secondary actions, as in the Sign-in Entry reference */
 .stackActions {
   display: flex;
@@ -526,6 +524,80 @@
 /* Phones: no corner shapes, so nothing crowds the top bar or the form */
 @media (max-width: 767px) {
   .decor {
+    display: none;
+  }
+}
+
+/* ---------- Phase 3: authentication background (Sign In, Create Account, Forgot Password) ----------
+   The approved paper-cut illustration fills the page behind the content, at its own
+   proportions (cover, anchored to the bottom: never stretched or distorted). Decorative:
+   alt="" and hidden from screen readers. Text always sits on a solid panel. */
+.authPage {
+  min-height: calc(100dvh - var(--layout-header-height));
+  /* Room below the form so the illustrated ground line stays visible */
+  padding-bottom: calc(var(--space-48) * 4);
+}
+
+.authBackdrop {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  background: var(--color-surface-warm);
+}
+
+.authArt {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center bottom;
+}
+
+/* Dark mode: the light paper artwork is dimmed so the page stays calm and dark */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .authBackdrop {
+    background: var(--color-background);
+  }
+
+  :root:not([data-theme='light']) .authArt {
+    opacity: 0.3;
+  }
+}
+
+:root[data-theme='dark'] .authBackdrop {
+  background: var(--color-background);
+}
+
+:root[data-theme='dark'] .authArt {
+  opacity: 0.3;
+}
+
+/* Headline and form on solid panels over the illustration: no outline, no shadow */
+.authPage .hero {
+  padding: var(--space-32);
+  border: var(--stroke-default) solid var(--frame-border);
+  border-radius: var(--radius-medium);
+  background: var(--color-surface-warm);
+}
+
+.authPage .card {
+  border-color: var(--frame-border);
+}
+
+@media (max-width: 767px) {
+  .authPage {
+    padding-bottom: calc(var(--space-48) * 3);
+  }
+
+  .authPage .hero {
+    padding: var(--space-24);
+  }
+}
+
+@media (forced-colors: active) {
+  .authBackdrop {
     display: none;
   }
 }

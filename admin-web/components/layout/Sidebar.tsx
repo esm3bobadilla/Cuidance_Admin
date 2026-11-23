@@ -8,6 +8,7 @@ import { profileCopy } from '../../../shared/content/profile';
 import { useIdentity } from '../../app/_data/identity';
 import mark from '../../../shared/brand/logo/prototype/cuidance-mark-reversed.webp';
 import { CuIcon } from '../ui/CuIcon';
+import { SignOutControl } from './SignOutControl';
 import { useNativeDialog } from '../ui/useNativeDialog';
 import styles from './Sidebar.module.css';
 
@@ -133,6 +134,8 @@ function NavPanel({ logo, mode, onToggle, toggleRef }: PanelProps) {
         <span className={styles.userText}>
           <span className={styles.userName}>{me.name}</span>
           {me.role && <span className={styles.userRole}>{me.role}</span>}
+          {/* Phase 3: Sign out with the current user and role */}
+          <SignOutControl className={styles.signOut} errorClassName={styles.signOutError} />
         </span>
       </section>
     </div>
@@ -193,6 +196,7 @@ function Rail({ onExpand, expandRef }: RailProps) {
           {me.role ? `, ${me.role}` : ''}
         </span>
       </span>
+      <SignOutControl className={`${styles.signOut} ${styles.railSignOut}`} errorClassName="visually-hidden" iconOnly />
     </div>
   );
 }

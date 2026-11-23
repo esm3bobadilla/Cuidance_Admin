@@ -416,7 +416,7 @@ export function LiveScreen({ surface, state = 'ready' }: { surface: LiveSurface;
 
           <section className={styles.panel} aria-labelledby="lv-history-heading">
             <div className={styles.panelHead}>
-              <h2 id="lv-history-heading" className={styles.sectionTitle}>
+              <h2 id="lv-history-heading" className={`${styles.sectionTitle} editorial-accent`}>
                 {copy.history.heading}
               </h2>
               <p className={styles.meta} role="status">

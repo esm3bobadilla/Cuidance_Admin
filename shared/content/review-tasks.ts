@@ -19,6 +19,12 @@ export const reviewTasksCopy = {
   eyebrow: 'Internal tool',
   searchLabel: 'Search tasks',
   searchPlaceholder: 'Search tasks, content, or assignee…',
+  // Phase 3: status and priority filters beside the search, inside the page
+  filtersLabel: 'Filter review tasks',
+  statusFilter: 'Status',
+  priorityFilter: 'Priority',
+  allStatuses: 'All statuses',
+  allPriorities: 'All priorities',
   count: (shown: number, total: number) => (shown === 0 ? `0 of ${total} tasks` : `1–${shown} of ${total} tasks`),
   detail: {
     heading: 'Task',
@@ -39,7 +45,7 @@ export const reviewTasksCopy = {
     empty: 'No review tasks right now.',
     emptyAction: 'Go to Dashboard',
     error: "Couldn't load review tasks. Check your connection, then reload the page.",
-    noResults: 'No tasks match your search.',
+    noResults: 'No tasks match your search and filters.',
     clear: 'Clear search',
   },
 };

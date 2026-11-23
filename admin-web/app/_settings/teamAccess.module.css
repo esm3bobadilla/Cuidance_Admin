@@ -69,7 +69,7 @@
   font: var(--type-data-small);
   white-space: nowrap;
   background: var(--color-background);
-  border: var(--stroke-default) solid var(--color-border);
+  border: var(--stroke-default) solid var(--frame-border);
   border-radius: var(--radius-pill);
 }
 
@@ -173,7 +173,7 @@
   gap: var(--space-8);
   padding: var(--space-16);
   background: var(--color-surface);
-  border: var(--stroke-default) solid var(--color-border);
+  border: var(--stroke-default) solid var(--frame-border);
   border-radius: var(--radius-medium);
 }
 

@@ -11,9 +11,12 @@
 export const profileCopy = {
   initials: 'TM',
   buttonLabel: 'Profile and notifications',
+  // Spoken name starts with the visible initials (WCAG 2.5.3 Label in Name)
+  buttonName: (initials: string, extra?: string) => `${initials}, Profile and notifications${extra ? `, ${extra}` : ''}`,
   name: 'Team member',
   role: 'Super Admin (sample)',
   status: "Sample account. Sign-in isn't connected yet.",
-  cardLabel: 'Profile',
+  // Distinct from the Profile page's own region, so screen readers don't hear "Profile" twice
+  cardLabel: 'Your account',
   signOut: 'Sign out',
 };

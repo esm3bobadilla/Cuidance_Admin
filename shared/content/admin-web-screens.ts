@@ -33,6 +33,7 @@ export type AdminScreenId =
   // Week 11 feature 2 and Phase A1: before the person enters Admin Web (no sidebar)
   | 'sign-in'
   | 'create-account'
+  | 'forgot-password'
   | 'accept-invitation'
   | 'account-setup';
 
@@ -212,6 +213,13 @@ export const adminScreens: Record<AdminScreenId, AdminScreen> = {
     path: '/create-account/',
     scopeNote: 'Accounts are invitation only. Find your invitation to set up your account. Prototype only.',
   },
+  // Phase 3: Forgot password as its own screen (it was a toggle on Sign In)
+  'forgot-password': {
+    id: 'forgot-password',
+    name: 'Forgot Password',
+    path: '/forgot-password/',
+    scopeNote: 'Ask for a link to choose a new password. In sample mode nothing is sent.',
+  },
   'accept-invitation': {
     id: 'accept-invitation',
     name: 'Accept Invitation',
@@ -229,7 +237,7 @@ export const adminScreens: Record<AdminScreenId, AdminScreen> = {
 // Week 11 feature 2 (Team 03 decision A8): these screens use the setup shell, with the
 // logo and the Theme menu only. No sidebar, Menu, breadcrumb or profile. The sidebar
 // starts once the person has set up their account and enters Admin Web.
-export const setupScreens: AdminScreenId[] = ['sign-in', 'create-account', 'accept-invitation', 'account-setup'];
+export const setupScreens: AdminScreenId[] = ['sign-in', 'create-account', 'forgot-password', 'accept-invitation', 'account-setup'];
 
 export function isSetupPath(pathname: string) {
   const current = pathname.replace(/\/+$/, '') || '/';

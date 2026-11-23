@@ -37,6 +37,23 @@ export const signInCopy = {
   noScript: 'Turn on JavaScript to sign in.',
 };
 
+// Phase 3: Forgot Password screen. Supabase mode sends the reset link (same answer whether or
+// not the email has an account); sample mode sends nothing and says so.
+export const forgotPasswordCopy = {
+  pageTitle: 'Forgot Password · Cuidance Admin Web',
+  title: 'Reset your password',
+  intro: 'Enter the email you use for Cuidance Admin Web. We will send a link to choose a new password.',
+  email: 'Email',
+  submit: 'Send reset link',
+  back: 'Back to sign in',
+  sampleSent: 'Sample mode: no email is sent. Ask an Admin on your team to help you get back in.',
+  errors: {
+    emailMissing: 'Enter your email.',
+    emailInvalid: 'Enter a valid email address, like name@example.com.',
+  },
+  noScript: 'Turn on JavaScript to ask for a reset link.',
+};
+
 export const createAccountCopy = {
   pageTitle: 'Create Account · Cuidance Admin Web',
   title: 'Create your account',

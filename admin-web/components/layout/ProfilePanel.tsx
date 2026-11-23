@@ -5,10 +5,10 @@ import { adminScreens } from '../../../shared/content/admin-web-screens';
 import { notificationsCopy as copy, notificationsSeed } from '../../../shared/content/notifications';
 import { profileCopy } from '../../../shared/content/profile';
 import { supabaseModeCopy } from '../../../shared/content/supabase-mode';
-import { signOut } from '../../app/_data/authStore';
 import { isSupabaseMode } from '../../app/_data/config';
 import { useIdentity } from '../../app/_data/identity';
 import { markRead, setPanelOpen, unreadCount, useNotifications } from './notificationsStore';
+import { SignOutControl } from './SignOutControl';
 import styles from './ProfilePanel.module.css';
 
 const base = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
@@ -30,7 +30,6 @@ export function ProfilePanel() {
   const unread = unreadCount(state);
   // Phase A2: the signed-in member in Supabase mode; the sample identity otherwise
   const me = useIdentity();
-  const [signOutState, setSignOutState] = useState<'idle' | 'busy' | 'failed'>('idle');
   const signInHref = `${base}${adminScreens['sign-in'].path}`;
 
   useEffect(() => {
@@ -62,7 +61,7 @@ export function ProfilePanel() {
         id={buttonId}
         type="button"
         className={styles.button}
-        aria-label={unread > 0 ? `${profileCopy.buttonLabel}, ${copy.unreadCount(unread)}` : profileCopy.buttonLabel}
+        aria-label={profileCopy.buttonName(me.initials, unread > 0 ? copy.unreadCount(unread) : undefined)}
         aria-haspopup="dialog"
         aria-expanded={state.open}
         aria-controls="profile-panel"
@@ -110,35 +109,12 @@ export function ProfilePanel() {
           })}
         </ul>
         <p className={styles.note}>{copy.sampleNote}</p>
-        {signOutState === 'failed' && (
-          <p className={styles.note} role="alert">
-            {supabaseModeCopy.session.signOutError}
-          </p>
-        )}
-
         <div className={styles.actions}>
           <button type="button" className={styles.textButton} disabled={unread === 0} onClick={() => markRead(notificationsSeed.map((item) => item.id))}>
             {copy.markAllRead}
           </button>
-          {isSupabaseMode ? (
-            // Phase A2: ends the Supabase session, then goes to Sign In
-            <button
-              type="button"
-              className={styles.textButton}
-              disabled={signOutState === 'busy'}
-              onClick={async () => {
-                setSignOutState('busy');
-                if (await signOut()) window.location.assign(signInHref);
-                else setSignOutState('failed');
-              }}
-            >
-              {signOutState === 'busy' ? supabaseModeCopy.session.signingOut : supabaseModeCopy.session.signOut}
-            </button>
-          ) : (
-            <a className={styles.textButton} href={signInHref}>
-              {profileCopy.signOut}
-            </a>
-          )}
+          {/* Phase A2 sign out, shared with the lower-left account area (Phase 3) */}
+          <SignOutControl className={styles.textButton} errorClassName={styles.note} />
           <button type="button" className={styles.textButton} onClick={close}>
             {copy.close}
           </button>

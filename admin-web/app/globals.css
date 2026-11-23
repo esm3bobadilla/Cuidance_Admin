@@ -18,6 +18,31 @@ p {
   margin: 0;
 }
 
+/* Phase 3 visual refinement: decorative panels and cards separate by background field,
+   spacing and type, not outlines. Their outline is transparent (same size, so nothing
+   shifts) and comes back where people need edges: High contrast (Settings or the device)
+   and Windows forced colors. Inputs, dialogs, selection, focus and functional groups keep
+   their own borders. */
+:root {
+  --frame-border: transparent;
+}
+
+:root[data-contrast='more'] {
+  --frame-border: var(--color-border-strong);
+}
+
+@media (prefers-contrast: more) {
+  :root:not([data-contrast='standard']) {
+    --frame-border: var(--color-border-strong);
+  }
+}
+
+@media (forced-colors: active) {
+  :root {
+    --frame-border: CanvasText;
+  }
+}
+
 :focus-visible {
   outline: var(--stroke-strong) solid var(--color-accent);
   outline-offset: var(--stroke-strong);
@@ -271,3 +296,22 @@ p {
   }
 }
 
+
+/* Phase 3: a small editorial accent above a few key section headings (Care Terracotta
+   rule from the Week 8 board's editorial style). Decorative only: a CSS shape, not read
+   aloud, and hidden in forced colors. Use sparingly. */
+.editorial-accent::before {
+  content: '';
+  display: block;
+  width: var(--space-32);
+  height: var(--stroke-strong);
+  margin-bottom: var(--space-8);
+  border-radius: var(--radius-pill);
+  background: var(--color-highlight);
+}
+
+@media (forced-colors: active) {
+  .editorial-accent::before {
+    display: none;
+  }
+}

@@ -78,7 +78,10 @@ function TabPanel({ tab }: { tab: MetricsTab }) {
                 <span className={styles.kpiValue}>{k.value}</span>
                 <span className={styles.kpiChange}>{copy.changeLabel(k.change)}</span>
               </span>
-              <img src={art[k.art].src} width={48} height={48} alt="" className={styles.kpiArt} />
+              {/* Phase 3: a standard square container; the artwork keeps its own proportions */}
+              <span className={styles.kpiArtBox} aria-hidden="true">
+                <img src={art[k.art].src} width={art[k.art].width} height={art[k.art].height} alt="" className={styles.kpiArt} />
+              </span>
             </button>
           </li>
         ))}
