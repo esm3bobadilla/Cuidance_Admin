@@ -51,17 +51,15 @@ export const workspaceItems: WorkspaceItem[] = [
 
 export const workspaceStatuses = Array.from(new Set(workspaceItems.map((i) => i.status)));
 
-// Category tiles (approved prototype illustrations)
-export const workspaceAreas: { screen: AdminScreenId; image: 'quiz' | 'articles' | 'product' | 'review' | 'saved' | 'media'; note: string }[] = [
-  { screen: 'quiz-content', image: 'quiz', note: 'Questions, answer cards and mixing rules' },
-  { screen: 'guidance-content', image: 'articles', note: 'Articles, care guidance and explanations' },
-  { screen: 'product-library', image: 'product', note: 'Product records, ingredients, claims and images' },
-  { screen: 'product-information', image: 'product', note: 'Product types for Barcode / Label Lookup' },
-  { screen: 'knowledge-sources', image: 'saved', note: 'Sources and evidence labels' },
-  { screen: 'partner-highlights', image: 'media', note: 'Labeled "Partner", kept separate' },
-  { screen: 'commercial-content', image: 'review', note: 'Commercial labels and disclosures' },
-  { screen: 'claims-safety-review', image: 'review', note: 'Claims, evidence labels and safety notes' },
-  { screen: 'guidance-rules-review', image: 'articles', note: 'Rules that build a guidance result' },
+// Browse by area: the illustrated left column of the Content workspace (Content workspace
+// visual reference, Nov 24, 2026). Each area opens the page that holds that content.
+export type WorkspaceAreaImage = 'articles' | 'product' | 'app' | 'web' | 'partner';
+export const workspaceAreas: { key: string; name: string; screen: AdminScreenId; image: WorkspaceAreaImage; note: string; partner?: boolean }[] = [
+  { key: 'guidance', name: 'Guidance', screen: 'guidance-content', image: 'articles', note: 'Care how-tos, routines and guidance.' },
+  { key: 'products', name: 'Products', screen: 'product-library', image: 'product', note: 'Product details, benefits and usage.' },
+  { key: 'app', name: 'App content', screen: 'live-app', image: 'app', note: 'In-app education, tips and care support.' },
+  { key: 'website', name: 'Website', screen: 'live-website', image: 'web', note: 'Public site content, articles and resources.' },
+  { key: 'partner', name: 'Partner content', screen: 'partner-highlights', image: 'partner', note: 'Shared guidance, co-branded content and partner resources.', partner: true },
 ];
 
 // Contextual Content navigation (approved prototype): switches between the two Content views
@@ -80,6 +78,7 @@ export const contentWorkspaceCopy = {
   libraryText: 'Create, edit, assign and prepare content for review.',
   newContent: 'New content',
   workspaceTitle: 'Content workspace',
+  workspaceIntro: 'Every content item, with its type, status and last update.',
   count: (shown: number, total: number) => (shown === total ? `${total} items` : `${shown} of ${total} items`),
   searchLabel: 'Search content',
   searchPlaceholder: 'Search content by title or type',
@@ -91,8 +90,6 @@ export const contentWorkspaceCopy = {
   noResults: 'No content matches your search and filters.',
   clearAll: 'Clear search and filters',
   areasTitle: 'Browse by area',
-  typeFilterLabel: 'Show content type',
-  allTypes: 'All types',
   sampleNote: 'Sample data. Nothing here is saved or published, and these screens are not part of participant testing.',
   filterDrawer: {
     title: 'Filter content',

@@ -72,14 +72,17 @@ export function DashboardGlance() {
       <ul className={styles.glance}>
         {glanceCards.map((card) => (
           <li key={card.key} className={styles.card}>
-            <div className={styles.cardText}>
+            <div className={styles.cardBody}>
               <p className={styles.cardLabel}>{card.label}</p>
               <p className={styles.cardValue}>{values[card.key]}</p>
-              <p className={styles.cardDetail}>{card.detail}</p>
-              {card.key === 'review' && products > 0 && <p className={styles.cardDetail}>{glanceDemoCopy.productsAwaiting(products)}</p>}
-              {card.demo && <span className={styles.sample}>{glanceDemoCopy.badge}</span>}
+              {/* Decorative: upper-right, beside the label and number */}
+              <img className={styles.cardArt} src={art[card.key].src} width={64} height={64} alt="" />
+              <div className={styles.cardMore}>
+                <p className={styles.cardDetail}>{card.detail}</p>
+                {card.key === 'review' && products > 0 && <p className={styles.cardDetail}>{glanceDemoCopy.productsAwaiting(products)}</p>}
+                {card.demo && <span className={styles.sample}>{glanceDemoCopy.badge}</span>}
+              </div>
             </div>
-            <img className={styles.cardArt} src={art[card.key].src} width={56} height={56} alt="" />
           </li>
         ))}
       </ul>

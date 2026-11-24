@@ -24,29 +24,44 @@
 }
 
 .card {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: var(--space-12);
+  container-type: inline-size;
   padding: var(--space-24);
   border: var(--stroke-default) solid var(--frame-border);
   border-radius: var(--radius-medium);
   background: var(--color-surface);
 }
 
-.cardText {
+/* Label and number on the left, the illustration in the upper-right beside them, and
+   the supporting lines across the full width underneath */
+.cardBody {
+  display: grid;
+  height: 100%;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    'label art'
+    'value art'
+    'more more';
+  grid-template-rows: auto 1fr auto;
+  column-gap: var(--space-12);
+  row-gap: var(--space-4);
+}
+
+.cardMore {
+  grid-area: more;
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   gap: var(--space-4);
-  min-width: 0;
 }
 
 .cardLabel {
+  grid-area: label;
   font: var(--type-body-small);
   color: var(--color-ink);
 }
 
 .cardValue {
+  grid-area: value;
   font: var(--type-display);
   color: var(--color-brand);
 }
@@ -57,8 +72,6 @@
 }
 
 .sample {
-  align-self: flex-start;
-  margin-top: var(--space-4);
   padding: 0 var(--space-8);
   border: var(--stroke-default) solid var(--color-border-strong);
   border-radius: var(--radius-pill);
@@ -66,10 +79,31 @@
   color: var(--color-ink-muted);
 }
 
+/* 72 px square field: one and a half times the old 48 px, and the height of the label
+   and number beside it, so the card doesn't grow (64 px in narrow cards). The 64 x 64
+   artwork scales evenly and is never stretched or cropped. */
 .cardArt {
-  flex: none;
-  width: var(--size-control-height);
-  height: auto;
+  grid-area: art;
+  align-self: start;
+  width: calc(var(--space-48) + var(--space-24));
+  height: calc(var(--space-48) + var(--space-24));
+  object-fit: contain;
+}
+
+/* Narrow cards (four across on smaller laptops): the label gets the full width, so long
+   words like "communication" never run into the illustration */
+@container (max-width: 199px) {
+  .cardBody {
+    grid-template-areas:
+      'label label'
+      'value art'
+      'more more';
+  }
+
+  .cardArt {
+    width: calc(var(--space-48) + var(--space-16));
+    height: calc(var(--space-48) + var(--space-16));
+  }
 }
 
 .panel {

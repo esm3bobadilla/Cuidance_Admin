@@ -14,11 +14,10 @@ import {
 import { assignableMembers, roleNames } from '../../../shared/content/permissions';
 import { teamRoster } from '../../../shared/content/team-roster';
 import catArticles from '../../../shared/brand/illustrations/content-categories/cat-articles.webp';
-import catMedia from '../../../shared/brand/illustrations/content-categories/cat-media.webp';
 import catProduct from '../../../shared/brand/illustrations/content-categories/cat-product.webp';
-import catQuiz from '../../../shared/brand/illustrations/content-categories/cat-quiz.webp';
 import catReview from '../../../shared/brand/illustrations/content-categories/cat-review.webp';
-import catSaved from '../../../shared/brand/illustrations/content-categories/cat-saved.webp';
+import glanceApp from '../../../shared/brand/illustrations/glance/glance-app.svg';
+import glanceWeb from '../../../shared/brand/illustrations/glance/glance-web.svg';
 import emptyContent from '../../../shared/brand/illustrations/empty/empty-content.webp';
 import { DataTable } from '../../components/data/DataTable';
 import { Toast } from '../../components/feedback/Toast';
@@ -33,7 +32,8 @@ import { useIdentity } from '../_data/identity';
 import styles from './contentWorkspace.module.css';
 
 const base = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
-const tiles = { quiz: catQuiz, articles: catArticles, product: catProduct, review: catReview, saved: catSaved, media: catMedia };
+// Approved Cuidance illustrations for Browse by area (decorative: the area name is the link text)
+const tiles = { articles: catArticles, product: catProduct, app: glanceApp, web: glanceWeb, partner: catReview };
 const toggle = <T,>(list: T[], value: T) => (list.includes(value) ? list.filter((v) => v !== value) : [...list, value]);
 
 type Draft = { title: string; type: WorkspaceType; body: string; reviewer: string; priority: string; due: string };
@@ -122,10 +122,10 @@ export function ContentWorkspace() {
 
       <section className={styles.library} aria-labelledby="library-heading">
         <div>
-          <h2 id="library-heading" className={styles.eyebrow}>
+          <h2 id="library-heading" className={styles.libraryTitle}>
             {copy.libraryEyebrow}
           </h2>
-          <p>{copy.libraryText}</p>
+          <p className={styles.libraryText}>{copy.libraryText}</p>
         </div>
         <Button variant="primary" onClick={() => setEditorOpen(true)} aria-haspopup="dialog">
           <span className={styles.buttonIcon}>
@@ -135,97 +135,96 @@ export function ContentWorkspace() {
         </Button>
       </section>
 
-      {/* Phase 3: Browse by area sits near the top; search and filters stay directly above the results */}
-      <section className={styles.areasSection} aria-labelledby="areas-heading">
-        <h2 id="areas-heading" className={`${styles.areasTitle} editorial-accent`}>
-          {copy.areasTitle}
-        </h2>
-        <ul className={styles.areas}>
-          {workspaceAreas.map((area) => (
-            <li key={area.screen}>
-              <a className={styles.area} href={`${base}${adminScreens[area.screen].path}`}>
-                <img src={tiles[area.image].src} width={40} height={40} alt="" className={styles.areaArt} />
-                <span className={styles.areaText}>
-                  <span className={styles.areaName}>{adminScreens[area.screen].name}</span>
-                  <span className={styles.areaNote}>{area.note}</span>
-                </span>
-              </a>
-            </li>
-          ))}
-        </ul>
-      </section>
+      {/* One Content workspace: Browse by area on the left, search, filter and results on the right */}
+      <div className={styles.workspace}>
+        <div className={styles.workspaceGrid}>
+          <nav className={styles.areasSection} aria-labelledby="areas-heading">
+            <h2 id="areas-heading" className={styles.areasTitle}>
+              {copy.areasTitle}
+            </h2>
+            <ul className={styles.areas}>
+              {workspaceAreas.map((area) => (
+                <li key={area.key}>
+                  <a className={styles.area} href={`${base}${adminScreens[area.screen].path}`}>
+                    <img src={tiles[area.image].src} width={64} height={64} alt="" className={styles.areaArt} />
+                    <span className={styles.areaText}>
+                      <span className={styles.areaName}>{area.name}</span>
+                      <span className={styles.areaNote}>{area.note}</span>
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
 
-      <section className={styles.panel} aria-labelledby="workspace-heading">
-        <div className={styles.panelHeader}>
-          <h2 id="workspace-heading" className={styles.title}>
-            {copy.workspaceTitle}
-          </h2>
-          <p className={styles.count} role="status">
-            {copy.count(shown.length, items.length)}
-          </p>
+          <section className={styles.panel} aria-labelledby="workspace-heading">
+            <div className={styles.panelHeader}>
+              <div>
+                <h2 id="workspace-heading" className={styles.title}>
+                  {copy.workspaceTitle}
+                </h2>
+                <p className={styles.intro}>{copy.workspaceIntro}</p>
+              </div>
+              <p className={styles.count} role="status">
+                {copy.count(shown.length, items.length)}
+              </p>
+            </div>
+            <div className={styles.tools}>
+              <label className={styles.search}>
+                <span className="visually-hidden">{copy.searchLabel}</span>
+                <CuIcon name="search" size={18} />
+                <input
+                  type="search"
+                  className={styles.searchInput}
+                  placeholder={copy.searchPlaceholder}
+                  value={query}
+                  onChange={(event) => setQuery(event.target.value)}
+                />
+              </label>
+              <button
+                type="button"
+                className={styles.filterButton}
+                aria-haspopup="dialog"
+                onClick={() => {
+                  setPendingTypes(types);
+                  setPendingStatuses(statuses);
+                  setFilterOpen(true);
+                }}
+              >
+                <CuIcon name="filter" size={18} />
+                {activeFilters ? copy.filterCount(activeFilters) : copy.filter}
+              </button>
+            </div>
+            {shown.length ? (
+              <DataTable
+                caption={copy.tableCaption}
+                columns={[
+                  { key: 'title', header: copy.columns.title },
+                  { key: 'type', header: copy.columns.type },
+                  { key: 'status', header: copy.columns.status },
+                  { key: 'updated', header: copy.columns.updated },
+                ]}
+                rows={rows}
+                flush
+              />
+            ) : (
+              <div className={styles.empty}>
+                <img src={emptyContent.src} width={120} height={Math.round((120 * emptyContent.height) / emptyContent.width)} alt="" />
+                <p>{copy.noResults}</p>
+                <Button
+                  onClick={() => {
+                    setQuery('');
+                    setTypes([]);
+                    setStatuses([]);
+                  }}
+                >
+                  {copy.clearAll}
+                </Button>
+              </div>
+            )}
+          </section>
         </div>
-        <fieldset className={styles.typeChips}>
-          <legend className="visually-hidden">{copy.typeFilterLabel}</legend>
-          <Chip label={copy.allTypes} selected={types.length === 0} onClick={() => setTypes([])} />
-          {workspaceTypes.map((t) => (
-            <Chip key={t} label={t} selected={types.length === 1 && types[0] === t} onClick={() => setTypes(types.length === 1 && types[0] === t ? [] : [t])} />
-          ))}
-        </fieldset>
-        <div className={styles.tools}>
-          <label className={styles.search}>
-            <span className="visually-hidden">{copy.searchLabel}</span>
-            <CuIcon name="search" size={18} />
-            <input
-              type="search"
-              className={styles.searchInput}
-              placeholder={copy.searchPlaceholder}
-              value={query}
-              onChange={(event) => setQuery(event.target.value)}
-            />
-          </label>
-          <button
-            type="button"
-            className={styles.filterButton}
-            aria-haspopup="dialog"
-            onClick={() => {
-              setPendingTypes(types);
-              setPendingStatuses(statuses);
-              setFilterOpen(true);
-            }}
-          >
-            <CuIcon name="filter" size={18} />
-            {activeFilters ? copy.filterCount(activeFilters) : copy.filter}
-          </button>
-        </div>
-        {shown.length ? (
-          <DataTable
-            caption={copy.tableCaption}
-            columns={[
-              { key: 'title', header: copy.columns.title },
-              { key: 'type', header: copy.columns.type },
-              { key: 'status', header: copy.columns.status },
-              { key: 'updated', header: copy.columns.updated },
-            ]}
-            rows={rows}
-            flush
-          />
-        ) : (
-          <div className={styles.empty}>
-            <img src={emptyContent.src} width={120} height={Math.round((120 * emptyContent.height) / emptyContent.width)} alt="" />
-            <p>{copy.noResults}</p>
-            <Button
-              onClick={() => {
-                setQuery('');
-                setTypes([]);
-                setStatuses([]);
-              }}
-            >
-              {copy.clearAll}
-            </Button>
-          </div>
-        )}
-      </section>
-
+      </div>
 
       <Drawer
         open={filterOpen}

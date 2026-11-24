@@ -1,24 +1,23 @@
 /* Consolidated Content workspace (approved prototype). Tokens only. */
+/* Content Library introduction: an editorial heading and one line, with New content
+   beside it. No panel: spacing separates it from the workspace below */
 .library {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: var(--space-16);
-  padding: var(--space-24);
-  /* Phase 3: a background field; the outline only shows in high contrast */
-  border: var(--stroke-default) solid var(--frame-border);
-  border-radius: var(--radius-medium);
-  background: var(--color-surface);
-  font: var(--type-body-small);
+  padding: var(--space-8) 0;
 }
 
-.eyebrow {
-  margin-bottom: var(--space-4);
-  font: var(--type-eyebrow);
-  letter-spacing: var(--type-eyebrow-tracking);
-  text-transform: uppercase;
-  color: var(--color-success);
+.libraryTitle {
+  font: var(--type-heading-2);
+}
+
+.libraryText {
+  margin-top: var(--space-4);
+  font: var(--type-body);
+  color: var(--color-ink-muted);
 }
 
 .buttonIcon {
@@ -31,11 +30,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-16);
-  padding: var(--space-24);
-  /* Phase 3: a background field; the outline only shows in high contrast */
-  border: var(--stroke-default) solid var(--frame-border);
-  border-radius: var(--radius-medium);
-  background: var(--color-surface);
+  min-width: 0;
 }
 
 .panelHeader {
@@ -48,6 +43,12 @@
 
 .title {
   font: var(--type-heading-2);
+}
+
+.intro {
+  margin-top: var(--space-4);
+  font: var(--type-body-small);
+  color: var(--color-ink-muted);
 }
 
 .count {
@@ -162,34 +163,69 @@
   height: auto;
 }
 
+/* One Content workspace: a single surface holding Browse by area (left) and the results
+   (right). The outline shows only in high contrast and forced colors (--frame-border) */
+.workspace {
+  container-type: inline-size;
+  padding: var(--space-24);
+  border: var(--stroke-default) solid var(--frame-border);
+  border-radius: var(--radius-medium);
+  background: var(--color-surface);
+}
+
+.workspaceGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-24);
+}
+
+/* Wide enough for both columns: the areas column keeps a steady width beside the table */
+@container (min-width: 880px) {
+  .workspaceGrid {
+    grid-template-columns: calc(var(--layout-sidebar-width) + var(--space-48)) minmax(0, 1fr);
+    gap: var(--space-32);
+  }
+}
+
 .areasSection {
   display: flex;
   flex-direction: column;
-  gap: var(--space-12);
+  gap: var(--space-16);
+  min-width: 0;
 }
 
-/* Phase 3: compact area links near the top, as many across as fit */
 .areasTitle {
-  font: var(--type-heading-4);
+  font: var(--type-heading-2);
 }
 
 .areas {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, calc(var(--layout-sidebar-width) - var(--space-16))), 1fr));
-  gap: var(--space-8);
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-12);
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
+/* Side by side on tablets, where the areas sit above the results */
+@container (min-width: 560px) and (max-width: 879px) {
+  .areas {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Each area: an illustrated card on a warm tonal surface (no outline) */
 .area {
   display: flex;
   align-items: center;
-  gap: var(--space-12);
-  min-height: calc(var(--size-touch-target) + var(--space-16));
-  padding: var(--space-8) var(--space-12);
-  border-radius: var(--radius-small);
-  background: var(--color-surface);
+  gap: var(--space-16);
+  height: 100%;
+  min-height: calc(var(--space-48) + var(--space-48));
+  padding: var(--space-12) var(--space-16);
+  /* Outline only in high contrast and forced colors */
+  border: var(--stroke-default) solid var(--frame-border);
+  border-radius: var(--radius-medium);
+  background: var(--color-surface-warm);
   color: var(--color-ink);
   text-decoration: none;
 }
@@ -202,25 +238,48 @@
   text-decoration: underline;
 }
 
+/* 64 px square field; every illustration keeps its proportions (never stretched or
+   cropped). The rounded corner matches the drawn icons and trims only the tile background */
 .areaArt {
   flex: none;
-  width: calc(var(--space-32) + var(--space-8));
-  height: calc(var(--space-32) + var(--space-8));
+  border-radius: var(--radius-small);
+  width: calc(var(--space-48) + var(--space-16));
+  height: calc(var(--space-48) + var(--space-16));
   object-fit: contain;
+}
+
+/* Phones: compact cards, so the results start sooner; the text stays the same size */
+@container (max-width: 559px) {
+  .areas {
+    gap: var(--space-8);
+  }
+
+  .area {
+    gap: var(--space-12);
+    min-height: calc(var(--size-touch-target) + var(--space-16));
+    padding: var(--space-8) var(--space-12);
+  }
+
+  .areaArt {
+    width: var(--size-control-height);
+    height: var(--size-control-height);
+  }
 }
 
 .areaText {
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
+  min-width: 0;
 }
 
 .areaName {
-  font: var(--type-label);
+  font: var(--type-heading-5);
+  font-family: var(--font-display);
 }
 
 .areaNote {
-  font: var(--type-caption);
+  font: var(--type-body-small);
   color: var(--color-ink-muted);
 }
 
@@ -253,22 +312,11 @@
 }
 
 @media (max-width: 767px) {
-  .library,
-  .panel {
+  .workspace {
     padding: var(--space-16);
   }
 
   .pair {
     grid-template-columns: minmax(0, 1fr);
   }
-}
-
-/* Phase 2 PR 1: content types as quick filters inside the workspace */
-.typeChips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-8);
-  margin: 0;
-  padding: 0;
-  border: 0;
 }
