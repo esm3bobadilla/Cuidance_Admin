@@ -285,6 +285,40 @@
   color: var(--color-ink-muted);
 }
 
+/* More areas: compact text links under the area cards (Compass Blue link text, 44 px targets) */
+.moreAreas {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.moreAreasTitle {
+  font: var(--type-label);
+  color: var(--color-ink-muted);
+}
+
+.moreAreasList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--space-24);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.moreAreaLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--size-touch-target);
+  color: var(--color-accent);
+  font: var(--type-link);
+  text-decoration: underline;
+}
+
+.moreAreaLink:hover {
+  color: var(--color-accent-pressed);
+}
+
 .chipGroup {
   display: flex;
   flex-wrap: wrap;

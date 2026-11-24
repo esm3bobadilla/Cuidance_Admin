@@ -6,6 +6,7 @@ import {
   contentWorkspaceCopy as copy,
   workspaceAreas,
   workspaceItems,
+  workspaceMoreAreas,
   workspaceStatuses,
   workspaceTypes,
   type WorkspaceItem,
@@ -155,6 +156,21 @@ export function ContentWorkspace() {
                 </li>
               ))}
             </ul>
+            {/* More areas: simple text links, not illustrated cards */}
+            <div className={styles.moreAreas}>
+              <h3 id="more-areas-heading" className={styles.moreAreasTitle}>
+                {copy.moreAreasTitle}
+              </h3>
+              <ul className={styles.moreAreasList} aria-labelledby="more-areas-heading">
+                {workspaceMoreAreas.map((screen) => (
+                  <li key={screen}>
+                    <a className={styles.moreAreaLink} href={`${base}${adminScreens[screen].path}`}>
+                      {adminScreens[screen].name}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </nav>
 
           <section className={styles.panel} aria-labelledby="workspace-heading">

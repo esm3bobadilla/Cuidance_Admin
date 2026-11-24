@@ -62,6 +62,10 @@ export const workspaceAreas: { key: string; name: string; screen: AdminScreenId;
   { key: 'partner', name: 'Partner content', screen: 'partner-highlights', image: 'partner', note: 'Shared guidance, co-branded content and partner resources.', partner: true },
 ];
 
+// More areas: compact text links under the five area cards, for the two content pages
+// that have no area card. Link text is each page's own name.
+export const workspaceMoreAreas: AdminScreenId[] = ['commercial-content', 'guidance-rules-review'];
+
 // Contextual Content navigation (approved prototype): switches between the two Content views
 export const contentNavCopy = {
   label: 'Content views',
@@ -90,6 +94,7 @@ export const contentWorkspaceCopy = {
   noResults: 'No content matches your search and filters.',
   clearAll: 'Clear search and filters',
   areasTitle: 'Browse by area',
+  moreAreasTitle: 'More areas',
   sampleNote: 'Sample data. Nothing here is saved or published, and these screens are not part of participant testing.',
   filterDrawer: {
     title: 'Filter content',
