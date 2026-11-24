@@ -65,6 +65,8 @@
 .search {
   display: flex;
   flex: 1 1 280px;
+  /* Can shrink below 280 px on narrow phones with larger text */
+  min-width: 0;
   align-items: center;
   gap: var(--space-8);
   min-height: var(--size-control-height);
@@ -180,7 +182,7 @@
 }
 
 /* Wide enough for both columns: the areas column keeps a steady width beside the table */
-@container (min-width: 880px) {
+@container (min-width: 840px) {
   .workspaceGrid {
     grid-template-columns: calc(var(--layout-sidebar-width) + var(--space-48)) minmax(0, 1fr);
     gap: var(--space-32);
@@ -208,7 +210,7 @@
 }
 
 /* Side by side on tablets, where the areas sit above the results */
-@container (min-width: 560px) and (max-width: 879px) {
+@container (min-width: 560px) and (max-width: 839px) {
   .areas {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }

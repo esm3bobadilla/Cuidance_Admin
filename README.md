@@ -184,7 +184,7 @@ Cuidance_Admin/
 │   ├── Phase-A4/          Phase A4 release readiness: checks, security review, known limitations, go-live checklist
 │   ├── Phase-B1/          Phase B1 prototype implementation: role migration plan, progress and checks
 │   ├── Phase-B2/          Phase 2 PR 1 (Content, Product Library, Email, Live, role wording) and PR 2 (functional demo workflows): notes and checks
-│   ├── Phase-3/           Phase 3 visual polish and QA: changes against the baseline, QA results, branch inventory, before-and-after images
+│   ├── Phase-3/           Phase 3 visual polish and QA: changes against the baseline, QA results, branch inventory, before-and-after images; polish/ for the follow-up Admin Web polish pass
 │   └── archived/
 │       └── admin-mobile/  Archived Admin Mobile reference (no active work)
 ├── README.md

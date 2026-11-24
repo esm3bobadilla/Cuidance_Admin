@@ -56,6 +56,9 @@
 
 .cardLabel {
   grid-area: label;
+  /* Long words (such as "communication" with larger text) wrap instead of running into the art */
+  overflow-wrap: break-word;
+  hyphens: auto;
   font: var(--type-body-small);
   color: var(--color-ink);
 }
