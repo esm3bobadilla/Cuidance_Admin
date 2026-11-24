@@ -701,29 +701,53 @@ export function EmailWorkspace({ state = 'ready' }: { state?: EmailViewState }) 
 
 function EmailPreview({ doc }: { doc: WorkDoc }) {
   const uploaded = useObjectUrl(doc.image?.file);
+  const [device, setDevice] = useState<'desktop' | 'mobile'>('desktop');
   const art = cards[doc.template];
   const src = doc.image ? uploaded : art.src;
   const alt = doc.image ? doc.image.alt : doc.templateAlt;
+  // Week 12 parts (preview text, eyebrow, support line) come from the template
+  const extra = emailTemplates.find((t) => t.id === doc.template);
   return (
     <section className={styles.preview} aria-labelledby="em-preview-heading">
-      <h2 id="em-preview-heading" className={styles.sectionTitle}>
-        {copy.editor.previewLabel}
-      </h2>
-      <div className={styles.envelope}>
-        <p className={styles.meta}>{copy.editor.previewFrom}</p>
-        <p className={styles.meta}>{copy.editor.previewTo(doc.audience)}</p>
-        <p className={styles.previewSubject}>{copy.editor.previewSubject(doc.subject || ' ')}</p>
+      <div className={styles.previewTop}>
+        <h2 id="em-preview-heading" className={styles.sectionTitle}>
+          {copy.editor.previewLabel}
+        </h2>
+        <div role="group" aria-label={copy.editor.deviceLabel} className={styles.devices}>
+          {(['desktop', 'mobile'] as const).map((d) => (
+            <button key={d} type="button" className={styles.deviceButton} aria-pressed={device === d} onClick={() => setDevice(d)}>
+              {device === d && <span aria-hidden="true">✓ </span>}
+              <CuIcon name={d === 'mobile' ? 'phone' : d} size={16} /> {copy.editor.devices[d]}
+            </button>
+          ))}
+        </div>
       </div>
-      <div className={styles.message}>
-        {src && <img src={src} alt={alt} className={doc.image ? styles.messagePhoto : styles.messageArt} />}
-        <p className={styles.messageHeading}>{doc.heading}</p>
-        <p className={styles.messageBody}>{doc.body}</p>
-        {doc.button && (
-          <span className={styles.messageButton} aria-label={`${doc.button} (preview only, links to ${doc.link || 'no link yet'})`}>
-            {doc.button}
-          </span>
-        )}
-        <p className={styles.messageFooter}>{copy.editor.previewFooter}</p>
+      <p className="visually-hidden" aria-live="polite">
+        {copy.editor.deviceNote(copy.editor.devices[device])}
+      </p>
+      <div className={device === 'mobile' ? `${styles.frame} ${styles.frameMobile}` : styles.frame}>
+        <div className={styles.envelope}>
+          <p className={styles.meta}>{copy.editor.previewFrom}</p>
+          <p className={styles.meta}>{copy.editor.previewTo(doc.audience)}</p>
+          <p className={styles.previewSubject}>{copy.editor.previewSubject(doc.subject || ' ')}</p>
+          {extra?.preheader && <p className={styles.meta}>{copy.editor.previewPreheader(extra.preheader)}</p>}
+        </div>
+        <div className={styles.message}>
+          <p className={styles.sampleTag}>{copy.editor.previewSample}</p>
+          {src && <img src={src} alt={alt} className={doc.image ? styles.messagePhoto : styles.messageArt} />}
+          {extra?.eyebrow && <p className={styles.messageEyebrow}>{extra.eyebrow}</p>}
+          <p className={styles.messageHeading}>{doc.heading}</p>
+          <p className={styles.messageBody}>{doc.body}</p>
+          {doc.button && (
+            <span className={styles.messageButton} aria-label={`${doc.button} (preview only, links to ${doc.link || 'no link yet'})`}>
+              {doc.button}
+            </span>
+          )}
+          <div className={styles.messageFooter}>
+            {extra?.support && <p className={styles.messageSupport}>{extra.support}</p>}
+            <p>{copy.editor.previewFooter}</p>
+          </div>
+        </div>
       </div>
     </section>
   );
