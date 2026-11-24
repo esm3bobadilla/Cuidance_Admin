@@ -63,7 +63,7 @@ export const adminScreens: Record<AdminScreenId, AdminScreen> = {
     name: 'Content',
     path: '/content/',
     parent: 'dashboard',
-    scopeNote: 'Parent section for the content the Cuidance team reviews and maintains. Choose a content area below.',
+    scopeNote: 'Everything the Cuidance team reviews and maintains. Choose an area to start.',
     navName: 'Content Workspace',
   },
   // Phase 2 PR 1: product records inside Content (no separate sidebar item)
@@ -125,7 +125,7 @@ export const adminScreens: Record<AdminScreenId, AdminScreen> = {
     name: 'Guidance Rules Review',
     path: '/guidance-rules-review/',
     parent: 'dashboard',
-    scopeNote: 'Review of the rules that build a guidance result. Admin Web never generates picks for people.',
+    scopeNote: 'The rules that build a guidance result. Admin Web never makes picks for people.',
   },
   'claims-safety-review': {
     id: 'claims-safety-review',
@@ -140,7 +140,7 @@ export const adminScreens: Record<AdminScreenId, AdminScreen> = {
     name: 'Metrics',
     path: '/content-metrics/',
     parent: 'dashboard',
-    scopeNote: 'App, Website and Communication numbers (sample data, not connected). Real analytics are deferred.',
+    scopeNote: 'App, Website and Communication numbers (sample data, not connected). Real analytics come later.',
   },
   'account-support': {
     id: 'account-support',

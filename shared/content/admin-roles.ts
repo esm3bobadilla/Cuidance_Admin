@@ -25,7 +25,7 @@ export const rolesCopy = {
   policyNote: 'Three roles. In Supabase mode the database rules enforce them; this card only describes them.',
   publishingRule:
     'Super Admins and Admins approve, publish and archive. Team Members create content, prepare updates and submit them for review.',
-  settingsNote: 'Other settings are not built yet.',
+  settingsNote: 'More settings will come later.',
   canHeading: 'Can',
   cannotHeading: 'Cannot',
 };

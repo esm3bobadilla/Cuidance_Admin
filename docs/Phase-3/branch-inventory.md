@@ -1,58 +1,46 @@
 # Phase 3: remote branch inventory
 
-_Checked Nov 20, 2026 against `main` at `f525d6e`, and again Nov 23, 2026 against `main` at `7d7f3e4` (after PR #26). No branch has been deleted._
+_Updated Nov 24, 2026. Cleanup is complete._
 
-**Status:** waiting for Team 03 to confirm that GitHub Pages builds from **GitHub Actions** (Settings, Pages, Source), as asked, before any deletion. This session also cannot delete remote branches: a test deletion of one merged branch was refused (HTTP 403 from the proxy), so a team member deletes them on GitHub or with the commands below.
+## Outcome
 
-## Fully merged: every commit is already in `main` (19)
+1. **Phase 3 is merged:** PR #27, "Phase 3: Visual polish, accessibility and QA", merged into `main` on Nov 23, 2026 as merge commit `31fef45` (regular merge commit, approved by Alyssa on `b7aff13`).
+2. **GitHub Pages deployed it:** the "Deploy Admin Web to GitHub Pages" run for `31fef45` (run #23) succeeded, including the sample-mode check and the `deploy-pages` step. Pages publishes from **GitHub Actions**: the deploy step only works with that setting, and the repository has no branch-based "pages build and deployment" job.
+3. **The 20 approved branches were deleted** on Nov 23, 2026, after a final check that each had no commits outside `main`. They were deleted on GitHub outside the build session, which can't delete branches (HTTP 403 from its connection). Verified Nov 23, 2026: none of the 20 remain.
 
-18 are safe to delete now. `deploy-github-pages` becomes safe once Pages is confirmed to build from GitHub Actions. (An earlier chat summary said 18 in total and folded `deploy-github-pages` into that number; the correct total is 19.)
+## Deleted (20, all fully merged into `main`)
 
-| Branch | Last commit | Notes |
-| --- | --- | --- |
-| `chore/nextjs-16.4.6-security` | 2026-11-17 | PR #21 |
-| `deploy-github-pages` | 2026-10-26 | Delete only after confirming Pages builds from GitHub Actions |
-| `docs/stage1-hosted-rollout-record` | 2026-11-20 | PR #23 |
-| `feat/admin-web-dashboard-screen` | 2026-10-27 | |
-| `feat/admin-web-dev-404` | 2026-10-30 | |
-| `feat/admin-web-foundation` | 2026-11-16 | PR #20 |
-| `feat/admin-web-prototype-alignment` | 2026-11-06 | |
-| `feat/admin-web-review-tasks` | 2026-10-28 | |
-| `feat/admin-web-route-map` | 2026-10-27 | |
-| `feat/admin-web-scaffold` | 2026-10-26 | |
-| `feat/admin-web-theme-responsive` | 2026-11-05 | |
-| `feat/phase-2-1-supabase-schema` | 2026-11-11 | |
-| `feat/phase-a1-admin-web-completion` | 2026-11-11 | |
-| `feat/phase-a2-admin-web-supabase` | 2026-11-12 | |
-| `feat/phase-a3-invitations` | 2026-11-12 | |
-| `feat/phase-a4-release-readiness` | 2026-11-13 | |
-| `feat/role-migration-stage-1` | 2026-11-18 | PR #22 |
-| `feat/week-11-account-setup` | 2026-11-10 | |
-| `feat/week-11-review-task-loop` | 2026-11-06 | |
+| Branch | Last commit |
+| --- | --- |
+| `chore/nextjs-16.4.6-security` | Nov 17 |
+| `claude/clever-goldberg-vgmhex` (Phase 3) | Nov 23 |
+| `deploy-github-pages` | Oct 26 |
+| `docs/stage1-hosted-rollout-record` (PR #23; a different branch from `docs/hosted-rollout-record`) | Nov 20 |
+| `feat/admin-web-dashboard-screen` | Oct 27 |
+| `feat/admin-web-dev-404` | Oct 30 |
+| `feat/admin-web-foundation` | Nov 16 |
+| `feat/admin-web-prototype-alignment` | Nov 6 |
+| `feat/admin-web-review-tasks` | Oct 28 |
+| `feat/admin-web-route-map` | Oct 27 |
+| `feat/admin-web-scaffold` | Oct 26 |
+| `feat/admin-web-theme-responsive` | Nov 5 |
+| `feat/phase-2-1-supabase-schema` | Nov 11 |
+| `feat/phase-a1-admin-web-completion` | Nov 11 |
+| `feat/phase-a2-admin-web-supabase` | Nov 12 |
+| `feat/phase-a3-invitations` | Nov 12 |
+| `feat/phase-a4-release-readiness` | Nov 13 |
+| `feat/role-migration-stage-1` | Nov 18 |
+| `feat/week-11-account-setup` | Nov 10 |
+| `feat/week-11-review-task-loop` | Nov 6 |
 
-How "merged" was checked: `git merge-base --is-ancestor <branch> origin/main` is true for each one, so no commit would be lost.
-
-## Keep
+## Kept (the three intended branches)
 
 | Branch | Why |
 | --- | --- |
-| `main` | Default branch |
-| `claude/clever-goldberg-vgmhex` | Active Phase 3 work |
+| `main` | Default branch (`31fef45` after Phase 3) |
 | `docs/hosted-rollout-record` | 2 commits not in `main` (Rollout 1 to 3 records, `db2af05`, `4d87c73`). Team 03 decides whether to merge or keep them |
-| `feat/product-library-reference-products` | The teammate's product branch (PR #26, merged Nov 20, 2026). Fully merged, but it's her branch: she decides when to delete it. Not in the commands below |
+| `feat/product-library-reference-products` | Alyssa's product branch (PR #26, merged). Fully merged, but kept until she confirms |
 
-## When approved
+How "fully merged" was checked: `git rev-list --count origin/main..origin/<branch>` was 0 for every deleted branch, so no commit was lost.
 
-On GitHub: Code, Branches, the trash icon beside each branch. Or, from a clone:
-
-```bash
-git push origin --delete chore/nextjs-16.4.6-security docs/stage1-hosted-rollout-record \
-  feat/admin-web-dashboard-screen feat/admin-web-dev-404 feat/admin-web-foundation \
-  feat/admin-web-prototype-alignment feat/admin-web-review-tasks feat/admin-web-route-map \
-  feat/admin-web-scaffold feat/admin-web-theme-responsive feat/phase-2-1-supabase-schema \
-  feat/phase-a1-admin-web-completion feat/phase-a2-admin-web-supabase feat/phase-a3-invitations \
-  feat/phase-a4-release-readiness feat/role-migration-stage-1 feat/week-11-account-setup \
-  feat/week-11-review-task-loop
-# then, after the Pages check:
-git push origin --delete deploy-github-pages
-```
+**Note:** after the cleanup, `claude/clever-goldberg-vgmhex` was started again from `main` (`31fef45`) for the Admin Web polish pass. It's the only branch this build session can push to, and it's a new short-lived branch for that one pull request.
