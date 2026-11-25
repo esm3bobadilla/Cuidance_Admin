@@ -23,11 +23,11 @@ export const dashboardCopy = {
   },
   keyAreas: {
     title: 'Key Areas',
-    description: 'Quick access to manage Cuidance content and information.',
+    description: 'Shortcuts to the content and information you manage.',
   },
   needsAttention: {
     title: 'Needs attention',
-    description: 'Items that require review or action.',
+    description: 'Items that need review or action.',
     tableCaption: 'Items that need attention (sample data)',
     action: 'View all review tasks',
   },
@@ -49,7 +49,7 @@ export const dashboardKeyAreas: { id: AdminScreenId; description: string }[] = [
   { id: 'quiz-content', description: 'Manage quiz questions, answer guidance, and outcomes.' },
   { id: 'guidance-content', description: 'Create and update educational articles and guidance.' },
   { id: 'product-information', description: 'Manage product details, attributes, and educational context.' },
-  { id: 'knowledge-sources', description: 'Maintain source library and references.' },
+  { id: 'knowledge-sources', description: 'Keep sources and references up to date.' },
   { id: 'partner-highlights', description: 'Manage partner and sponsored educational content.' },
   { id: 'claims-safety-review', description: 'Review claims, safety notes, and required disclosures.' },
 ];

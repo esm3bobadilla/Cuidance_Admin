@@ -43,7 +43,7 @@ _Branch `claude/clever-goldberg-vgmhex`, from `main` at `f525d6e` (merge of PR #
 
 - **Authentication illustration file (VERIFY):** `shared/brand/auth/auth-background.webp` is the copy of `Cuidance_Auth_Background_Illustration_Phase3_v03.png` that reached the build session through the chat preview (1672 x 941, WebP). The original PNG could not be transferred as a file: each attempt arrived as the same preview image (identical bytes). The artwork is visually identical and unchanged. Team 03 approved using it (Nov 23, 2026). Swap in the original export later if wanted: same file name, same size, no code change.
 - **Product Library "View" buttons:** spoken as "Open [product name]", which doesn't start with the visible "View" (`label-content-name-mismatch`). The wording is in `shared/content/product-library.ts`, a protected product file. Follow-up after the teammate's product work: change `open` to start with "View" (for example "View [product name]").
-- **Branch cleanup:** see `branch-inventory.md`. Nothing deleted; waiting for the GitHub Pages source confirmation.
+- **Branch cleanup:** done Nov 23, 2026. The 20 approved merged branches were deleted; `main`, `docs/hosted-rollout-record` and `feat/product-library-reference-products` remain. See `branch-inventory.md`.
 
 ## Checks
 

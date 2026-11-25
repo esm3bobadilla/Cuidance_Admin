@@ -28,6 +28,11 @@ export type EmailTemplate = {
   link: string;
   // Default image: the approved card illustration (shared/brand/illustrations/email)
   imageAlt: string;
+  // Optional Week 12 email parts, shown in the preview: inbox preview text, the small
+  // label above the headline, and the support line above the footer
+  preheader?: string;
+  eyebrow?: string;
+  support?: string;
 };
 
 export type EmailDoc = {
@@ -55,13 +60,17 @@ export const emailTemplates: EmailTemplate[] = [
     name: 'Invite',
     description: 'Bring a new team member into the workspace.',
     category: 'Invitation',
-    subject: 'You are invited to Cuidance Admin',
+    // Polished sample invitation (Week 12 email direction, Nov 24, 2026). Sample only
+    subject: 'You’re invited to Cuidance Admin',
     audience: 'New team member',
-    heading: 'Join the Cuidance Content Team',
-    body: 'You have been invited to review and maintain guidance in Cuidance Admin. Accept the invitation to set up your account.',
+    heading: 'Your Cuidance workspace is ready',
+    body: 'You’ve been invited to join Cuidance Admin, a shared workspace for creating, reviewing, and maintaining trusted beauty guidance.\n\nStart by accepting your invitation and exploring the work prepared for your team.',
     button: 'Accept invitation',
     link: `${ex}admin/invitation`,
     imageAlt: 'Illustration of three people beside a guidance note',
+    preheader: 'Review guidance, product information, and team updates in one workspace.',
+    eyebrow: 'INVITATION · CUIDANCE ADMIN',
+    support: 'This invitation is intended for the invited recipient and may expire. If you need help, contact your workspace administrator.',
   },
   {
     id: 'welcome',
@@ -228,6 +237,11 @@ export const emailCopy = {
     previewTo: (audience: string) => `To: ${audience}`,
     previewSubject: (subject: string) => `Subject: ${subject}`,
     previewFooter: 'You are receiving this because you are part of the Cuidance Content Team. Sample preview only.',
+    previewPreheader: (text: string) => `Preview text: ${text}`,
+    previewSample: 'Sample email · not sent',
+    deviceLabel: 'Preview width',
+    devices: { desktop: 'Desktop', mobile: 'Mobile' },
+    deviceNote: (device: string) => `Showing the ${device.toLowerCase()} preview.`,
     status: 'Status',
     when: 'When',
   },

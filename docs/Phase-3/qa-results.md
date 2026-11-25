@@ -38,6 +38,8 @@ Test-script note: the browser scripts named the old sample products ("Barrier su
 
 ## Full page pass: 312 page loads, 0 failures
 
+**Correction (Nov 24, 2026):** the Phase 3 run of this pass loaded every page at the default 1280 px width: the test script asked for the widths below in a way the browser ignored. The other Phase 3 checks (banners, image proportions, roles, keyboard) set their widths correctly. The pass was fixed to confirm the real width of every load and run again on the polish branch (Phase 3 plus the polish changes): 312 loads at the listed widths, 0 failures. See `polish/admin-web-polish.md`.
+
 26 pages (every route, including Forgot password) at 1440, 834, 390, 720 (1440 at 200% zoom), 640 (1280 at 200% zoom) and 320 px, in light, dark, and high contrast with larger text and reduced motion. On every load: no horizontal scrolling, exactly one main heading, no console or page errors, no em dashes in app text.
 
 ## Interaction suites (existing, re-run)
