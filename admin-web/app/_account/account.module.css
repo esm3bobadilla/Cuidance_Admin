@@ -164,6 +164,40 @@
   background: var(--color-surface-warm);
 }
 
+/* Role column marker (Visual Package 01): same 24 px footprint as before, so row height
+   and alignment don't change. Transparent artwork, kept at its own proportions. */
+.roleMarker {
+  flex: none;
+  width: auto;
+  max-width: calc(var(--space-32) + var(--space-12));
+  height: 24px;
+  object-fit: contain;
+}
+
+/* Dark mode: the dark green hands need a light backdrop (illustrations README), so the
+   role markers and the Profile illustration sit on the light-green brand surface */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .roleMarker {
+    padding: 0 var(--space-4);
+    border-radius: var(--radius-small);
+    background: var(--color-brand);
+  }
+
+  :root:not([data-theme='light']) .profileArt {
+    background: var(--color-brand);
+  }
+}
+
+:root[data-theme='dark'] .roleMarker {
+  padding: 0 var(--space-4);
+  border-radius: var(--radius-small);
+  background: var(--color-brand);
+}
+
+:root[data-theme='dark'] .profileArt {
+  background: var(--color-brand);
+}
+
 .statusInvited {
   color: var(--color-highlight);
 }
@@ -225,7 +259,9 @@
 }
 
 .profileArt {
-  width: 96px;
+  /* Visual Package 01 illustration is wider than tall: same 96 px height, its own proportions */
+  width: auto;
+  max-width: 144px;
   height: 96px;
   padding: var(--space-8);
   border-radius: var(--radius-medium);

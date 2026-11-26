@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 import { assignTaskCopy as copy } from '../../../shared/content/assign-task';
-import heroReview from '../../../shared/brand/heroes/hero-review.jpg';
-import { HeroBanner } from '../../components/ui/HeroBanner';
+import heroReview from '../../../shared/brand/heroes/hero-review.webp';
+import { HeroBanner, packageHeroFrame } from '../../components/ui/HeroBanner';
 import { screenMetadata } from '../_screens/ScreenPage';
 import { AssignTask } from '../_reviewTasks/AssignTask';
 import { ReviewTasksContent } from '../_reviewTasks/ReviewTasksContent';
@@ -14,7 +14,7 @@ export const metadata = screenMetadata('review-tasks');
 export default function Page() {
   return (
     <main className="shell">
-      <HeroBanner title={copy.heroTitle} description={copy.heroSubtitle} image={heroReview} />
+      <HeroBanner title={copy.heroTitle} description={copy.heroSubtitle} image={heroReview} {...packageHeroFrame} />
       <AssignTask>
         {/* The static page shows the seeded tasks, so it works without JavaScript */}
         <Suspense fallback={<ReviewTasksContent state="ready" />}>

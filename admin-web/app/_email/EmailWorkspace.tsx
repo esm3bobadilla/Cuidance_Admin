@@ -12,7 +12,7 @@ import {
   type EmailTemplateId,
 } from '../../../shared/content/email';
 import { can } from '../../../shared/content/permissions';
-import heroEmail from '../../../shared/brand/heroes/hero-email.jpg';
+import heroEmail from '../../../shared/brand/heroes/hero-email.webp';
 import cardInvite from '../../../shared/brand/illustrations/email/card-invite.webp';
 import cardNudge from '../../../shared/brand/illustrations/email/card-nudge.webp';
 import cardReset from '../../../shared/brand/illustrations/email/card-reset.webp';
@@ -31,7 +31,7 @@ import { PageHeader } from '../../components/layout/PageHeader';
 import { Dialog } from '../../components/overlay/Dialog';
 import { Button } from '../../components/ui/Button';
 import { CuIcon } from '../../components/ui/CuIcon';
-import { HeroBanner } from '../../components/ui/HeroBanner';
+import { HeroBanner, packageHeroFrame } from '../../components/ui/HeroBanner';
 import { StatusBadge, type StatusTone } from '../../components/ui/StatusBadge';
 import { Tabs } from '../../components/ui/Tabs';
 import { demoModeCopy } from '../../../shared/content/demo-mode';
@@ -646,6 +646,7 @@ export function EmailWorkspace({ state = 'ready' }: { state?: EmailViewState }) 
         title={copy.heroTitle}
         description={copy.heroDescription}
         image={heroEmail}
+        {...packageHeroFrame}
         actions={
           <Button variant="primary" onClick={() => openEditor(fromTemplate('welcome', me.id), 'edit')} disabled={loadState === 'loading' || loadState === 'error'}>
             <CuIcon name="plus" size={16} /> {copy.newEmail}

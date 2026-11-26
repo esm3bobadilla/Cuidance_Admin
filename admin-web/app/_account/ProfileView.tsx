@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { profilePageCopy as copy, roleIllustration } from '../../../shared/content/account-pages';
+import { profilePageCopy as copy } from '../../../shared/content/account-pages';
 import { adminScreens } from '../../../shared/content/admin-web-screens';
 import { notificationsSeed } from '../../../shared/content/notifications';
 import { roleNames } from '../../../shared/content/permissions';
@@ -13,7 +13,7 @@ import { Drawer } from '../../components/overlay/Drawer';
 import { Button } from '../../components/ui/Button';
 import { useIdentity } from '../_data/identity';
 import { isSupabaseMode } from '../_data/config';
-import { roleArt } from './RoleBadge';
+import profileCard from '../../../shared/brand/illustrations/profile/profile-card.webp';
 import styles from './account.module.css';
 
 const base = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
@@ -29,7 +29,6 @@ export function ProfileView() {
   const [photo, setPhoto] = useState<UploadValue>(null);
   const [notice, setNotice] = useState('');
   const shownName = name || me.name;
-  const art = me.adminRole ? roleArt[roleIllustration[me.adminRole]] : null;
 
   return (
     <div className={styles.page}>
@@ -48,7 +47,7 @@ export function ProfileView() {
               <span className={styles.note}>{me.adminRole ? roleNames[me.adminRole] : me.role}</span>
               <span className={styles.note}>{me.status}</span>
             </span>
-            {art && <img className={styles.profileArt} src={art.src} width={96} height={96} alt="" />}
+            <img className={styles.profileArt} src={profileCard.src} width={144} height={96} alt="" />
           </div>
           {/* Sample mode only: Supabase mode has no profile editing yet */}
           {!isSupabaseMode && (

@@ -164,9 +164,9 @@ Cuidance_Admin/
 │   ├── quiz-rules/        Answer cards, mixing rules, delivery rules
 │   ├── design-tokens/     Colors (light and dark), type, spacing, radius, stroke
 │   └── brand/
-│       ├── heroes/        Phase B1 cut-paper hero banner images (from the approved prototype)
+│       ├── heroes/        Cut-paper hero banner images (Phase B1 prototype; Review Tasks, Metrics and Email from Visual Package 01)
 │       ├── icons/         Phase B1 cu-icons path data (rendered by admin-web/components/ui/CuIcon.tsx)
-│       ├── illustrations/ Approved flat Cuidance illustrations (Phase A1, plus Phase B1 prototype assets; email/ for the Phase 2 email cards)
+│       ├── illustrations/ Approved flat Cuidance illustrations (Phase A1, plus Phase B1 prototype assets; email/ for the email cards, roles/ and profile/ from Visual Package 01)
 │       ├── live/          Phase 2 static Live preview images (App screen, website hero) from the approved prototype
 │       ├── auth/          Phase 3 approved paper-cut background for Sign in, Create account and Forgot password
 │       └── logo/          Approved Logo Version 4 files (package v03); prototype/ holds the cream mark for the icon rail
@@ -184,7 +184,7 @@ Cuidance_Admin/
 │   ├── Phase-A4/          Phase A4 release readiness: checks, security review, known limitations, go-live checklist
 │   ├── Phase-B1/          Phase B1 prototype implementation: role migration plan, progress and checks
 │   ├── Phase-B2/          Phase 2 PR 1 (Content, Product Library, Email, Live, role wording) and PR 2 (functional demo workflows): notes and checks
-│   ├── Phase-3/           Phase 3 visual polish and QA: changes against the baseline, QA results, branch inventory, before-and-after images; polish/ for the follow-up Admin Web polish pass
+│   ├── Phase-3/           Phase 3 visual polish and QA: changes against the baseline, QA results, branch inventory, before-and-after images; polish/ for the follow-up Admin Web polish pass; visual-package-01/ for the Visual Package 01 asset update
 │   └── archived/
 │       └── admin-mobile/  Archived Admin Mobile reference (no active work)
 ├── README.md

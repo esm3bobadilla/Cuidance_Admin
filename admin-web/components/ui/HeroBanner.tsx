@@ -11,25 +11,36 @@ type HeroBannerProps = {
   image: StaticImage;
   // Optional wider image for screens 1280 px and up
   wideImage?: StaticImage;
+  // Optional banner proportions when the artwork is taller than the banner (Visual
+  // Package 01). The artwork fills the banner (object-fit: cover) and is cropped on
+  // screen only, toward `focus`; the file itself is never cropped.
+  frame?: { width: number; height: number };
+  focus?: string;
   actions?: ReactNode;
   // h1 by default: the banner is the page's main heading
   headingLevel?: 1 | 2;
 };
 
+// Visual Package 01 banners (Review Tasks, Metrics, Email): the 2:1 artwork is shown in a
+// 5:2 banner, cropped on screen slightly below center so every object stays in view.
+export const packageHeroFrame = { frame: { width: 5, height: 2 }, focus: 'right 70%' };
+
 // Page hero banner (approved prototype). The image fills the banner; the text sits on a
 // solid Warm Care panel on the left so it never depends on the photo for contrast.
 // The artwork is unchanged; only its cropping, position and responsive behavior are set here.
-export function HeroBanner({ title, description, eyebrow, image, wideImage, actions, headingLevel = 1 }: HeroBannerProps) {
+export function HeroBanner({ title, description, eyebrow, image, wideImage, frame, focus, actions, headingLevel = 1 }: HeroBannerProps) {
   const Heading = headingLevel === 1 ? 'h1' : 'h2';
   // Phase 3: the banner keeps the artwork's own proportions, so it is never squashed and
   // the illustration is not cropped at the sides (the text sits over the plain paper area).
-  const wide = wideImage ?? image;
+  const box = frame ?? image;
+  const wide = frame ?? wideImage ?? image;
   const ratio = {
-    '--hero-ratio': `${image.width} / ${image.height}`,
-    '--hero-w': image.width,
-    '--hero-h': image.height,
+    '--hero-ratio': `${box.width} / ${box.height}`,
+    '--hero-w': box.width,
+    '--hero-h': box.height,
     '--hero-w-wide': wide.width,
     '--hero-h-wide': wide.height,
+    ...(focus ? { '--hero-focus': focus } : {}),
   } as CSSProperties;
   return (
     <section className={styles.hero} style={ratio}>

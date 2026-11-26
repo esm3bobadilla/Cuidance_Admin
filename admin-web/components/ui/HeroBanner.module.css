@@ -39,7 +39,7 @@
   height: 100%;
   object-fit: cover;
   /* Keep the illustration (right) and its ground line (bottom) in view when space is short */
-  object-position: right bottom;
+  object-position: var(--hero-focus, right bottom);
 }
 
 /* Solid panel behind the text: contrast never depends on the image */

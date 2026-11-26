@@ -67,7 +67,7 @@ export const emailTemplates: EmailTemplate[] = [
     body: 'You’ve been invited to join Cuidance Admin, a shared workspace for creating, reviewing, and maintaining trusted beauty guidance.\n\nStart by accepting your invitation and exploring the work prepared for your team.',
     button: 'Accept invitation',
     link: `${ex}admin/invitation`,
-    imageAlt: 'Illustration of three people beside a guidance note',
+    imageAlt: 'Illustration of a sealed envelope with an invitation card',
     preheader: 'Review guidance, product information, and team updates in one workspace.',
     eyebrow: 'INVITATION · CUIDANCE ADMIN',
     support: 'This invitation is intended for the invited recipient and may expire. If you need help, contact your workspace administrator.',
@@ -109,7 +109,7 @@ export const emailTemplates: EmailTemplate[] = [
     body: 'We received a request to reset your password. This link expires in 30 minutes. If you did not ask for this, you can ignore this email.',
     button: 'Reset password',
     link: `${ex}admin/reset`,
-    imageAlt: 'Illustration of a padlock beside a document',
+    imageAlt: 'Illustration of a checklist with a padlock',
   },
 ];
 

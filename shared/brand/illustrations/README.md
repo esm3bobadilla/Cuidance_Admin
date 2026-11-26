@@ -34,3 +34,20 @@ These files were extracted from it unchanged (no redrawing, recoloring or croppi
 | `glance/glance-*.svg` | Dashboard "Today at a glance" cards. Checked: plain shapes, no scripts or links |
 
 Hero photographs for page banners are in `../heroes/`.
+
+## Visual Package 01 (Team 03, Nov 26, 2026)
+
+Approved replacements from `claude-code-visual-package-01.zip`. Re-encoded from the supplied
+PNGs as WebP with transparency, scaled down for the web at their own proportions. Not
+redrawn, recolored or cropped.
+
+| File | Used on | Supplied file |
+| --- | --- | --- |
+| `email/card-invite.webp`, `card-welcome.webp`, `card-nudge.webp`, `card-reset.webp` | Email template cards and default email images (replace the Phase 2 versions; old ones are in Git history) | `*-email-icon.png` |
+| `roles/role-super-admin.webp`, `role-admin.webp`, `role-team-member.webp` | Manage Team, Role column only (24 px markers) | `*-role-icon.png` |
+| `profile/profile-card.webp` | Profile card illustration | `profile-card-illustration.png` |
+
+In dark mode the role markers and the Profile illustration sit on the light-green brand
+surface (`--color-brand`), so the dark green hands stay visible. The Manage Team "Roles"
+summary card still uses the earlier role illustrations (`illus-hands-jar.png`,
+`illus-arch-drop.webp`, `illus-leaf-hand.png`).
