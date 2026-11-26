@@ -156,14 +156,6 @@
   color: var(--color-role-team-member);
 }
 
-.roleArt {
-  width: 24px;
-  height: 24px;
-  object-fit: contain;
-  border-radius: var(--radius-pill);
-  background: var(--color-surface-warm);
-}
-
 /* Role column marker (Visual Package 01): same 24 px footprint as before, so row height
    and alignment don't change. Transparent artwork, kept at its own proportions. */
 .roleMarker {

@@ -6,12 +6,16 @@ export type StatusTone = 'neutral' | 'info' | 'alert' | 'error' | 'success' | 'm
 
 // Workflow status label (Phase 2 PR 1: Product Library, Email, Live). Text plus an icon,
 // with a semantic surface and border: never color alone. Same look as the review labels.
-export function StatusBadge({ label, tone, icon }: { label: string; tone: StatusTone; icon: CuIconName }) {
+// icon is optional only for the Live preview label, whose signal moved to the page header
+// (Visual Package 01). Every other status label keeps its icon beside the text.
+export function StatusBadge({ label, tone, icon }: { label: string; tone: StatusTone; icon?: CuIconName }) {
   return (
     <span className={`${styles.badge} ${styles[tone]}`}>
-      <span className={styles.icon} aria-hidden="true">
-        <CuIcon name={icon} size={14} />
-      </span>
+      {icon && (
+        <span className={styles.icon} aria-hidden="true">
+          <CuIcon name={icon} size={14} />
+        </span>
+      )}
       {label}
     </span>
   );

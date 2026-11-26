@@ -34,3 +34,18 @@
   flex-wrap: wrap;
   gap: var(--space-12);
 }
+
+/* Header with a decorative mark (Live, Visual Package 01): the mark stays in the
+   upper-right beside the title at every width; the text wraps beside it */
+.rowWithMark {
+  flex-wrap: nowrap;
+}
+
+.rowWithMark .text {
+  min-width: 0;
+}
+
+.mark {
+  flex: none;
+  margin-left: auto;
+}

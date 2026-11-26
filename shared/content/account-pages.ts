@@ -4,7 +4,6 @@
  * never sent. In Supabase mode, Manage Team uses the existing live members and
  * invitation tools (Phase A3), and Row Level Security stays the real boundary.
  */
-import type { AdminRoleId } from './permissions';
 
 export const profilePageCopy = {
   title: 'Profile',
@@ -73,12 +72,6 @@ export const manageTeamCopy = {
     cancel: 'Cancel',
     added: (email: string) => `Invitation added for ${email}. Sample mode, nothing was sent.`,
   },
-};
-
-export const roleIllustration: Record<AdminRoleId, 'hands-jar' | 'arch-drop' | 'leaf-hand'> = {
-  super_admin: 'hands-jar',
-  admin: 'arch-drop',
-  team_member: 'leaf-hand',
 };
 
 export const settingsPageCopy = {

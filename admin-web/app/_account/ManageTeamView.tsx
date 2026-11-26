@@ -75,7 +75,7 @@ function SampleManageTeam() {
             <strong>{m.name}</strong>
           </span>
         ),
-        role: <RoleBadge role={m.role} marker />,
+        role: <RoleBadge role={m.role} />,
         status: <span className={m.status === 'Invited' ? styles.statusInvited : undefined}>{m.status}</span>,
         lastActive: m.lastActive,
         actions: (

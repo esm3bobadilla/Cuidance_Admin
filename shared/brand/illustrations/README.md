@@ -7,7 +7,7 @@ not redrawn, recolored or cropped in the files (one CSS crop on screen is noted 
 | File | Used on |
 | --- | --- |
 | `illus-leaf-hand.png` | Accept Invitation and Account Setup steps panel (removed from the sidebar in the Phase B1 shell) |
-| `illus-hands-jar.png` | Role illustration (Super Admin). Removed from the Dashboard banner in Phase B1 |
+| `illus-hands-jar.png` | Not in use since Visual Package 01 (was the Super Admin role illustration); kept as an approved asset |
 | `shape-leaf.png` | Not in use since the Phase B1 Dashboard hero; kept as an approved asset |
 | `illus-hand-stone.png` | Sign In and Create Account hero. On screen, a CSS crop hides a stray stroke at the top edge of the supplied file |
 
@@ -44,10 +44,10 @@ redrawn, recolored or cropped.
 | File | Used on | Supplied file |
 | --- | --- | --- |
 | `email/card-invite.webp`, `card-welcome.webp`, `card-nudge.webp`, `card-reset.webp` | Email template cards and default email images (replace the Phase 2 versions; old ones are in Git history) | `*-email-icon.png` |
-| `roles/role-super-admin.webp`, `role-admin.webp`, `role-team-member.webp` | Manage Team, Role column only (24 px markers) | `*-role-icon.png` |
+| `roles/role-super-admin.webp`, `role-admin.webp`, `role-team-member.webp` | Manage Team: Role column and the "What each role can do" card (24 px markers) | `*-role-icon.png` |
 | `profile/profile-card.webp` | Profile card illustration | `profile-card-illustration.png` |
 
 In dark mode the role markers and the Profile illustration sit on the light-green brand
-surface (`--color-brand`), so the dark green hands stay visible. The Manage Team "Roles"
-summary card still uses the earlier role illustrations (`illus-hands-jar.png`,
-`illus-arch-drop.webp`, `illus-leaf-hand.png`).
+surface (`--color-brand`), so the dark green hands stay visible. The earlier role
+illustrations (`illus-hands-jar.png`, `illus-arch-drop.webp`) are no longer used on screen;
+the files stay as approved assets. `illus-leaf-hand.png` is still used by Account Setup.

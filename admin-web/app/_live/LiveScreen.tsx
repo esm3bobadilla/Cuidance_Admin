@@ -316,7 +316,13 @@ export function LiveScreen({ surface, state = 'ready' }: { surface: LiveSurface;
 
   return (
     <main className="shell">
-      <PageHeader eyebrow={copy.eyebrow} title={copy.title[surface]} description={copy.description[surface]} />
+      <PageHeader
+        eyebrow={copy.eyebrow}
+        title={copy.title[surface]}
+        description={copy.description[surface]}
+        // Visual Package 01: the Live signal sits once, in the header (not in the preview label)
+        mark={<CuIcon name="live" variant="badge" size={48} />}
+      />
       <nav aria-label={copy.navLabel} className={styles.switcher}>
         <ul>
           {(['app', 'website'] as const).map((s) => (
@@ -354,7 +360,7 @@ export function LiveScreen({ surface, state = 'ready' }: { surface: LiveSurface;
               <h2 id="lv-preview-heading" className={styles.sectionTitle}>
                 {copy.preview.heading}
               </h2>
-              <StatusBadge label={copy.preview.liveBadge[surface]} icon="live" tone="success" />
+              <StatusBadge label={copy.preview.liveBadge[surface]} tone="success" />
             </div>
             <dl className={styles.facts}>
               {liveCurrent[surface].facts.map((f) => (
